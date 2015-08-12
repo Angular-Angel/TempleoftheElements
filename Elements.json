@@ -1,0 +1,59 @@
+[
+    {
+        "Name": "Fire",
+        "Type" : "Element",
+        "Resistances" : [["Fire", 0.25], ["Water", 2.0], ["Earth", 1.25], ["Air", 1.25]],
+        "Attributes" : ["Intelligence", "Spirit"],
+        "Details" : ["PROJECTILE", "AREA_TARGET", "ENEMY_TARGET", "SELF_TARGET", 
+                     "DAMAGE", "BUFF", "ON_HIT_EFFECT", "ON_ATTACK_EFFECT",
+                     "ON_CAST_EFFECT", "DAMAGE_OVER_TIME", "AREA_OF_EFFECT"],
+        "Focuses" : ["OFFENSE", "PROJECTILES"]
+    },
+    {
+        "Name": "Water",
+        "Type" : "Element",
+        "Resistances" : [["Fire", 0.5], ["Water", 0.25]],
+        "Attributes" : ["Dexterity", "Spirit"],
+        "Details" : ["PROJECTILE", "AREA_TARGET", "ENEMY_TARGET", "SELF_TARGET",
+                     "BUFF", "DEBUFF", "ON_HIT_EFFECT", "ON_ATTACK_EFFECT",
+                     "ON_CAST_EFFECT", "AREA_OF_EFFECT", "SLOW", "BLIND",
+                     "PERMANENT_STAT_COST", "TEMPORARY_STAT_COST", "HEAL", 
+                     "MANA_DRAIN", "EXHAUSTION", "MOVEMENT"],
+        "Focuses" : ["OFFENSE", "DEFENSE", "UTILITY", "HEALING", "PROJECTILES",
+            "BUFFS", "DEBUFFS"]
+    },
+    {
+        "Name": "Earth",
+        "Type" : "Element",
+        "Resistances" : [["Fire", 0.5], ["Water", 1.25], ["Air", 0.25]],
+        "Attributes" : ["Constitution", "Spirit"],
+        "Details" : ["PROJECTILE", "AREA_TARGET", "SELF_TARGET", "BUFF", 
+                     "AREA_OF_EFFECT", "SLOW", "STUN", "IMMOBILIZATION", 
+                     "PERMANENT_STAT_COST", "TEMPORARY_STAT_COST", 
+                     "TERRAIN_ALTERATION", "ITEM_CREATION", "PETRIFICATION", 
+                     "MULTI_TARGET"],
+        "Focuses" : ["DEFENSE", "UTILITY", "TERRAIN_ALTERATION", "ITEM_MANIPULATION"]
+    },
+    {
+        "Name": "Air",
+        "Type" : "Element",
+        "Resistances" : [["Earth", 1.25]],
+        "Attributes" : ["Dexterity", "Intelligence"],
+        "Details" : ["PROJECTILE", "AREA_TARGET", "SELF_TARGET", "BUFF", "DEBUFF", 
+                     "ON_HIT_EFFECT", "ON_ATTACK_EFFECT", "ON_CAST_EFFECT",
+                     "AREA_OF_EFFECT", "SLOW", "STUN", "IMMOBILIZATION", "SILENCE", 
+                     "BLIND", "MOVEMENT", "MULTI_TARGET", "HOMING"],
+        "Focuses" : ["OFFENSE", "DEFENSE", "UTILITY", "MOVEMENT"]
+    },
+    {
+        "Name": "Lightning",
+        "Type" : "Element",
+        "Resistances" : [],
+        "Attributes" : ["Dexterity", "Intelligence"],
+        "Details" : ["PROJECTILE", "ENEMY_TARGET", "SELF_TARGET", "BUFF", 
+                     "ON_HIT_EFFECT", "ON_ATTACK_EFFECT", "ON_CAST_EFFECT", 
+                     "AREA_OF_EFFECT", "STUN", "MULTI_TARGET", "HOMING", 
+                     "MOVEMENT", "TELEPORTATION", "CONFUSION", "MANA_DRAIN"],
+        "Focuses" : ["OFFENSE", "UTILITY", "MOVEMENT"]
+    }
+]

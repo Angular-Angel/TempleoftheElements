@@ -1,0 +1,26 @@
+[
+    {
+        "Name": "Vampiric",
+        "Level" : 1,
+        "Rarity": 5,
+        "Type": "Magic Weapon Definition",
+        "Stats": [["Life Steal", 0.10]],
+        "PlayerStats": [["Dexterity", 20]]
+    },
+    {
+        "Name": "Bludgeoning",
+        "Level" : 1,
+        "Rarity": 5,
+        "Type": "Magic Weapon Definition",
+        "Stats": [],
+        "PlayerStats": [["Dexterity", 20]],
+        "Effects": ["import templeoftheelements.player.*; \n import templeoftheelements.item.*; \n import templeoftheelements.collision.*; \n public class BludgeonEffect extends Effect { public float effect(EffectSource source, Collidable c) {return ((Creature) c).takeDamage(1, \"Crushing\");}}"]
+    },
+    {
+        "Name": "Hardened",
+        "Level" : 1,
+        "Rarity": 5,
+        "Type": "Magic Item Definition",
+        "Stats": [["Durability", 10]]
+    }
+]
