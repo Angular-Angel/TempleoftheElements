@@ -34,8 +34,11 @@ public class CharacterWheel {
         
         for (int i = 0; i < 20; i++) {
             for (CharacterTree tree : trees) {
-                for (int j = 0; j <= i; j++) 
-                    curNodeRing.add(game.registry.treeGenerator.generateNode(tree));
+                for (int j = 0; j <= i; j++) {
+                    CharacterNode node = game.registry.treeGenerator.generateNode(tree);
+                    curNodeRing.add(node);
+                    tree.curLayerNodes.add(node);
+                }
                 tree.newLayer(i+2);
             }
             double angle, diff = Math.toRadians(360/ (double) curNodeRing.size()), offset;
