@@ -107,6 +107,7 @@ public class Player implements Controller {
             case GLFW.GLFW_KEY_C: game.screen = characterScreen;
                 break;
             case GLFW.GLFW_KEY_ESCAPE: game.screen = game.menu;
+            game.start();
                 break;
                 
         }

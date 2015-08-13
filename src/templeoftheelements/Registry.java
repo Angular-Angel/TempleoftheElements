@@ -28,6 +28,7 @@ import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
 import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.CharacterTreeGenerator;
 import templeoftheelements.player.Effect;
 import util.RawReader;
 
@@ -49,7 +50,7 @@ public class Registry extends RawReader {
     public ArrayList<Element> elementList;
     public ArrayList<MagicItemDef> magicEffects;
     public CreatureTypeGenerator wandererGenerator;
-    private Random random;
+    public CharacterTreeGenerator treeGenerator;
     
     public Registry() {
         creatureDefs = new HashMap<>();
@@ -57,7 +58,6 @@ public class Registry extends RawReader {
         itemDefs = new HashMap<>();
         controllers = new HashMap<>();
         magicEffects = new ArrayList<>();
-        random = new Random();
         itemPools = new HashMap<>();
         elements = new HashMap<>();
         elementList = new ArrayList<>();

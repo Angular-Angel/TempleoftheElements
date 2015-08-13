@@ -31,11 +31,7 @@ class Initiator implements InitScript {
         game.registry.readRaw(new File("Weapons.json"));
         game.registry.readRaw(new File("Elements.json"));
         game.registry.loadItemPool("ItemRoller.groovy", );
-        CharacterTreeGenerator treeGen = game.registry.readGroovyScript(new File("MagicalStyleGenerator.groovy"));
-        
-        treeGen.genCharacterTreeDef();
-        treeGen.genCharacterTreeDef();
-        treeGen.genCharacterTreeDef();
+        game.registry.treeGenerator = game.registry.readGroovyScript(new File("MagicalStyleGenerator.groovy"));
         
         for (int i = 0; i < 10; i++) {
            game.registry.wandererGenerator.genType();

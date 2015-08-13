@@ -4,6 +4,7 @@ package templeoftheelements.player;
 import com.samrj.devil.math.Vec2;
 import java.util.ArrayList;
 import java.util.HashSet;
+import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
 
 /**
@@ -25,21 +26,16 @@ public class CharacterWheel {
     public void generate() {
         ArrayList<CharacterNode> curNodeRing = new ArrayList<>(); // the nodes in the current layer.
         
-        CharacterNode baseNode = new CharacterNode(new AndRequirement(), new CharacterTree());
-        
-        baseNode.acquire();
-        nodes.add(baseNode);
-        
         ArrayList<CharacterTree> trees = new ArrayList<>();
         
         for (int i = 0; i < 5; i++) {
-            trees.add(new CharacterTree(baseNode));
+            trees.add(new CharacterTree(game.registry.treeGenerator.genCharacterTreeDef()));
         }
         
         for (int i = 0; i < 20; i++) {
             for (CharacterTree tree : trees) {
                 for (int j = 0; j <= i; j++) 
-                    curNodeRing.add(tree.generateNode());
+                    curNodeRing.add(game.registry.treeGenerator.generateNode(tree));
                 tree.newLayer(i+2);
             }
             double angle, diff = Math.toRadians(360/ (double) curNodeRing.size()), offset;
@@ -62,28 +58,22 @@ public class CharacterWheel {
     
     public class CharacterTree {
         
-        private ArrayList<CharacterNode> prevLayerNodes;
-        private ArrayList<CharacterNode> curLayerNodes; //the nodes in this specific tree.
-        private int layerSize;
-        private CharacterTreeDef def;
+        public ArrayList<CharacterNode> prevLayerNodes;
+        public ArrayList<CharacterNode> curLayerNodes; //the nodes in this specific tree.
+        public int layerSize;
+        public CharacterTreeDef def;
         
-        public CharacterTree() {}
-        
-        public CharacterTree(CharacterNode rootNode) {
+        public CharacterTree(CharacterTreeDef definition) {
+            def = definition;
             curLayerNodes = new ArrayList<>();
-            curLayerNodes.add(rootNode);
             newLayer(1);
         }
         
-        public CharacterNode generateNode() {
-            double num = (curLayerNodes.size() / (double) layerSize) * prevLayerNodes.size();
-            Requirement req;
-            if (num < prevLayerNodes.size() - 1)
-                req = new OrRequirement(prevLayerNodes.get((int) num), prevLayerNodes.get(((int) num) + 1));
-            else req = prevLayerNodes.get((int) num);
-            CharacterNode node = new CharacterNode(req, this);
-            curLayerNodes.add(node);
-            return node;
+        public CharacterTree(CharacterTreeDef definition, CharacterNode rootNode) {
+            def = definition;
+            curLayerNodes = new ArrayList<>();
+            curLayerNodes.add(rootNode);
+            newLayer(1);
         }
         
         public void newLayer(int size) {

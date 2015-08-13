@@ -63,15 +63,57 @@ class MagicalStyleGenerator implements CharacterTreeGenerator {
         while(attributePool.remove(attribute));
         ret.primaryAttributes.add(attribute);
         
-        ret.details.add(CharacterTreeDef.Detail.values()[random.nextInt(CharacterTreeDef.Detail.values().length)]);
-        
         CharacterTreeDef.Detail detail = CharacterTreeDef.Detail.values()[random.nextInt(CharacterTreeDef.Detail.values().length)];
+        
+        ret.details.add(detail);
+        
+        detail = CharacterTreeDef.Detail.values()[random.nextInt(CharacterTreeDef.Detail.values().length)];
+        
         
         while (ret.details.contains(detail)) detail = CharacterTreeDef.Detail.values()[random.nextInt(CharacterTreeDef.Detail.values().length)];
         
         ret.details.add(detail);
         
+        
+        if (ret.details.contains(CharacterTreeDef.Detail.SPEED_BASED)) 
+        ret.secondaryAttributes.add("Dexterity");
+        
+        if (ret.details.contains(CharacterTreeDef.Detail.TOUGHNESS_BASED) ||
+            ret.details.contains(CharacterTreeDef.Detail.STAMINA_BASED)) 
+        ret.secondaryAttributes.add("Constitution");
+        
+        if (ret.details.contains(CharacterTreeDef.Detail.COSTS_HP)) 
+        ret.secondaryAttributes.add("Max HP");
+        
         return ret;
+    }
+    
+    public CharacterNode generateNode(CharacterWheel.CharacterTree tree) {
+        
+        double num = (tree.curLayerNodes.size() / (double) tree.layerSize) * tree.prevLayerNodes.size();
+        Requirement req;
+        if (tree.prevLayerNodes.size() == 0) {
+            req = new AndRequirement();
+        } else if (num < tree.prevLayerNodes.size() - 1)
+            req = new OrRequirement(tree.prevLayerNodes.get((int) num), tree.prevLayerNodes.get(((int) num) + 1));
+        else req = tree.prevLayerNodes.get((int) num);
+        
+        CharacterNode node = new CharacterNode(req, tree);
+        
+        String stat;
+        
+        if (tree.def.secondaryAttributes.size() > 0) {
+        
+            if (random.nextInt(4) < 3)
+                stat = tree.def.primaryAttributes.get(random.nextInt(tree.def.primaryAttributes.size()));
+            else stat = tree.def.secondaryAttributes.get(random.nextInt(tree.def.secondaryAttributes.size()));
+        
+        }
+        else stat = tree.def.primaryAttributes.get(random.nextInt(tree.def.primaryAttributes.size()));
+        
+        node.addStat(stat, new NumericStat(1));
+        
+        return node;
     }
     
 }

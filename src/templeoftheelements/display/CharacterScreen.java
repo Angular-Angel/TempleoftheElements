@@ -1,12 +1,17 @@
 
 package templeoftheelements.display;
 
+import com.samrj.devil.graphics.Color4f;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
+import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.Inventory;
 
 /**
  *
@@ -18,10 +23,12 @@ public class CharacterScreen extends Screen {
     
     private Vec2 view;
     private CharacterWheel wheel;
+    private StatScreen screen;
     
     public CharacterScreen(CharacterWheel wheel) {
         view = new Vec2();
         this.wheel = wheel;
+        screen = new StatScreen(0, 0, 0, 0);
     }
 
     @Override
@@ -34,6 +41,8 @@ public class CharacterScreen extends Screen {
             r.draw();
         }
         GL11.glPopMatrix();
+        
+        screen.draw();
     }
 
     public void mouseEvent(int button, int action, int mods) {
@@ -44,7 +53,10 @@ public class CharacterScreen extends Screen {
         pos.x -= view.x;
         pos.y -= view.y;
         for (CharacterNode node : wheel.nodes) {
-            if (node.isClicked(pos.x, pos.y)) node.mouseEvent(button, action, mods);
+            if (node.isClicked(pos.x, pos.y)) {
+                node.mouseEvent(button, action, mods);
+                break;
+            }
         }
     }
 
@@ -61,6 +73,62 @@ public class CharacterScreen extends Screen {
     }
 
     @Override
-    public void mouseMoved(float x, float y, float dx, float dy) {}
+    public void mouseMoved(float x, float y, float dx, float dy) {
+        Vec2 pos = new Vec2(game.mouse.getX(), game.mouse.getY());
+        pos.x -= game.res.width/2;
+        pos.y -= game.res.height/2;
+        pos.x -= view.x;
+        pos.y -= view.y;
+        screen.display = false;
+        for (CharacterNode node : wheel.nodes) {
+            if (node.isClicked(pos.x, pos.y)) {
+                screen.setNode(node);
+                screen.x = game.mouse.getX();
+                screen.y = game.mouse.getY();
+                screen.display = true;
+                break;
+            }
+        }
+    }
+    
+    public class StatScreen extends SubScreen {
+
+        private CharacterNode node;
+        public boolean display;
+        
+        public void setNode(CharacterNode node) {
+            this.node = node;
+            width = 0;
+            height = (node.getStatList().size()) * 20;
+            for (String s : node.getStatList()) 
+                if (width < s.length() * 20 + 100) width = s.length() * 20 + 100;
+        }
+        
+        public StatScreen(float x, float y, float width, float height, Color4f background, Color4f border) {
+            super(x, y, width, height, background, border);
+        }
+
+        private StatScreen(int x, int y, int width, int height) {
+             super(x, y, width, height);
+        }
+        @Override
+        public void draw() {
+            if (!display) return;
+            super.draw();
+            int i = -10;
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glColor3f(255, 0, 0);
+            game.font.getTexture().glBind(0);
+            for (String s : node.getStatList()) {
+                try {
+                    game.font.draw(s + ": " + node.getScore(s), new com.samrj.devil.math.Vec2(x, y + i));
+                    i += 20;
+                } catch (NoSuchStatException ex) {
+                    Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
     
 }
