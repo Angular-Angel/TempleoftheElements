@@ -4,7 +4,7 @@ import templeoftheelements.collision.*; // these are used for
 import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;   // the groovy script importing.
 import templeoftheelements.item.*;
-import stat.NumericStat;
+import stat.*;
 import java.util.Random;
 import static templeoftheelements.TempleOfTheElements.game;
 
@@ -58,13 +58,14 @@ class WandererGenerator implements CreatureTypeGenerator {
         ret.addStat("Size", new NumericStat(size));
         ret.addStat("Acceleration", new NumericStat((float) ret.getScore("Dexterity") * 4));
         ret.addStat("Max Speed", new NumericStat((float) ret.getScore("Dexterity") * 80));
-        ret.addStat("Turning Speed", new NumericStat((float) ret.getScore("Dexterity") / 10));
+        ret.addStat("Turning Speed", new EquationStat("0.5 + [Dexterity] / 18"));
         ret.addStat("Max HP", new NumericStat((float) ret.getScore("Constitution") * 2));
         ret.addStat("Max Stamina", new NumericStat((float) ret.getScore("Constitution") * 2));
         ret.addStat("Max Mana", new NumericStat((float) ret.getScore("Spirit") * 2));
         ret.addStat("Stamina", new NumericStat(ret.getScore("Max Stamina")));
         ret.addStat("Damage", new NumericStat((float) ret.getScore("Strength") / 2));
-        ret.addStat("Sight Range", new NumericStat((float) -10 + ret.getScore("Perception") + ret.getScore("Intelligence")));
+        ret.addStat("Sight Range", new EquationStat("-10 + [Perception] + [Intelligence]"));
+        ret.addStat("Attack Speed", new EquationStat("1 - (([Dexterity] - 10) / 5)"));
         
         ret.addStat("XP", new NumericStat(10));
         
