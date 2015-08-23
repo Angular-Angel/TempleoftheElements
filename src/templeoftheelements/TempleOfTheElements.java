@@ -1,4 +1,3 @@
-
 package templeoftheelements;
 
 import com.samrj.devil.config.CfgResolution;
@@ -27,41 +26,23 @@ import templeoftheelements.display.Screen;
 import templeoftheelements.player.Clickable;
 import templeoftheelements.player.Player;
 
-
-
-public class TempleOfTheElements extends Game {
-    private boolean running = false;
+public final class TempleOfTheElements extends Game {
     
-    public Set<Renderable> sprites;
-    public Set<Actor> actors;
-    public Set<Clickable> clickables;
-    public Set<Collidable> collidables;
-    public Registry registry;
-    public Player player;
-    public World world;
-    public Font font;
     public static TempleOfTheElements game;
     public static final int PIXELS_PER_METER = 30;
-    public final CfgResolution res;
-    public MenuScreen menu;
-    public Room room;
-    public Screen screen;
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) throws Exception {
         Game.init();
-        game = new TempleOfTheElements();
-        
-        game.start();
-        game.menu = new MenuScreen();
-        game.screen = game.menu;
-        
-        
-        game.run();
-        
-        game.destroy();
+        try {
+            game = new TempleOfTheElements();
+            game.start();
+            game.run();
+            game.destroy();
+        }
+        finally {
+            game = null;
+            Game.terminate();
+        }
     }
     
     public static com.samrj.devil.math.Vec2 JBoxtoDevil(Vec2 v) {
@@ -92,29 +73,51 @@ public class TempleOfTheElements extends Game {
         Mat2 m = Mat2.rotation(ang);
         return v.mult(m);
     }
+    
+    public final Font font;
+    public final CfgResolution res;
+    public final MenuScreen menu;
+    
+    public Set<Renderable> sprites;
+    public Set<Actor> actors;
+    public Set<Clickable> clickables;
+    public Set<Collidable> collidables;
+    public Registry registry;
+    public Player player;
+    public World world;
+    public Room room;
+    
+    public Screen screen;
 
-    public TempleOfTheElements() {
+    private TempleOfTheElements() throws IOException{
         super();
         
         res = config.getField("res");
         
         // init OpenGL
-        
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
         GL11.glOrtho(0, res.width, 0, res.height, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         
+        Texture2DData texture2DData = new Texture2DData(
+                new File("mono_20.png"));
+        GLTexture2D glTexture2D = new GLTexture2D(texture2DData);
+        font = new Font(glTexture2D, "mono_20.csv", 32);
         
-        try {
-            Texture2DData texture2DData = new Texture2DData(
-                    new File("mono_20.png"));
-            GLTexture2D glTexture2D = new GLTexture2D(texture2DData);
-            font = new Font(glTexture2D, "mono_20.csv", 32);
-        } catch (IOException ex) {
-            Logger.getLogger(TempleOfTheElements.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(1);
-        }
+        menu = new MenuScreen();
+        screen = menu;
+    }
+    
+    public void start() {
+        sprites = new IdentitySet<>();
+        actors = new IdentitySet<>();
+        collidables = new IdentitySet<>();
+        clickables = new IdentitySet<>();
+        world = new World(new Vec2());
+        world.setContactListener(new CollisionManager());
+        registry = new Registry();
+        ((InitScript) registry.readGroovyScript(new File("Init.groovy"))).Init();
     }
     
     public void addActor(Actor a) {
@@ -148,17 +151,7 @@ public class TempleOfTheElements extends Game {
         sprites.remove(r);
     }
 
-    public void start() {
-        sprites = new IdentitySet<>();
-        actors = new IdentitySet<>();
-        collidables = new IdentitySet<>();
-        clickables = new IdentitySet<>();
-        world = new World(new Vec2());
-        world.setContactListener(new CollisionManager());
-        registry = new Registry();
-        ((InitScript) registry.readGroovyScript(new File("Init.groovy"))).Init();
-    }
-
+    @Override
     public void step(float dt) {
         if (screen == null) {
             world.step(dt, 8, 3);
@@ -176,17 +169,18 @@ public class TempleOfTheElements extends Game {
         } else screen.step();
     }
 
+    @Override
     public void render() {
         if (screen == null) {
             // Clear the screen and depth buffer
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT); 
 
             GL11.glPushMatrix();
-            GL11.glTranslated(res.width/2, res.height/7, 0);
+            GL11.glTranslatef(res.width/2, res.height/7, 0);
             GL11.glRotatef(player.getCreature().getDirection(), 0, 0, 1);
             GL11.glScalef(TempleOfTheElements.PIXELS_PER_METER, TempleOfTheElements.PIXELS_PER_METER, 1f);
             Vec2 pos = player.getCreature().getPosition();
-            GL11.glTranslated(-pos.x, -pos.y, 0);
+            GL11.glTranslatef(-pos.x, -pos.y, 0);
 
             room.draw();
 
@@ -196,37 +190,6 @@ public class TempleOfTheElements extends Game {
             player.hud.draw();
         } else screen.render();
     }
-    
-//    public final void run() throws LWJGLException
-//    {
-//        
-//        try
-//        {
-//            init();
-//        }
-//        catch (Exception e)
-//        {
-//            throw new RuntimeException(e);
-//        }
-//        
-//        running = true;
-//        while (running)
-//        {
-//            Display.processMessages();
-//            if (Display.isCloseRequested())
-//            {
-//                stop();
-//                break;
-//            }
-//            
-//            Input.step(this);
-//            step(1f/60f);
-//            render();
-//            
-//            Display.update(false);
-//            Display.sync(60);
-//        }
-//    }
     
     public void enterDoor(Door door) {
         if (door.getDestination() == null) return;
@@ -342,5 +305,8 @@ public class TempleOfTheElements extends Game {
     }
 
     @Override
-    public void onDestroy() {}
+    public void onDestroy() {
+        
+        font.delete();
+    }
 }

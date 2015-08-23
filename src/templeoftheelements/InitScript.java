@@ -1,5 +1,4 @@
- 
-package templeoftheelements;
+ package templeoftheelements;
 
 /**
  *
@@ -10,5 +9,4 @@ package templeoftheelements;
 public interface InitScript {
     
     public void Init();
-    
 }
