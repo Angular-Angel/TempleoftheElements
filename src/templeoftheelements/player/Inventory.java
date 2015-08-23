@@ -1,7 +1,7 @@
  
 package templeoftheelements.player;
 
-import com.samrj.devil.graphics.Color4f;
+import com.samrj.devil.math.Vec4;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -10,13 +10,13 @@ import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
-import templeoftheelements.item.Consumable;
-import templeoftheelements.item.Equipment;
-import templeoftheelements.item.Item;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Creature.Hand;
 import templeoftheelements.display.Screen;
+import templeoftheelements.item.Consumable;
+import templeoftheelements.item.Equipment;
+import templeoftheelements.item.Item;
 
 /**
  *
@@ -292,10 +292,10 @@ public class Inventory extends Screen {
         public Equipment item;
         
         public ItemSlot(Creature.BodyPart bodypart, float x, float y, float width, float height) {
-            this(bodypart, x, y, width, height, new Color4f(0, 0, 0), new Color4f(255, 255, 255));
+            this(bodypart, x, y, width, height, new Vec4(0, 0, 0, 1), new Vec4(1, 1, 1, 1));
         }
         
-        public ItemSlot(Creature.BodyPart bodypart, float x, float y, float width, float height, Color4f background, Color4f border) {
+        public ItemSlot(Creature.BodyPart bodypart, float x, float y, float width, float height, Vec4 background, Vec4 border) {
             super(x, y, width, height, background, border);
             this.bodypart = bodypart;
             item = null;
@@ -337,10 +337,10 @@ public class Inventory extends Screen {
     public class WeaponSlot extends ItemSlot {
 
         public WeaponSlot(Creature.Hand bodypart, float x, float y, float width, float height) {
-            this(bodypart, x, y, width, height, new Color4f(0, 0, 0), new Color4f(255, 0, 0));
+            this(bodypart, x, y, width, height, new Vec4(0, 0, 0, 1), new Vec4(1, 0, 0, 1));
         }
         
-        public WeaponSlot(Creature.Hand bodypart, float x, float y, float width, float height, Color4f background, Color4f border) {
+        public WeaponSlot(Creature.Hand bodypart, float x, float y, float width, float height, Vec4 background, Vec4 border) {
             super(bodypart, x, y, width, height, background, border);
         }
         

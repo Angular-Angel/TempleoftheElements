@@ -1,7 +1,8 @@
 
 package templeoftheelements.display;
 
-import com.samrj.devil.graphics.Color4f;
+import com.samrj.devil.graphics.GraphicsUtil;
+import com.samrj.devil.math.Vec4;
 import org.lwjgl.opengl.GL11;
 import static templeoftheelements.TempleOfTheElements.game;
 
@@ -26,13 +27,13 @@ public abstract class Screen {
     
     public class SubScreen implements Renderable{
         public float x, y, width, height;
-        public Color4f background, border;
+        public Vec4 background, border;
         
         public SubScreen(float x, float y, float width, float height) {
-            this(x, y, width, height, new Color4f(0, 0, 0), new Color4f(255, 255, 255));
+            this(x, y, width, height, new Vec4(0, 0, 0, 1), new Vec4(1, 1, 1, 1));
         }
         
-        public SubScreen(float x, float y, float width, float height, Color4f background, Color4f border) {
+        public SubScreen(float x, float y, float width, float height, Vec4 background, Vec4 border) {
             this.x = x;
             this.y = y;
             this.width = width;
@@ -49,7 +50,7 @@ public abstract class Screen {
         public void draw() {
             GL11.glPushMatrix();
             glTranslate();
-            background.glColor();
+            GraphicsUtil.glColor(background);
             GL11.glBegin(GL11.GL_QUADS);
             GL11.glVertex2f(0, 0);
             GL11.glVertex2f(0 + width, 0);
@@ -58,7 +59,7 @@ public abstract class Screen {
             GL11.glVertex2f(0, 0);
             GL11.glEnd();
 
-            border.glColor();
+            GraphicsUtil.glColor(border);
             GL11.glBegin(GL11.GL_LINE_STRIP);
             GL11.glVertex2f(0, 0);
             GL11.glVertex2f(0 + width, 0);

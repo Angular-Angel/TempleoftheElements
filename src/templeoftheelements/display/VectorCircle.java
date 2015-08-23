@@ -1,24 +1,24 @@
 
 package templeoftheelements.display;
 
-import com.samrj.devil.graphics.Color4f;
 import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec2;
+import com.samrj.devil.math.Vec4;
 
 
 
 public class VectorCircle implements Renderable {
-    private Color4f color;
+    private Vec4 color;
     private float size;
 
     public VectorCircle(float size) {
-        color = new Color4f(0, 0, 255);
+        color = new Vec4(0, 0, 1, 1);
         this.size = size;
     }
     
     @Override
     public void draw() {
-        color.glColor();
+        GraphicsUtil.glColor(color);
         Vec2 center = new Vec2();
         GraphicsUtil.drawCircle(center, size, 32);
     }

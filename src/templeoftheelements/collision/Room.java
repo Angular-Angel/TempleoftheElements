@@ -1,9 +1,9 @@
 
 package templeoftheelements.collision;
 
-import com.samrj.devil.graphics.Color4f;
 import com.samrj.devil.graphics.GLTexture2D;
-import com.samrj.devil.graphics.GLTextureRectangle;
+import com.samrj.devil.graphics.GraphicsUtil;
+import com.samrj.devil.math.Vec4;
 import java.util.ArrayList;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -25,7 +25,7 @@ import templeoftheelements.player.Clickable;
 public class Room implements Renderable, Collidable, Actor {
     
     int width, height;
-    private Color4f color;
+    private Vec4 color;
     Body[] walls;
     private ArrayList<Object> stuff;
     private boolean cleared;
@@ -34,7 +34,7 @@ public class Room implements Renderable, Collidable, Actor {
     public Room(int width, int height, Texture texture) {
         cleared = false;
         stuff = new ArrayList<>();
-        color = new Color4f(0, 0, 255);
+        color = new Vec4(0.0f, 0.0f, 1.0f, 1.0f);
         
         walls = new Body[4];
         
@@ -49,7 +49,7 @@ public class Room implements Renderable, Collidable, Actor {
 
     @Override
     public void draw() {
-        color.glColor();
+        GraphicsUtil.glColor(color);
         GL11.glBegin(GL11.GL_LINE_STRIP);
         GL11.glVertex2f(width/2, height/2);
         GL11.glVertex2f(-(width/2), (height/2));
@@ -339,10 +339,9 @@ public class Room implements Renderable, Collidable, Actor {
 
         @Override
         public void draw() {
-            Color4f white = new Color4f(255, 255, 255);
             GL11.glPushMatrix();
             GL11.glTranslated(entrancePosition.x, entrancePosition.y, 0);
-            white.glColor();
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             GL11.glBegin(GL11.GL_LINE_STRIP);
             GL11.glVertex2d(point1.x, point1.y);
             GL11.glVertex2d(point2.x, point2.y);

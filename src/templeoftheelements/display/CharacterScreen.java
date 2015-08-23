@@ -1,7 +1,7 @@
 
 package templeoftheelements.display;
 
-import com.samrj.devil.graphics.Color4f;
+import com.samrj.devil.math.Vec4;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
@@ -104,7 +104,7 @@ public class CharacterScreen extends Screen {
                 if (width < s.length() * 20 + 100) width = s.length() * 20 + 100;
         }
         
-        public StatScreen(float x, float y, float width, float height, Color4f background, Color4f border) {
+        public StatScreen(float x, float y, float width, float height, Vec4 background, Vec4 border) {
             super(x, y, width, height, background, border);
         }
 
