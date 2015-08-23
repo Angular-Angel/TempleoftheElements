@@ -45,6 +45,8 @@ public class MenuScreen extends Screen {
             position.y -= 20;
             game.font.draw("Esc - Exit current screen", position);
             position.y -= 20;
+            game.font.draw("R - Reset current game", position);
+            position.y -= 20;
             game.font.draw("W - Move forward", position);
             position.y -= 20;
             game.font.draw("S - Move backward", position);

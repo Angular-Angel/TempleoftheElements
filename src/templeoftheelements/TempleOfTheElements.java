@@ -224,80 +224,31 @@ public final class TempleOfTheElements extends Game {
         if (screen == null) {
             try {
                 if (action != GLFW.GLFW_PRESS) return;
-                Creature creature;
+                String creatureName;
                 switch (key) {
-                    case GLFW.GLFW_KEY_0:
-                        creature = registry.creatureDefs.get("Wanderer 0").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_1:
-                        creature = registry.creatureDefs.get("Wanderer 1").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_2:
-                        creature = registry.creatureDefs.get("Wanderer 2").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_3:
-                        creature = registry.creatureDefs.get("Wanderer 3").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_4:
-                        creature = registry.creatureDefs.get("Wanderer 4").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_5:
-                        creature = registry.creatureDefs.get("Wanderer 5").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_6:
-                        creature = registry.creatureDefs.get("Wanderer 6").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_7:
-                        creature = registry.creatureDefs.get("Wanderer 7").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_8:
-                        creature = registry.creatureDefs.get("Wanderer 8").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    case GLFW.GLFW_KEY_9:
-                        creature = registry.creatureDefs.get("Wanderer 9").genCreature();
-                        creature.createBody(new Vec2(-10,-10));
-                        addActor(creature);
-                        addSprite(creature);
-                        room.add(creature);
-                        break;
-                    default: player.keyEvent(key, action, mods);
+                    case GLFW.GLFW_KEY_0: creatureName = "Wanderer 0"; break;
+                    case GLFW.GLFW_KEY_1: creatureName = "Wanderer 1"; break;
+                    case GLFW.GLFW_KEY_2: creatureName = "Wanderer 2"; break;
+                    case GLFW.GLFW_KEY_3: creatureName = "Wanderer 3"; break;
+                    case GLFW.GLFW_KEY_4: creatureName = "Wanderer 4"; break;
+                    case GLFW.GLFW_KEY_5: creatureName = "Wanderer 5"; break;
+                    case GLFW.GLFW_KEY_6: creatureName = "Wanderer 6"; break;
+                    case GLFW.GLFW_KEY_7: creatureName = "Wanderer 7"; break;
+                    case GLFW.GLFW_KEY_8: creatureName = "Wanderer 8"; break;
+                    case GLFW.GLFW_KEY_9: creatureName = "Wanderer 9"; break;
+                    default:
+                        creatureName = null;
+                        player.keyEvent(key, action, mods);
                 }
+                
+                if (creatureName != null) {
+                        Creature creature = registry.creatureDefs.get(creatureName).genCreature();
+                        creature.createBody(new Vec2(-10,-10));
+                        addActor(creature);
+                        addSprite(creature);
+                        room.add(creature);
+                }
+                
             } catch (NoSuchStatException ex) {
                 Logger.getLogger(TempleOfTheElements.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -102,11 +102,16 @@ public class Player implements Controller {
     public void keyEvent(int key, int action, int mods) {
         if (action != GLFW.GLFW_PRESS) return;
         switch (key) {
-            case GLFW.GLFW_KEY_I: game.screen = inventory;
+            case GLFW.GLFW_KEY_I:
+                game.screen = inventory;
                 break;
-            case GLFW.GLFW_KEY_C: game.screen = characterScreen;
+            case GLFW.GLFW_KEY_C:
+                game.screen = characterScreen;
                 break;
-            case GLFW.GLFW_KEY_ESCAPE: game.screen = game.menu;
+            case GLFW.GLFW_KEY_ESCAPE:
+                game.screen = game.menu;
+                break;
+            case GLFW.GLFW_KEY_R:
                 game.start();
                 break;
                 
