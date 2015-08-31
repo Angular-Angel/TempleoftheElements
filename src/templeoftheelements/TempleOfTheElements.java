@@ -2,10 +2,10 @@ package templeoftheelements;
 
 import com.samrj.devil.config.CfgResolution;
 import com.samrj.devil.game.Game;
-import com.samrj.devil.graphics.GLTexture2D;
-import com.samrj.devil.graphics.Texture2DData;
+import com.samrj.devil.gl.DGL;
+import com.samrj.devil.gl.Texture2D;
+import com.samrj.devil.io.Memory;
 import com.samrj.devil.math.Mat2;
-import templeoftheelements.collision.*;
 import com.samrj.devil.ui.Font;
 import com.samrj.devil.util.IdentitySet;
 import java.io.File;
@@ -16,9 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
-import org.lwjgl.opengl.*;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.*;
 import stat.NoSuchStatException;
+import templeoftheelements.collision.*;
 import templeoftheelements.collision.Room.Door;
 import templeoftheelements.display.MenuScreen;
 import templeoftheelements.display.Renderable;
@@ -30,6 +31,7 @@ public final class TempleOfTheElements extends Game {
     
     public static TempleOfTheElements game;
     public static final int PIXELS_PER_METER = 30;
+    private static final int DGL_MEMORY_SIZE = 1048576; //1 mebibyte of memory
     
     public static void main(String[] args) throws Exception {
         Game.init();
@@ -74,6 +76,7 @@ public final class TempleOfTheElements extends Game {
         return v.mult(m);
     }
     
+    public final Memory memory;
     public final Font font;
     public final CfgResolution res;
     public final MenuScreen menu;
@@ -94,17 +97,18 @@ public final class TempleOfTheElements extends Game {
         
         res = config.getField("res");
         
+        DGL.init();
+        
         // init OpenGL
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
         GL11.glOrtho(0, res.width, 0, res.height, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         
-        Texture2DData texture2DData = new Texture2DData(
-                new File("mono_20.png"));
-        GLTexture2D glTexture2D = new GLTexture2D(texture2DData);
-        font = new Font(glTexture2D, "mono_20.csv", 32);
+        memory = new Memory(DGL_MEMORY_SIZE);
         
+        Texture2D glTexture2D = DGL.loadTex2D(memory, "mono_20.png");
+        font = new Font(glTexture2D, "mono_20.csv", 32);
         menu = new MenuScreen();
         screen = menu;
     }
@@ -116,7 +120,7 @@ public final class TempleOfTheElements extends Game {
         clickables = new IdentitySet<>();
         world = new World(new Vec2());
         world.setContactListener(new CollisionManager());
-        registry = new Registry();
+        registry = new Registry(memory);
         ((InitScript) registry.readGroovyScript(new File("Init.groovy"))).Init();
     }
     
@@ -257,7 +261,6 @@ public final class TempleOfTheElements extends Game {
 
     @Override
     public void onDestroy() {
-        
-        font.delete();
+        DGL.destroy();
     }
 }

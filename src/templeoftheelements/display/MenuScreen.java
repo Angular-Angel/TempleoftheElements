@@ -32,14 +32,14 @@ public class MenuScreen extends Screen {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         if (!controlView) {
             Vec2 position = new Vec2((game.res.width*1f/6) + 5, (game.res.height*4.5f/6) + 20);
-            game.font.getTexture().glBind(0);
+            game.font.getTexture().bind();
 
             game.font.draw("Start", position);
             position.y -= 20;
             game.font.draw("Controls", position);
         } else {
             Vec2 position = new Vec2((game.res.width*1f/6) + 5, (game.res.height*4.5f/6) + 20);
-            game.font.getTexture().glBind(0);
+            game.font.getTexture().bind();
 
             game.font.draw("Controls:", position);
             position.y -= 20;

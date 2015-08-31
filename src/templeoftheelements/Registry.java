@@ -1,15 +1,15 @@
 
 package templeoftheelements;
 
-import com.samrj.devil.graphics.GLTexture2D;
-import com.samrj.devil.graphics.GLTextureRectangle;
-import com.samrj.devil.graphics.Texture2DData;
+import com.samrj.devil.gl.DGL;
+import com.samrj.devil.gl.Texture2D;
+import com.samrj.devil.gl.TextureRectangle;
+import com.samrj.devil.io.Memory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
@@ -42,8 +42,8 @@ public class Registry extends RawReader {
     
     public HashMap<String, CreatureDefinition> creatureDefs;
     public HashMap<String, ItemDefinition> itemDefs;
-    public HashMap<String, GLTexture2D> textures;
-    public HashMap<String, GLTextureRectangle> spriteSheets;
+    public HashMap<String, Texture2D> textures;
+    public HashMap<String, TextureRectangle> spriteSheets;
     public HashMap<String, Controller> controllers;
     public HashMap<String, ItemGenerator> itemPools;
     public HashMap<String, Element> elements;
@@ -52,7 +52,9 @@ public class Registry extends RawReader {
     public CreatureTypeGenerator wandererGenerator;
     public CharacterTreeGenerator treeGenerator;
     
-    public Registry() {
+    private final Memory memory;
+    
+    public Registry(Memory memory) {
         creatureDefs = new HashMap<>();
         textures = new HashMap<>();
         itemDefs = new HashMap<>();
@@ -63,6 +65,8 @@ public class Registry extends RawReader {
         elementList = new ArrayList<>();
         spriteSheets = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
+        
+        this.memory = memory;
     }
     
     public void readRaw(File file) {
@@ -92,10 +96,8 @@ public class Registry extends RawReader {
         }
     }
     
-    public GLTextureRectangle loadTextureRectangle(File file) throws IOException {
-        Texture2DData texture2DData = new Texture2DData(
-                file);
-        GLTextureRectangle glTexture = new GLTextureRectangle(texture2DData);
+    public TextureRectangle loadTextureRectangle(File file) throws IOException {
+        TextureRectangle glTexture = DGL.loadTexRect(memory, file.getPath());
         spriteSheets.put(file.getName(), glTexture);
         return glTexture;
         
@@ -154,10 +156,8 @@ public class Registry extends RawReader {
         return new ItemDrop(pool, level, variance);
     }
     
-    public GLTexture2D loadTexture2D(File file) throws IOException {
-        Texture2DData texture2DData = new Texture2DData(
-                file);
-        GLTexture2D glTexture = new GLTexture2D(texture2DData);
+    public Texture2D loadTexture2D(File file) throws IOException {
+        Texture2D glTexture = DGL.loadTex2D(memory, file.getPath());
         textures.put(file.getName(), glTexture);
         return glTexture;
     }
@@ -263,7 +263,7 @@ public class Registry extends RawReader {
             float width = ((Long) ja.get(5)).floatValue();
             float height = ((Long) ja.get(6)).floatValue();
 
-            return new Sprite((GLTextureRectangle) spriteSheets.get(name), x, y, texWidth, texHeight, width, height);
+            return new Sprite((TextureRectangle) spriteSheets.get(name), x, y, texWidth, texHeight, width, height);
         }
     }
     

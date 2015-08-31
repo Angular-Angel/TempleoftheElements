@@ -1,7 +1,7 @@
 
 package templeoftheelements.display;
 
-import com.samrj.devil.graphics.GLTextureRectangle;
+import com.samrj.devil.gl.TextureRectangle;
 import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.GL_NEAREST;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
@@ -12,15 +12,15 @@ import org.lwjgl.opengl.GL31;
 
 public class Sprite implements Renderable{
 
-    private GLTextureRectangle texture;
+    private TextureRectangle texture;
     
     private float x, y, texWidth, texHeight, width, height;
     
-    public Sprite(GLTextureRectangle texture, float width, float height) {
-        this(texture, 0, 0, texture.width, texture.height, width, height);
+    public Sprite(TextureRectangle texture, float width, float height) {
+        this(texture, 0, 0, texture.getWidth(), texture.getHeight(), width, height);
     }
     
-    public Sprite(GLTextureRectangle texture, float x, float y, float texWidth, float texHeight, float width, float height) {
+    public Sprite(TextureRectangle texture, float x, float y, float texWidth, float texHeight, float width, float height) {
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -36,14 +36,14 @@ public class Sprite implements Renderable{
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         glTexParameteri(GL31.GL_TEXTURE_RECTANGLE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//        
+        
         GL11.glEnable(GL31.GL_TEXTURE_RECTANGLE);
         
         // store the current model matrix
 	GL11.glPushMatrix();
 		
 	// bind to the appropriate texture for this sprite
-	texture.glBind();
+	texture.bind();
     
 	// translate to the right location and prepare to draw	
         GL11.glTranslatef(-width/2, -height/2, 0);

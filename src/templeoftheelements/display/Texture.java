@@ -1,13 +1,8 @@
 
 package templeoftheelements.display;
 
-import com.samrj.devil.graphics.GLTexture2D;
-import com.samrj.devil.graphics.GLTextureRectangle;
+import com.samrj.devil.gl.Texture2D;
 import org.lwjgl.opengl.GL11;
-import static org.lwjgl.opengl.GL11.GL_NEAREST;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
-import static org.lwjgl.opengl.GL11.glTexParameteri;
-import org.lwjgl.opengl.GL31;
 
 /**
  *
@@ -16,15 +11,15 @@ import org.lwjgl.opengl.GL31;
 
 
 public class Texture {
-    private GLTexture2D texture;
+    private Texture2D texture;
     
     private float x, y, texWidth, texHeight;
     
-     public Texture(GLTexture2D texture) {
-        this(texture, 0, 0, texture.width, texture.height);
+     public Texture(Texture2D texture) {
+        this(texture, 0, 0, texture.getWidth(), texture.getHeight());
     }
     
-    public Texture(GLTexture2D texture, float x, float y, float texWidth, float texHeight) {
+    public Texture(Texture2D texture, float x, float y, float texWidth, float texHeight) {
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -46,7 +41,7 @@ public class Texture {
 	GL11.glPushMatrix();
 		
 	// bind to the appropriate texture for this sprite
-	texture.glBind();
+	texture.bind();
     
 	// translate to the right location and prepare to draw	
         GL11.glScalef(2, 2, 1);

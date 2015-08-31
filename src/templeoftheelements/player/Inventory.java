@@ -273,7 +273,7 @@ public class Inventory extends Screen {
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GL11.glColor3f(255, 0, 0);
-            game.font.getTexture().glBind(0);
+            game.font.getTexture().bind();
             for (String s : item.getStatList()) {
                 try {
                     game.font.draw(s + ": " + item.getScore(s), new com.samrj.devil.math.Vec2(x, y + i));

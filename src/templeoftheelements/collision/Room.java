@@ -1,7 +1,7 @@
 
 package templeoftheelements.collision;
 
-import com.samrj.devil.graphics.GLTexture2D;
+import com.samrj.devil.gl.Texture2D;
 import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec4;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class Room implements Renderable, Collidable, Actor {
         floor = texture;
     }
     
-    public Room (int width, int height, GLTexture2D texture) {
+    public Room (int width, int height, Texture2D texture) {
         this(width, height, new Texture(texture));
     }
 
