@@ -10,12 +10,13 @@ import stat.NoSuchStatException;
 import stat.Stat;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
+import templeoftheelements.player.Ability;
 import templeoftheelements.player.Action;
 import templeoftheelements.player.CreatureEvent;
 
 
 
-public abstract class Spell extends Action {
+public abstract class Spell extends Action implements Ability {
     
     public static enum Detail {
         

@@ -9,11 +9,15 @@ package templeoftheelements.player;
 
 public class AbilityNode extends CharacterNode {
 
-    private final Object ability;
+    public final Ability ability;
     
-    public AbilityNode(Requirement requirements, CharacterWheel.CharacterTree tree, boolean automatic, Object ability) {
+    public AbilityNode(Requirement requirements, CharacterWheel.CharacterTree tree, boolean automatic, Ability ability) {
         super(requirements, tree, automatic);
         this.ability = ability;
+    }
+    
+    public AbilityNode(Requirement requirements, CharacterWheel.CharacterTree tree, Ability ability) {
+        this(requirements, tree, false, ability);
     }
     
     public void acquire() {

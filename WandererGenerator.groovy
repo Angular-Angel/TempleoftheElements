@@ -59,13 +59,14 @@ class WandererGenerator implements CreatureTypeGenerator {
         ret.addStat("Acceleration", new NumericStat((float) ret.getScore("Dexterity") * 4));
         ret.addStat("Max Speed", new NumericStat((float) ret.getScore("Dexterity") * 80));
         ret.addStat("Turning Speed", new EquationStat("0.5 + [Dexterity] / 18"));
-        ret.addStat("Max HP", new NumericStat((float) ret.getScore("Constitution") * 2));
-        ret.addStat("Max Stamina", new NumericStat((float) ret.getScore("Constitution") * 2));
-        ret.addStat("Max Mana", new NumericStat((float) ret.getScore("Spirit") * 2));
-        ret.addStat("Stamina", new NumericStat(ret.getScore("Max Stamina")));
+        ret.addStat("Max HP", new EquationStat("[Strength] * 2"));
+        ret.addStat("Max Stamina", new EquationStat("[Constitution] * 2"));
+        ret.addStat("Max Mana", new EquationStat("[Spirit] * 2"));
         ret.addStat("Damage", new NumericStat((float) ret.getScore("Strength") / 2));
         ret.addStat("Sight Range", new EquationStat("-10 + [Perception] + [Intelligence]"));
-        ret.addStat("Attack Speed", new EquationStat("1 - (([Dexterity] - 10) / 5)"));
+        ret.addStat("Attack Speed", new EquationStat("1 - (([Dexterity] - 10) / 50)"));
+        ret.addStat("Dodge", new EquationStat("[Dexterity] - 10"));
+        ret.addStat("Accuracy", new EquationStat("[Dexterity] - 10"));
         
         ret.addStat("XP", new NumericStat(10));
         

@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
+import templeoftheelements.player.AbilityNode;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterWheel;
 import templeoftheelements.player.Inventory;
@@ -91,7 +92,7 @@ public class CharacterScreen extends Screen {
         }
     }
     
-    public class StatScreen extends SubScreen {
+    public class StatScreen extends Screen.SubScreen {
 
         private CharacterNode node;
         public boolean display;
@@ -102,6 +103,11 @@ public class CharacterScreen extends Screen {
             height = (node.getStatList().size()) * 20;
             for (String s : node.getStatList()) 
                 if (width < s.length() * 20 + 100) width = s.length() * 20 + 100;
+            if (node instanceof AbilityNode) {
+                height += 40;
+                if (width < ((AbilityNode) node).ability.getDescription().length() * 13) 
+                    width = ((AbilityNode) node).ability.getDescription().length() * 13;
+            }
         }
         
         public StatScreen(float x, float y, float width, float height, Vec4 background, Vec4 border) {
@@ -115,15 +121,21 @@ public class CharacterScreen extends Screen {
         public void draw() {
             if (!display) return;
             super.draw();
-            int i = -10;
+            float i = height - 12;
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GL11.glColor3f(255, 0, 0);
             game.font.getTexture().bind();
+            if (node instanceof AbilityNode) {
+                i -= 20;
+                game.font.draw(((AbilityNode) node).ability.getName(), new com.samrj.devil.math.Vec2(x +2, y + i));
+                i -= 20;
+                game.font.draw(((AbilityNode) node).ability.getDescription(), new com.samrj.devil.math.Vec2(x +2, y + i));
+            }
             for (String s : node.getStatList()) {
                 try {
-                    game.font.draw(s + ": " + node.getScore(s), new com.samrj.devil.math.Vec2(x, y + i));
-                    i += 20;
+                    i -= 20;
+                    game.font.draw(s + ": " + node.getScore(s), new com.samrj.devil.math.Vec2(x +2, y + i));
                 } catch (NoSuchStatException ex) {
                     Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
                 }

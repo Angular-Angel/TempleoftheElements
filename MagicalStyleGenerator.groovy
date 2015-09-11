@@ -98,22 +98,75 @@ class MagicalStyleGenerator implements CharacterTreeGenerator {
             req = new OrRequirement(tree.prevLayerNodes.get((int) num), tree.prevLayerNodes.get(((int) num) + 1));
         else req = tree.prevLayerNodes.get((int) num);
         
-        CharacterNode node = new CharacterNode(req, tree);
         
-        String stat;
-        
-        if (tree.def.secondaryAttributes.size() > 0) {
-        
-            if (random.nextInt(4) < 3)
-                stat = tree.def.primaryAttributes.get(random.nextInt(tree.def.primaryAttributes.size()));
-            else stat = tree.def.secondaryAttributes.get(random.nextInt(tree.def.secondaryAttributes.size()));
-        
+        if (random.nextInt(2) == 0) {
+            CharacterNode node = new CharacterNode(req, tree);
+            String stat;
+
+            if (tree.definition.secondaryAttributes.size() > 0) {
+
+                if (random.nextInt(4) < 3)
+                    stat = tree.definition.primaryAttributes.get(random.nextInt(tree.definition.primaryAttributes.size()));
+                else stat = tree.definition.secondaryAttributes.get(random.nextInt(tree.definition.secondaryAttributes.size()));
+
+            }
+            else stat = tree.definition.primaryAttributes.get(random.nextInt(tree.definition.primaryAttributes.size()));
+
+            node.addStat(stat, new NumericStat(1));
+
+            return node;
+        } else {
+            Ability ability;
+            
+            if (true) {
+                ability = generateMissile(tree);
+            }
+            
+            AbilityNode node = new AbilityNode(req, tree, ability);
         }
-        else stat = tree.def.primaryAttributes.get(random.nextInt(tree.def.primaryAttributes.size()));
+    }
+    
+    
+    public MissileSpell generateMissile(CharacterWheel.CharacterTree tree) {
+        String name;
         
-        node.addStat(stat, new NumericStat(1));
+        Element element = tree.definition.elements.get(random.nextInt(tree.definition.elements.size()));
         
-        return node;
+        name = element.name;
+        
+        AttackDefinition missile;
+        
+        switch (random.nextInt(3)) {
+            case 0: 
+                name += " Bolt";
+                missile = new AttackDefinition(name, new VectorCircle(1), element.name);
+                missile.addStat("Ranged Attack", new BinaryStat());
+                missile.addStat("Damage", new NumericStat(12));
+                missile.addStat("Size", new NumericStat(0.35));
+                missile.addStat("Speed", new NumericStat(50));
+                break;
+            case 1: 
+                name += " Blast";
+                missile = new AttackDefinition(name, new VectorCircle(1), element.name);
+                missile.addStat("Ranged Attack", new BinaryStat());
+                missile.addStat("Damage", new NumericStat(26));
+                missile.addStat("Size", new NumericStat(0.70));
+                missile.addStat("Speed", new NumericStat(50));
+                break;
+            case 2: 
+                name += " Ball";
+                missile = new AttackDefinition(name, new VectorCircle(1), element.name);
+                missile.addStat("Ranged Attack", new BinaryStat());
+                missile.addStat("Damage", new NumericStat(30));
+                missile.addStat("Size", new NumericStat(1));
+                missile.addStat("Speed", new NumericStat(50));
+                break;
+        }
+        
+        MissileSpell ret = new MissileSpell(missile);
+        ret.addStat("Mana Cost", new NumericStat(4));
+        
+        return ret;
     }
     
 }

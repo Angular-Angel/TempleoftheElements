@@ -41,5 +41,9 @@ public class MissileSpell extends Spell {
     public void cast(Creature caster, Vec2 in) {
         caster.attack(missile);
     }
+
+    public String getDescription() {
+        return "When cast, shoots a missile.";
+    }
     
 }

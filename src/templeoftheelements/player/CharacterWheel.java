@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.display.Renderable;
 
 /**
  *
@@ -16,9 +17,11 @@ import templeoftheelements.collision.Creature;
 public class CharacterWheel {
     private Player player;
     public HashSet<CharacterNode> nodes; //all the nodes in the character wheel.
+    public HashSet<Renderable> renderables; //all the non-node requirements.
     
     public CharacterWheel(Player player) {
         nodes = new HashSet<>();
+        renderables = new HashSet<>();
         this.player = player;
         generate();
     }
@@ -64,16 +67,16 @@ public class CharacterWheel {
         public ArrayList<CharacterNode> prevLayerNodes;
         public ArrayList<CharacterNode> curLayerNodes; //the nodes in this specific tree.
         public int layerSize;
-        public CharacterTreeDef def;
+        public CharacterTreeDef definition;
         
         public CharacterTree(CharacterTreeDef definition) {
-            def = definition;
+            this.definition = definition;
             curLayerNodes = new ArrayList<>();
             newLayer(1);
         }
         
         public CharacterTree(CharacterTreeDef definition, CharacterNode rootNode) {
-            def = definition;
+            this.definition = definition;
             curLayerNodes = new ArrayList<>();
             curLayerNodes.add(rootNode);
             newLayer(1);

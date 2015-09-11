@@ -4,7 +4,6 @@ build/
 dist/
 
 #Netbeans project properties
-*.properties
 
 #Java files
 *.class
