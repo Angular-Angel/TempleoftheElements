@@ -1,9 +1,7 @@
 #NetBeans project directories
-nbproject/private/
+nbproject/
 build/
 dist/
-
-#Netbeans project properties
 
 #Java files
 *.class

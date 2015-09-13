@@ -1,26 +1,20 @@
 
 package templeoftheelements.display;
 
-import com.samrj.devil.gl.TextureRectangle;
+import com.samrj.devil.gl.Texture2D;
 import org.lwjgl.opengl.GL11;
-import static org.lwjgl.opengl.GL11.GL_NEAREST;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
-import static org.lwjgl.opengl.GL11.glTexParameteri;
-import org.lwjgl.opengl.GL31;
-
-
 
 public class Sprite implements Renderable{
 
-    private TextureRectangle texture;
+    private Texture2D texture;
     
     private float x, y, texWidth, texHeight, width, height;
     
-    public Sprite(TextureRectangle texture, float width, float height) {
+    public Sprite(Texture2D texture, float width, float height) {
         this(texture, 0, 0, texture.getWidth(), texture.getHeight(), width, height);
     }
     
-    public Sprite(TextureRectangle texture, float x, float y, float texWidth, float texHeight, float width, float height) {
+    public Sprite(Texture2D texture, float x, float y, float texWidth, float texHeight, float width, float height) {
         this.texture = texture;
         this.x = x;
         this.y = y;
@@ -35,15 +29,15 @@ public class Sprite implements Renderable{
         
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        glTexParameteri(GL31.GL_TEXTURE_RECTANGLE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         
-        GL11.glEnable(GL31.GL_TEXTURE_RECTANGLE);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
         
         // store the current model matrix
 	GL11.glPushMatrix();
 		
 	// bind to the appropriate texture for this sprite
 	texture.bind();
+        texture.parami(GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
     
 	// translate to the right location and prepare to draw	
         GL11.glTranslatef(-width/2, -height/2, 0);
@@ -52,17 +46,23 @@ public class Sprite implements Renderable{
 	// draw a quad textured to match the sprite
     	GL11.glBegin(GL11.GL_QUADS);
 	{
-	    GL11.glTexCoord2f(x, y);
+            float tcx0 = x/texture.getWidth();
+            float tcx1 = (x + texWidth)/texture.getWidth();
+            float tcy0 = y/texture.getHeight();
+            float tcy1 = (y + texHeight)/texture.getHeight();
+            
+	    GL11.glTexCoord2f(tcx0, tcy0);
 	    GL11.glVertex2f(0, 0);
-	    GL11.glTexCoord2f(x, y + texHeight);
+	    GL11.glTexCoord2f(tcx0, tcy1);
 	    GL11.glVertex2f(0, height);
-	    GL11.glTexCoord2f(x + texWidth, y + texHeight);
+	    GL11.glTexCoord2f(tcx1, tcy1);
 	    GL11.glVertex2f(width, height);
-	    GL11.glTexCoord2f(x + texWidth, y);
+	    GL11.glTexCoord2f(tcx1, tcy0);
 	    GL11.glVertex2f(width, 0);
 	}
 	GL11.glEnd();
-        GL11.glDisable(GL31.GL_TEXTURE_RECTANGLE);
+        
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
         
         GL11.glDisable(GL11.GL_BLEND);
 		

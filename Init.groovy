@@ -7,7 +7,6 @@ import static templeoftheelements.TempleOfTheElements.game;
 import stat.*;
 import java.util.Random;
 import com.samrj.devil.gl.Texture2D;
-import com.samrj.devil.gl.TextureRectangle;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 
@@ -21,7 +20,7 @@ class Initiator implements InitScript {
         
         game.registry.wandererGenerator = game.registry.readGroovyScript(new File("WandererGenerator.groovy"));
         game.registry.readRaw(new File("Creatures.json"));
-        TextureRectangle glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
+        Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
         game.registry.loadTextureRectangle(new File("Icons.png"));
         game.registry.loadTextureRectangle(new File("Items.png"));
         game.registry.loadTexture2D(new File("Stone Floor.png"));

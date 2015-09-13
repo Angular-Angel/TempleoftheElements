@@ -3,7 +3,6 @@ package templeoftheelements;
 
 import com.samrj.devil.gl.DGL;
 import com.samrj.devil.gl.Texture2D;
-import com.samrj.devil.gl.TextureRectangle;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class Registry extends RawReader {
     public HashMap<String, CreatureDefinition> creatureDefs;
     public HashMap<String, ItemDefinition> itemDefs;
     public HashMap<String, Texture2D> textures;
-    public HashMap<String, TextureRectangle> spriteSheets;
+    public HashMap<String, Texture2D> spriteSheets;
     public HashMap<String, Controller> controllers;
     public HashMap<String, ItemGenerator> itemPools;
     public HashMap<String, Element> elements;
@@ -91,8 +90,8 @@ public class Registry extends RawReader {
         }
     }
     
-    public TextureRectangle loadTextureRectangle(File file) throws IOException {
-        TextureRectangle glTexture = DGL.loadTexRect(file.getPath());
+    public Texture2D loadTextureRectangle(File file) throws IOException {
+        Texture2D glTexture = DGL.loadTex2D(file.getPath());
         spriteSheets.put(file.getName(), glTexture);
         return glTexture;
         
@@ -258,7 +257,7 @@ public class Registry extends RawReader {
             float width = ((Long) ja.get(5)).floatValue();
             float height = ((Long) ja.get(6)).floatValue();
 
-            return new Sprite((TextureRectangle) spriteSheets.get(name), x, y, texWidth, texHeight, width, height);
+            return new Sprite(spriteSheets.get(name), x, y, texWidth, texHeight, width, height);
         }
     }
     
