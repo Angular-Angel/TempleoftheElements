@@ -18,7 +18,7 @@ class Initiator implements InitScript {
 
     public void Init() {
         
-        game.registry.wandererGenerator = game.registry.readGroovyScript(new File("WandererGenerator.groovy"));
+        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.readRaw(new File("Creatures.json"));
         Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
         game.registry.loadTextureRectangle(new File("Icons.png"));
@@ -32,7 +32,7 @@ class Initiator implements InitScript {
         game.registry.treeGenerator = game.registry.readGroovyScript(new File("MagicalStyleGenerator.groovy"));
         
         for (int i = 0; i < 10; i++) {
-           game.registry.wandererGenerator.genType();
+           game.registry.creatureTypeGenerator.genType();
         }
         
         game.room = new Room(22, 24, game.registry.textures.get("Stone Floor.png"));

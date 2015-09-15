@@ -1,14 +1,29 @@
 
 package templeoftheelements;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author angle
  */
 
 
-public interface CreatureTypeGenerator {
+public class CreatureTypeGenerator implements ProceduralGenerator<CreatureDefinition> {
+
+    Random random = new Random();
+    ArrayList<GenerationProcedure<CreatureDefinition>> baseProcedures = new ArrayList<>();
     
-    public CreatureDefinition genType();
+    @Override
+    public CreatureDefinition genType() {
+        CreatureDefinition ret = baseProcedures.get(random.nextInt(baseProcedures.size())).generate();
+        
+        return ret;
+    }
+    
+    public void addBaseProcedure(GenerationProcedure<CreatureDefinition> procedure) {
+        baseProcedures.add(procedure);
+    }
     
 }

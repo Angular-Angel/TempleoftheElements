@@ -47,7 +47,7 @@ public class Registry extends RawReader {
     public HashMap<String, Element> elements;
     public ArrayList<Element> elementList;
     public ArrayList<MagicItemDef> magicEffects;
-    public CreatureTypeGenerator wandererGenerator;
+    public CreatureTypeGenerator creatureTypeGenerator;
     public CharacterTreeGenerator treeGenerator;
     
     public Registry() {
@@ -61,6 +61,7 @@ public class Registry extends RawReader {
         elementList = new ArrayList<>();
         spriteSheets = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
+        creatureTypeGenerator = new CreatureTypeGenerator();
     }
     
     public void readRaw(File file) {

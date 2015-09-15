@@ -12,12 +12,12 @@ import static templeoftheelements.TempleOfTheElements.game;
  *
  * @author angle
  */
-class WandererGenerator implements CreatureTypeGenerator {
+class WandererGenerator implements GenerationProcedure<CreatureDefinition> {
 	
     int count = 0;
     Random random = new Random();
     
-    public CreatureDefinition genType() {
+    public CreatureDefinition generate() {
         int rand = random.nextInt(2);
         String type = null;
         switch (rand) {
@@ -74,6 +74,14 @@ class WandererGenerator implements CreatureTypeGenerator {
         ret.itemDrops.add(new ItemDrop(game.registry.itemPools.get("ItemRoller.groovy"), 2, 1));
         game.registry.creatureDefs.put(name, ret);
         return ret;
+    }
+    
+    public CreatureDefinition modify(CreatureDefinition definition) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public boolean isApplicable(CreatureDefinition definition) {
+        throw new UnsupportedOperationException();
     }
     
 }
