@@ -16,7 +16,7 @@ public class CreatureTypeGenerator implements ProceduralGenerator<CreatureDefini
     ArrayList<GenerationProcedure<CreatureDefinition>> baseProcedures = new ArrayList<>();
     
     @Override
-    public CreatureDefinition genType() {
+    public CreatureDefinition generate() {
         CreatureDefinition ret = baseProcedures.get(random.nextInt(baseProcedures.size())).generate();
         
         return ret;

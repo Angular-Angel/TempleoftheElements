@@ -9,6 +9,6 @@ package templeoftheelements;
 
 public interface ProceduralGenerator<T> {
     
-    public T genType();
+    public T generate();
     
 }

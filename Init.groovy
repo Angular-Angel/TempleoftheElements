@@ -32,10 +32,13 @@ class Initiator implements InitScript {
         game.registry.treeGenerator = game.registry.readGroovyScript(new File("MagicalStyleGenerator.groovy"));
         
         for (int i = 0; i < 10; i++) {
-           game.registry.creatureTypeGenerator.genType();
+           game.registry.creatureTypeGenerator.generate();
         }
         
-        game.room = new Room(22, 24, game.registry.textures.get("Stone Floor.png"));
+        Floor.FloorSchematic schematic = new Floor.FloorSchematic(300, 300);
+        Floor floor = schematic.generate();
+        
+        game.room = floor.getEntrance();
         Creature creature = game.registry.creatureDefs.get("Human").genCreature();
         creature.setSprite(new Sprite(glTexture, 2, 2));
         game.player = new Player(creature);
@@ -72,11 +75,6 @@ class Initiator implements InitScript {
         Obstacle obstacle = new Obstacle(3, 4, new CircleShape(), new VectorCircle(3), 3);
         game.room.add(obstacle);
         
-        Room room2 = new Room(12, 24, game.registry.textures.get("Stone Floor.png"));
-        Room.Door door = game.room.createDoor(9, 1, 11, 1);
-        Room.Door door2 = room2.createDoor(5, 10, 5, 12);
-        door.setDestination(door2);
-        door2.setDestination(door);
         game.room.enter();
         
     }
