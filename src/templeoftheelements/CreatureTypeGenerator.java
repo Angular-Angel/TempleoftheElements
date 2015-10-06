@@ -1,6 +1,8 @@
 
 package templeoftheelements;
 
+import generation.GenerationProcedure;
+import generation.ProceduralGenerator;
 import java.util.ArrayList;
 import java.util.Random;
 

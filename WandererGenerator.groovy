@@ -5,6 +5,7 @@ import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;   // the groovy script importing.
 import templeoftheelements.item.*;
 import stat.*;
+import generation.*;
 import java.util.Random;
 import static templeoftheelements.TempleOfTheElements.game;
 

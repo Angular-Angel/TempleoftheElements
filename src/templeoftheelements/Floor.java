@@ -1,6 +1,7 @@
 
 package templeoftheelements;
 
+import generation.ProceduralGenerator;
 import java.util.HashSet;
 import java.util.Set;
 import static templeoftheelements.TempleOfTheElements.game;
@@ -132,7 +133,7 @@ public class Floor {
         }
     }
     
-    private static class RoomSchematic implements ProceduralGenerator<Room>{
+    public static class RoomSchematic implements ProceduralGenerator<Room>{
 
         public int x, y, width, height;
         

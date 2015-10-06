@@ -341,7 +341,7 @@ public class Room implements Renderable, Collidable, Actor {
         public void draw() {
             GL11.glPushMatrix();
             GL11.glTranslated(entrancePosition.x, entrancePosition.y, 0);
-            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            GL11.glColor3f(1.0f, 1.0f, 1.0f);
             GL11.glBegin(GL11.GL_LINE_STRIP);
             GL11.glVertex2d(point1.x, point1.y);
             GL11.glVertex2d(point2.x, point2.y);
