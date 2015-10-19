@@ -320,11 +320,11 @@ public class Room implements Renderable, Collidable, Actor {
             bodydef.type = BodyType.STATIC;
             PolygonShape bodyshape = new PolygonShape();
             if (position.x == -width/2 || position.x == width/2) {
-                bodyshape.setAsBox(.05f, 1);
+                bodyshape.setAsBox(0.1f, 1);
                 point1 = new Vec2(0, 1f);
                 point2 = new Vec2(0, -1f);
             } else {
-                bodyshape.setAsBox(1, .05f);
+                bodyshape.setAsBox(1, 0.1f);
                 point1 = new Vec2(1f, 0);
                 point2 = new Vec2(-1f, 0);
             }

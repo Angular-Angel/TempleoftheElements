@@ -3,7 +3,7 @@
         "Name": "Human",
         "Type": "Creature Definition",
         "level": 1,
-        "Stats": [["Strength", 10], ["Dexterity", 10], ["Constitution", 10],
+        "Stats": [["Strength", 10], ["Dexterity", 20], ["Constitution", 10],
                   ["Perception", 10], ["Intelligence", 10], ["Spirit", 10],
                   ["Luck", 10], ["Size", 1], ["Acceleration", ["Dexterity", 4, "*"]],
                   ["Max Speed", ["Dexterity", 80, "*"]], ["Turning Speed", "0.5 + [Dexterity] / 18"],

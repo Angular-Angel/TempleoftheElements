@@ -199,7 +199,6 @@ public final class TempleOfTheElements extends Game {
         world = new World(new Vec2());
         world.setContactListener(new CollisionManager());
         room = door.getDestination().getRoom();
-        player.getCreature().setDirection(0);
         player.getCreature().setCreatePosition(door.getDestination().getExit());
         room.enter();
     }

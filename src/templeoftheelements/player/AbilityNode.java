@@ -23,6 +23,7 @@ public class AbilityNode extends CharacterNode {
     public void acquire() {
         super.acquire();
         tree.getPlayer().addAbility(ability);
+        tree.getPlayer().getController().refactorActions();
     }
     
 }

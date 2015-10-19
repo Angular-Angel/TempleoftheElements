@@ -35,7 +35,7 @@ class Initiator implements InitScript {
            game.registry.creatureTypeGenerator.generate();
         }
         
-        Floor.FloorSchematic schematic = new Floor.FloorSchematic(300, 300);
+        Floor.FloorSchematic schematic = new Floor.FloorSchematic(30, 30);
         Floor floor = schematic.generate();
         
         game.room = floor.getEntrance();
@@ -72,8 +72,8 @@ class Initiator implements InitScript {
         consumable.addStat("Size", new NumericStat(0.3f));
         game.room.add(consumable);
         
-        Obstacle obstacle = new Obstacle(3, 4, new CircleShape(), new VectorCircle(3), 3);
-        game.room.add(obstacle);
+//        Obstacle obstacle = new Obstacle(3, 4, new CircleShape(), new VectorCircle(3), 3);
+//        game.room.add(obstacle);
         
         game.room.enter();
         

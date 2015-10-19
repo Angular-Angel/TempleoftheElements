@@ -58,6 +58,7 @@ public class Player implements Controller {
     public void refactorActions() {
         actions.clear();
         creature.refactorActions();
+        refactorHUD();
     }
     
     @Override
