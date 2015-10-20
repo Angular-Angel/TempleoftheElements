@@ -1,6 +1,7 @@
 
 package templeoftheelements.player;
 
+import generation.ProceduralGenerator;
 import java.util.ArrayList;
 import templeoftheelements.Element;
 
@@ -31,6 +32,7 @@ public class CharacterTreeDef {
     public ArrayList<String> primaryAttributes;
     public ArrayList<String> secondaryAttributes;
     public ArrayList<Element> elements;
+    public ProceduralGenerator<CharacterNode> nodeGenerator;
     
     public CharacterTreeDef(String name) {
         this.name = name;

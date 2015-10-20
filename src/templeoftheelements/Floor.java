@@ -5,6 +5,7 @@ import generation.GenerationProcedure;
 import generation.ProceduralGenerator;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Room;
@@ -122,7 +123,7 @@ public class Floor {
                 while(schematic[x][y] != null) {
                     x += dir.xmod; y += dir.ymod;
                 }
-                int roomWidth = 3, roomHeight = 3;
+                int roomWidth = 1, roomHeight = 3;
 //                while(roomWidth < 30 && roomHeight < 30 && schematic[x+roomWidth][y+roomHeight] != null) {
 //                    roomWidth++; roomHeight++;
 //                    if (dir.xmod < 0) x--;
@@ -155,6 +156,11 @@ public class Floor {
             return room;
             
         }
+
+        @Override
+        public Floor generate(Object o) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
     
     public static class RoomSchematic implements ProceduralGenerator<Room>{
@@ -163,7 +169,9 @@ public class Floor {
         
         public Room room;
         
-        public static ArrayList<GenerationProcedure<Room>> procedures;
+        public static ArrayList<GenerationProcedure<Room>> procedures = new ArrayList<>();
+        
+        public static Random random = new Random();
         
         public RoomSchematic(int x, int y, int width, int height) {
             this.x = x;
@@ -178,9 +186,14 @@ public class Floor {
             if (room != null) return room;
             room = new Room(width*10, height*10, game.registry.textures.get("Stone Floor.png"));
             
-            
+            procedures.get(random.nextInt(procedures.size())).modify(room);
             
             return room;
+        }
+
+        @Override
+        public Room generate(Object o) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
         
     }

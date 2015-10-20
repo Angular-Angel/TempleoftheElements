@@ -3,6 +3,7 @@ package templeoftheelements;
 
 import com.samrj.devil.gl.DGL;
 import com.samrj.devil.gl.Texture2D;
+import generation.ProceduralGenerator;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,8 +26,8 @@ import templeoftheelements.item.MagicEquipmentDef;
 import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
+import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterTreeDef;
-import templeoftheelements.player.CharacterTreeGenerator;
 import templeoftheelements.player.Effect;
 import util.RawReader;
 
@@ -47,8 +48,9 @@ public class Registry extends RawReader {
     public HashMap<String, Element> elements;
     public ArrayList<Element> elementList;
     public ArrayList<MagicItemDef> magicEffects;
+    public ArrayList<CreatureDefinition> creatureList;
     public CreatureTypeGenerator creatureTypeGenerator;
-    public CharacterTreeGenerator treeGenerator;
+    public ProceduralGenerator<CharacterTreeDef> treeGenerator;
     
     public Registry() {
         creatureDefs = new HashMap<>();
@@ -57,6 +59,7 @@ public class Registry extends RawReader {
         controllers = new HashMap<>();
         magicEffects = new ArrayList<>();
         itemPools = new HashMap<>();
+        creatureList = new ArrayList<>();
         elements = new HashMap<>();
         elementList = new ArrayList<>();
         spriteSheets = new HashMap<>();
@@ -292,6 +295,7 @@ public class Registry extends RawReader {
             ret.abilities.add(readGroovyScript((String) o));
         
         creatureDefs.put(name, ret);
+        creatureList.add(ret);
         
         return ret;
     }

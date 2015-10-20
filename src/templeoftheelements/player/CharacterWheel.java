@@ -2,6 +2,7 @@
 package templeoftheelements.player;
 
 import com.samrj.devil.math.Vec2;
+import generation.ProceduralGenerator;
 import java.util.ArrayList;
 import java.util.HashSet;
 import static templeoftheelements.TempleOfTheElements.game;
@@ -32,13 +33,13 @@ public class CharacterWheel {
         ArrayList<CharacterTree> trees = new ArrayList<>();
         
         for (int i = 0; i < 5; i++) {
-            trees.add(new CharacterTree(game.registry.treeGenerator.genCharacterTreeDef()));
+            trees.add(new CharacterTree(game.registry.treeGenerator.generate()));
         }
         
         for (int i = 0; i < 20; i++) {
             for (CharacterTree tree : trees) {
                 for (int j = 0; j <= i; j++) {
-                    CharacterNode node = game.registry.treeGenerator.generateNode(tree);
+                    CharacterNode node = tree.definition.nodeGenerator.generate(tree);
                     curNodeRing.add(node);
                     tree.curLayerNodes.add(node);
                 }

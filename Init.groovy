@@ -19,17 +19,18 @@ class Initiator implements InitScript {
     public void Init() {
         
         game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
-        game.registry.readRaw(new File("Creatures.json"));
+        game.registry.loadControllerScript(new File("Wanderer.groovy"));
         Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
         game.registry.loadTextureRectangle(new File("Icons.png"));
         game.registry.loadTextureRectangle(new File("Items.png"));
         game.registry.loadTexture2D(new File("Stone Floor.png"));
-        game.registry.loadControllerScript(new File("Wanderer.groovy"));
         game.registry.readRaw(new File("MagicEffects.json"));
         game.registry.readRaw(new File("Weapons.json"));
         game.registry.readRaw(new File("Elements.json"));
         game.registry.loadItemPool("ItemRoller.groovy", );
         game.registry.treeGenerator = game.registry.readGroovyScript(new File("MagicalStyleGenerator.groovy"));
+        Floor.RoomSchematic.procedures.add(game.registry.readGroovyScript(new File("RockyRoom.groovy")));
+        game.registry.readRaw(new File("Creatures.json"));
         
         for (int i = 0; i < 10; i++) {
            game.registry.creatureTypeGenerator.generate();
@@ -42,25 +43,6 @@ class Initiator implements InitScript {
         Creature creature = game.registry.creatureDefs.get("Human").genCreature();
         creature.setSprite(new Sprite(glTexture, 2, 2));
         game.player = new Player(creature);
-//        
-//        glTexture = game.registry.textures.get("Icons.png");
-        
-        Weapon weapon = game.registry.itemDefs.get("Spear").generate();
-        weapon.setPosition(new Vec2(3, 2));
-        game.registry.magicEffects.get(0).apply(weapon);
-        game.room.add(weapon);
-        
-        Equipment item = new Equipment("Helm of Speed", "Head", new VectorCircle(0.3f), 1);
-        item.addStat("Size", new NumericStat(0.3f));
-        item.setPosition(new Vec2(2, 3));
-        item.playerStats.addStat("Dexterity", new NumericStat(20));
-        game.room.add(item);
-        
-        for (int i = 0; i < 10; i++) {
-            item = game.registry.itemPools.get("ItemRoller.groovy").generate(2, 1);
-            item.setPosition(new Vec2(4, 2 + i));
-            game.room.add(item);
-        }
         
         Effect effect = new Effect() {
             public float effect(EffectSource source, Collidable c) {
@@ -71,9 +53,6 @@ class Initiator implements InitScript {
         Consumable consumable = new Consumable("Mana Crystal", effect, new VectorCircle(0.4f), 1);
         consumable.addStat("Size", new NumericStat(0.3f));
         game.room.add(consumable);
-        
-//        Obstacle obstacle = new Obstacle(3, 4, new CircleShape(), new VectorCircle(3), 3);
-//        game.room.add(obstacle);
         
         game.room.enter();
         

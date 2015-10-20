@@ -27,5 +27,10 @@ public class CreatureTypeGenerator implements ProceduralGenerator<CreatureDefini
     public void addBaseProcedure(GenerationProcedure<CreatureDefinition> procedure) {
         baseProcedures.add(procedure);
     }
+
+    @Override
+    public CreatureDefinition generate(Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
