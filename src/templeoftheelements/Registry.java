@@ -294,10 +294,14 @@ public class Registry extends RawReader {
         for (Object o : ja) 
             ret.abilities.add(readGroovyScript((String) o));
         
-        creatureDefs.put(name, ret);
-        creatureList.add(ret);
+        addCreatureDef(name, ret);
         
         return ret;
+    }
+    
+    public void addCreatureDef(String name, CreatureDefinition def) {
+        creatureDefs.put(name, def);
+        creatureList.add(def);
     }
     
 }

@@ -13,11 +13,13 @@ import templeoftheelements.Element;
 
 public class CharacterTreeDef {
     
+    //This defines the prupose of the character tree.
     public static enum Focus {
         OFFENSE, DEFENSE, UTILITY, MINIONS, PROJECTILES, BUFFS, DEBUFFS, HEALING,
         TERRAIN_ALTERATION, MIND_CONTROL, KNOWLEDGE, ITEM_MANIPULATION, MOVEMENT
     }
     
+    //these define any extra details common on abilities of this style.
     public static enum Detail {
         LONG_COOLDOWNS, COSTS_ATTRIBUTES, MATERIAL_COMPONENTS, SPEED_BASED, 
         CHANNELING_TIMES, TOUGHNESS_BASED, LUCK_BASED, RITUALS, STAMINA_BASED, 

@@ -18,8 +18,10 @@ class Initiator implements InitScript {
 
     public void Init() {
         
+        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
         game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("Wanderer.groovy"));
+        game.registry.loadControllerScript(new File("Fighter.groovy"));
         Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
         game.registry.loadTextureRectangle(new File("Icons.png"));
         game.registry.loadTextureRectangle(new File("Items.png"));
@@ -33,7 +35,8 @@ class Initiator implements InitScript {
         game.registry.readRaw(new File("Creatures.json"));
         
         for (int i = 0; i < 10; i++) {
-           game.registry.creatureTypeGenerator.generate();
+            CreatureDefinition definition = game.registry.creatureTypeGenerator.generate();
+            game.registry.addCreatureDef(definition.getName(), definition);
         }
         
         Floor.FloorSchematic schematic = new Floor.FloorSchematic(30, 30);

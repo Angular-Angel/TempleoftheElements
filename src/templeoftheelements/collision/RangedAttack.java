@@ -105,6 +105,7 @@ public class RangedAttack extends Attack {
 
     @Override
     public void collisionLogic(Object o) {
+        if (o == origin) return;
         if (o instanceof Collidable && ((Collidable) o).isImpassable()) dead = true;
         if (o instanceof Creature) hit((Creature) o);
     }

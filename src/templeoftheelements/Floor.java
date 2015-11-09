@@ -52,7 +52,7 @@ public class Floor {
 
         @Override
         public Floor generate() {
-            RoomSchematic startRoom = generateRoom(schematic.length/2, schematic[0].length/2, 3, 3);
+            RoomSchematic startRoom = generateRoom(schematic.length/2, schematic[0].length/2, 3, 3, 0);
             rooms.add(startRoom);
             generateBranch(schematic.length/2, schematic[0].length/2, Direction.NORTH, 5, true);
             generateBranch(schematic.length/2, schematic[0].length/2, Direction.EAST, 5, false);
@@ -130,7 +130,7 @@ public class Floor {
 //                    if (dir.ymod < 0) y--;
 //                }
 
-                generateRoom(x, y, roomWidth, roomHeight);
+                generateRoom(x, y, roomWidth, roomHeight, 1);
 //                if (dir.xmod >= 0) x += roomWidth;
 //                if (dir.ymod >= 0) y += roomHeight;
                 x += (roomWidth - 1) * dir.xmod;
@@ -139,8 +139,8 @@ public class Floor {
             
         }
         
-        public RoomSchematic generateRoom(int x, int y, int width, int height) {
-            RoomSchematic room = new RoomSchematic(x, y, width, height);
+        public RoomSchematic generateRoom(int x, int y, int width, int height, int complexity) {
+            RoomSchematic room = new RoomSchematic(x, y, width, height, complexity);
             x -= width/2;
             y -= height/2;
             int endX = x + room.width;
@@ -165,7 +165,7 @@ public class Floor {
     
     public static class RoomSchematic implements ProceduralGenerator<Room>{
 
-        public int x, y, width, height;
+        public int x, y, width, height, complexity;
         
         public Room room;
         
@@ -173,12 +173,12 @@ public class Floor {
         
         public static Random random = new Random();
         
-        public RoomSchematic(int x, int y, int width, int height) {
+        public RoomSchematic(int x, int y, int width, int height, int complexity) {
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
-            
+            this.complexity = complexity;
         }
         
         @Override
@@ -186,7 +186,8 @@ public class Floor {
             if (room != null) return room;
             room = new Room(width*10, height*10, game.registry.textures.get("Stone Floor.png"));
             
-            procedures.get(random.nextInt(procedures.size())).modify(room);
+            for (int i = 0; i < complexity; i++) 
+                procedures.get(random.nextInt(procedures.size())).modify(room);
             
             return room;
         }

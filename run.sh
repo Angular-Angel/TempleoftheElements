@@ -1,0 +1,1 @@
+ java -Djava.library.path="${BASH_SOURCE%/*}/lib/native" -jar "TempleoftheElements.jar"

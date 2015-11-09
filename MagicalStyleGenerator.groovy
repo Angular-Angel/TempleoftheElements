@@ -15,16 +15,22 @@ import generation.ProceduralGenerator;
  */
 class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
     
+    //our random number generator;
     Random random = new Random();
     
+    //an unused method from the interface. Sloppy, I know.
     public CharacterTreeDef generate(Object o) {
         throw new UnsupportedOperationException();
     }
     
+    //the main method. This generates the description of the character tree that 
+    //the generator uses to generate the substance.
     public CharacterTreeDef generate() {
         
+        //the elements this style uses for it's magic. 
         ArrayList<Element> elements = new ArrayList<>();
         
+        //this block picks out two elements for the style to use.
         int numElements = game.registry.elements.size();
         for (int i = 0; i < 2; i++) {
             Element e = game.registry.elementList.get(random.nextInt(numElements));
@@ -33,32 +39,44 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             else i--;
         }
         
+        //assigns the name of the style.
         String name = "Path of " + elements.get(0).name + " and " + elements.get(1).name;
         
+        //a list of possible attributes for the style to be based off of.
         ArrayList<String> attributePool = new ArrayList<>();
         
+        //the three basic mental attributes.
         attributePool.add("Intelligence");
         attributePool.add("Spirit");
         attributePool.add("Perception");
         
+        //adds the attributes associated with each element.
         for (Element e : elements) {
             attributePool.addAll(e.attributes);
         }
         
+        //generates a new CharacterTreeDef to hold all this information.
         CharacterTreeDef ret = new CharacterTreeDef(name);
         
         ret.elements = elements;
         
+        //now we need to pick out what kind of things this style focuses on doing.
+        //First, we pick out all our options, weighting in favor of some things...
         ArrayList<CharacterTreeDef.Focus> focusPool = new ArrayList<>();
         
+        //first, we have a chance to get any focus there is.
         focusPool.addAll(CharacterTreeDef.Focus.values());
         
+        //Then theres an adfitional chance to get a focus associated with one of 
+        //the elements used for this magical style. 
         for (Element e : elements) {
             focusPool.addAll(e.focuses);
         }
         
+        //first, pick out a primary focus
         ret.primaryFocus = focusPool.get(random.nextInt(focusPool.size()));
         
+        //then pick out a secondary focus
         ret.secondaryFocuses.add(focusPool.get(random.nextInt(focusPool.size())));
         
         String attribute = attributePool.get(random.nextInt(attributePool.size()));
@@ -181,6 +199,14 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
 
             return ret;
         }
+    }
+    
+    public CharacterTreeDef modify(CharacterTreeDef tree) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public boolean isApplicable(CharacterTreeDef tree) {
+        throw new UnsupportedOperationException();
     }
     
 }

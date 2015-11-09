@@ -1,0 +1,1 @@
+ java -Djava.library.path="%~dp0\lib\native" -jar "TempleoftheElements.jar"
