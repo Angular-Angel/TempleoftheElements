@@ -47,6 +47,9 @@ class Initiator implements InitScript {
         creature.setSprite(new Sprite(glTexture, 2, 2));
         game.player = new Player(creature);
         
+        Item item = game.registry.itemPools.get("ItemRoller.groovy").generate(1, 0);
+        game.room.add(item);
+        
         Effect effect = new Effect() {
             public float effect(EffectSource source, Collidable c) {
                 ((Creature) c).getStat("Mana").modifyBase(20);

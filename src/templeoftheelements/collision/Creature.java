@@ -306,6 +306,7 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
             TempleOfTheElements.game.addSprite(item);
             TempleOfTheElements.game.room.add(item);
         }
+        TempleOfTheElements.game.room.remove(this);
         TempleOfTheElements.game.world.destroyBody(fixture.getBody());
         TempleOfTheElements.game.removeSprite(this);
         
