@@ -90,7 +90,7 @@ public class CharacterWheel {
             layerSize = size;
         }
         
-        public Creature getPlayer() {
+        public Creature getCreature() {
             return player.getCreature();
         }
         

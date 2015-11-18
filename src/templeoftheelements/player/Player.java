@@ -31,6 +31,8 @@ public class Player implements Controller {
     public CharacterWheel characterWheel;
     public SelectIcon leftClick, rightClick;
     private int experience;
+    private int level;
+    public int characterPoints;
     private HashSet<Action> actions;
     
     public Player(Creature b) {
@@ -45,6 +47,8 @@ public class Player implements Controller {
         leftClick = new SelectIcon(new Vec2(200, 50), 100, 100);
         hud.addIcon(leftClick);
         refactorHUD();
+        experience = 0;
+        level = 1;
     }
     
     public HashSet<Action> getActions() {
@@ -190,6 +194,11 @@ public class Player implements Controller {
 
     public void gainExperience(int experience) {
         this.experience += experience;
+        System.out.println(experience);
+        if (this.experience >= level * level * 100) {
+            level++;
+            characterPoints++;
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec2;
 import org.lwjgl.opengl.GL11;
 import stat.StatContainer;
+import templeoftheelements.TempleOfTheElements;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.CharacterWheel.CharacterTree;
 
@@ -61,7 +62,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     
     public void acquire() {
         acquired = true;
-        tree.getPlayer().addAllStats(this);
+        tree.getCreature().addAllStats(this);
     }
 
     @Override
@@ -89,7 +90,11 @@ public class CharacterNode extends StatContainer implements Requirement , Render
 
     @Override
     public void mouseEvent(int button, int action, int mods) {
-        if (isAccessible()) acquire();
+        if (isAccessible() && 
+            TempleOfTheElements.game.player.characterPoints > 0) {
+            acquire();
+            TempleOfTheElements.game.player.characterPoints--;
+        }
     }
 
     @Override
