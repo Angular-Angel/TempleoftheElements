@@ -136,8 +136,7 @@ public class Player implements Controller {
         if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_Q)) {
             creature.modifyDirection(-1);
         }
-        
-        
+        for (Action a : getActions()) a.step();
         //set the initial direction. Why are we subtracting 90? I dunno, but it works.
         float dir = creature.getDirection() - 90;
         

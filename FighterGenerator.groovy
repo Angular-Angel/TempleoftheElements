@@ -69,7 +69,7 @@ class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
         ret.addStat("Dodge", new EquationStat("[Dexterity] - 10"));
         ret.addStat("Accuracy", new EquationStat("[Dexterity] - 10"));
         
-        ret.addStat("XP", new NumericStat(10));
+        ret.addStat("XP", new NumericStat(90));
         
         ret.setControllerType(game.registry.controllers.get("Fighter.groovy"));
         ret.itemDrops.add(new ItemDrop(game.registry.itemPools.get("ItemRoller.groovy"), 2, 1));

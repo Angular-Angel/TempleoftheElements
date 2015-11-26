@@ -17,7 +17,6 @@ public interface Controller extends Actor {
     public Creature getCreature();
     public Vec2 getAccel();
     public Controller clone(Creature creature);
-    public HashSet<Action> getActions();
     public void addAction(Action a);
     public void refactorActions();
 }

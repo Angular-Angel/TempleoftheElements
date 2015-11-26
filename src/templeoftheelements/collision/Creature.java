@@ -186,7 +186,6 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         if (controller == null) return;
         controller.step(dt);
         if (timer > 0) timer--;
-        for (Action a : controller.getActions()) a.step();
         try {
             Vec2 speed = getBody().getLinearVelocity().mul(1 - getScore("Acceleration")/getScore("Max Speed"));
             getBody().setLinearVelocity(speed);

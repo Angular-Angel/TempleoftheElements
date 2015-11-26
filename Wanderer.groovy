@@ -46,10 +46,6 @@ class Wanderer implements Controller {
     }
     
     
-    public HashSet<Action> getActions() {
-        return actions;
-    }
-    
     public void addAction(Action a ) {
         actions.add(a);
     }

@@ -46,10 +46,6 @@ class Fighter implements Controller {
     }
     
     
-    public HashSet<Action> getActions() {
-        return actions;
-    }
-    
     public void addAction(Action a ) {
         actions.add(a);
     }
@@ -72,6 +68,13 @@ class Fighter implements Controller {
         } catch (NoSuchStatException ex) {
             Logger.getLogger(BasicAI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        int x = pos.x - getCreature().getPosition().x;
+        int y = pos.y - getCreature().getPosition().y;
+        if (Math.sqrt(x * x + y * y) <= 100) attack();
+    }
+    
+    public void attack() {
+        
     }
     
     public boolean isEnemy() {
