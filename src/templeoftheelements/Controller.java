@@ -19,4 +19,5 @@ public interface Controller extends Actor {
     public Controller clone(Creature creature);
     public void addAction(Action a);
     public void refactorActions();
+    public void init();
 }

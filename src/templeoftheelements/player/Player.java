@@ -37,18 +37,21 @@ public class Player implements Controller {
     
     public Player(Creature b) {
         creature = b;
-        creature.setController(this);
         accel = new Vec2();
         inventory = new Inventory(this);
         characterWheel = new CharacterWheel(this);
         characterScreen = new CharacterScreen(characterWheel);
         actions = new HashSet<>();
+        experience = 0;
+        level = 1;
+        creature.setController(this);
+    }
+    
+    public void init() {
         hud = new HUD(this);
         leftClick = new SelectIcon(new Vec2(200, 50), 100, 100);
         hud.addIcon(leftClick);
         refactorHUD();
-        experience = 0;
-        level = 1;
     }
     
     public HashSet<Action> getActions() {
@@ -193,7 +196,6 @@ public class Player implements Controller {
 
     public void gainExperience(int experience) {
         this.experience += experience;
-        System.out.println(experience);
         if (this.experience >= level * level * 100) {
             level++;
             characterPoints++;

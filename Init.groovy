@@ -19,7 +19,7 @@ class Initiator implements InitScript {
     public void Init() {
         
         game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
-        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
+//        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("Wanderer.groovy"));
         game.registry.loadControllerScript(new File("Fighter.groovy"));
         Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));

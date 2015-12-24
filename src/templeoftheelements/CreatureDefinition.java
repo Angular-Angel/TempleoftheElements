@@ -8,6 +8,7 @@ import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.display.Renderable;
 import templeoftheelements.item.ItemDrop;
 
 /**
@@ -20,6 +21,7 @@ public class CreatureDefinition extends StatContainer {
     
     private String name;
     private Controller controllerType;
+    private Renderable sprite;
     
     public ArrayList<BodyPartDefinition> bodyParts;
     private HashMap<String, Float> resistances;
@@ -38,6 +40,10 @@ public class CreatureDefinition extends StatContainer {
         resistances.put(type, f);
     }
     
+    public void addAbility(Object a) {
+        abilities.add(a);
+    }
+    
     public CreatureDefinition clone() {
         CreatureDefinition ret = new CreatureDefinition(name);
         ret.addAllStats(viewStats());
@@ -53,13 +59,15 @@ public class CreatureDefinition extends StatContainer {
     
     public Creature genCreature(float x, float y) throws NoSuchStatException {
         Creature ret = new Creature(new Vec2(x, y), this);
-        ret.setController(controllerType.clone(ret));
+        if (sprite != null) ret.setSprite(sprite);
         for (BodyPartDefinition b : bodyParts) b.genBodyPart(ret);
         for (String type : resistances.keySet()) ret.addResistance(type, resistances.get(type));
         ret.addStat("HP", new NumericStat(ret.getScore("Max HP")));
         ret.addStat("Mana", new NumericStat(ret.getScore("Max Mana")));
+        ret.addStat("Stamina", new NumericStat(ret.getScore("Max Stamina")));
         for (Object o : abilities) ret.addAbility(o);
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
+        ret.setController(controllerType.clone(ret));
         return ret;
     }
 
@@ -79,6 +87,20 @@ public class CreatureDefinition extends StatContainer {
     
     public void addBodyPart(String name, float position) {
         bodyParts.add(new BodyPartDefinition(name, position));
+    }
+
+    /**
+     * @return the sprite
+     */
+    public Renderable getSprite() {
+        return sprite;
+    }
+
+    /**
+     * @param sprite the sprite to set
+     */
+    public void setSprite(Renderable sprite) {
+        this.sprite = sprite;
     }
     
     public class BodyPartDefinition {

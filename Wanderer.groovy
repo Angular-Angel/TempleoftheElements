@@ -27,10 +27,14 @@ class Wanderer implements Controller {
     
     public Wanderer(Creature b) {
         creature = b;
-        creature.setController(this);
         accel = new Vec2();
         random = new Random();
         actions = new HashSet<>();
+        creature.setController(this);
+    }
+    
+    public void init() {
+        
     }
     
     public Creature getCreature() {

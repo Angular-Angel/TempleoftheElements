@@ -185,8 +185,12 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         for (PassiveAbility passive : passives) passive.step(dt);
         if (controller == null) return;
         controller.step(dt);
-        if (timer > 0) timer--;
+        if (timer > 0) timer -= dt*150;
         try {
+            if (getScore("Stamina") < getScore("Max Stamina")) {
+                getStat("Stamina").modifyBase(getScore("Stamina Regen") * dt * 150);
+                if (getScore("Stamina") > getScore("Max Stamina")) getStat("Stamina").set(getScore("Max Stamina"));
+            }
             Vec2 speed = getBody().getLinearVelocity().mul(1 - getScore("Acceleration")/getScore("Max Speed"));
             getBody().setLinearVelocity(speed);
             getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(getScore("Acceleration")));
@@ -216,6 +220,7 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
      */
     public void setController(Controller controller) {
         this.controller = controller;
+        controller.init();
     }
 
     @Override

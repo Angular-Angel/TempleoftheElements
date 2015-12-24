@@ -28,8 +28,12 @@ public class BasicAI implements Controller {
     
     public BasicAI(Creature b) {
         creature = b;
-        creature.setController(this);
         accel = new Vec2();
+        creature.setController(this);
+    }
+    
+    public void init() {
+        
     }
     
     @Override

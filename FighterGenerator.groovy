@@ -7,6 +7,7 @@ import templeoftheelements.item.*;
 import stat.*;
 import generation.*;
 import java.util.Random;
+import com.samrj.devil.gl.Texture2D;
 import static templeoftheelements.TempleOfTheElements.game;
 
 /**
@@ -63,6 +64,7 @@ class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
         ret.addStat("Max HP", new EquationStat("[Strength] * 2"));
         ret.addStat("Max Stamina", new EquationStat("[Constitution] * 2"));
         ret.addStat("Max Mana", new EquationStat("[Spirit] * 2"));
+        ret.addStat("Stamina Regen", new EquationStat("[Max Stamina] / 10"));
         ret.addStat("Damage", new NumericStat((float) ret.getScore("Strength") / 2));
         ret.addStat("Sight Range", new EquationStat("-10 + [Perception] + [Intelligence]"));
         ret.addStat("Attack Speed", new EquationStat("1 - (([Dexterity] - 10) / 50)"));
@@ -70,6 +72,21 @@ class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
         ret.addStat("Accuracy", new EquationStat("[Dexterity] - 10"));
         
         ret.addStat("XP", new NumericStat(90));
+        
+        AttackDefinition attack = new AttackDefinition(name, new VectorCircle(1), "Fire");
+        attack.addStat("Melee Attack", new BinaryStat());
+        attack.addStat("Size", new NumericStat(0.35));
+        attack.addStat("Duration", new NumericStat(13));
+        attack.addStat("Reach", new NumericStat(1.3)); 
+        attack.addStat("Angular Travel",  new NumericStat(70));
+        attack.addStat("Distance Travel", new NumericStat(0));
+        attack.addStat("Recovery Time", new NumericStat(15));
+        attack.addStat("Damage Multiplier", new NumericStat(0));
+        
+        ret.addAbility(new AttackAction(attack));
+        
+        Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
+        ret.setSprite(new Sprite(glTexture, 2, 2));
         
         ret.setControllerType(game.registry.controllers.get("Fighter.groovy"));
         ret.itemDrops.add(new ItemDrop(game.registry.itemPools.get("ItemRoller.groovy"), 2, 1));

@@ -80,6 +80,7 @@ public final class TempleOfTheElements extends Game {
     
     public Set<Renderable> sprites;
     public Set<Actor> actors;
+    public Set<Actor> newActors;
     public Set<Clickable> clickables;
     public Set<Collidable> collidables;
     public Registry registry;
@@ -111,6 +112,7 @@ public final class TempleOfTheElements extends Game {
     public void start() {
         sprites = new IdentitySet<>();
         actors = new IdentitySet<>();
+        newActors = new IdentitySet<>();
         collidables = new IdentitySet<>();
         clickables = new IdentitySet<>();
         world = new World(new Vec2());
@@ -120,7 +122,7 @@ public final class TempleOfTheElements extends Game {
     }
     
     public void addActor(Actor a) {
-        actors.add(a);
+        newActors.add(a);
     }
     
     public Clickable getClickable(float x, float y) {
@@ -153,6 +155,10 @@ public final class TempleOfTheElements extends Game {
     @Override
     public void step(float dt) {
         if (screen == null) {
+            for (Actor a : newActors) {
+                actors.add(a);
+            }
+            newActors.clear();
             world.step(dt, 8, 3);
             Iterator<Actor> iter = actors.iterator();
             Actor next;
