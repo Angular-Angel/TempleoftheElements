@@ -92,6 +92,35 @@ public class HUD implements Renderable, Clickable {
         GL11.glVertex2f(19*game.res.width/20, 1);
         GL11.glEnd();
         
+        float stamina = 0;
+        
+        try {
+            //How much stamina we got?
+
+            stamina = player.getCreature().getScore("Stamina")/player.getCreature().getScore("Max Stamina");
+        } catch (NoSuchStatException ex) {
+            Logger.getLogger(HUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //Draw the Stamina Bar
+        GL11.glColor3f(0, 255, 0);
+        GL11.glBegin(GL11.GL_QUADS);
+        GL11.glVertex2f(1, game.res.height);
+        GL11.glVertex2f(game.res.width*stamina/3, game.res.height);
+        GL11.glVertex2f(game.res.width*stamina/3, 19*game.res.height/20);
+        GL11.glVertex2f(1, 19*game.res.height/20);
+//        GL11.glVertex2f(1, 1);
+        GL11.glEnd();
+        
+        GL11.glColor3f(128, 128, 128);
+        GL11.glBegin(GL11.GL_LINE_STRIP);
+        GL11.glVertex2f(1, game.res.height);
+        GL11.glVertex2f(game.res.width/3, game.res.height);
+        GL11.glVertex2f(game.res.width/3, 19*game.res.height/20);
+        GL11.glVertex2f(1, 19*game.res.height/20);
+        GL11.glVertex2f(1, 1);
+        GL11.glEnd();
+        
         //don't forget to draw the Icons.
         icons.forEach((Icon i) -> i.draw());
     }

@@ -43,6 +43,7 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
     private ArrayList<StatusEffect> statusEffects;
     private ArrayList<CreatureListener> listeners;
     private ArrayList<PassiveAbility> passives;
+    private boolean winded;
 
     public Creature() {
         this(new Vec2(), new StatContainer() {});
@@ -55,6 +56,7 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
     public Creature(Vec2 pos, StatContainer stats) {
         timer = 0; direction = 0;
         createPosition = pos;
+        winded = false;
         abilities = new HashSet<>();
         bodyParts = new ArrayList<>();
         resistances = new HashMap<>();
@@ -185,9 +187,8 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         for (PassiveAbility passive : passives) passive.step(dt);
         if (controller == null) return;
         controller.step(dt);
-        if (timer > 0) timer -= dt*150;
         try {
-            if (getScore("Stamina") < getScore("Max Stamina")) {
+            if (!winded && getScore("Stamina") < getScore("Max Stamina")) {
                 getStat("Stamina").modifyBase(getScore("Stamina Regen") * dt * 150);
                 if (getScore("Stamina") > getScore("Max Stamina")) getStat("Stamina").set(getScore("Max Stamina"));
             }
@@ -196,15 +197,20 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
             getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(getScore("Acceleration")));
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.MOVED, getBody().getLinearVelocity().length()));
             if (curAttack != null) {
-                if (!curAttack.isDead())
-                curAttack.move(getPosition(), getDirection());
-                else {
+                winded = true;
+                if (!curAttack.isDead()) {
+                    curAttack.move(getPosition(), getDirection());
+                } else {
                     timer = (int) curAttack.getScore("Recovery Time");
                     curAttack = null;
                 }
             }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (timer > 0) {
+            timer -= dt*150;
+            winded = false;
         }
     }
 
@@ -252,12 +258,17 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
     }
     
     public void attack(AttackDefinition attack) {
-        if (curAttack != null || timer > 0) return;
+        try {
+            if (curAttack != null || timer > 0 || attack.getScore("Stamina Cost") > getScore("Stamina")) return;
         Attack a = attack.generate(this);
         TempleOfTheElements.game.addSprite(a);
         TempleOfTheElements.game.addActor(a);
         if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
+        getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
+        } catch (NoSuchStatException ex) {
+            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

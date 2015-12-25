@@ -64,7 +64,7 @@ class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
         ret.addStat("Max HP", new EquationStat("[Strength] * 2"));
         ret.addStat("Max Stamina", new EquationStat("[Constitution] * 2"));
         ret.addStat("Max Mana", new EquationStat("[Spirit] * 2"));
-        ret.addStat("Stamina Regen", new EquationStat("[Max Stamina] / 10"));
+        ret.addStat("Stamina Regen", new EquationStat("[Max Stamina] / 1000"));
         ret.addStat("Damage", new NumericStat((float) ret.getScore("Strength") / 2));
         ret.addStat("Sight Range", new EquationStat("-10 + [Perception] + [Intelligence]"));
         ret.addStat("Attack Speed", new EquationStat("1 - (([Dexterity] - 10) / 50)"));
@@ -82,6 +82,7 @@ class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
         attack.addStat("Distance Travel", new NumericStat(0));
         attack.addStat("Recovery Time", new NumericStat(15));
         attack.addStat("Damage Multiplier", new NumericStat(0));
+        attack.addStat("Stamina Cost", new NumericStat(4));
         
         ret.addAbility(new AttackAction(attack));
         

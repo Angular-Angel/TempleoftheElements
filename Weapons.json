@@ -9,12 +9,12 @@
         "Attacks" : [["Thrust", "Piercing", ["Icons.png", 36, 52, 36, 26, 100, 100], 
                         [["Size", 0.35], ["Duration", 10], ["Reach", 0.5], 
                         ["Angular Travel", 0], ["Distance Travel", 1.6], 
-                        ["Recovery Time", 8], ["Damage Multiplier", 1.2], ["Stamina Cost", 3], 
+                        ["Recovery Time", 8], ["Damage Multiplier", 1.2], ["Stamina Cost", 6], 
                         ["Thrusting Attack"]]],
                      ["Swing", "Cutting Damage", ["Icons.png", 72, 52, 36, 26, 100, 100], 
                         [["Size", 0.4], ["Duration", 13], ["Reach", 1.3], 
                         ["Angular Travel", 70], ["Distance Travel", 0], 
-                        ["Recovery Time", 15], ["Damage Multiplier", 1.6], ["Stamina Cost", 4], 
+                        ["Recovery Time", 15], ["Damage Multiplier", 1.6], ["Stamina Cost", 8], 
                         ["Swinging Attack"]]]
                     ]
     },
@@ -28,12 +28,12 @@
         "Attacks" : [["Swing", "Cutting", ["Icons.png", 108, 52, 36, 26, 100, 100], 
                         [["Size", 0.4], ["Duration", 13], ["Reach", 0.68], 
                         ["Angular Travel", 70], ["Distance Travel", 0], 
-                        ["Recovery Time", 15], ["Damage Multiplier", 1.5], ["Stamina Cost", 2], 
+                        ["Recovery Time", 15], ["Damage Multiplier", 1.5], ["Stamina Cost", 4], 
                         ["Swinging Attack"]]],
                      ["Stab", "Piercing Damage", ["Icons.png", 144, 52, 36, 26, 100, 100], 
                         [["Size", 0.35], ["Duration", 13], ["Reach", 0.38], 
                         ["Angular Travel", 0], ["Distance Travel", 0.85], 
-                        ["Recovery Time", 10], ["Damage Multiplier", 1.1], ["Stamina Cost", 1.5], 
+                        ["Recovery Time", 10], ["Damage Multiplier", 1.1], ["Stamina Cost", 3], 
                         ["Thrusting Attack"]]]
                     ]
     },
@@ -47,7 +47,7 @@
         "Attacks" : [["Swing", "Cutting", ["Icons.png", 108, 52, 36, 26, 100, 100], 
                         [["Size", 0.4], ["Duration", 15], ["Reach", 0.46], 
                         ["Angular Travel", 70], ["Distance Travel", 0], 
-                        ["Recovery Time", 20], ["Damage Multiplier", 1.5], ["Stamina Cost", 2], 
+                        ["Recovery Time", 20], ["Damage Multiplier", 1.5], ["Stamina Cost", 4], 
                         ["Swinging Attack"]]]
                     ]
     },
@@ -61,12 +61,12 @@
         "Attacks" : [["Swing", "Cutting", ["Icons.png", 108, 52, 36, 26, 100, 100], 
                         [["Size", 0.15], ["Duration", 8], ["Reach", 0.11], 
                         ["Angular Travel", 50], ["Distance Travel", 0], 
-                        ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 1], 
+                        ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 2], 
                         ["Swinging Attack"]]],
                      ["Stab", "Piercing", ["Icons.png", 108, 52, 36, 26, 100, 100], 
                         [["Size", 0.15], ["Duration", 8], ["Reach", 0.56], 
                         ["Angular Travel", 0], ["Distance Travel", 0.45], 
-                        ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 0.5], 
+                        ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 1], 
                         ["Swinging Attack"]]]
                     ]
     },
@@ -80,7 +80,7 @@
         "Attacks" : [["Swing", "Crushing", ["Icons.png", 108, 52, 36, 26, 100, 100], 
                         [["Size", 0.15], ["Duration", 8], ["Reach", 0.46], 
                         ["Angular Travel", 50], ["Distance Travel", 0], 
-                        ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 2], 
+                        ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 4], 
                         ["Swinging Attack"]]]
                     ]
     }
