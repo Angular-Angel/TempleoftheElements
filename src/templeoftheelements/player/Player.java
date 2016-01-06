@@ -2,8 +2,11 @@
 package templeoftheelements.player;
 
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
+import stat.NoSuchStatException;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.Controller;
 import templeoftheelements.item.Item;
@@ -122,6 +125,9 @@ public class Player implements Controller {
             case GLFW.GLFW_KEY_R:
                 game.start();
                 break;
+            case GLFW.GLFW_KEY_Z:
+                debug();
+                break;
                 
         }
     }
@@ -148,6 +154,7 @@ public class Player implements Controller {
         if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_A)) accel.x = -1;
         if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_S)) accel.y = -1;
         if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_D)) accel.x = 1;
+        
         
         //Figue out the actual direction we're sending them.
         if (accel.x == 0 && accel.y == 0) return;
@@ -217,5 +224,12 @@ public class Player implements Controller {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public void debug() {
+        try {
+            System.out.println(creature.getScore("Stamina Regen"));
+        } catch (NoSuchStatException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }

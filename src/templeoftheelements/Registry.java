@@ -29,6 +29,7 @@ import templeoftheelements.item.WeaponDefinition;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterTreeDef;
 import templeoftheelements.player.Effect;
+import templeoftheelements.player.StatusEffect;
 import util.RawReader;
 
 /**
@@ -46,6 +47,7 @@ public class Registry extends RawReader {
     public HashMap<String, Controller> controllers;
     public HashMap<String, ItemGenerator> itemPools;
     public HashMap<String, Element> elements;
+    public HashMap<String, StatusEffect> statusEffects;
     public ArrayList<Element> elementList;
     public ArrayList<MagicItemDef> magicEffects;
     public ArrayList<CreatureDefinition> creatureList;
@@ -63,6 +65,7 @@ public class Registry extends RawReader {
         elements = new HashMap<>();
         elementList = new ArrayList<>();
         spriteSheets = new HashMap<>();
+        statusEffects = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
         creatureTypeGenerator = new CreatureTypeGenerator();
     }
@@ -234,6 +237,14 @@ public class Registry extends RawReader {
         Controller ret = (Controller) readGroovyScript(file);
         
         controllers.put(file.getName(), ret);
+        
+        return ret;
+    }
+    
+    public StatusEffect loadStatusEffect(File file) {
+        StatusEffect ret = (StatusEffect) readGroovyScript(file);
+        
+        statusEffects.put(file.getName().replace(".groovy", ""), ret);
         
         return ret;
     }

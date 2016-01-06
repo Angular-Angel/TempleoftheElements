@@ -58,13 +58,13 @@ class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
         //generate the secondary attributes.
         float size = ((float) ret.getScore("Strength") + ret.getScore("Constitution")) / (2 * ret.getScore("Dexterity"));
         ret.addStat("Size", new NumericStat(size));
-        ret.addStat("Acceleration", new NumericStat((float) ret.getScore("Dexterity") * 4));
-        ret.addStat("Max Speed", new NumericStat((float) ret.getScore("Dexterity") * 80));
+        ret.addStat("Acceleration", new EquationStat("[Dexterity] * 4"));
+        ret.addStat("Max Speed", new EquationStat("[Dexterity] * 80"));
         ret.addStat("Turning Speed", new EquationStat("0.5 + [Dexterity] / 18"));
         ret.addStat("Max HP", new EquationStat("[Strength] * 2"));
-        ret.addStat("Max Stamina", new EquationStat("[Constitution] * 2"));
+        ret.addStat("Max Stamina", new EquationStat("[Constitution] * 20"));
         ret.addStat("Max Mana", new EquationStat("[Spirit] * 2"));
-        ret.addStat("Stamina Regen", new EquationStat("[Max Stamina] / 1000"));
+        ret.addStat("Stamina Regen", new EquationStat("[Max Stamina] / 10000"));
         ret.addStat("Damage", new NumericStat((float) ret.getScore("Strength") / 2));
         ret.addStat("Sight Range", new EquationStat("-10 + [Perception] + [Intelligence]"));
         ret.addStat("Attack Speed", new EquationStat("1 - (([Dexterity] - 10) / 50)"));

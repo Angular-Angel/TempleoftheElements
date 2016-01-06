@@ -40,7 +40,7 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
     public ArrayList<BodyPart> bodyParts;
     private HashMap<String, Float> resistances;
     public ArrayList<ItemDrop> itemDrops;
-    private ArrayList<StatusEffect> statusEffects;
+    private HashMap<String, StatusEffect> statusEffects;
     private ArrayList<CreatureListener> listeners;
     private ArrayList<PassiveAbility> passives;
     private boolean winded;
@@ -61,7 +61,7 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         bodyParts = new ArrayList<>();
         resistances = new HashMap<>();
         itemDrops = new ArrayList<>();
-        statusEffects = new ArrayList<>();
+        statusEffects = new HashMap<>();
         listeners = new ArrayList<>();
         passives = new ArrayList<>();
         addAllStats(stats);
@@ -88,6 +88,20 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
     
     public HashSet<Action> getActions() {
         return abilities;
+    }
+    
+    @Override
+    public void refactor() {
+        for (StatusEffect effect : statusEffects.values()) {
+            defactorStatusEffect(effect);
+        }
+        super.refactor();
+        for (BodyPart part : bodyParts) {
+            part.factor();
+        }
+        for (StatusEffect effect : statusEffects.values()) {
+            factorStatusEffect(effect);
+        }
     }
     
     public void refactorActions() {
@@ -205,6 +219,18 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
                     curAttack = null;
                 }
             }
+            float staminaPercentage = getScore("Stamina") / getScore("Max Stamina");
+            if (staminaPercentage < 0.9) {
+                if (statusEffects.containsKey("Fatigue") && statusEffects.get("Fatigue").severity < (int) (10 -10 * staminaPercentage)) {
+                    StatusEffect effect = game.registry.statusEffects.get("Fatigue").clone();
+                    effect.severity = (int) (10 -10 * staminaPercentage);
+                    statusEffects.get("Fatigue").update(effect);
+                } else {
+                    StatusEffect effect = game.registry.statusEffects.get("Fatigue").clone();
+                    addStatusEffect(effect);
+                }
+            }
+            
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -249,7 +275,7 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.TOOK_DAMAGE, damage, type));
         if (resistances.containsKey(type)) damage *= (1 - resistances.get(type));
         try {
-            getStat("HP").modify(-damage);
+            getStat("HP").modifyBase(-damage);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -259,13 +285,14 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
     
     public void attack(AttackDefinition attack) {
         try {
-            if (curAttack != null || timer > 0 || attack.getScore("Stamina Cost") > getScore("Stamina")) return;
-        Attack a = attack.generate(this);
-        TempleOfTheElements.game.addSprite(a);
-        TempleOfTheElements.game.addActor(a);
-        if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
-        notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
-        getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
+            if (curAttack != null || timer > 0) return;
+            if (attack.hasStat("Stamina Cost") && attack.getScore("Stamina Cost") > getScore("Stamina")) return;
+            Attack a = attack.generate(this);
+            TempleOfTheElements.game.addSprite(a);
+            TempleOfTheElements.game.addActor(a);
+            if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
+            notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
+            if (attack.hasStat("Stamina Cost")) getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -380,20 +407,33 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
     }
 
     public void addStatusEffect(StatusEffect statusEffect) {
-        if (!statusEffects.contains(statusEffect)) {
+        if (!statusEffects.containsKey(statusEffect.name)) {
             statusEffect.creature = this;
-            statusEffects.add(statusEffect);
-            addAllStats(statusEffect);
+            statusEffects.put(statusEffect.name, statusEffect);
+            statusEffect.init(this);
+            factorStatusEffect(statusEffect);
+            game.addActor(statusEffect);
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ADDED_STATUS_EFFECT, statusEffect));
+        } else {
+            statusEffects.get(statusEffect.name).update(statusEffect);
         }
+    }
+    
+    private void factorStatusEffect(StatusEffect statusEffect) {
+        addAllStats(statusEffect);
     }
 
     public void removeStatusEffect(StatusEffect statusEffect) {
-        if (statusEffects.contains(statusEffect)) {
-            statusEffects.remove(statusEffect);
-            removeAllStats(statusEffect);
+        if (statusEffects.containsKey(statusEffect.name)) {
+            statusEffects.remove(statusEffect.name);
+            defactorStatusEffect(statusEffect);
+            statusEffect.creature = null;
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.LOST_STATUS_EFFECT, statusEffect));
         }
+    }
+    
+    private void defactorStatusEffect(StatusEffect statusEffect) {
+        removeAllStats(statusEffect);
     }
     
     public class BodyPart {
@@ -412,19 +452,10 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
             equipment = null;
         }
         
-//        public void refactor() {
-//            if (equipment == null) return;
-//            for (String s : equipment.playerStats.viewStats().keySet()) {
-//                try {
-//                    if (hasStat(s)) {
-//                        getStat(s).modify(equipment.playerStats.viewStat(s).getScore());
-//                    } else addStat(s, equipment.playerStats.viewStat(s));
-//
-//                } catch (NoSuchStatException ex) {
-//                    Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
+        public void refactor() {
+            Creature.super.refactor();
+            
+        }
         
         public boolean canEquip(Equipment e) {
             return e.getType().equals(type);
@@ -433,8 +464,13 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         public void equip(Equipment e) {
             if (canEquip(e)) {
                 equipment = e;
-                addAllStats(equipment.playerStats);
+                factor();
             }
+        }
+        
+        private void factor() {
+            if (equipment == null) return;
+            addAllStats(equipment.playerStats);
         }
         
         /**
@@ -460,9 +496,8 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         public void equip(Equipment e) {
             if (canEquip(e)) {
                 equipment = e;
-                addAllStats(equipment.playerStats);
-                for (AttackDefinition a : ((Weapon) equipment).getAttacks()) 
-                    controller.addAction(new AttackAction(a)); 
+                super.factor();
+                factor();
             }
         }
         
@@ -472,21 +507,14 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
             controller.refactorActions();
         }
         
-//        public void refactor() {
-//            if (equipment == null) return;
-//            for (String s : equipment.playerStats.viewStats().keySet()) {
-//                try {
-//                    if (hasStat(s)) {
-//                        getStat(s).modify(equipment.playerStats.viewStat(s).getScore());
-//                    } else addStat(s, equipment.playerStats.viewStat(s));
-//
-//                } catch (NoSuchStatException ex) {
-//                    Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//            for (AttackDefinition a : ((Weapon) equipment).getAttacks()) 
-//                actions.add(new AttackAction(a));
-//        }
+        private void factor() {
+            for (AttackDefinition a : ((Weapon) equipment).getAttacks()) 
+                controller.addAction(new AttackAction(a)); 
+        }
+        
+        public void refactor() {
+            super.refactor();
+        }
         
     }
 }

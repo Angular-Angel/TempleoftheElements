@@ -22,6 +22,7 @@ class Initiator implements InitScript {
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("Wanderer.groovy"));
         game.registry.loadControllerScript(new File("Fighter.groovy"));
+        game.registry.loadStatusEffect(new File("Fatigue.groovy"));
         Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
         game.registry.loadTextureRectangle(new File("Icons.png"));
         game.registry.loadTextureRectangle(new File("Items.png"));
@@ -51,8 +52,8 @@ class Initiator implements InitScript {
         game.room.add(item);
         
         Effect effect = new Effect() {
-            public float effect(EffectSource source, Collidable c) {
-                ((Creature) c).getStat("Mana").modifyBase(20);
+            public float effect(EffectSource source, Object o) {
+                ((Creature) o).getStat("Mana").modifyBase(20);
                 return 20;
             }
         };
