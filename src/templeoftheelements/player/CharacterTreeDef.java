@@ -35,6 +35,7 @@ public class CharacterTreeDef {
     public ArrayList<String> secondaryAttributes;
     public ArrayList<Element> elements;
     public ProceduralGenerator<CharacterNode> nodeGenerator;
+    public ArrayList<Ability> abilities;
     
     public CharacterTreeDef(String name) {
         this.name = name;
@@ -43,5 +44,7 @@ public class CharacterTreeDef {
         secondaryFocuses = new ArrayList<>();
         details = new ArrayList<>();
         elements = new ArrayList<>();
+        abilities = new ArrayList<>();
     }
+    
 }

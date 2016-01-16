@@ -3,6 +3,7 @@ package templeoftheelements.player;
 
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
+import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
 
@@ -17,7 +18,7 @@ public class DoNothingAction extends Action {
     private Renderable sprite;
     
     public DoNothingAction(Renderable sprite) {
-        super("Do Nothing", new HashMap<>());
+        super("Do Nothing", new StatContainer());
         this.sprite = sprite;
     }
 
@@ -29,6 +30,16 @@ public class DoNothingAction extends Action {
     @Override
     public Renderable getSprite() {
         return sprite;
+    }
+
+    @Override
+    public Ability clone() {
+        return new DoNothingAction(sprite);
+    }
+
+    @Override
+    public String getDescription() {
+        return "Do Nothing.";
     }
     
 }

@@ -23,7 +23,7 @@ import templeoftheelements.player.EffectContainer;
  * @author angle
  */
 
-public class AttackDefinition extends Trait{
+public class AttackDefinition extends Trait {
 
     private ArrayList<Effect> onHitEffects;
     private Shape shape;

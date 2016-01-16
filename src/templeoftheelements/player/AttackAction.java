@@ -3,6 +3,7 @@ package templeoftheelements.player;
 
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
+import stat.StatContainer;
 import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
@@ -13,17 +14,19 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public class AttackAction extends Action{
+public class AttackAction extends Action {
 
+    
     private AttackDefinition attack;
+    public String description;
     
     public AttackAction(AttackDefinition attack) {
-        super(attack.getName(), new HashMap<>());
+        super(attack.getName(), new StatContainer());
         this.attack = attack;
     }
     
     public AttackAction(String name, AttackDefinition attack) {
-        super(name, new HashMap<>());
+        super(name, new StatContainer());
         this.attack = attack;
     }
     
@@ -35,6 +38,16 @@ public class AttackAction extends Action{
     @Override
     public Renderable getSprite() {
         return attack.getSprite();
+    }
+
+    @Override
+    public Ability clone() {
+        return new AttackAction(this.getName(), attack);
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
     }
     
 }

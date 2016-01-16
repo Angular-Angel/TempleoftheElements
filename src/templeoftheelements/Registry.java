@@ -26,7 +26,7 @@ import templeoftheelements.item.MagicEquipmentDef;
 import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
-import templeoftheelements.player.CharacterNode;
+import templeoftheelements.player.Ability;
 import templeoftheelements.player.CharacterTreeDef;
 import templeoftheelements.player.Effect;
 import templeoftheelements.player.StatusEffect;
@@ -277,33 +277,44 @@ public class Registry extends RawReader {
     }
     
     public CreatureDefinition readCreatureDef(JSONObject obj) {
-        
         String name = (String) obj.get("Name");
+        String parent = (String) obj.get("Parent");
+        CreatureDefinition ret;
+        if (parent != null) {
+            ret = creatureDefs.get(parent).clone();
+            ret.name = name;
+        } else {
+            ret = new CreatureDefinition(name); //initialize return variable
+        }
         
-        CreatureDefinition ret = new CreatureDefinition(name); //initialize return variable
         JSONArray stats = (JSONArray) obj.get("Stats"); 
-        ret.addAllStats(readJSONStats(stats)); //add the stats that the creature def will have.
         
+        if (stats != null)
+            ret.addAllStats(readJSONStats(stats)); //add the stats that the creature def will have.
+
         JSONArray bodyParts = (JSONArray) obj.get("Body Parts");
-        
-        for (Object o : bodyParts) {
-            JSONArray bodyPart = (JSONArray) o;
-            ret.addBodyPart((String) bodyPart.get(0), ((Long) bodyPart.get(1)).floatValue());
-        }
-        
+
+        if (bodyParts != null)
+            for (Object o : bodyParts) {
+                JSONArray bodyPart = (JSONArray) o;
+                ret.addBodyPart((String) bodyPart.get(0), ((Long) bodyPart.get(1)).floatValue());
+            }
+
         JSONArray itemDrops = (JSONArray) obj.get("Item Drops");
-        
-        for (Object o : itemDrops) {
-            JSONArray itemDrop = (JSONArray) o;
-            ret.itemDrops.add(readItemDrop(itemDrop));
-        }
-        
+
+        if (itemDrops != null)
+            for (Object o : itemDrops) {
+                JSONArray itemDrop = (JSONArray) o;
+                ret.itemDrops.add(readItemDrop(itemDrop));
+            }
+
         ret.setControllerType(controllers.get((String) obj.get("Controller")));
-        
-        JSONArray ja = (JSONArray) obj.get("Abilities");
-                
-        for (Object o : ja) 
-            ret.abilities.add(readGroovyScript((String) o));
+
+        JSONArray abilities = (JSONArray) obj.get("Abilities");
+
+        if (abilities != null)
+            for (Object o : abilities) 
+                ret.abilities.add((Ability) readGroovyScript((String) o));
         
         addCreatureDef(name, ret);
         

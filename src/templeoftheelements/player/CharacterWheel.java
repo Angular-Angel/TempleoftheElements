@@ -17,12 +17,12 @@ import templeoftheelements.display.Renderable;
 
 public class CharacterWheel {
     private Player player;
-    public HashSet<CharacterNode> nodes; //all the nodes in the character wheel.
-    public HashSet<Renderable> renderables; //all the non-node requirements.
+    public ArrayList<CharacterNode> nodes; //all the nodes in the character wheel.
+    public ArrayList<CharacterTree> trees; //The list of trees on the character wheel.
     
     public CharacterWheel(Player player) {
-        nodes = new HashSet<>();
-        renderables = new HashSet<>();
+        nodes = new ArrayList<>();
+        trees = new ArrayList<>();
         this.player = player;
         generate();
     }
@@ -30,18 +30,18 @@ public class CharacterWheel {
     public void generate() {
         ArrayList<CharacterNode> curNodeRing = new ArrayList<>(); // the nodes in the current layer.
         
-        ArrayList<CharacterTree> trees = new ArrayList<>();
+        
         
         for (int i = 0; i < 5; i++) {
             trees.add(new CharacterTree(game.registry.treeGenerator.generate()));
         }
         
-        for (int i = 0; i < 20; i++) {
-            for (CharacterTree tree : trees) {
-                for (int j = 0; j <= i; j++) {
-                    CharacterNode node = tree.definition.nodeGenerator.generate(tree);
-                    curNodeRing.add(node);
-                    tree.curLayerNodes.add(node);
+        for (int i = 0; i < 20; i++) { //for each layer
+            for (CharacterTree tree : trees) { //for each tree
+                for (int j = 0; j <= i; j++) { //for each node
+                    CharacterNode node = tree.definition.nodeGenerator.generate(tree); ///generate the node
+                    curNodeRing.add(node); //add the node to our temporary list of nodes for this layer
+                    tree.curLayerNodes.add(node); //add the node to its tree
                 }
                 tree.newLayer(i+2);
             }
@@ -63,16 +63,24 @@ public class CharacterWheel {
     
     }
     
+    public static enum GoalType {
+        ABILITY, ABILITY_BOOST, PASSIVE, STAT, ONETIME;
+    }
+    
     public class CharacterTree {
         
         public ArrayList<CharacterNode> prevLayerNodes;
         public ArrayList<CharacterNode> curLayerNodes; //the nodes in this specific tree.
+        public ArrayList<CharacterNode> nodes;
+        public ArrayList<Goal> goals;
         public int layerSize;
         public CharacterTreeDef definition;
         
         public CharacterTree(CharacterTreeDef definition) {
             this.definition = definition;
             curLayerNodes = new ArrayList<>();
+            nodes = new ArrayList<>();
+            goals = new ArrayList<>();
             newLayer(1);
         }
         
@@ -92,6 +100,30 @@ public class CharacterWheel {
         
         public Creature getCreature() {
             return player.getCreature();
+        }
+        
+        public class CharacterCluster {
+
+        }
+
+        public class AbilityCluster extends CharacterCluster {
+
+        }
+
+        public class Goal {
+            public GoalType type;
+            public CharacterTreeDef.Focus focus;
+            public ArrayList<CharacterTreeDef.Detail> details;
+            public boolean fulfilled;
+            public int count;
+
+            public Goal(GoalType type, CharacterTreeDef.Focus focus) {
+                this.type = type;
+                this.focus = focus;
+                details = new ArrayList<>();
+                fulfilled = false;
+                count = 0;
+            }
         }
         
     }

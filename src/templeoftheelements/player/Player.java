@@ -13,6 +13,7 @@ import templeoftheelements.item.Item;
 import static templeoftheelements.TempleOfTheElements.PIXELS_PER_METER;
 import static templeoftheelements.TempleOfTheElements.game;
 import static templeoftheelements.TempleOfTheElements.rotate;
+import templeoftheelements.collision.Room;
 import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.display.HUD;
 import templeoftheelements.display.Screen;
@@ -55,6 +56,7 @@ public class Player implements Controller {
         leftClick = new SelectIcon(new Vec2(200, 50), 100, 100);
         hud.addIcon(leftClick);
         refactorHUD();
+        characterPoints += 3;
     }
     
     public HashSet<Action> getActions() {
@@ -203,9 +205,22 @@ public class Player implements Controller {
 
     public void gainExperience(int experience) {
         this.experience += experience;
-        if (this.experience >= level * level * 100) {
+        while (this.experience >= level * level * 100) {
             level++;
             characterPoints++;
+        }
+    }
+    
+    public void roomCleared(Room room) {
+        try {
+            creature.getStat("Stamina").set(creature.getScore("Max Stamina"));
+            creature.getStat("Mana").modifyBase(creature.getScore("Mana Regen"));
+            if (creature.getScore("Mana")> creature.getScore("Max Mana")) creature.getStat("Mana").set(creature.getScore("Max Mana"));
+            creature.getStat("HP").modifyBase(creature.getScore("HP Regen"));
+            if (creature.getScore("HP")> creature.getScore("Max HP")) creature.getStat("HP").set(creature.getScore("Max HP"));
+            gainExperience(room.experience);
+        } catch (NoSuchStatException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

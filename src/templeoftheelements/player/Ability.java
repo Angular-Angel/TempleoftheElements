@@ -13,4 +13,6 @@ public interface Ability {
     
     public String getDescription();
     
+    public Ability clone();
+    
 }

@@ -4,6 +4,7 @@ package templeoftheelements.player;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import stat.Stat;
+import stat.StatContainer;
 import stat.Trait;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
@@ -14,11 +15,11 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public abstract class Action extends Trait {
+public abstract class Action extends Trait implements Ability {
 
     private int cooldown;
     
-    public Action(String name, HashMap<String, Stat> stats) {
+    public Action(String name, StatContainer stats) {
         super(name, stats);
         cooldown = 0;
     }
@@ -52,5 +53,7 @@ public abstract class Action extends Trait {
     public void setCooldown(int cooldown) {
         this.cooldown = cooldown;
     }
+    
+    public abstract Ability clone();
     
 }

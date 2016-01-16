@@ -2,7 +2,7 @@
     {
         "Name" : "Spear",
         "Type" : "Weapon Definition",
-        "Sprite" : ["Items.png", 36, 0, 36, 36, 2, 2],
+        "Sprite" : ["Sprites.png", 36, 330, 34, 34, 2, 2],
         "Level" : 1,
         "Rarity": 1,
         "Stats" : [["Weight", 10], ["Durability", 8], ["Spear"], ["Two Handed"], ["Size", 0.5]],
@@ -21,7 +21,7 @@
     {
         "Name" : "Longsword",
         "Type" : "Weapon Definition",
-        "Sprite" : ["Items.png", 36, 36, 36, 36, 2, 2],
+        "Sprite" : ["Sprites.png", 106, 330, 34, 34, 2, 2],
         "Level" : 1,
         "Rarity": 5,
         "Stats" : [["Weight", 10], ["Durability", 8], ["Sword"], ["One Handed"], ["Size", 0.5]],
@@ -40,7 +40,7 @@
     {
         "Name" : "Axe",
         "Type" : "Weapon Definition",
-        "Sprite" : [0.5],
+        "Sprite" : ["Sprites.png", 141, 330, 34, 34, 2, 2],
         "Level" : 1,
         "Rarity": 5,
         "Stats" : [["Weight", 10], ["Durability", 8], ["Axe"], ["One Handed"], ["Size", 0.5]],
@@ -54,7 +54,7 @@
     {
         "Name" : "Dagger",
         "Type" : "Weapon Definition",
-        "Sprite" : [0.5],
+        "Sprite" : ["Sprites.png", 176, 330, 34, 34, 2, 2],
         "Level" : 1,
         "Rarity": 5,
         "Stats" : [["Weight", 3], ["Durability", 4], ["Dagger"], ["One Handed"], ["Size", 0.2]],

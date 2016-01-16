@@ -3,6 +3,8 @@ package templeoftheelements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import stat.NoSuchStatException;
 import stat.NumericStat;
@@ -10,6 +12,7 @@ import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.item.ItemDrop;
+import templeoftheelements.player.Ability;
 
 /**
  *
@@ -19,14 +22,19 @@ import templeoftheelements.item.ItemDrop;
 
 public class CreatureDefinition extends StatContainer {
     
-    private String name;
-    private Controller controllerType;
-    private Renderable sprite;
+    public String name;
+    public Controller controllerType;
+    public Renderable sprite;
     
     public ArrayList<BodyPartDefinition> bodyParts;
     private HashMap<String, Float> resistances;
     public ArrayList<ItemDrop> itemDrops;
-    public ArrayList<Object> abilities;
+    public ArrayList<Ability> abilities;
+    public ArrayList<Detail> details;
+    
+    public static enum Detail {
+        Tough, Strong, Fast, Frenzied, Spined, Armored, Enduring, Regenerating;
+    }
     
     public CreatureDefinition(String name) {
         this.name = name;
@@ -34,13 +42,14 @@ public class CreatureDefinition extends StatContainer {
         resistances = new HashMap<>();
         itemDrops = new ArrayList<>();
         abilities = new ArrayList<>();
+        details = new ArrayList<>();
     }
     
     public void addResistance(String type, float f) {
         resistances.put(type, f);
     }
     
-    public void addAbility(Object a) {
+    public void addAbility(Ability a) {
         abilities.add(a);
     }
     
@@ -50,6 +59,9 @@ public class CreatureDefinition extends StatContainer {
         for (BodyPartDefinition b : bodyParts) ret.addBodyPart(b.name, b.position);
         for (String s : resistances.keySet()) ret.addResistance(s, resistances.get(s));
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
+        for (Ability a :abilities) {
+            ret.addAbility(a.clone());
+        }
         return ret;
     }
     

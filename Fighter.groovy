@@ -66,6 +66,7 @@ class Fighter implements Controller {
     public void step(float dt) {
         Vec2 pos = game.player.getCreature().getPosition();
         Vec2 position = getCreature().getPosition();
+        accel = new Vec2();
         try {
             if (VecMath.dist(position, pos) < getCreature().getScore("Sight Range")) {
                 accel = VecMath.direction(position, pos);
@@ -94,17 +95,18 @@ class Fighter implements Controller {
                 if (angle < -45 || angle > 45 ) {
                     accel.x = 0;
                     accel.y = 0;
-                    
-                } 
+                } else {
+                    int x = pos.x - getCreature().getPosition().x;
+                    int y = pos.y - getCreature().getPosition().y;
+                    if (Math.sqrt(x * x + y * y) <= 10) attack();
+                }
                 if (angle > 0 ) getCreature().modifyDirection(1);
                     else if (angle < 0) getCreature().modifyDirection(-1);
             }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(BasicAI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int x = pos.x - getCreature().getPosition().x;
-        int y = pos.y - getCreature().getPosition().y;
-        if (Math.sqrt(x * x + y * y) <= 10) attack();
+        
     }
     
     public void attack() {

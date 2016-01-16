@@ -30,6 +30,7 @@ public class Room implements Renderable, Collidable, Actor {
     private ArrayList<Object> stuff;
     private boolean cleared;
     private Texture floor;
+    public int experience;
     
     public Room(int width, int height, Texture texture) {
         cleared = false;
@@ -77,6 +78,7 @@ public class Room implements Renderable, Collidable, Actor {
             }
         }
         cleared = true;
+        game.player.roomCleared(this);
         return;
     }
     

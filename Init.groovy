@@ -18,7 +18,8 @@ class Initiator implements InitScript {
 
     public void Init() {
         
-        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("MonsterGenerator.groovy")));
+//        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("Wanderer.groovy"));
         game.registry.loadControllerScript(new File("Fighter.groovy"));
@@ -26,6 +27,7 @@ class Initiator implements InitScript {
         Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
         game.registry.loadTextureRectangle(new File("Icons.png"));
         game.registry.loadTextureRectangle(new File("Items.png"));
+        game.registry.loadTextureRectangle(new File("Sprites.png"));
         game.registry.loadTexture2D(new File("Stone Floor.png"));
         game.registry.readRaw(new File("MagicEffects.json"));
         game.registry.readRaw(new File("Weapons.json"));
@@ -60,6 +62,8 @@ class Initiator implements InitScript {
         Consumable consumable = new Consumable("Mana Crystal", effect, new VectorCircle(0.4f), 1);
         consumable.addStat("Size", new NumericStat(0.3f));
         game.room.add(consumable);
+        
+        game.player.gainExperience(999999);
         
         game.room.enter();
         

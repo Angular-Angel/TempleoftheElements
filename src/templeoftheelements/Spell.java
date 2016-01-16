@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import stat.NoSuchStatException;
 import stat.Stat;
+import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
@@ -40,11 +41,11 @@ public abstract class Spell extends Action implements Ability {
     public ArrayList<Detail> details;
 
     public Spell(String name, Renderable sprite) {
-        this(name, sprite, new HashMap<>());
+        this(name, sprite, new StatContainer());
     }
     
     
-    public Spell(String name, Renderable sprite, HashMap<String, Stat> stats) {
+    public Spell(String name, Renderable sprite, StatContainer stats) {
         super(name, stats);
         this.sprite = sprite;
         this.details = new ArrayList<>();

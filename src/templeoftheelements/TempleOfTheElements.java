@@ -230,16 +230,16 @@ public final class TempleOfTheElements extends Game {
                 if (action != GLFW.GLFW_PRESS) return;
                 String creatureName;
                 switch (key) {
-                    case GLFW.GLFW_KEY_0: creatureName = "Wanderer 0"; break;
-                    case GLFW.GLFW_KEY_1: creatureName = "Wanderer 1"; break;
-                    case GLFW.GLFW_KEY_2: creatureName = "Wanderer 2"; break;
-                    case GLFW.GLFW_KEY_3: creatureName = "Wanderer 3"; break;
-                    case GLFW.GLFW_KEY_4: creatureName = "Wanderer 4"; break;
-                    case GLFW.GLFW_KEY_5: creatureName = "Wanderer 5"; break;
-                    case GLFW.GLFW_KEY_6: creatureName = "Wanderer 6"; break;
-                    case GLFW.GLFW_KEY_7: creatureName = "Wanderer 7"; break;
-                    case GLFW.GLFW_KEY_8: creatureName = "Wanderer 8"; break;
-                    case GLFW.GLFW_KEY_9: creatureName = "Wanderer 9"; break;
+//                    case GLFW.GLFW_KEY_0: creatureName = "Wanderer 0"; break;
+//                    case GLFW.GLFW_KEY_1: creatureName = "Wanderer 1"; break;
+//                    case GLFW.GLFW_KEY_2: creatureName = "Wanderer 2"; break;
+//                    case GLFW.GLFW_KEY_3: creatureName = "Wanderer 3"; break;
+//                    case GLFW.GLFW_KEY_4: creatureName = "Wanderer 4"; break;
+//                    case GLFW.GLFW_KEY_5: creatureName = "Wanderer 5"; break;
+//                    case GLFW.GLFW_KEY_6: creatureName = "Wanderer 6"; break;
+//                    case GLFW.GLFW_KEY_7: creatureName = "Wanderer 7"; break;
+//                    case GLFW.GLFW_KEY_8: creatureName = "Wanderer 8"; break;
+//                    case GLFW.GLFW_KEY_9: creatureName = "Wanderer 9"; break;
                     default:
                         creatureName = null;
                         player.keyEvent(key, action, mods);

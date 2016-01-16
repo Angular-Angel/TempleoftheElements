@@ -5,7 +5,9 @@ import templeoftheelements.item.AttackDefinition;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import stat.Stat;
+import stat.StatContainer;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.player.Ability;
 
 /**
  *
@@ -18,14 +20,14 @@ public class MissileSpell extends Spell {
     private AttackDefinition missile;
     
     public MissileSpell(AttackDefinition attack) {
-        this(attack.getName(), attack, new HashMap<>());
+        this(attack.getName(), attack, new StatContainer());
     }
     
     public MissileSpell(String name, AttackDefinition attack) {
-        this(name, attack, new HashMap<>());
+        this(name, attack, new StatContainer());
     }
     
-    public MissileSpell(String name, AttackDefinition attack, HashMap<String, Stat> stats) {
+    public MissileSpell(String name, AttackDefinition attack, StatContainer stats) {
         super(name, attack.getSprite(), stats);
         missile = attack;
     }
@@ -44,6 +46,11 @@ public class MissileSpell extends Spell {
 
     public String getDescription() {
         return "When cast, shoots a missile.";
+    }
+
+    @Override
+    public Ability clone() {
+        return new MissileSpell(this.getName(), missile, this);
     }
     
 }
