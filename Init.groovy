@@ -18,6 +18,7 @@ class Initiator implements InitScript {
 
     public void Init() {
         
+        game.registry.readRaw(new File("StatDescriptions.json"));
         game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("MonsterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));

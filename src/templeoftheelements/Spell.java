@@ -21,6 +21,14 @@ public abstract class Spell extends Action implements Ability {
     
     public static enum Detail {
         
+        //Usage
+        SPAMMABLE, SITUATIONAL, NONCOMBAT, PASSIVE, CROWD_CONTROL,
+        BURST, FINISHER, 
+        
+        //Costs
+        NORMAL_MANA_COST, HIGH_MANA_COST, PERMANENT_STAT_COST, 
+        TEMPORARY_STAT_COST, COSTS_HP, MATERIAL_COMPONENT, COSTS_STAMINA,
+        
         //targeting types
         PROJECTILE, AREA_TARGET, ENEMY_TARGET, SELF_TARGET, MINION,
 
@@ -31,9 +39,10 @@ public abstract class Spell extends Action implements Ability {
 
         //rare effects
         TERRAIN_ALTERATION, TELEPORTATION, ITEM_CREATION, ITEM_ALTERATION, 
-        PERMANENT_STAT_COST, TEMPORARY_STAT_COST, MIND_CONTROL, CONFUSION,
-        PETRIFICATION, MULTI_TARGET, HOMING, DIVINATION, HEAL, MANA_DRAIN, 
+        MIND_CONTROL, CONFUSION, PETRIFICATION, MULTI_TARGET, HOMING, DIVINATION, HEAL, MANA_DRAIN, 
         EXHAUSTION;
+        
+        //
 
     }
     

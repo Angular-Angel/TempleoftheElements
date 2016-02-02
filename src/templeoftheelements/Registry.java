@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import stat.StatDescriptor;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.Sprite;
 import templeoftheelements.display.VectorCircle;
@@ -48,6 +49,7 @@ public class Registry extends RawReader {
     public HashMap<String, ItemGenerator> itemPools;
     public HashMap<String, Element> elements;
     public HashMap<String, StatusEffect> statusEffects;
+    public HashMap<String, StatDescriptor> statDescriptors;
     public ArrayList<Element> elementList;
     public ArrayList<MagicItemDef> magicEffects;
     public ArrayList<CreatureDefinition> creatureList;
@@ -66,6 +68,7 @@ public class Registry extends RawReader {
         elementList = new ArrayList<>();
         spriteSheets = new HashMap<>();
         statusEffects = new HashMap<>();
+        statDescriptors = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
         creatureTypeGenerator = new CreatureTypeGenerator();
     }
@@ -83,6 +86,9 @@ public class Registry extends RawReader {
                     case "Element": readElement((JSONObject) obj);
                         break;
                    case "Weapon Definition": readWeaponDef((JSONObject) obj);
+                       break;
+                   case "Stat Description": StatDescriptor stat = readStatDescriptor((JSONObject) obj);
+                       statDescriptors.put(stat.name, stat);
                        break;
                    case "Magic Item Definition":
                    case "Magic Equipment Definition":
@@ -124,10 +130,16 @@ public class Registry extends RawReader {
             ret.resistances.put((String) resist.get(0), ((Double) resist.get(1)).floatValue());
         }
         
-        ja = (JSONArray) obj.get("Attributes");
+        ja = (JSONArray) obj.get("PrimaryAttributes");
         if (ja != null)
         for (Object o : ja) {
-            ret.attributes.add((String) o);
+            ret.primaryAttributes.add(statDescriptors.get((String) o));
+        }
+        
+        ja = (JSONArray) obj.get("SecondaryAttributes");
+        if (ja != null)
+        for (Object o : ja) {
+            ret.secondaryAttributes.add(statDescriptors.get((String) o));
         }
         
         ja = (JSONArray) obj.get("Details");

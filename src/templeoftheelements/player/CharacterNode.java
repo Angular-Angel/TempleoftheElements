@@ -21,6 +21,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     protected CharacterTree tree;
     protected boolean acquired;
     protected Requirement requirements;
+    protected String description;
     protected final boolean free; //is this gem acquired automatically?
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {

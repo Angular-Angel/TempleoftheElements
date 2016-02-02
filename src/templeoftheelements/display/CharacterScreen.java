@@ -23,12 +23,14 @@ import templeoftheelements.player.Inventory;
 public class CharacterScreen extends Screen {
     
     private Vec2 view;
+    private float angle;
     private CharacterWheel wheel;
     private StatScreen screen;
     
     public CharacterScreen(CharacterWheel wheel) {
         view = new Vec2();
         this.wheel = wheel;
+        angle  = 0;
         screen = new StatScreen(0, 0, 0, 0);
     }
 
@@ -38,6 +40,7 @@ public class CharacterScreen extends Screen {
         GL11.glPushMatrix();
         GL11.glTranslated(game.res.width/2, game.res.height/2, 0);
         GL11.glTranslated(view.x, view.y, 0);
+        //GL11.glRotatef(angle, 0, 0, 1);
         for (CharacterNode r : wheel.nodes) {
             r.draw();
         }
@@ -71,6 +74,11 @@ public class CharacterScreen extends Screen {
         if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_A)) view.x += 5;
         if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_S)) view.y += 5;
         if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_D)) view.x -= 5;
+        if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_Q)) angle -= 0.5;
+        if (game.keyboard.isKeyDown(GLFW.GLFW_KEY_E)) angle += 0.5;
+        
+        if (angle > 360) angle -= 360;
+        if (angle < 0) angle += 360;
     }
 
     @Override

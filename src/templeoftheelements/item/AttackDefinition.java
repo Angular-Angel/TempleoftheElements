@@ -65,7 +65,7 @@ public class AttackDefinition extends Trait {
                 float reach = getScore("Reach") + attacker.getScore("Size")/2;
                 attack = new MeleeAttack(attacker, this, shape, dir, reach);
                 ((MeleeAttack) attack).move(attacker.getPosition(), 0);
-                attack.addStat("Damage", new NumericStat(attacker.getScore("Damage") 
+                attack.addStat("Damage", new NumericStat(attacker.getScore("Physical Damage") 
                         * getScore("Damage Multiplier")));
             }
         } catch (NoSuchStatException ex) {

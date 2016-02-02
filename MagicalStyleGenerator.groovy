@@ -8,7 +8,8 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.CharacterWheel.CharacterTree.Goal;
+import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
+import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 
 /**
  *
@@ -21,6 +22,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
     
     //an unused method from the interface. Sloppy, I know.
     public CharacterTreeDef generate(Object o) {
+//        CharacterWheel wheel = (CharacterWheel) o;
         throw new UnsupportedOperationException();
     }
     
@@ -44,16 +46,16 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         String name = "Path of " + elements.get(0).name + " and " + elements.get(1).name;
         
         //a list of possible attributes for the style to be based off of.
-        ArrayList<String> attributePool = new ArrayList<>();
+        ArrayList<StatDescriptor> attributePool = new ArrayList<>();
         
         //the three basic mental attributes.
-        attributePool.add("Intelligence");
-        attributePool.add("Spirit");
-        attributePool.add("Perception");
+        attributePool.add(game.registry.statDescriptors.get("Intelligence"));
+        attributePool.add(game.registry.statDescriptors.get("Spirit"));
+        attributePool.add(game.registry.statDescriptors.get("Perception"));
         
         //adds the attributes associated with each element.
         for (Element e : elements) {
-            attributePool.addAll(e.attributes);
+            attributePool.addAll(e.primaryAttributes);
         }
         
         //generates a new CharacterTreeDef to hold all this information.
@@ -76,11 +78,13 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         
         //first, pick out a primary focus
         ret.primaryFocus = focusPool.get(random.nextInt(focusPool.size()));
+        System.out.println(ret.primaryFocus);
         
         //then pick out a secondary focus
         ret.secondaryFocuses.add(focusPool.get(random.nextInt(focusPool.size())));
         
-        String attribute = attributePool.get(random.nextInt(attributePool.size()));
+        //pick out attributes
+        StatDescriptor attribute = attributePool.get(random.nextInt(attributePool.size()));
         while(attributePool.remove(attribute));
         ret.primaryAttributes.add(attribute);
         attribute = attributePool.get(random.nextInt(attributePool.size()));
@@ -98,16 +102,28 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         
         ret.details.add(detail);
         
+        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Mana"));
         
         if (ret.details.contains(CharacterTreeDef.Detail.SPEED_BASED)) 
-        ret.secondaryAttributes.add("Dexterity");
+        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Speed"));
         
         if (ret.details.contains(CharacterTreeDef.Detail.TOUGHNESS_BASED) ||
             ret.details.contains(CharacterTreeDef.Detail.STAMINA_BASED)) 
-        ret.secondaryAttributes.add("Constitution");
+        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Stamina"));
         
         if (ret.details.contains(CharacterTreeDef.Detail.COSTS_HP)) 
-        ret.secondaryAttributes.add("Max HP");
+        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added HP"));
+        
+        attributePool.clear();
+        for (Element e : elements) {
+            attributePool.addAll(e.secondaryAttributes);
+        }
+            
+        while (ret.secondaryAttributes.size() < 3) {
+            attribute = attributePool.get(random.nextInt(attributePool.size()));
+            while(attributePool.remove(attribute));
+            ret.secondaryAttributes.add(attribute);
+        }
         
         ret.nodeGenerator = new NodeGenerator();
         
@@ -118,20 +134,6 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         
         public CharacterNode generate() {
             throw new UnsupportedOperationException();
-        }
-        
-        public void setGoals(CharacterWheel.CharacterTree tree) {
-            //First, scan tree and see what it already has. 
-            //Actually no just kidding. Maybe we'll implement this later.
-            
-            //First, we want a basic ability. 
-//            switch (tree.definition.primaryFocus) {
-//                case Goal.GoalType.OFFENSE:
-//                    tree.goals.add(new Goal(Goal.GoalType.ABILITY, tree.definition.primaryFocus));
-//                    break;
-//            }
-            
-            
         }
         
         public CharacterNode generate(Object o) {
@@ -156,7 +158,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             //decide whether the node will give a stat boost or a new ability.
             if (random.nextInt(5) > 0) {
                 CharacterNode node = new CharacterNode(req, tree);
-                String stat;
+                StatDescriptor stat;
 
                 //if the tree has secondary stats, we have a 1 in 4 chance of picking one of them, otherwise
                 //we pick a primary stat node
@@ -165,7 +167,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 else stat = tree.definition.primaryAttributes.get(random.nextInt(tree.definition.primaryAttributes.size()));
 
                 //add the chosen stat to the node, and return it.
-                node.addStat(stat, new NumericStat(10));
+                node.addStat(stat.name, new NumericStat(stat.increase));
 
                 return node;
             } else {
@@ -196,7 +198,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                     name += " Bolt";
                     missile = new AttackDefinition(name, new VectorCircle(1), element.name);
                     missile.addStat("Ranged Attack", new BinaryStat());
-                    missile.addStat("Damage", new NumericStat(12));
+                    missile.addStat("Damage", new NumericStat(120));
                     missile.addStat("Size", new NumericStat(0.35));
                     missile.addStat("Speed", new NumericStat(50));
                     break;
@@ -204,7 +206,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                     name += " Blast";
                     missile = new AttackDefinition(name, new VectorCircle(1), element.name);
                     missile.addStat("Ranged Attack", new BinaryStat());
-                    missile.addStat("Damage", new NumericStat(26));
+                    missile.addStat("Damage", new NumericStat(260));
                     missile.addStat("Size", new NumericStat(0.70));
                     missile.addStat("Speed", new NumericStat(50));
                     break;
@@ -212,7 +214,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                     name += " Ball";
                     missile = new AttackDefinition(name, new VectorCircle(1), element.name);
                     missile.addStat("Ranged Attack", new BinaryStat());
-                    missile.addStat("Damage", new NumericStat(30));
+                    missile.addStat("Damage", new NumericStat(300));
                     missile.addStat("Size", new NumericStat(1));
                     missile.addStat("Speed", new NumericStat(50));
                     break;
