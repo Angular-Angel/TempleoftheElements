@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 
@@ -78,7 +79,6 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         
         //first, pick out a primary focus
         ret.primaryFocus = focusPool.get(random.nextInt(focusPool.size()));
-        System.out.println(ret.primaryFocus);
         
         //then pick out a secondary focus
         ret.secondaryFocuses.add(focusPool.get(random.nextInt(focusPool.size())));
@@ -126,64 +126,72 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         }
         
         ret.nodeGenerator = new NodeGenerator();
+        ret.clusterGenerator = new ClusterGenerator();
         
         return ret;
     }
     
-    public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
+    public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> {
         
-        public CharacterNode generate() {
+    
+        public ClusterDefinition generate() {
             throw new UnsupportedOperationException();
         }
         
-        public CharacterNode generate(Object o) {
-            CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) o;
-        
-            double num = (tree.curLayerNodes.size() / (double) tree.layerSize) * tree.prevLayerNodes.size();
-            Requirement req;
+        public ClusterDefinition generate(Object o) {
             
-            ArrayList<CharacterNode> prevNodes = new ArrayList<>();
-            if (tree.prevLayerNodes.size() == 0) {
-                req = new AndRequirement();
-            } else if (num < tree.prevLayerNodes.size() - 1) {
-                req = new OrRequirement(tree.prevLayerNodes.get((int) num), tree.prevLayerNodes.get(((int) num) + 1));
-                prevNodes.add(tree.prevLayerNodes.get((int) num));
-                prevNodes.add(tree.prevLayerNodes.get(((int) num) + 1));
-            } else {
-                req = tree.prevLayerNodes.get((int) num);
-                prevNodes.add(tree.prevLayerNodes.get((int) num));
-            }
+            CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) o;
+            
+            //first, generate the capstone. 
+            
+            ClusterDefinition ret = new ClusterDefinition();
+            
+            //The stats our cluster will feature.
+            StatDescriptor stat1, stat2;
 
+            //the pool of attributes to draw from.
+            ArrayList<StatDescriptor> attributePool = new ArrayList<>();
 
-            //decide whether the node will give a stat boost or a new ability.
-            if (random.nextInt(5) > 0) {
-                CharacterNode node = new CharacterNode(req, tree);
-                StatDescriptor stat;
+            attributePool.addAll(tree.definition.secondaryAttributes);
 
-                //if the tree has secondary stats, we have a 1 in 4 chance of picking one of them, otherwise
-                //we pick a primary stat node
-                if (tree.definition.secondaryAttributes.size() > 0 && random.nextInt(4) > 2)
-                    stat = tree.definition.secondaryAttributes.get(random.nextInt(tree.definition.secondaryAttributes.size()));
-                else stat = tree.definition.primaryAttributes.get(random.nextInt(tree.definition.primaryAttributes.size()));
+            stat1 = attributePool.get(random.nextInt(attributePool.size()));
+            attributePool.remove(stat1);
 
-                //add the chosen stat to the node, and return it.
-                node.addStat(stat.name, new NumericStat(stat.increase));
+            stat2 = attributePool.get(random.nextInt(attributePool.size()));
 
-                return node;
-            } else {
-                //oh, we're not doing a node? Let's do an ability instead then.
-                Ability ability;
-
-                if (true) {
-                    ability = generateMissile(tree);
-                }
-
-                AbilityNode node = new AbilityNode(req, tree, ability);
+            NodeDefinition bulk = tree.definition.newNode(tree);
+            bulk.stats.add(stat1);
+            ret.bulk.add(bulk);
+            
+            bulk = tree.definition.newNode(tree);
+            bulk.stats.add(stat2);
+            ret.bulk.add(bulk);
+            
+            //now for the capstone.
+            if (random.nextInt(5) == 0) {
+                //generate ability
                 
-                return node;
+                NodeDefinition capStone = tree.definition.newNode(tree);
+                
+                capStone.ability = new AbilityDefinition(generateMissile(tree));
+                
+                ret.capstone = capStone;
+            } else {
+                NodeDefinition capStone = tree.definition.newNode(tree);
+                
+                capStone.stats.add(stat1);
+                capStone.stats.add(stat2);
+                
+                ret.capstone = capStone;
             }
+            
+            
+            
+            
+            
+            return ret;
         }
-    
+        
         public MissileSpell generateMissile(CharacterWheel.CharacterTree tree) {
             String name;
 
@@ -224,6 +232,61 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             ret.addStat("Mana Cost", new NumericStat(4));
 
             return ret;
+        }
+        
+        public ClusterDefinition modify(ClusterDefinition cluster) {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean isApplicable(ClusterDefinition cluster) {
+            throw new UnsupportedOperationException();
+        }
+    
+    }
+    
+    public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
+        
+        public CharacterNode generate() {
+            throw new UnsupportedOperationException();
+        }
+        
+        public CharacterNode generate(Object o) {
+            NodeDefinition nodeDef = (NodeDefinition) o;
+            CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree;
+        
+            double num = (tree.curLayerNodes.size() / (double) tree.layerSize) * tree.prevLayerNodes.size();
+            Requirement req;
+            
+            ArrayList<CharacterNode> prevNodes = new ArrayList<>();
+            if (tree.prevLayerNodes.size() == 0) {
+                req = new AndRequirement();
+            } else if (num < tree.prevLayerNodes.size() - 1) {
+                req = new OrRequirement(tree.prevLayerNodes.get((int) num), tree.prevLayerNodes.get(((int) num) + 1));
+                prevNodes.add(tree.prevLayerNodes.get((int) num));
+                prevNodes.add(tree.prevLayerNodes.get(((int) num) + 1));
+            } else {
+                req = tree.prevLayerNodes.get((int) num);
+                prevNodes.add(tree.prevLayerNodes.get((int) num));
+            }
+
+
+            //decide whether the node will give a stat boost or a new ability.
+             if (nodeDef.ability == null) {
+                CharacterNode node = new CharacterNode(req, tree);
+                
+                for (StatDescriptor stat : nodeDef.stats) {
+                
+                    node.addStat(stat.name, new NumericStat(stat.increase));
+                }
+
+                return node;
+            } else {
+               
+                AbilityNode node = new AbilityNode(req, tree, nodeDef.ability.ability);
+                
+                return node;
+            }
+            
         }
     }
     

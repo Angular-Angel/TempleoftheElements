@@ -8,6 +8,8 @@ import java.util.HashSet;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
+import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 
 /**
  *
@@ -19,6 +21,7 @@ public class CharacterWheel {
     private Player player;
     public ArrayList<CharacterNode> nodes; //all the nodes in the character wheel.
     public ArrayList<CharacterTree> trees; //The list of trees on the character wheel.
+    public ArrayList<ArrayList<CharacterNode>> nodeWheel;
     public int statNodes = 0;
     public int abilityNodes = 0;
     public int activeNodes = 0;
@@ -27,6 +30,7 @@ public class CharacterWheel {
     public CharacterWheel(Player player) {
         nodes = new ArrayList<>();
         trees = new ArrayList<>();
+        nodeWheel = new ArrayList<>();
         this.player = player;
         generate();
     }
@@ -42,29 +46,64 @@ public class CharacterWheel {
         
         
         
-        for (int i = 1; i <= 2; i++) { //for each layer
+        for (int i = 0; i < 2; i++) { //for each layer
             for (CharacterTree tree : trees) { //for each tree
-                tree.newLayer(i);
                 for (int j = 0; j <= i; j++) { //for each cluster
-//                    CharacterNode node = tree.definition.nodeGenerator.generate(tree); ///generate the node
-//                    curNodeRing.add(node); //add the node to our temporary list of nodes for this layer
-//                    tree.curLayerNodes.add(node); //add the node to its tree
+                    int k = (i)*5;
+                    //generate the cluster definition
+                    ClusterDefinition cluster = tree.definition.clusterGenerator.generate(tree); 
+                    
+                    //generate the lead-in node
+                    NodeDefinition nodeDef = cluster.bulk.get(0);
+                    
+                    CharacterNode node = tree.definition.nodeGenerator.generate(nodeDef);
+                    tree.curLayerNodes.add(node);
+                    nodeWheel.add(new ArrayList<>());
+                    nodeWheel.get(k).add(node);
+                    k++;
+                    tree.newLayer();
+                    
+                    //generate the bulk nodes
+                    for (int l = 0; l < cluster.length; l++) {
+                        for (NodeDefinition bulkDef : cluster.bulk) {
+                            node = tree.definition.nodeGenerator.generate(bulkDef);
+                            tree.curLayerNodes.add(node);
+                            nodeWheel.add(new ArrayList<>());
+                            nodeWheel.get(k).add(node);
+                        }
+                        k++;
+                        tree.newLayer();
+                    }
+                    
+                    //generate the capstone
+                     node = tree.definition.nodeGenerator.generate(cluster.capstone);
+                    tree.curLayerNodes.add(node);
+                    nodeWheel.add(new ArrayList<>());
+                    nodeWheel.get(k).add(node);
+                    tree.newLayer();
                 }
 //                
             }
-            double angle, diff = Math.toRadians(360/ (double) curNodeRing.size()), offset;
+            
+        }
+        
+        for (int i = 0; i < nodeWheel.size(); i++) {
+            ArrayList<CharacterNode> layer = nodeWheel.get(i);
+            double angle, diff = Math.toRadians(360/ (double) layer.size()), offset;
             offset = -0.5 * diff * i;
-            for (int j = 0; j < curNodeRing.size(); j++) {
-                CharacterNode node = curNodeRing.get(j);
+            for (int j = 0; j < layer.size(); j++) {
+                CharacterNode node = layer.get(j);
                 angle = (diff * j) + offset;
                 Vec2 position = new Vec2();
                 position.x = (float) (65 * (i + 1) * Math.sin(angle));
                 position.y = (float) (65 * (i + 1) * Math.cos(angle));
                 node.setPosition(position);
                 nodes.add(node);
+                System.out.println("jytyujft");
             }
-            curNodeRing.clear();
+            
         }
+        
         
         
     
@@ -83,17 +122,17 @@ public class CharacterWheel {
             this.definition = definition;
             curLayerNodes = new ArrayList<>();
             nodes = new ArrayList<>();
-            newLayer(1);
+            newLayer();
         }
         
         public CharacterTree(CharacterTreeDef definition, CharacterNode rootNode) {
             this.definition = definition;
             curLayerNodes = new ArrayList<>();
             curLayerNodes.add(rootNode);
-            newLayer(1);
+            newLayer();
         }
         
-        public void newLayer(int clusters) {
+        public void newLayer() {
             prevLayerNodes = curLayerNodes;
             curLayerNodes = new ArrayList<>();
         }

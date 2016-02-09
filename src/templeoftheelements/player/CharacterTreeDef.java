@@ -37,6 +37,7 @@ public class CharacterTreeDef {
     public ArrayList<StatDescriptor> primaryAttributes;
     public ArrayList<StatDescriptor> secondaryAttributes;
     public ArrayList<Element> elements;
+    public ProceduralGenerator<ClusterDefinition> clusterGenerator;
     public ProceduralGenerator<CharacterNode> nodeGenerator;
     public ArrayList<Ability> abilities;
     public ArrayList<NodeDefinition> capstones;
@@ -51,20 +52,42 @@ public class CharacterTreeDef {
         abilities = new ArrayList<>();
     }
     
-    public static class NodeDefinition extends StatContainer {
+    public static class AbilityDefinition {
+        public ArrayList<Spell.Detail> details;
+        public Ability ability;
+        
+        public AbilityDefinition(Ability ability) {
+            this.ability = ability;
+            details = new ArrayList<>();
+        }
+        
+    }
+    
+    public class NodeDefinition {
         public String description;
         public boolean free;
-        public Ability ability;
+        public AbilityDefinition ability;
+        public ArrayList<StatDescriptor> stats;
+        public CharacterWheel.CharacterTree tree;
+        
+        public NodeDefinition() {
+            stats = new ArrayList<>();
+        }
+    }
+    
+    public NodeDefinition newNode(CharacterWheel.CharacterTree tree) {
+        NodeDefinition ret = new NodeDefinition();
+        ret.tree = tree;
+        return ret;
     }
 
     public static class ClusterDefinition {
         public NodeDefinition capstone;
         public ArrayList<NodeDefinition> bulk;
+        public int layer;
         public int length;
         
-        public ClusterDefinition(NodeDefinition cap, int length) {
-            capstone = cap;
-            this.length = length;
+        public ClusterDefinition() {
             bulk = new ArrayList<>();
         }
     }
