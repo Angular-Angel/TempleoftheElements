@@ -160,10 +160,12 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             stat2 = attributePool.get(random.nextInt(attributePool.size()));
 
             NodeDefinition bulk = tree.definition.newNode(tree);
+            bulk.requirement = CharacterTreeDef.Requirement.SINGLE;
             bulk.stats.add(stat1);
             ret.bulk.add(bulk);
             
             bulk = tree.definition.newNode(tree);
+            bulk.requirement = CharacterTreeDef.Requirement.SINGLE;
             bulk.stats.add(stat2);
             ret.bulk.add(bulk);
             
@@ -175,18 +177,20 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 
                 capStone.ability = new AbilityDefinition(generateMissile(tree));
                 
+                capStone.requirement = CharacterTreeDef.Requirement.OR;
                 ret.capstone = capStone;
             } else {
                 NodeDefinition capStone = tree.definition.newNode(tree);
                 
                 capStone.stats.add(stat1);
                 capStone.stats.add(stat2);
+                capStone.requirement = CharacterTreeDef.Requirement.OR;
                 
                 ret.capstone = capStone;
             }
             
             
-            
+            ret.length = 3;
             
             
             return ret;
@@ -254,39 +258,51 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             NodeDefinition nodeDef = (NodeDefinition) o;
             CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree;
         
-            double num = (tree.curLayerNodes.size() / (double) tree.layerSize) * tree.prevLayerNodes.size();
             Requirement req;
+            double num = (tree.curLayerNodes.size() / (double) tree.layerSize) * tree.prevLayerNodes.size();
             
-            ArrayList<CharacterNode> prevNodes = new ArrayList<>();
-            if (tree.prevLayerNodes.size() == 0) {
-                req = new AndRequirement();
-            } else if (num < tree.prevLayerNodes.size() - 1) {
-                req = new OrRequirement(tree.prevLayerNodes.get((int) num), tree.prevLayerNodes.get(((int) num) + 1));
-                prevNodes.add(tree.prevLayerNodes.get((int) num));
-                prevNodes.add(tree.prevLayerNodes.get(((int) num) + 1));
-            } else {
-                req = tree.prevLayerNodes.get((int) num);
-                prevNodes.add(tree.prevLayerNodes.get((int) num));
+            switch (nodeDef.requirement) {
+                case CharacterTreeDef.Requirement.OR:
+                    if (tree.prevLayerNodes.size() == 0) {
+                        req = new AndRequirement();
+                    } else if (num < tree.prevLayerNodes.size() - 1) {
+                        req = new OrRequirement(tree.prevLayerNodes.get((int) num), tree.prevLayerNodes.get(((int) num) + 1));
+                    } else if (tree.prevLayerNodes.size() > (int) num) {
+                        req = tree.prevLayerNodes.get((int) num);
+                    } else {
+                        req = tree.prevLayerNodes.get(0);
+                    }
+                    break;
+                case CharacterTreeDef.Requirement.SINGLE:
+                    if (tree.prevLayerNodes.size() == 0) {
+                        req = new AndRequirement();
+                    } else if (tree.curLayerNodes.size() < tree.prevLayerNodes.size()) {
+                        req = tree.prevLayerNodes.get(tree.curLayerNodes.size());
+                    } else if (tree.prevLayerNodes.size() > (int) num) {
+                        req = tree.prevLayerNodes.get((int) num);
+                    } else {
+                        req = tree.prevLayerNodes.get(0);
+                    }
+                    break;
+                default: 
+                    System.out.println(nodeDef.requirement);
             }
 
-
+            CharacterNode node;
+            
             //decide whether the node will give a stat boost or a new ability.
              if (nodeDef.ability == null) {
-                CharacterNode node = new CharacterNode(req, tree);
-                
-                for (StatDescriptor stat : nodeDef.stats) {
-                
-                    node.addStat(stat.name, new NumericStat(stat.increase));
-                }
-
-                return node;
+                node = new CharacterNode(req, tree);
             } else {
-               
-                AbilityNode node = new AbilityNode(req, tree, nodeDef.ability.ability);
-                
-                return node;
+
+                node = new AbilityNode(req, tree, nodeDef.ability.ability);
             }
             
+            for (StatDescriptor stat : nodeDef.stats) {
+                node.addStat(stat.name, new NumericStat(stat.increase));
+            }
+            
+            return node;
         }
     }
     

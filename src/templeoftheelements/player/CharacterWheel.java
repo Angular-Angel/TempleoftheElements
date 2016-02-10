@@ -46,15 +46,16 @@ public class CharacterWheel {
         
         
         
-        for (int i = 0; i < 2; i++) { //for each layer
+        for (int i = 0; i < 1; i++) { //for each layer
             for (CharacterTree tree : trees) { //for each tree
                 for (int j = 0; j <= i; j++) { //for each cluster
-                    int k = (i)*5;
+                    int k = i*5;
                     //generate the cluster definition
                     ClusterDefinition cluster = tree.definition.clusterGenerator.generate(tree); 
                     
                     //generate the lead-in node
                     NodeDefinition nodeDef = cluster.bulk.get(0);
+                    tree.layerSize = 1;
                     
                     CharacterNode node = tree.definition.nodeGenerator.generate(nodeDef);
                     tree.curLayerNodes.add(node);
@@ -64,6 +65,7 @@ public class CharacterWheel {
                     tree.newLayer();
                     
                     //generate the bulk nodes
+                    tree.layerSize = cluster.bulk.size();
                     for (int l = 0; l < cluster.length; l++) {
                         for (NodeDefinition bulkDef : cluster.bulk) {
                             node = tree.definition.nodeGenerator.generate(bulkDef);
@@ -75,8 +77,9 @@ public class CharacterWheel {
                         tree.newLayer();
                     }
                     
-                    //generate the capstone
-                     node = tree.definition.nodeGenerator.generate(cluster.capstone);
+                    //generate the capstonecluster.bulk
+                    tree.layerSize = 1;
+                    node = tree.definition.nodeGenerator.generate(cluster.capstone);
                     tree.curLayerNodes.add(node);
                     nodeWheel.add(new ArrayList<>());
                     nodeWheel.get(k).add(node);
@@ -90,7 +93,7 @@ public class CharacterWheel {
         for (int i = 0; i < nodeWheel.size(); i++) {
             ArrayList<CharacterNode> layer = nodeWheel.get(i);
             double angle, diff = Math.toRadians(360/ (double) layer.size()), offset;
-            offset = -0.5 * diff * i;
+            offset = 0 * diff * i;
             for (int j = 0; j < layer.size(); j++) {
                 CharacterNode node = layer.get(j);
                 angle = (diff * j) + offset;
@@ -99,7 +102,6 @@ public class CharacterWheel {
                 position.y = (float) (65 * (i + 1) * Math.cos(angle));
                 node.setPosition(position);
                 nodes.add(node);
-                System.out.println("jytyujft");
             }
             
         }

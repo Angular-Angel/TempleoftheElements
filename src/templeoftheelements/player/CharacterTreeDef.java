@@ -63,12 +63,17 @@ public class CharacterTreeDef {
         
     }
     
+    public static enum Requirement {
+        SINGLE, OR, AND;
+    }
+    
     public class NodeDefinition {
         public String description;
         public boolean free;
         public AbilityDefinition ability;
         public ArrayList<StatDescriptor> stats;
         public CharacterWheel.CharacterTree tree;
+        public Requirement requirement;
         
         public NodeDefinition() {
             stats = new ArrayList<>();
