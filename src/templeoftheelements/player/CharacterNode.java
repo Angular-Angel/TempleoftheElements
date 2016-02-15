@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import stat.StatContainer;
 import templeoftheelements.TempleOfTheElements;
 import templeoftheelements.display.Renderable;
+import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterWheel.CharacterTree;
 
 /**
@@ -23,6 +24,8 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     protected Requirement requirements;
     protected String description;
     protected final boolean free; //is this gem acquired automatically?
+    public NodeDefinition nodeDef;
+    public int cluster;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();

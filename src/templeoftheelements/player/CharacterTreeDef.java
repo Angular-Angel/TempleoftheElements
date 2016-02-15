@@ -67,6 +67,10 @@ public class CharacterTreeDef {
         SINGLE, OR, AND;
     }
     
+    public static enum Position {
+        RADIAL, CLOCKWISE20, COUNTERCLOCKWISE20;
+    }
+    
     public class NodeDefinition {
         public String description;
         public boolean free;
@@ -74,6 +78,7 @@ public class CharacterTreeDef {
         public ArrayList<StatDescriptor> stats;
         public CharacterWheel.CharacterTree tree;
         public Requirement requirement;
+        public Position position;
         
         public NodeDefinition() {
             stats = new ArrayList<>();
@@ -87,7 +92,7 @@ public class CharacterTreeDef {
     }
 
     public static class ClusterDefinition {
-        public NodeDefinition capstone;
+        public NodeDefinition capstone, entry;
         public ArrayList<NodeDefinition> bulk;
         public int layer;
         public int length;

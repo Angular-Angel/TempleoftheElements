@@ -46,18 +46,20 @@ public class CharacterWheel {
         
         
         
-        for (int i = 0; i < 1; i++) { //for each layer
+        for (int i = 0; i < 2; i++) { //for each layer
             for (CharacterTree tree : trees) { //for each tree
+                int clusterNum = 0;
                 for (int j = 0; j <= i; j++) { //for each cluster
                     int k = i*5;
                     //generate the cluster definition
                     ClusterDefinition cluster = tree.definition.clusterGenerator.generate(tree); 
                     
                     //generate the lead-in node
-                    NodeDefinition nodeDef = cluster.bulk.get(0);
+                    NodeDefinition nodeDef = cluster.entry;
                     tree.layerSize = 1;
                     
                     CharacterNode node = tree.definition.nodeGenerator.generate(nodeDef);
+                            node.cluster = clusterNum;
                     tree.curLayerNodes.add(node);
                     nodeWheel.add(new ArrayList<>());
                     nodeWheel.get(k).add(node);
@@ -69,6 +71,7 @@ public class CharacterWheel {
                     for (int l = 0; l < cluster.length; l++) {
                         for (NodeDefinition bulkDef : cluster.bulk) {
                             node = tree.definition.nodeGenerator.generate(bulkDef);
+                            node.cluster = clusterNum;
                             tree.curLayerNodes.add(node);
                             nodeWheel.add(new ArrayList<>());
                             nodeWheel.get(k).add(node);
@@ -80,10 +83,12 @@ public class CharacterWheel {
                     //generate the capstonecluster.bulk
                     tree.layerSize = 1;
                     node = tree.definition.nodeGenerator.generate(cluster.capstone);
+                            node.cluster = clusterNum;
                     tree.curLayerNodes.add(node);
                     nodeWheel.add(new ArrayList<>());
                     nodeWheel.get(k).add(node);
                     tree.newLayer();
+                    clusterNum++;
                 }
 //                
             }
@@ -92,16 +97,42 @@ public class CharacterWheel {
         
         for (int i = 0; i < nodeWheel.size(); i++) {
             ArrayList<CharacterNode> layer = nodeWheel.get(i);
-            double angle, diff = Math.toRadians(360/ (double) layer.size()), offset;
-            offset = 0 * diff * i;
+            double angle, diff = Math.toRadians(360/ (double) layer.size()), offset = 0;
             for (int j = 0; j < layer.size(); j++) {
                 CharacterNode node = layer.get(j);
-                angle = (diff * j) + offset;
-                Vec2 position = new Vec2();
-                position.x = (float) (65 * (i + 1) * Math.sin(angle));
-                position.y = (float) (65 * (i + 1) * Math.cos(angle));
-                node.setPosition(position);
-                nodes.add(node);
+                int treeNum = trees.indexOf(node.tree);
+                //offset = diff * (Math.floor(i/5));
+                Vec2 position;
+                switch (node.nodeDef.position) {
+                    case RADIAL:
+                        angle = (diff * j);
+                        position = new Vec2();
+                        position.x = (float) (65 * (i + 1) * Math.sin(angle));
+                        position.y = (float) (65 * (i + 1) * Math.cos(angle));
+                        node.setPosition(position);
+                        nodes.add(node);
+                        break;
+                    case CLOCKWISE20:
+                        angle = (treeNum * (Math.floor(i/5)+1) + node.cluster) * Math.toRadians(360/(double) (trees.size() * (Math.floor(i/5)+1)));
+                        position = new Vec2();
+                        position.x = (float) (65 * (i + 1) * Math.sin(angle));
+                        position.y = (float) (65 * (i + 1) * Math.cos(angle));
+                        position.x += (float) (30 * Math.sin(angle-30));
+                        position.y += (float) (30 * Math.cos(angle-30));
+                        node.setPosition(position);
+                        nodes.add(node);
+                        break;
+                    case COUNTERCLOCKWISE20:
+                        angle = (treeNum * (Math.floor(i/5)+1) + node.cluster) * Math.toRadians(360/ (double) (trees.size() * (Math.floor(i/5)+1)));
+                        position = new Vec2();
+                        position.x = (float) (65 * (i + 1) * Math.sin(angle));
+                        position.y = (float) (65 * (i + 1) * Math.cos(angle));
+                        position.x += (float) (30 * Math.sin(angle+30));
+                        position.y += (float) (30 * Math.cos(angle+30));
+                        node.setPosition(position);
+                        nodes.add(node);
+                        break;
+                }
             }
             
         }

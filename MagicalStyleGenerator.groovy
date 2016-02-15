@@ -158,19 +158,26 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             attributePool.remove(stat1);
 
             stat2 = attributePool.get(random.nextInt(attributePool.size()));
+            
+            ret.entry = tree.definition.newNode(tree);
+            ret.entry.requirement = CharacterTreeDef.Requirement.SINGLE;
+            ret.entry.position = CharacterTreeDef.Position.RADIAL;
+            ret.entry.stats.add(stat1);
 
             NodeDefinition bulk = tree.definition.newNode(tree);
             bulk.requirement = CharacterTreeDef.Requirement.SINGLE;
+            bulk.position = CharacterTreeDef.Position.CLOCKWISE20;
             bulk.stats.add(stat1);
             ret.bulk.add(bulk);
             
             bulk = tree.definition.newNode(tree);
             bulk.requirement = CharacterTreeDef.Requirement.SINGLE;
+            bulk.position = CharacterTreeDef.Position.COUNTERCLOCKWISE20;
             bulk.stats.add(stat2);
             ret.bulk.add(bulk);
             
             //now for the capstone.
-            if (random.nextInt(5) == 0) {
+            if (random.nextInt(2) == 0) {
                 //generate ability
                 
                 NodeDefinition capStone = tree.definition.newNode(tree);
@@ -178,6 +185,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 capStone.ability = new AbilityDefinition(generateMissile(tree));
                 
                 capStone.requirement = CharacterTreeDef.Requirement.OR;
+                capStone.position = CharacterTreeDef.Position.RADIAL;
                 ret.capstone = capStone;
             } else {
                 NodeDefinition capStone = tree.definition.newNode(tree);
@@ -185,6 +193,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 capStone.stats.add(stat1);
                 capStone.stats.add(stat2);
                 capStone.requirement = CharacterTreeDef.Requirement.OR;
+                capStone.position = CharacterTreeDef.Position.RADIAL;
                 
                 ret.capstone = capStone;
             }
@@ -226,7 +235,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                     name += " Ball";
                     missile = new AttackDefinition(name, new VectorCircle(1), element.name);
                     missile.addStat("Ranged Attack", new BinaryStat());
-                    missile.addStat("Damage", new NumericStat(300));
+                    missile.addStat("Damage", new NumericStat(500));
                     missile.addStat("Size", new NumericStat(1));
                     missile.addStat("Speed", new NumericStat(50));
                     break;
@@ -302,6 +311,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 node.addStat(stat.name, new NumericStat(stat.increase));
             }
             
+            node.nodeDef = nodeDef;
             return node;
         }
     }
