@@ -264,33 +264,46 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         }
         
         public CharacterNode generate(Object o) {
-            NodeDefinition nodeDef = (NodeDefinition) o;
-            CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree;
+            NodeDefinition nodeDef = (NodeDefinition) o; //the definition for the node we're making
+            CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree; //the tree to which the node will belong
         
-            Requirement req;
-            double num = (tree.curLayerNodes.size() / (double) tree.layerSize) * tree.prevLayerNodes.size();
+            Requirement req; //the variable that will keep track of what nodes this node requires
+            
+            //the layer we're gonna add this node too.
+            ArrayList<CharacterNode> curLayerNodes = tree.layers.get(nodeDef.layer); 
+            
+            //the layer that contains the nodes upon which this node will depend.
+            ArrayList<CharacterNode> prevLayerNodes;
+            
+            if (nodeDef.layer >= 2)
+                prevLayerNodes = tree.layers.get(nodeDef.layer-1); 
+            else
+                prevLayerNodes = new ArrayList<>(); 
+            
+            //This variable helps determine which nodes this node will require.
+            double num = (curLayerNodes.size() / (double) tree.layerSize) * prevLayerNodes.size(); 
             
             switch (nodeDef.requirement) {
                 case CharacterTreeDef.Requirement.OR:
-                    if (tree.prevLayerNodes.size() == 0) {
+                    if (prevLayerNodes.size() == 0) {
                         req = new AndRequirement();
-                    } else if (num < tree.prevLayerNodes.size() - 1) {
-                        req = new OrRequirement(tree.prevLayerNodes.get((int) num), tree.prevLayerNodes.get(((int) num) + 1));
-                    } else if (tree.prevLayerNodes.size() > (int) num) {
-                        req = tree.prevLayerNodes.get((int) num);
+                    } else if (num < prevLayerNodes.size() - 1) {
+                        req = new OrRequirement(prevLayerNodes.get((int) num), prevLayerNodes.get(((int) num) + 1));
+                    } else if (prevLayerNodes.size() > (int) num) {
+                        req = prevLayerNodes.get((int) num);
                     } else {
-                        req = tree.prevLayerNodes.get(0);
+                        req = prevLayerNodes.get(0);
                     }
                     break;
                 case CharacterTreeDef.Requirement.SINGLE:
-                    if (tree.prevLayerNodes.size() == 0) {
+                    if (prevLayerNodes.size() == 0) {
                         req = new AndRequirement();
-                    } else if (tree.curLayerNodes.size() < tree.prevLayerNodes.size()) {
-                        req = tree.prevLayerNodes.get(tree.curLayerNodes.size());
-                    } else if (tree.prevLayerNodes.size() > (int) num) {
-                        req = tree.prevLayerNodes.get((int) num);
+                    } else if (curLayerNodes.size() < prevLayerNodes.size()) {
+                        req = prevLayerNodes.get(curLayerNodes.size());
+                    } else if (prevLayerNodes.size() > (int) num) {
+                        req = prevLayerNodes.get((int) num);
                     } else {
-                        req = tree.prevLayerNodes.get(0);
+                        req = prevLayerNodes.get(0);
                     }
                     break;
                 default: 

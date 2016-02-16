@@ -77,6 +77,7 @@ public class CharacterTreeDef {
         public AbilityDefinition ability;
         public ArrayList<StatDescriptor> stats;
         public CharacterWheel.CharacterTree tree;
+        public int layer;
         public Requirement requirement;
         public Position position;
         
