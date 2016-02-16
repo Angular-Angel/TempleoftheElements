@@ -1,6 +1,8 @@
 
 package templeoftheelements.player;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author angle
@@ -9,4 +11,6 @@ package templeoftheelements.player;
 
 public interface Requirement {
     public boolean isMet();
+    public ArrayList<Requirement> getReqs();
+    public void draw(Requirement req);
 }

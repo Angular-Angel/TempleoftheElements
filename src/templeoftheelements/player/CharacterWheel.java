@@ -55,7 +55,7 @@ public class CharacterWheel {
                     //generate the lead-in node
                     NodeDefinition nodeDef = cluster.entry;
                     nodeDef.layer = k;
-                    tree.layerSize = 1;
+                    tree.layerSize = i +1;
                     
                     CharacterNode node = tree.definition.nodeGenerator.generate(nodeDef);
                     node.cluster = clusterNum;
@@ -64,7 +64,7 @@ public class CharacterWheel {
                     tree.newLayer();
                     
                     //generate the bulk nodes
-                    tree.layerSize = cluster.bulk.size();
+                    tree.layerSize = cluster.bulk.size() * (i+1);
                     for (int l = 0; l < cluster.length; l++) {
                         for (NodeDefinition bulkDef : cluster.bulk) {
                             bulkDef.layer = k;
@@ -77,7 +77,7 @@ public class CharacterWheel {
                     }
                     
                     //generate the capstonecluster.bulk
-                    tree.layerSize = 1;
+                    tree.layerSize = i+1;
                     cluster.capstone.layer = k;
                     node = tree.definition.nodeGenerator.generate(cluster.capstone);
                     node.cluster = clusterNum;
@@ -89,16 +89,16 @@ public class CharacterWheel {
             }
             
         }
+        
         for (int k = 0; k < trees.size(); k++) { //for each tree
             CharacterTree tree = trees.get(k); //get the tree
             for (int i = 0; i < tree.layers.size(); i++) { //for each layer
                 ArrayList<CharacterNode> layer = tree.layers.get(i); //get the layer
                 double angle; //the angle which we use to place our node relative to the center of the character wheel.
                 double slice = Math.toRadians(360/(double) trees.size()); //the slice of the character wheel that this tree gets
-                System.out.println(slice);
                 double diff = (slice/(double) layer.size()); // The arc between each node in this layer of the tree.
                 for (int j = 0; j < layer.size(); j++) { //for each node in the layer
-                    CharacterNode node = layer.get(j); //get the node 
+                    CharacterNode node = layer.get(j); //get the node
                     int ring = (int) (Math.floor(i/5)+1); //figure out which ring we're in.
                     //offset = diff * (Math.floor(i/5));
                     Vec2 position;
@@ -136,7 +136,6 @@ public class CharacterWheel {
                             break;
                     }
                 }
-
             }
         }
         

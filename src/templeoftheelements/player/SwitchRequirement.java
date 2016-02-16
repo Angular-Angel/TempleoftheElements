@@ -26,5 +26,17 @@ public class SwitchRequirement implements Requirement{
         }
         return true;
     }
+
+    @Override
+    public ArrayList<Requirement> getReqs() {
+        ArrayList<Requirement> ret = new ArrayList<>();
+        ret.add(requirements);
+        return ret;
+    }
+
+    @Override
+    public void draw(Requirement req) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

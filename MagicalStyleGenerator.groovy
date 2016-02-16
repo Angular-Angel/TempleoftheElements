@@ -275,13 +275,13 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             //the layer that contains the nodes upon which this node will depend.
             ArrayList<CharacterNode> prevLayerNodes;
             
-            if (nodeDef.layer >= 2)
+            if (nodeDef.layer >= 1)
                 prevLayerNodes = tree.layers.get(nodeDef.layer-1); 
             else
                 prevLayerNodes = new ArrayList<>(); 
             
             //This variable helps determine which nodes this node will require.
-            double num = (curLayerNodes.size() / (double) tree.layerSize) * prevLayerNodes.size(); 
+            double num = (curLayerNodes.size() / (double) tree.layerSize) * (double) prevLayerNodes.size(); 
             
             switch (nodeDef.requirement) {
                 case CharacterTreeDef.Requirement.OR:
@@ -298,7 +298,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 case CharacterTreeDef.Requirement.SINGLE:
                     if (prevLayerNodes.size() == 0) {
                         req = new AndRequirement();
-                    } else if (curLayerNodes.size() < prevLayerNodes.size()) {
+                    } else if (tree.layerSize < prevLayerNodes.size()) {
                         req = prevLayerNodes.get(curLayerNodes.size());
                     } else if (prevLayerNodes.size() > (int) num) {
                         req = prevLayerNodes.get((int) num);

@@ -26,5 +26,15 @@ public class AndRequirement implements Requirement{
         }
         return true;
     }
+
+    @Override
+    public ArrayList<Requirement> getReqs() {
+        return requirements;
+    }
+
+    @Override
+    public void draw(Requirement req) {
+        
+    }
     
 }

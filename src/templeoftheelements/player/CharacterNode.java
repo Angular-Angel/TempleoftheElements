@@ -3,6 +3,7 @@ package templeoftheelements.player;
 
 import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec2;
+import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import stat.StatContainer;
 import templeoftheelements.TempleOfTheElements;
@@ -85,6 +86,29 @@ public class CharacterNode extends StatContainer implements Requirement , Render
             
         
         GraphicsUtil.drawCircle(position, 20, 32);
+        
+        requirements.draw(this);
+    }
+    
+    @Override
+    public void draw(Requirement req) {
+        
+        if (req instanceof CharacterNode) {
+            CharacterNode source = (CharacterNode) req;
+            if (source.isAcquired()) {
+                GL11.glColor3f(0, 0, 255);
+            } else if (source.isAccessible()) {
+                GL11.glColor3f(0, 255, 0);
+            } else
+                GL11.glColor3f(255, 0, 0);
+            
+            GL11.glBegin(GL11.GL_LINE_LOOP);
+            
+            GL11.glVertex2f(source.position.x, source.position.y);
+            GL11.glVertex2f(this.position.x, this.position.y);
+            
+            GL11.glEnd();
+        }
     }
 
     @Override
@@ -109,6 +133,13 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     @Override
     public float getDrawHeight() {
         return 40; 
+    }
+
+    @Override
+    public ArrayList<Requirement> getReqs() {
+        ArrayList<Requirement> ret = new ArrayList<>();
+        ret.add(this);
+        return ret;
     }
     
 }

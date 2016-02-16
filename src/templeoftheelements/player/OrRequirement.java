@@ -2,6 +2,7 @@
 package templeoftheelements.player;
 
 import java.util.ArrayList;
+import org.lwjgl.opengl.GL11;
 
 /**
  *
@@ -25,6 +26,38 @@ public class OrRequirement implements Requirement{
             if (req.isMet()) return true;
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<Requirement> getReqs() {
+        return requirements;
+    }
+
+    @Override
+    public void draw(Requirement req) {
+        CharacterNode source;
+        if (!(req instanceof CharacterNode)) return;
+        else source = (CharacterNode) req;
+        for (Requirement requirement : requirements) {
+            if (!(requirement instanceof CharacterNode)) return;
+            
+            if (requirement instanceof CharacterNode) {
+            CharacterNode target = (CharacterNode) requirement;
+            if (source.isAcquired() && target.isMet()) {
+                GL11.glColor3f(0, 0, 255);
+            } else if (target.isMet()) {
+                GL11.glColor3f(0, 255, 0);
+            } else
+                GL11.glColor3f(255, 0, 0);
+            
+            GL11.glBegin(GL11.GL_LINE_LOOP);
+            
+            GL11.glVertex2f(source.position.x, source.position.y);
+            GL11.glVertex2f(target.position.x, target.position.y);
+            
+            GL11.glEnd();
+        }
+        }
     }
     
 }
