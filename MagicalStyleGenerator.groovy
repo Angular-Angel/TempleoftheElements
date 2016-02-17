@@ -160,18 +160,22 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             stat2 = attributePool.get(random.nextInt(attributePool.size()));
             
             ret.entry = tree.definition.newNode(tree);
-            ret.entry.requirement = CharacterTreeDef.Requirement.SINGLE;
             ret.entry.position = CharacterTreeDef.Position.RADIAL;
             ret.entry.stats.add(stat1);
+            
+            if (tree.clusters > 0 && tree.layerSize > tree.clusters+1)
+                ret.entry.requirement = new CharacterTreeDef.Requirement(2);
+            else
+                ret.entry.requirement = new CharacterTreeDef.Requirement(1);
 
             NodeDefinition bulk = tree.definition.newNode(tree);
-            bulk.requirement = CharacterTreeDef.Requirement.SINGLE;
+            bulk.requirement = new CharacterTreeDef.Requirement(1);
             bulk.position = CharacterTreeDef.Position.CLOCKWISE20;
             bulk.stats.add(stat1);
             ret.bulk.add(bulk);
             
             bulk = tree.definition.newNode(tree);
-            bulk.requirement = CharacterTreeDef.Requirement.SINGLE;
+            bulk.requirement = new CharacterTreeDef.Requirement(1);
             bulk.position = CharacterTreeDef.Position.COUNTERCLOCKWISE20;
             bulk.stats.add(stat2);
             ret.bulk.add(bulk);
@@ -184,7 +188,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 
                 capStone.ability = new AbilityDefinition(generateMissile(tree));
                 
-                capStone.requirement = CharacterTreeDef.Requirement.OR;
+                capStone.requirement = new CharacterTreeDef.Requirement(2);
                 capStone.position = CharacterTreeDef.Position.RADIAL;
                 ret.capstone = capStone;
             } else {
@@ -192,7 +196,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 
                 capStone.stats.add(stat1);
                 capStone.stats.add(stat2);
-                capStone.requirement = CharacterTreeDef.Requirement.OR;
+                capStone.requirement = new CharacterTreeDef.Requirement(2);
                 capStone.position = CharacterTreeDef.Position.RADIAL;
                 
                 ret.capstone = capStone;
@@ -282,24 +286,14 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             
             //This variable helps determine which nodes this node will require.
             double num = (curLayerNodes.size() / (double) tree.layerSize) * (double) prevLayerNodes.size(); 
+            System.out.println("" + curLayerNodes.size() + ", " + tree.layerSize + ", " + prevLayerNodes.size() + ", " + num);
             
-            switch (nodeDef.requirement) {
-                case CharacterTreeDef.Requirement.OR:
+            switch (nodeDef.requirement.and) {
+                case false:
                     if (prevLayerNodes.size() == 0) {
                         req = new AndRequirement();
-                    } else if (num < prevLayerNodes.size() - 1) {
+                    } else if (nodeDef.requirement.number == 2) {
                         req = new OrRequirement(prevLayerNodes.get((int) num), prevLayerNodes.get(((int) num) + 1));
-                    } else if (prevLayerNodes.size() > (int) num) {
-                        req = prevLayerNodes.get((int) num);
-                    } else {
-                        req = prevLayerNodes.get(0);
-                    }
-                    break;
-                case CharacterTreeDef.Requirement.SINGLE:
-                    if (prevLayerNodes.size() == 0) {
-                        req = new AndRequirement();
-                    } else if (tree.layerSize < prevLayerNodes.size()) {
-                        req = prevLayerNodes.get(curLayerNodes.size());
                     } else if (prevLayerNodes.size() > (int) num) {
                         req = prevLayerNodes.get((int) num);
                     } else {

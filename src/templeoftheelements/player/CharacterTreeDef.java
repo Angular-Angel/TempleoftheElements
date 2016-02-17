@@ -63,8 +63,18 @@ public class CharacterTreeDef {
         
     }
     
-    public static enum Requirement {
-        SINGLE, OR, AND;
+    public static class Requirement {
+        public int number;
+        public boolean and;
+        
+        public Requirement(int number) {
+            this(number, false);
+        }
+        
+        public Requirement(int number, boolean and) {
+            this.number = number;
+            this.and = and;
+        }
     }
     
     public static enum Position {

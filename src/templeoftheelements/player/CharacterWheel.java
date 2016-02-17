@@ -44,21 +44,21 @@ public class CharacterWheel {
         
         
         
-        for (int i = 0; i < 3; i++) { //for each layer
+        for (int i = 0; i < 4; i++) { //for each layer
             for (CharacterTree tree : trees) { //for each tree
-                int clusterNum = 0;
+                tree.clusters = 0;
                 for (int j = 0; j <= i; j++) { //for each cluster
                     int k = i*5;
+                    tree.layerSize = i +1;
                     //generate the cluster definition
                     ClusterDefinition cluster = tree.definition.clusterGenerator.generate(tree); 
                     
                     //generate the lead-in node
                     NodeDefinition nodeDef = cluster.entry;
                     nodeDef.layer = k;
-                    tree.layerSize = i +1;
                     
                     CharacterNode node = tree.definition.nodeGenerator.generate(nodeDef);
-                    node.cluster = clusterNum;
+                    node.cluster = tree.clusters;
                     tree.layers.get(k).add(node);
                     k++;
                     tree.newLayer();
@@ -69,7 +69,7 @@ public class CharacterWheel {
                         for (NodeDefinition bulkDef : cluster.bulk) {
                             bulkDef.layer = k;
                             node = tree.definition.nodeGenerator.generate(bulkDef);
-                            node.cluster = clusterNum;
+                            node.cluster = tree.clusters;
                             tree.layers.get(k).add(node);
                         }
                         k++;
@@ -80,10 +80,10 @@ public class CharacterWheel {
                     tree.layerSize = i+1;
                     cluster.capstone.layer = k;
                     node = tree.definition.nodeGenerator.generate(cluster.capstone);
-                    node.cluster = clusterNum;
+                    node.cluster = tree.clusters;
                     tree.layers.get(k).add(node);
                     tree.newLayer();
-                    clusterNum++;
+                    tree.clusters++;
                 }
 //                
             }
@@ -149,7 +149,7 @@ public class CharacterWheel {
         public ArrayList<ArrayList<CharacterNode>> layers;
         public ArrayList<CharacterNode> nodes;
         
-        public int layerSize;
+        public int layerSize, clusters;
         public CharacterTreeDef definition;
         
         public CharacterTree(CharacterTreeDef definition) {
