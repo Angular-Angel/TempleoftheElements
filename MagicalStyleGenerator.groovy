@@ -163,7 +163,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             ret.entry.position = CharacterTreeDef.Position.RADIAL;
             ret.entry.stats.add(stat1);
             
-            if (tree.clusters > 0 && tree.layerSize > tree.clusters+1)
+            if (tree.cluster > 0 && tree.layerSize > tree.cluster)
                 ret.entry.requirement = new CharacterTreeDef.Requirement(2);
             else
                 ret.entry.requirement = new CharacterTreeDef.Requirement(1);
@@ -285,17 +285,17 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 prevLayerNodes = new ArrayList<>(); 
             
             //This variable helps determine which nodes this node will require.
-            double num = (curLayerNodes.size() / (double) tree.layerSize) * (double) prevLayerNodes.size(); 
-            System.out.println("" + curLayerNodes.size() + ", " + tree.layerSize + ", " + prevLayerNodes.size() + ", " + num);
+            int num = curLayerNodes.size() * prevLayerNodes.size() / tree.layerSize;
+            System.out.println("" + nodeDef.layer + ": " + curLayerNodes.size() + ", " + tree.layerSize + ", " + prevLayerNodes.size() + ", " + num);
             
             switch (nodeDef.requirement.and) {
                 case false:
                     if (prevLayerNodes.size() == 0) {
                         req = new AndRequirement();
-                    } else if (nodeDef.requirement.number == 2) {
-                        req = new OrRequirement(prevLayerNodes.get((int) num), prevLayerNodes.get(((int) num) + 1));
-                    } else if (prevLayerNodes.size() > (int) num) {
-                        req = prevLayerNodes.get((int) num);
+                    } else if (prevLayerNodes.size() > num-1 && nodeDef.requirement.number == 2) {
+                        req = new OrRequirement(prevLayerNodes.get(num), prevLayerNodes.get(num+1));
+                    } else if (prevLayerNodes.size() > num) {
+                        req = prevLayerNodes.get(num);
                     } else {
                         req = prevLayerNodes.get(0);
                     }
