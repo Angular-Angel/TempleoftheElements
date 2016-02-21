@@ -35,7 +35,7 @@ public class AttackDefinition extends Trait {
     }
     
     public AttackDefinition(String name, Renderable sprite, Shape shape, String type) {
-        super(name);
+        super(name, false);
         this.shape = shape;
         this.sprite = sprite;
         this.type = type;
@@ -56,8 +56,8 @@ public class AttackDefinition extends Trait {
                 pos.x += (attacker.getScore("Size") + 1) * (float) Math.sin(Math.toRadians(attacker.getDirection()));
                 pos.y += (attacker.getScore("Size") + 1) * (float) Math.cos(Math.toRadians(attacker.getDirection()));
                 Vec2 vector = new Vec2();
-                vector.x += 2 * getScore("Speed") * (float) Math.sin(Math.toRadians(attacker.getDirection()));
-                vector.y += 2 * getScore("Speed") * (float) Math.cos(Math.toRadians(attacker.getDirection()));
+                vector.x += 2 * attack.getScore("Speed") * (float) Math.sin(Math.toRadians(attacker.getDirection()));
+                vector.y += 2 * attack.getScore("Speed") * (float) Math.cos(Math.toRadians(attacker.getDirection()));
                 attack.getBody().setTransform(pos, 0);
                 attack.getBody().applyForceToCenter(vector);
             } else {
@@ -66,7 +66,7 @@ public class AttackDefinition extends Trait {
                 attack = new MeleeAttack(attacker, this, shape, dir, reach);
                 ((MeleeAttack) attack).move(attacker.getPosition(), 0);
                 attack.addStat("Damage", new NumericStat(attacker.getScore("Physical Damage") 
-                        * getScore("Damage Multiplier")));
+                        * attack.getScore("Damage Multiplier")));
             }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AttackDefinition.class.getName()).log(Level.SEVERE, null, ex);

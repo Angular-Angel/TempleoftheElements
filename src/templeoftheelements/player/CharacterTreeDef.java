@@ -23,20 +23,16 @@ public class CharacterTreeDef {
     }
     
     //these define any extra details common on abilities of this style.
-    public static enum Detail {
-        MAGIC, MARTIAL, LONG_COOLDOWNS, COSTS_ATTRIBUTES, MATERIAL_COMPONENTS, SPEED_BASED, 
-        CHANNELING_TIMES, TOUGHNESS_BASED, LUCK_BASED, RITUALS, STAMINA_BASED, 
-        COSTS_HP
-    }
+    
     
     public String name;
     
     public Focus primaryFocus;
     public ArrayList<Focus> secondaryFocuses;
-    public ArrayList<Detail> details;
+    public ArrayList<Spell.Detail> details;
     public ArrayList<StatDescriptor> primaryAttributes;
     public ArrayList<StatDescriptor> secondaryAttributes;
-    public ArrayList<Element> elements;
+    public Element element;
     public ProceduralGenerator<ClusterDefinition> clusterGenerator;
     public ProceduralGenerator<CharacterNode> nodeGenerator;
     public ArrayList<Ability> abilities;
@@ -48,16 +44,14 @@ public class CharacterTreeDef {
         secondaryAttributes = new ArrayList<>();
         secondaryFocuses = new ArrayList<>();
         details = new ArrayList<>();
-        elements = new ArrayList<>();
         abilities = new ArrayList<>();
     }
     
     public static class AbilityDefinition {
+        public CharacterWheel.CharacterTree tree;
         public ArrayList<Spell.Detail> details;
-        public Ability ability;
         
-        public AbilityDefinition(Ability ability) {
-            this.ability = ability;
+        public AbilityDefinition() {
             details = new ArrayList<>();
         }
         

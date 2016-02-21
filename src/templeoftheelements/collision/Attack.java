@@ -23,6 +23,7 @@ public abstract class Attack extends StatContainer implements Actor, Renderable,
     public Attack(Creature c) {
         onHitEffects = new ArrayList<>();
         origin = c;
+        addAllStats(c.viewStats());
     }
     
     public void addOnHitEffect(Effect effect) {

@@ -161,6 +161,13 @@
         "Increase": 0.05,
     },
     {
+        "Name": "Spell Range Multiplier",
+        "Type": "Stat Description",
+        "Stat": [1],
+        "Base": 1.0,
+        "Increase": 0.05,
+    },
+    {
         "Name": "Sight Range Multiplier",
         "Type": "Stat Description",
         "Stat": [1],

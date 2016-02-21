@@ -8,7 +8,7 @@
         "Details" : ["PROJECTILE", "AREA_TARGET", "ENEMY_TARGET", "SELF_TARGET", 
                      "DAMAGE", "BUFF", "ON_HIT_EFFECT", "ON_ATTACK_EFFECT",
                      "ON_CAST_EFFECT", "DAMAGE_OVER_TIME", "AREA_OF_EFFECT", 
-                     "COSTS_HP", "PERMANENT_STAT_COST", "TEMPORARY_STAT_COST"],
+                     "HP_COST", "PERMANENT_STAT_COST", "TEMPORARY_STAT_COST"],
         "Focuses" : ["OFFENSE", "PROJECTILES"]
     },
     {

@@ -122,6 +122,7 @@ public class CharacterScreen extends Screen {
         pos.y -= game.res.height/2;
         pos.x -= view.x;
         pos.y -= view.y;
+        pos = rotate(new Vec2(0,0), pos, -angle);
         screen.display = false;
         for (CharacterNode node : wheel.nodes) {
             if (node.isClicked(pos.x, pos.y)) {

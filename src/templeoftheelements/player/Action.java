@@ -20,7 +20,7 @@ public abstract class Action extends Trait implements Ability {
     private int cooldown;
     
     public Action(String name, StatContainer stats) {
-        super(name, stats);
+        super(name, true, stats);
         cooldown = 0;
     }
     

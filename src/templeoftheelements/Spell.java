@@ -27,8 +27,8 @@ public abstract class Spell extends Action implements Ability {
         
         //Downsides
         NORMAL_MANA_COST, HIGH_MANA_COST, TEMPORARY_STAT_COST, 
-        PERMANENT_STAT_COST, COSTS_HP, MATERIAL_COMPONENT, COSTS_STAMINA,
-        DELAY,  SHORT_COOLDOWN, 
+        PERMANENT_STAT_COST, HP_COST, MATERIAL_COMPONENT, STAMINA_COST, XP_COST,
+        DELAY, SHORT_COOLDOWN, LONG_COOLDOWN, LONG_CAST_TIME, RITUAL,
         
         //targeting types
         PROJECTILE, AREA_TARGET, ENEMY_TARGET, SELF_TARGET, MINION, 
@@ -42,7 +42,10 @@ public abstract class Spell extends Action implements Ability {
         //rare effects
         TERRAIN_ALTERATION, TELEPORTATION, ITEM_CREATION, ITEM_ALTERATION, 
         MIND_CONTROL, CONFUSION, PETRIFICATION, DIVINATION, HEAL, MANA_DRAIN, 
-        EXHAUSTION;
+        EXHAUSTION,
+        
+        //Scaling
+        SPEED_BASED, TOUGHNESS_BASED, LUCK_BASED, STAMINA_BASED;
         
         //
 
