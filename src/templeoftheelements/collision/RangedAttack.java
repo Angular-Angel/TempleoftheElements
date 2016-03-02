@@ -70,8 +70,7 @@ public class RangedAttack extends Attack {
     }
 
     @Override
-    public void step(float dt) {
-        
+    public void step(float dt) {  
     }
 
     @Override

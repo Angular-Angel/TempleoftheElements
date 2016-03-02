@@ -147,9 +147,14 @@ public class CharacterScreen extends Screen {
             for (String s : node.getStatList()) 
                 if (width < s.length() * 20 + 100) width = s.length() * 20 + 100;
             if (node instanceof AbilityNode) {
-                height += 40;
-                if (width < ((AbilityNode) node).ability.getDescription().length() * 13) 
-                    width = ((AbilityNode) node).ability.getDescription().length() * 13;
+                height += 20;
+                String[] split = ((AbilityNode) node).ability.getDescription().split("\n");
+                height += split.length * 20;
+                if (width < ((AbilityNode) node).ability.getName().length() * 13) 
+                    width = ((AbilityNode) node).ability.getName().length() * 13;
+                for (String s : split)
+                if (width < s.length() * 13) 
+                    width = s.length() * 13;
             }
         }
         
@@ -164,25 +169,7 @@ public class CharacterScreen extends Screen {
         public void draw() {
             if (!display) return;
             super.draw();
-            float i = height - 12;
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GL11.glColor3f(255, 0, 0);
-            game.font.getTexture().bind();
-            if (node instanceof AbilityNode) {
-                i -= 20;
-                game.font.draw(((AbilityNode) node).ability.getName(), new com.samrj.devil.math.Vec2(x +2, y + i));
-                i -= 20;
-                game.font.draw(((AbilityNode) node).ability.getDescription(), new com.samrj.devil.math.Vec2(x +2, y + i));
-            }
-            for (String s : node.getStatList()) {
-                try {
-                    i -= 20;
-                    game.font.draw(s + ": " + node.getScore(s), new com.samrj.devil.math.Vec2(x +2, y + i));
-                } catch (NoSuchStatException ex) {
-                    Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            node.showDescription(this);
         }
     }
     

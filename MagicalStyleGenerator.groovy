@@ -231,7 +231,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             int limitationValue = 1, complexity = 9 + tree.layers.size(), pool = 10;
             
             //Stats: Range, Size, Speed, Damage, Cast Speed, Mana Cost
-            Stat range, size, speed, damage, castTime, manaCost, cooldown;
+            Stat size, speed, damage, castTime, manaCost, cooldown;
                 
             if (ability.details.contains(Spell.Detail.LONG_COOLDOWN)) {
                 int num = 20 + random.nextInt(20);
@@ -247,42 +247,39 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
                 
             } else castTime =  new NumericStat(0);
             
-            if (ability.details.contains(Spell.Detail.NORMAL_MANA_COST)) {
-                int num = 10 + random.nextInt(10);
-                manaCost =  new NumericStat(num);
-                limitationValue += num / 5;
-            } else if (ability.details.contains(Spell.Detail.HIGH_MANA_COST)) {
+           if (ability.details.contains(Spell.Detail.HIGH_MANA_COST)) {
                 int num = 20 + random.nextInt(20);
                 manaCost =  new NumericStat(num);
                 limitationValue += num / 5;
-            } else manaCost =  new NumericStat(0);
+            } else {
+                int num = 10 + random.nextInt(10);
+                manaCost =  new NumericStat(num);
+                limitationValue += num / 5;
+            } 
             
             while (pool > 0) {
-                switch (random.nextInt(7)) {
+                switch (random.nextInt(3)) {
                     case 0:
-                        rangeValue += 1;
+                        sizeValue += 1;
+                        pool -= (speedValue * damageValue / limitationValue);
                         break;
                     case 1:
-                        sizeValue += 1;
+                        speedValue += 1;
+                        pool -= (sizeValue * damageValue / limitationValue);
                         break;
                     case 2:
-                        speedValue += 1;
-                        break;
-                    case 4:
                         damageValue += 1;
+                        pool -= (sizeValue * speedValue / limitationValue);
                         break;
                 }
-                pool -= (rangeValue * sizeValue * speedValue * damageValue / limitationValue);
+                
             }
-            
-            rangeValue = 300 + (rangeValue -1) * 50;
-            range = new EquationStat("" + rangeValue + " * [Spell Range Multiplier]");
-            
-            sizeValue = 0.3 + (sizeValue -1) * 0.03;
-            size = new NumericStat(sizeValue);
             
             speedValue = 40 + (speedValue -1) * 4;
             speed = new EquationStat("" + speedValue + " * [Spell Speed Multiplier]");
+            
+            sizeValue = 1.3 + (sizeValue -1) * 0.03;
+            size = new NumericStat(sizeValue);
             
             damageValue = 30 + (damageValue -1) * 3;
             damage = new EquationStat("" + damageValue + " * [Spell Damage Multiplier]");
@@ -294,7 +291,6 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             
             missile = new AttackDefinition(name, new VectorCircle(1), element.name);
             missile.addStat("Ranged Attack", new BinaryStat());
-            missile.addStat("Range", range);
             missile.addStat("Damage", damage);
             missile.addStat("Size", size);
             missile.addStat("Speed", speed);
@@ -303,6 +299,11 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             ret.addStat("Cast Time", castTime);
             ret.addStat("Mana Cost", manaCost);
             ret.addStat("Cooldown", cooldown);
+            
+            ret.description += "This spell shoots a missile.";
+            ret.description += "\nDamage: " + ((EquationStat) damage).equation;
+            ret.description += "\nSpeed: " + ((EquationStat) speed).equation;
+            
 
             return ret;
         }

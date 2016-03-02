@@ -18,6 +18,7 @@ import templeoftheelements.player.Ability;
 public class MissileSpell extends Spell {
 
     private AttackDefinition missile;
+    public String description;
     
     public MissileSpell(AttackDefinition attack) {
         this(attack.getName(), attack, new StatContainer());
@@ -30,6 +31,7 @@ public class MissileSpell extends Spell {
     public MissileSpell(String name, AttackDefinition attack, StatContainer stats) {
         super(name, attack.getSprite(), stats);
         missile = attack;
+        description = "";
     }
 
     @Override
@@ -41,16 +43,23 @@ public class MissileSpell extends Spell {
 
     @Override
     public void cast(Creature caster, Vec2 in) {
-        caster.attack(missile);
+        caster.attack(getMissile());
     }
 
     public String getDescription() {
-        return "When cast, shoots a missile.";
+        return description;
     }
 
     @Override
     public Ability clone() {
-        return new MissileSpell(this.getName(), missile, this);
+        return new MissileSpell(this.getName(), getMissile(), this);
+    }
+
+    /**
+     * @return the missile
+     */
+    public AttackDefinition getMissile() {
+        return missile;
     }
     
 }
