@@ -14,7 +14,14 @@
         "Type": "Magic Weapon Definition",
         "Stats": [],
         "PlayerStats": [],
-        "Effects": ["import templeoftheelements.player.*; \n import templeoftheelements.item.*; \n import templeoftheelements.collision.*; \n public class BludgeonEffect extends Effect { public float effect(EffectSource source, Object o) {return ((Creature) o).takeDamage(1, \"Crushing\");}}"]
+        "Effects": ["import templeoftheelements.player.*; 
+                  \n import templeoftheelements.item.*; 
+                  \n import templeoftheelements.collision.*;
+                  \n public class BludgeonEffect extends Effect { 
+                        public float effect(EffectSource source, Object o) {
+                            return ((Creature) o).takeDamage(1, \"Crushing\");
+                        }
+                     }"]
     },
     {
         "Name": "Hardened",

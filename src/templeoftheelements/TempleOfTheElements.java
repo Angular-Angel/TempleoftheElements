@@ -118,7 +118,7 @@ public final class TempleOfTheElements extends Game {
         world = new World(new Vec2());
         world.setContactListener(new CollisionManager());
         registry = new Registry();
-        ((InitScript) registry.readGroovyScript(new File("Init.groovy"))).Init();
+        ((InitScript) registry.readGroovyScript(new File("RAW/Scripts/Init.groovy"))).Init();
     }
     
     public void addActor(Actor a) {

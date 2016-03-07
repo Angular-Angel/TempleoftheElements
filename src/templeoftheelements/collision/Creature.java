@@ -27,7 +27,7 @@ import templeoftheelements.player.*;
 
 
 
-public class Creature extends StatContainer implements Collidable, Actor, Renderable {
+public class Creature extends StatContainer implements Damageable, Actor, Renderable {
     private Renderable sprite;
     private Controller controller;
     private Fixture fixture;
@@ -271,6 +271,13 @@ public class Creature extends StatContainer implements Collidable, Actor, Render
         return fixture.getBody();
     }
     
+    /**
+     *
+     * @param damage
+     * @param type
+     * @return
+     */
+    @Override
     public float takeDamage(float damage, String type) {
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.TOOK_DAMAGE, damage, type));
         if (resistances.containsKey(type)) damage *= (1 - resistances.get(type));

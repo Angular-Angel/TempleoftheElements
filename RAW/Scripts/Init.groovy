@@ -18,25 +18,27 @@ class Initiator implements InitScript {
 
     public void Init() {
         
-        game.registry.readRaw(new File("StatDescriptions.json"));
-        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("MonsterGenerator.groovy")));
+        game.registry.readRaw(new File("RAW/JSON/StatDescriptions.json"));
+        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("RAW/Scripts/MonsterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
-        game.registry.loadControllerScript(new File("Wanderer.groovy"));
-        game.registry.loadControllerScript(new File("Fighter.groovy"));
-        game.registry.loadStatusEffect(new File("Fatigue.groovy"));
-        Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
-        game.registry.loadTextureRectangle(new File("Icons.png"));
-        game.registry.loadTextureRectangle(new File("Items.png"));
-        game.registry.loadTextureRectangle(new File("Sprites.png"));
-        game.registry.loadTexture2D(new File("Stone Floor.png"));
-        game.registry.readRaw(new File("MagicEffects.json"));
-        game.registry.readRaw(new File("Weapons.json"));
-        game.registry.readRaw(new File("Elements.json"));
-        game.registry.loadItemPool("ItemRoller.groovy", );
-        game.registry.treeGenerator = game.registry.readGroovyScript(new File("MagicalStyleGenerator.groovy"));
-        Floor.RoomSchematic.procedures.add(game.registry.readGroovyScript(new File("RockyRoom.groovy")));
-        game.registry.readRaw(new File("Creatures.json"));
+        game.registry.loadControllerScript(new File("RAW/Scripts/Wanderer.groovy"));
+        game.registry.loadControllerScript(new File("RAW/Scripts/Fighter.groovy"));
+        game.registry.loadStatusEffect(new File("RAW/Scripts/Fatigue.groovy"));
+        Texture2D glTexture = game.registry.loadTextureRectangle(new File("RAW/Images/Character.png"));
+        game.registry.loadTextureRectangle(new File("RAW/Images/Icons.png"));
+        game.registry.loadTextureRectangle(new File("RAW/Images/Items.png"));
+        game.registry.loadTextureRectangle(new File("RAW/Images/Sprites.png"));
+        game.registry.loadTexture2D(new File("RAW/Images/Stone Floor.png"));
+        game.registry.readRaw(new File("RAW/JSON/MagicEffects.json"));
+        game.registry.readRaw(new File("RAW/JSON/Weapons.json"));
+        game.registry.readRaw(new File("RAW/JSON/Elements.json"));
+        game.registry.loadItemPool("RAW/Scripts/ItemRoller.groovy", );
+        game.registry.treeGenerator = game.registry.readGroovyScript(new File("RAW/Scripts/MagicalStyleGenerator.groovy"));
+        game.registry.clusterGenerator = game.registry.readGroovyScript(new File("RAW/Scripts/ClusterGenerator.groovy"));
+        game.registry.nodeGenerator = game.registry.readGroovyScript(new File("RAW/Scripts/NodeGenerator.groovy"));
+        Floor.RoomSchematic.procedures.add(game.registry.readGroovyScript(new File("RAW/Scripts/RockyRoom.groovy")));
+        game.registry.readRaw(new File("RAW/JSON/Creatures.json"));
         
         for (int i = 0; i < 10; i++) {
             CreatureDefinition definition = game.registry.creatureTypeGenerator.generate();
@@ -51,7 +53,7 @@ class Initiator implements InitScript {
         creature.setSprite(new Sprite(glTexture, 2, 2));
         game.player = new Player(creature);
         
-        Item item = game.registry.itemPools.get("ItemRoller.groovy").generate(1, 0);
+        Item item = game.registry.itemPools.get("RAW/Scripts/ItemRoller.groovy").generate(1, 0);
         game.room.add(item);
         
         Effect effect = new Effect() {

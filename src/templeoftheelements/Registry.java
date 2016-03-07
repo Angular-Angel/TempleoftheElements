@@ -28,7 +28,9 @@ import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
 import templeoftheelements.player.Ability;
+import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import templeoftheelements.player.Effect;
 import templeoftheelements.player.StatusEffect;
 import util.RawReader;
@@ -55,6 +57,8 @@ public class Registry extends RawReader {
     public ArrayList<CreatureDefinition> creatureList;
     public CreatureTypeGenerator creatureTypeGenerator;
     public ProceduralGenerator<CharacterTreeDef> treeGenerator;
+    public ProceduralGenerator<ClusterDefinition> clusterGenerator;
+    public ProceduralGenerator<CharacterNode> nodeGenerator;
     
     public Registry() {
         creatureDefs = new HashMap<>();

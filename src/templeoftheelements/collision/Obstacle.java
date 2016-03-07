@@ -18,7 +18,7 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public class Obstacle implements Collidable, Renderable{
+public class Obstacle implements Damageable, Renderable{
 
     private Fixture fixture;
     private Shape shape;
@@ -121,6 +121,11 @@ public class Obstacle implements Collidable, Renderable{
     @Override
     public float getDrawHeight() {
         return sprite.getDrawHeight();
+    }
+
+    @Override
+    public float takeDamage(float damage, String type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

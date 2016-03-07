@@ -134,7 +134,7 @@ class MonsterGenerator implements GenerationProcedure<CreatureDefinition> {
         
         //Determine XP and Loot
         
-        Texture2D glTexture = game.registry.loadTextureRectangle(new File("Character.png"));
+        Texture2D glTexture = game.registry.loadTextureRectangle(new File("RAW/Images/Character.png"));
         ret.setSprite(new Sprite(glTexture, 2, 2));
         
         ret.setControllerType(game.registry.controllers.get("Fighter.groovy"));
