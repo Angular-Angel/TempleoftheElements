@@ -19,6 +19,10 @@ class MonsterGenerator implements GenerationProcedure<CreatureDefinition> {
     int count = 0;
     Random random = new Random();
     
+    public CreatureDefinition generate(Object o) {
+        throw new UnsupportedOperationException();
+    }
+    
     public CreatureDefinition generate() {
         int rand = random.nextInt(2);
         

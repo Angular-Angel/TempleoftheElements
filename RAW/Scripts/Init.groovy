@@ -20,6 +20,7 @@ class Initiator implements InitScript {
         
         game.registry.readRaw(new File("RAW/JSON/StatDescriptions.json"));
         game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("RAW/Scripts/MonsterGenerator.groovy")));
+        game.registry.nodeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("RAW/Scripts/MissileGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("RAW/Scripts/Wanderer.groovy"));
@@ -33,10 +34,9 @@ class Initiator implements InitScript {
         game.registry.readRaw(new File("RAW/JSON/MagicEffects.json"));
         game.registry.readRaw(new File("RAW/JSON/Weapons.json"));
         game.registry.readRaw(new File("RAW/JSON/Elements.json"));
-        game.registry.loadItemPool("RAW/Scripts/ItemRoller.groovy", );
+        game.registry.loadItemPool(new File("RAW/Scripts/ItemRoller.groovy"));
         game.registry.treeGenerator = game.registry.readGroovyScript(new File("RAW/Scripts/MagicalStyleGenerator.groovy"));
         game.registry.clusterGenerator = game.registry.readGroovyScript(new File("RAW/Scripts/ClusterGenerator.groovy"));
-        game.registry.nodeGenerator = game.registry.readGroovyScript(new File("RAW/Scripts/NodeGenerator.groovy"));
         Floor.RoomSchematic.procedures.add(game.registry.readGroovyScript(new File("RAW/Scripts/RockyRoom.groovy")));
         game.registry.readRaw(new File("RAW/JSON/Creatures.json"));
         
@@ -53,7 +53,7 @@ class Initiator implements InitScript {
         creature.setSprite(new Sprite(glTexture, 2, 2));
         game.player = new Player(creature);
         
-        Item item = game.registry.itemPools.get("RAW/Scripts/ItemRoller.groovy").generate(1, 0);
+        Item item = game.registry.itemPools.get("ItemRoller.groovy").generate(1, 0);
         game.room.add(item);
         
         Effect effect = new Effect() {

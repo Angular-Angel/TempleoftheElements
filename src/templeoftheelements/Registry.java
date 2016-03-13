@@ -32,6 +32,7 @@ import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterTreeDef;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import templeoftheelements.player.Effect;
+import templeoftheelements.player.NodeGenerator;
 import templeoftheelements.player.StatusEffect;
 import util.RawReader;
 
@@ -58,7 +59,7 @@ public class Registry extends RawReader {
     public CreatureTypeGenerator creatureTypeGenerator;
     public ProceduralGenerator<CharacterTreeDef> treeGenerator;
     public ProceduralGenerator<ClusterDefinition> clusterGenerator;
-    public ProceduralGenerator<CharacterNode> nodeGenerator;
+    public NodeGenerator nodeGenerator;
     
     public Registry() {
         creatureDefs = new HashMap<>();
@@ -75,6 +76,7 @@ public class Registry extends RawReader {
         statDescriptors = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
         creatureTypeGenerator = new CreatureTypeGenerator();
+        nodeGenerator = new NodeGenerator();
     }
     
     public void readRaw(File file) {
@@ -114,12 +116,12 @@ public class Registry extends RawReader {
         
     }
     
-    public ItemGenerator loadItemPool(String name) {
-        ItemGenerator ret = (ItemGenerator) readGroovyScript(new File(name));
+    public ItemGenerator loadItemPool(File file) {
+        ItemGenerator ret = (ItemGenerator) readGroovyScript(file);
         
         ret.init();
         
-        itemPools.put(name, ret);
+        itemPools.put(file.getName(), ret);
         
         return ret;
     }

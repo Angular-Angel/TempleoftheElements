@@ -21,6 +21,10 @@ class RockyRoom implements GenerationProcedure<Room> {
         throw new UnsupportedOperationException();
     }
     
+    public Room generate(Object o) {
+        throw new UnsupportedOperationException();
+    }
+    
     public Room modify(Room room) {
         for (int i = 0; i < room.width/10; i++) {
             int x, y, size;
@@ -42,5 +46,6 @@ class RockyRoom implements GenerationProcedure<Room> {
     public boolean isApplicable(Room room) {
         throw new UnsupportedOperationException();
     }
+    
     
 }

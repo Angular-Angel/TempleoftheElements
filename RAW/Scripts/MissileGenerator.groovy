@@ -4,6 +4,7 @@ import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;   // the groovy script importing.
 import templeoftheelements.item.*;
 import stat.*;
+import generation.*;
 import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
@@ -12,7 +13,7 @@ import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 
-public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
+public class MissileGenerator implements GenerationProcedure<CharacterNode> {
 
      //our random number generator;
     Random random = new Random();
@@ -45,13 +46,13 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
         } else castTime =  new NumericStat(0);
 
        if (ability.details.contains(Spell.Detail.HIGH_MANA_COST)) {
-            int num = 20 + random.nextInt(20);
+            int num = 5 + random.nextInt(5);
             manaCost =  new NumericStat(num);
-            limitationValue += num / 5;
+            limitationValue += num;
         } else {
-            int num = 10 + random.nextInt(10);
+            int num = 2 + random.nextInt(2);
             manaCost =  new NumericStat(num);
-            limitationValue += num / 5;
+            limitationValue += num;
         } 
 
         while (pool > 0) {
@@ -113,48 +114,8 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
     public CharacterNode generate(Object o) {
         NodeDefinition nodeDef = (NodeDefinition) o; //the definition for the node we're making
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree; //the tree to which the node will belong
-
-        Requirement req; //the variable that will keep track of what nodes this node requires
-
-        //the layer we're gonna add this node too.
-        ArrayList<CharacterNode> curLayerNodes = tree.layers.get(nodeDef.layer); 
-
-        //the layer that contains the nodes upon which this node will depend.
-        ArrayList<CharacterNode> prevLayerNodes;
-
-        if (nodeDef.layer >= 1)
-            prevLayerNodes = tree.layers.get(nodeDef.layer-1); 
-        else
-            prevLayerNodes = new ArrayList<>(); 
-
-        //This variable helps determine which nodes this node will require.
-        int num = curLayerNodes.size() * prevLayerNodes.size() / tree.layerSize;
-
-        switch (nodeDef.requirement.and) {
-            case false:
-                if (prevLayerNodes.size() == 0) {
-                    req = new AndRequirement();
-                } else if (prevLayerNodes.size() > num-1 && nodeDef.requirement.number == 2) {
-                    req = new OrRequirement(prevLayerNodes.get(num), prevLayerNodes.get(num+1));
-                } else if (prevLayerNodes.size() > num) {
-                    req = prevLayerNodes.get(num);
-                } else {
-                    req = prevLayerNodes.get(0);
-                }
-                break;
-            default: 
-                System.out.println(nodeDef.requirement);
-        }
-
-        CharacterNode node;
-
-        //decide whether the node will give a stat boost or a new ability.
-         if (nodeDef.ability == null) {
-            node = new CharacterNode(req, tree);
-        } else {
-
-            node = new AbilityNode(req, tree, generateMissile(nodeDef.ability));
-        }
+        
+        CharacterNode node = new AbilityNode(null, tree, generateMissile(nodeDef.ability));
 
         for (StatDescriptor stat : nodeDef.stats) {
             node.addStat(stat.name, new NumericStat(stat.increase));
@@ -162,5 +123,13 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
 
         node.nodeDef = nodeDef;
         return node;
+    }
+    
+    public CharacterNode modify(CharacterNode node) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public boolean isApplicable(CharacterNode node) {
+        throw new UnsupportedOperationException();
     }
 }
