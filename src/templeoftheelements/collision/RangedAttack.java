@@ -47,7 +47,7 @@ public class RangedAttack extends Attack {
         bodydef.type = BodyType.DYNAMIC;
         Body body = TempleOfTheElements.game.world.createBody(bodydef);
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.density = 1;
+        fixtureDef.density = 0;
         fixtureDef.shape = bodyShape;
         fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);

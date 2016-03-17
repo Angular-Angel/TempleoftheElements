@@ -83,16 +83,24 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         while(attributePool.remove(attribute));
         ret.primaryAttributes.add(attribute);
         
-        Spell.Detail detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
         
-        ret.details.add(detail);
+//        Spell.Detail[] values = Arrays.copyOfRange(Spell.Detail.values(), Spell.Detail._TARGETING_.ordinal()+1, Spell.Detail._COMMON_.ordinal());
         
-        detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
+        Spell.Detail detail;
+        
+//        for (int i = 0; i < values.length/2; i++) {
+//            detail = values[random.nextInt(values.length)];
+//            ret.details.add(detail);
+//        }
+
+        
+            ret.details.add(Spell.Detail.PROJECTILE);
+            ret.details.add(Spell.Detail.AREA_TARGET);
         
         
-        while (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
+        //hile (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
         
-        ret.details.add(detail);
+        //ret.details.add(detail);
         
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Mana"));
         

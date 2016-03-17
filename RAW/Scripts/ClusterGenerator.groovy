@@ -75,7 +75,7 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
 
             capStone.ability.tree = tree;
 
-            for (int i = 0; i < 3; i++) 
+            for (int i = 0; i < 1; i++) 
                 capStone.ability.details.add(tree.definition.details.get(random.nextInt(tree.definition.details.size())));
 
             capStone.requirement = new CharacterTreeDef.Requirement(2);

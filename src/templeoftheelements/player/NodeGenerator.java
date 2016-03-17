@@ -8,10 +8,13 @@ package templeoftheelements.player;
 import generation.GenerationProcedure;
 import generation.ProceduralGenerator;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 import stat.NumericStat;
 import stat.StatDescriptor;
 import templeoftheelements.CreatureDefinition;
+import templeoftheelements.Spell;
 import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 
 /**
@@ -21,15 +24,15 @@ import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
 
     Random random = new Random();
-    ArrayList<GenerationProcedure<CharacterNode>> baseProcedures = new ArrayList<>();
+    HashMap<Spell.Detail, GenerationProcedure<CharacterNode>> procedures = new HashMap<>();
 
     @Override
     public CharacterNode generate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void addBaseProcedure(GenerationProcedure<CharacterNode> procedure) {
-        baseProcedures.add(procedure);
+    public void addProcedure(Spell.Detail detail, GenerationProcedure<CharacterNode> procedure) {
+        procedures.put(detail, procedure);
     }
     
     @Override
@@ -63,15 +66,22 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
         } else {
             req = prevLayerNodes.get(0);
         }
-
-        CharacterNode node;
+       
+        CharacterNode node = null;
 
         //decide whether the node will give a stat boost or a new ability.
          if (nodeDef.ability == null) {
             node = new CharacterNode(req, tree);
         } else {
-            node = baseProcedures.get(random.nextInt(baseProcedures.size())).generate(o);
-            node.requirements = req;
+            for (Spell.Detail detail : nodeDef.ability.details) {
+                if (procedures.containsKey(detail)) {
+                    if (node == null) {
+                        node = procedures.get(detail).generate(o);
+                        node.requirements = req;
+                    } else
+                        node = procedures.get(detail).modify(node);
+                }
+            }
         }
 
         for (StatDescriptor stat : nodeDef.stats) {
