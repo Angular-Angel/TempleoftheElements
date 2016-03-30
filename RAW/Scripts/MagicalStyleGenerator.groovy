@@ -96,6 +96,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         
             ret.details.add(Spell.Detail.PROJECTILE);
             ret.details.add(Spell.Detail.AREA_TARGET);
+            ret.details.add(Spell.Detail.ENEMY_TARGET);
         
         
         //hile (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];

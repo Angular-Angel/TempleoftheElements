@@ -49,6 +49,7 @@ public class AreaEffect implements Collidable, Actor, Renderable {
         ongoingEffects = new ArrayList<>();
         sprite = new VectorCircle(radius);
         game.addSprite(this);
+        game.addActor(this);
         
         BodyDef bodydef = new BodyDef();
         bodydef.position.set(position);
@@ -149,7 +150,7 @@ public class AreaEffect implements Collidable, Actor, Renderable {
     @Override
     public void destroy() {
         TempleOfTheElements.game.world.destroyBody(fixture.getBody());
-//        TempleOfTheElements.game.removeSprite(this);
+        TempleOfTheElements.game.removeSprite(this);
     }
 
     @Override

@@ -105,10 +105,10 @@ public class Player implements Controller {
             click.y += creature.getPosition().y;
             click = rotate(creature.getPosition(), click, -creature.getDirection());
             Clickable c = game.getClickable(click.x, click.y);
-            if (c != null) {
+            if (c != null && !(c instanceof Creature)) {
                 c.mouseEvent(button, action, mods);
             }
-            else leftClick.performAction(creature, button, action, mods);
+            else leftClick.performAction(creature, button, action, mods, click);
         }
     }
     

@@ -14,7 +14,7 @@ import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import org.jbox2d.common.Vec2;
 
-public class MissileGenerator implements GenerationProcedure<CharacterNode> {
+public class AreaSpellGenerator implements GenerationProcedure<CharacterNode> {
 
      //our random number generator;
     Random random = new Random();
@@ -38,9 +38,12 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
 
                     @Override
                     public float effect(EffectSource src, Object object) {
+                        if (object instanceof Creature)
+                        ((Creature) object).takeDamage(1, "Crushing");
                         return 0;
                     }
-                })
+                });
+                game.addActor(areaEffect);
                 return 0;
             }
         }

@@ -8,6 +8,7 @@ import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.player.Ability;
+import templeoftheelements.player.Effect;
 
 /**
  *
@@ -17,7 +18,7 @@ import templeoftheelements.player.Ability;
 
 public class MissileSpell extends Spell {
 
-    private AttackDefinition missile;
+    public AttackDefinition missile;
     public String description;
     
     public MissileSpell(AttackDefinition attack) {
@@ -60,6 +61,11 @@ public class MissileSpell extends Spell {
      */
     public AttackDefinition getMissile() {
         return missile;
+    }
+
+    @Override
+    public void addEffect(Effect effect) {
+        missile.addOnHitEffect(effect);
     }
     
 }

@@ -7,24 +7,24 @@ package templeoftheelements;
 
 import java.util.ArrayList;
 import org.jbox2d.common.Vec2;
+import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
+import templeoftheelements.player.Clickable;
 import templeoftheelements.player.Effect;
 
 /**
  *
  * @author angle
  */
-public class AreaSpell extends Spell {
-
+public class EnemyTargetSpell extends Spell {
+    
     ArrayList<Effect> effects;
-    float radius;
 
-    public AreaSpell(String name, Renderable sprite, Effect effect) {
+    public EnemyTargetSpell(String name, Renderable sprite) {
         super(name, sprite);
-        this.effects = new ArrayList<>();
-        effects.add(effect);
+        effects = new ArrayList<>();
     }
     
     @Override
@@ -33,11 +33,13 @@ public class AreaSpell extends Spell {
         super.perform(creature, in);
         cast(creature, in);
     }
-    
+
     @Override
     public void cast(Creature caster, Vec2 in) {
-        for (Effect e : effects)
-            e.effect(caster, in);
+        Clickable c = game.getClickable(in.x, in.y);
+        if (c instanceof Creature) {
+            for (Effect e : effects) e.effect(caster, c);
+        }
     }
 
     @Override
@@ -47,7 +49,7 @@ public class AreaSpell extends Spell {
 
     @Override
     public String getDescription() {
-        return "This is an aea Spell.";
+        return "Enemy Target Spell.";
     }
 
     @Override

@@ -27,7 +27,7 @@ import templeoftheelements.player.*;
 
 
 
-public class Creature extends StatContainer implements Damageable, Actor, Renderable {
+public class Creature extends StatContainer implements Damageable, Actor, Renderable, Clickable {
     private Renderable sprite;
     private Controller controller;
     private Fixture fixture;
@@ -442,6 +442,20 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     private void defactorStatusEffect(StatusEffect statusEffect) {
         removeAllStats(statusEffect);
     }
+
+    @Override
+    public boolean isClicked(float x, float y) {
+        try {
+            return (x > getPosition().x - getScore("Size")/2 && x < getPosition().x + getScore("Size")/2
+                    && y > getPosition().y - getScore("Size")/2 && y < getPosition().y + getScore("Size")/2);
+        } catch (NoSuchStatException ex) {
+            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public void mouseEvent(int button, int action, int mods) {}
     
     public class BodyPart {
         protected Equipment equipment;

@@ -14,6 +14,7 @@ import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
 import templeoftheelements.player.Action;
 import templeoftheelements.player.CreatureEvent;
+import templeoftheelements.player.Effect;
 
 
 
@@ -73,6 +74,8 @@ public abstract class Spell extends Action implements Ability {
         }
         return false;
     }
+    
+    public abstract void addEffect(Effect effect);
     
     @Override
     public void perform(Creature creature, Vec2 in) {
