@@ -15,6 +15,7 @@ import stat.StatContainer;
 import templeoftheelements.Actor;
 import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.Controller;
+import templeoftheelements.Damager;
 import templeoftheelements.item.Equipment;
 import templeoftheelements.item.Item;
 import templeoftheelements.TempleOfTheElements;
@@ -27,7 +28,7 @@ import templeoftheelements.player.*;
 
 
 
-public class Creature extends StatContainer implements Damageable, Actor, Renderable, Clickable {
+public class Creature extends StatContainer implements Damageable, Actor, Renderable, Clickable, Damager {
     private Renderable sprite;
     private Controller controller;
     private Fixture fixture;
@@ -44,6 +45,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     private ArrayList<CreatureListener> listeners;
     private ArrayList<PassiveAbility> passives;
     private boolean winded;
+    private String name; //For display and debug purposes.
 
     public Creature() {
         this(new Vec2(), new StatContainer() {});
@@ -456,6 +458,20 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
 
     @Override
     public void mouseEvent(int button, int action, int mods) {}
+
+    @Override
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Damager getOwner() {
+        return this;
+    }
     
     public class BodyPart {
         protected Equipment equipment;

@@ -23,6 +23,7 @@ class Initiator implements InitScript {
         game.registry.nodeGenerator.addProcedure(Spell.Detail.PROJECTILE, game.registry.readGroovyScript(new File("RAW/Scripts/MissileGenerator.groovy")));
         game.registry.nodeGenerator.addProcedure(Spell.Detail.AREA_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/AreaSpellGenerator.groovy")));
         game.registry.nodeGenerator.addProcedure(Spell.Detail.ENEMY_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/EnemyTargetSpellGenerator.groovy")));
+        game.registry.nodeGenerator.addProcedure(Spell.Detail.DAMAGE, game.registry.readGroovyScript(new File("RAW/Scripts/DamageSpellGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("RAW/Scripts/Wanderer.groovy"));

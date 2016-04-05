@@ -56,7 +56,7 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
         } 
 
         while (pool > 0) {
-            switch (random.nextInt(3)) {
+            switch (random.nextInt(2)) {
                 case 0:
                     sizeValue += 1;
                     pool -= (speedValue * damageValue / limitationValue);
@@ -65,10 +65,10 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
                     speedValue += 1;
                     pool -= (sizeValue * damageValue / limitationValue);
                     break;
-                case 2:
-                    damageValue += 1;
-                    pool -= (sizeValue * speedValue / limitationValue);
-                    break;
+//                case 2:
+//                    damageValue += 1;
+//                    pool -= (sizeValue * speedValue / limitationValue);
+//                    break;
             }
 
         }
@@ -79,8 +79,8 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
         sizeValue = 0.3 + (sizeValue -1) * 0.03;
         size = new NumericStat(sizeValue);
 
-        damageValue = 30 + (damageValue -1) * 3;
-        damage = new EquationStat("" + damageValue + " * [Attacker@Spell Damage Multiplier]");
+//        damageValue = 30 + (damageValue -1) * 3;
+//        damage = new EquationStat("" + damageValue + " * [Attacker@Spell Damage Multiplier]");
 
         name = element.name;
 
@@ -89,7 +89,7 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
 
         missile = new AttackDefinition(name, new VectorCircle(1), element.name);
         missile.addStat("Ranged Attack", new BinaryStat());
-        missile.addStat("Damage", damage);
+//        missile.addStat("Damage", damage);
         missile.addStat("Size", size);
         missile.addStat("Speed", speed);
 
@@ -99,7 +99,7 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
         ret.addStat("Cooldown", cooldown);
 
         ret.description += "This spell shoots a missile.";
-        ret.description += "\nDamage: " + ((EquationStat) damage).equation;
+//        ret.description += "\nDamage: " + ((EquationStat) damage).equation;
         ret.description += "\nSpeed: " + ((EquationStat) speed).equation;
         ret.description += "\nSize: " + size.getScore();
 

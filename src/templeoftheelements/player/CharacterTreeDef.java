@@ -29,7 +29,9 @@ public class CharacterTreeDef {
     
     public Focus primaryFocus;
     public ArrayList<Focus> secondaryFocuses;
-    public ArrayList<Spell.Detail> details;
+    public ArrayList<Spell.Detail> targetDetails;
+    public ArrayList<Spell.Detail> effectDetails;
+    public ArrayList<Spell.Detail> scalingDetails;
     public ArrayList<StatDescriptor> primaryAttributes;
     public ArrayList<StatDescriptor> secondaryAttributes;
     public Element element;
@@ -43,7 +45,9 @@ public class CharacterTreeDef {
         primaryAttributes = new ArrayList<>();
         secondaryAttributes = new ArrayList<>();
         secondaryFocuses = new ArrayList<>();
-        details = new ArrayList<>();
+        targetDetails = new ArrayList<>();
+        effectDetails = new ArrayList<>();
+        scalingDetails = new ArrayList<>();
         abilities = new ArrayList<>();
     }
     

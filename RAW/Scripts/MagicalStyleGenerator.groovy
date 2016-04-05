@@ -94,25 +94,27 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
 //        }
 
         
-            ret.details.add(Spell.Detail.PROJECTILE);
-            ret.details.add(Spell.Detail.AREA_TARGET);
-            ret.details.add(Spell.Detail.ENEMY_TARGET);
+            ret.targetDetails.add(Spell.Detail.PROJECTILE);
+            ret.targetDetails.add(Spell.Detail.AREA_TARGET);
+            ret.targetDetails.add(Spell.Detail.ENEMY_TARGET);
+            
+            ret.effectDetails.add(Spell.Detail.DAMAGE);
         
         
-        //hile (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
+        //while (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
         
         //ret.details.add(detail);
         
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Mana"));
         
-        if (ret.details.contains(Spell.Detail.SPEED_BASED)) 
+        if (ret.scalingDetails.contains(Spell.Detail.SPEED_BASED)) 
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Speed"));
         
-        if (ret.details.contains(Spell.Detail.STAMINA_BASED)) 
+        if (ret.scalingDetails.contains(Spell.Detail.STAMINA_BASED)) 
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Stamina"));
         
-        if (ret.details.contains(Spell.Detail.TOUGHNESS_BASED) ||
-            ret.details.contains(Spell.Detail.HP_COST)) 
+        if (ret.scalingDetails.contains(Spell.Detail.TOUGHNESS_BASED) ||
+            ret.scalingDetails.contains(Spell.Detail.HP_COST)) 
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added HP"));
         
         attributePool.clear();
