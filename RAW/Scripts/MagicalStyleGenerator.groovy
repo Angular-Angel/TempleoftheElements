@@ -3,6 +3,7 @@ import templeoftheelements.collision.*; // these are used for
 import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;   // the groovy script importing.
 import templeoftheelements.item.*;
+import templeoftheelements.effect.*;
 import stat.*;
 import java.util.Random;
 import java.util.ArrayList;
@@ -99,6 +100,12 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             ret.targetDetails.add(Spell.Detail.ENEMY_TARGET);
             
             ret.effectDetails.add(Spell.Detail.DAMAGE);
+            
+            ArrayList<Spell.Detail> arrayList = new ArrayList<Spell.Detail>();
+            arrayList.addAll(Arrays.asList(Spell.Detail.values()));
+            arrayList = arrayList.subList(arrayList.indexOf(Spell.Detail._COSTS_) +1, arrayList.indexOf(Spell.Detail._TARGETING_));
+        
+        ret.costDetails.add(arrayList);
         
         
         //while (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
@@ -110,10 +117,12 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         if (ret.scalingDetails.contains(Spell.Detail.SPEED_BASED)) 
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Speed"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.STAMINA_BASED)) 
+        if (ret.scalingDetails.contains(Spell.Detail.CONSTITUTION_BASED) || 
+            ret.scalingDetails.contains(Spell.Detail.STAMINA_BASED) ||
+            ret.scalingDetails.contains(Spell.Detail.STAMINA_COST)) 
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Stamina"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.TOUGHNESS_BASED) ||
+        if (ret.scalingDetails.contains(Spell.Detail.CONSTITUTION_BASED) ||
             ret.scalingDetails.contains(Spell.Detail.HP_COST)) 
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added HP"));
         

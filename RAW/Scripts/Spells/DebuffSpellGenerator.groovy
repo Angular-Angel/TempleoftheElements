@@ -12,9 +12,8 @@ import generation.ProceduralGenerator;
 import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
-import org.jbox2d.common.Vec2;
 
-public class DamageSpellGenerator implements GenerationProcedure<CharacterNode> {
+public class DebuffSpellGenerator implements GenerationProcedure<CharacterNode> {
 
      //our random number generator;
     Random random = new Random();
@@ -29,32 +28,28 @@ public class DamageSpellGenerator implements GenerationProcedure<CharacterNode> 
     
     public CharacterNode modify(CharacterNode node) {
         AbilityNode abilityNode = (AbilityNode) node;
+        Ability ability = abilityNode.ability;
         
-        Spell spell = (Spell) node.ability;
+        String name = "Debuff";
         
-        Effect e = new Effect() {
-
+        StatusEffect debuff = new StatusEffect(name);
+        
+        node.de
+        
+        Effect effect = new Effect() {
             @Override
-            public float effect(EffectSource src, Object object) {
-                if (!(object instanceof Creature && src instanceof Creature)) return 0;
-                
-                Creature source = (Creature) src;
-                
-                float damage = source.getStat("Spirit") / 5; 
-                
-                return ((Creature) object).takeDamage(damage, "Fire");
+            public float effect(EffectSource source, Object o) {
+                if (o instanceof Creature)
+                    ((Creature) o).addStatusEffect(debuff);
             }
         };
         
-        spell.addEffect(e)
-        
-        return node;
+        if (ability instanceof MissileSpell) {
+            AttackDefinition missile = ((MissileSpell) ability).missile;
+        }
     }
     
     public boolean isApplicable(CharacterNode node) {
-        if (!(node instanceof AbilityNode)) return false;
-        AbilityNode abilityNode = (AbilityNode) node;
-        
-        return (node.ability instanceof Spell);
+        throw new UnsupportedOperationException();
     }
 }

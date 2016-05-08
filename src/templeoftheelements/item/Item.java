@@ -14,7 +14,7 @@ import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Positionable;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Clickable;
-import templeoftheelements.player.EffectSource;
+import templeoftheelements.effect.EffectSource;
 
 /**
  *

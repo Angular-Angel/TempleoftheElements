@@ -4,7 +4,9 @@ package templeoftheelements.player;
 import com.samrj.devil.math.Vec2;
 import generation.ProceduralGenerator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import templeoftheelements.Spell;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
@@ -163,13 +165,16 @@ public class CharacterWheel {
         
         public int layerSize, cluster;
         public ArrayList<ClusterDefinition> clusters;
+        public ArrayList<Ability> abilities;
         public CharacterTreeDef definition;
+        public float spammables, situationals;
         
         public CharacterTree(CharacterTreeDef definition) {
             this.definition = definition;
             layers = new ArrayList<>();
             nodes = new ArrayList<>();
             clusters = new ArrayList<>();
+            abilities = new ArrayList<>();
             newLayer();
         }
         

@@ -2,6 +2,7 @@
 package templeoftheelements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
 import templeoftheelements.player.Action;
 import templeoftheelements.player.CreatureEvent;
-import templeoftheelements.player.Effect;
+import templeoftheelements.effect.Effect;
 
 
 
@@ -23,31 +24,37 @@ public abstract class Spell extends Action implements Ability {
     public static enum Detail {
         
         //Usage
-        _USAGES_, SPAMMABLE, SITUATIONAL, NONCOMBAT, PASSIVE, CROWD_CONTROL,
-        BURST, FINISHER, 
+        _USAGES_(0), SPAMMABLE(0), SITUATIONAL(0), NONCOMBAT(0), PASSIVE(0),
         
-        //Downsides
-        _DOWNSIDES_, NORMAL_MANA_COST, HIGH_MANA_COST, TEMPORARY_STAT_COST, 
-        PERMANENT_STAT_COST, HP_COST, MATERIAL_COMPONENT, STAMINA_COST, XP_COST,
-        DELAY, SHORT_COOLDOWN, LONG_COOLDOWN, LONG_CAST_TIME, RITUAL,
+        //Costs
+        _COSTS_(0), MANA_COST(2), TEMPORARY_STAT_COST(4), PERMANENT_STAT_COST(8), 
+        HP_COST(3), MATERIAL_COMPONENT(5), STAMINA_COST(1), XP_COST(5), DELAY(1), 
+        CHARGE(3), COOLDOWN(2), CAST_TIME(3), RITUAL(5),
         
         //targeting types
-        _TARGETING_, PROJECTILE, AREA_TARGET, ENEMY_TARGET, SELF_TARGET, MINION, 
+        _TARGETING_(0), PROJECTILE(0), AREA_TARGET(0), ENEMY_TARGET(0), SELF_TARGET(0), //MINION, 
 
         //common effects
-        _COMMON_, DAMAGE, ARMOR_DIVISOR, BUFF, DEBUFF, ON_HIT_EFFECT, ON_ATTACK_EFFECT,
-        ON_CAST_EFFECT, DAMAGE_OVER_TIME, AREA_OF_EFFECT, SLOW, STUN,
-        IMMOBILIZATION, SILENCE, BLIND, MOVEMENT,
+        _COMMON_(0), DAMAGE(3), ARMOR_DIVISOR(2), BUFF(3), DEBUFF(2), ON_HIT_EFFECT(2), 
+        ON_ATTACK_EFFECT(3), ON_CAST_EFFECT(5), DAMAGE_OVER_TIME(1), AREA_OF_EFFECT(1), SLOW(1), STUN(6),
+        IMMOBILIZATION(4), SILENCE(3), BLIND(4), MOVEMENT(2),
 
         //rare effects
-        _RARE_, TERRAIN_ALTERATION, TELEPORTATION, ITEM_CREATION, ITEM_ALTERATION, 
-        MIND_CONTROL, CONFUSION, PETRIFICATION, DIVINATION, HEAL, MANA_DRAIN, 
-        EXHAUSTION, MULTI_TARGET, HOMING, CHAIN,
+        _RARE_(0), TERRAIN_ALTERATION(5), TELEPORTATION(6), ITEM_CREATION(6), ITEM_ALTERATION(6), 
+        MIND_CONTROL(8), CONFUSION(6), PETRIFICATION(10), DIVINATION(4), HEAL(3), MANA_DRAIN(2), 
+        EXHAUSTION(3), MULTI_TARGET(4), HOMING(3), CHAIN(4),
         
         //Scaling
-        _SCALING_, SPEED_BASED, TOUGHNESS_BASED, LUCK_BASED, STAMINA_BASED;
+        _SCALING_(0), SPIRIT_BASED(0), INTELLIGENCE_BASED(0), PERCEPTION_BASED(0), SPEED_BASED(0), 
+        STRENGTH_BASED(0), CONSTITUTION_BASED(0), DEXTERITY_BASED(0), STAMINA_BASED(0), LUCK_BASED(0);
         
         //
+        
+        public final int cost;
+        
+        Detail(int cost) {
+            this.cost = cost;
+        }
 
     }
     

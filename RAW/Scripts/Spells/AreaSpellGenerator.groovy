@@ -1,8 +1,10 @@
 import templeoftheelements.*;
 import templeoftheelements.collision.*; // these are used for
 import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
+import templeoftheelements.player.*;
 import templeoftheelements.item.*;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectSource;
 import stat.*;
 import generation.*;
 import java.util.Random;

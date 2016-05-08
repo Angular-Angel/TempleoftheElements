@@ -2,7 +2,7 @@
 package templeoftheelements.item;
 
 import java.util.ArrayList;
-import templeoftheelements.player.Effect;
+import templeoftheelements.effect.Effect;
 
 /**
  *

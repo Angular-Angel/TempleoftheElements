@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import stat.Stat;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.Effect;
+import templeoftheelements.effect.Effect;
 
 /**
  *

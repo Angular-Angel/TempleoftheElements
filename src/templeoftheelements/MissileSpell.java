@@ -8,7 +8,7 @@ import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.player.Ability;
-import templeoftheelements.player.Effect;
+import templeoftheelements.effect.Effect;
 
 /**
  *

@@ -17,6 +17,8 @@
         "Effects": ["import templeoftheelements.player.*; 
                   \n import templeoftheelements.item.*; 
                   \n import templeoftheelements.collision.*;
+                  \n import templeoftheelements.effect.Effect;
+                  \n import templeoftheelements.effect.EffectSource;
                   \n public class BludgeonEffect extends Effect { 
                         public float effect(EffectSource source, Object o) {
                             return ((Creature) o).takeDamage(1, \"Crushing\");

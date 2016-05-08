@@ -1,7 +1,5 @@
 
-package templeoftheelements.player;
-
-import templeoftheelements.collision.Collidable;
+package templeoftheelements.effect;
 
 
 

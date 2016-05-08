@@ -3,6 +3,8 @@ import templeoftheelements.collision.*; // these are used for
 import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;
 import templeoftheelements.item.*;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectSource;
 import static templeoftheelements.TempleOfTheElements.game;
 import stat.*;
 import java.util.Random;
@@ -17,13 +19,12 @@ import org.jbox2d.common.Vec2;
 class Initiator implements InitScript {
 
     public void Init() {
-        
         game.registry.readRaw(new File("RAW/JSON/StatDescriptions.json"));
         game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("RAW/Scripts/MonsterGenerator.groovy")));
-        game.registry.nodeGenerator.addProcedure(Spell.Detail.PROJECTILE, game.registry.readGroovyScript(new File("RAW/Scripts/MissileGenerator.groovy")));
-        game.registry.nodeGenerator.addProcedure(Spell.Detail.AREA_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/AreaSpellGenerator.groovy")));
-        game.registry.nodeGenerator.addProcedure(Spell.Detail.ENEMY_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/EnemyTargetSpellGenerator.groovy")));
-        game.registry.nodeGenerator.addProcedure(Spell.Detail.DAMAGE, game.registry.readGroovyScript(new File("RAW/Scripts/DamageSpellGenerator.groovy")));
+        game.registry.nodeGenerator.addProcedure(Spell.Detail.PROJECTILE, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/MissileSpellGenerator.groovy")));
+        game.registry.nodeGenerator.addProcedure(Spell.Detail.AREA_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/AreaSpellGenerator.groovy")));
+        game.registry.nodeGenerator.addProcedure(Spell.Detail.ENEMY_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/EnemyTargetSpellGenerator.groovy")));
+       // game.registry.nodeGenerator.addProcedure(Spell.Detail.DAMAGE, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/DamageSpellGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("RAW/Scripts/Wanderer.groovy"));

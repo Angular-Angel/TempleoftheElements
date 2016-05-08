@@ -10,7 +10,7 @@ import org.jbox2d.common.Vec2;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
-import templeoftheelements.player.Effect;
+import templeoftheelements.effect.Effect;
 
 /**
  *
@@ -19,7 +19,6 @@ import templeoftheelements.player.Effect;
 public class AreaSpell extends Spell {
 
     ArrayList<Effect> effects;
-    float radius;
 
     public AreaSpell(String name, Renderable sprite, Effect effect) {
         super(name, sprite);

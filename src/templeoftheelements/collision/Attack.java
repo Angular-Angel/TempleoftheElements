@@ -6,8 +6,8 @@ import stat.StatContainer;
 import templeoftheelements.Actor;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.CreatureEvent;
-import templeoftheelements.player.Effect;
-import templeoftheelements.player.EffectContainer;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 /**
  *

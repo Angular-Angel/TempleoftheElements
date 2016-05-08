@@ -20,8 +20,8 @@ import templeoftheelements.collision.Collidable;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.VectorCircle;
-import templeoftheelements.player.Effect;
-import templeoftheelements.player.EffectSource;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectSource;
 
 /**
  *

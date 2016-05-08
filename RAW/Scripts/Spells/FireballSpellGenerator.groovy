@@ -3,6 +3,7 @@ import templeoftheelements.collision.*; // these are used for
 import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;   // the groovy script importing.
 import templeoftheelements.item.*;
+import templeoftheelements.effect.*;
 import stat.*;
 import generation.*;
 import java.util.Random;
@@ -13,17 +14,25 @@ import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 
-public class MissileGenerator implements GenerationProcedure<CharacterNode> {
-
+/**
+ *
+ * @author angle
+ */
+class FireballSpellGenerator implements GenerationProcedure<CharacterNode> {
      //our random number generator;
     Random random = new Random();
     
-    public MissileSpell generateMissile(AbilityDefinition ability) {
-        CharacterWheel.CharacterTree tree = ability.tree;
+    public CharacterNode generate() {
+        throw new UnsupportedOperationException();
+    }
+
+    public CharacterNode generate(Object o) {
+        NodeDefinition nodeDef = (NodeDefinition) o; //the definition for the node we're making
+        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree; //the tree to which the node will belong.
 
         String name;
 
-        Element element = tree.definition.element;
+        Element element = game.registry.elemnts.get("Fire");
 
         float rangeValue = 1, sizeValue = 1, speedValue = 1, damageValue = 1;
         int limitationValue = 1, complexity = 9 + tree.layers.size(), pool = 100;
@@ -56,7 +65,7 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
         } 
 
         while (pool > 0) {
-            switch (random.nextInt(2)) {
+            switch (random.nextInt(3)) {
                 case 0:
                     sizeValue += 1;
                     pool -= (speedValue * damageValue / limitationValue);
@@ -65,10 +74,10 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
                     speedValue += 1;
                     pool -= (sizeValue * damageValue / limitationValue);
                     break;
-//                case 2:
-//                    damageValue += 1;
-//                    pool -= (sizeValue * speedValue / limitationValue);
-//                    break;
+                case 2:
+                    damageValue += 1;
+                    pool -= (sizeValue * speedValue / limitationValue);
+                    break;
             }
 
         }
@@ -79,17 +88,30 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
         sizeValue = 0.3 + (sizeValue -1) * 0.03;
         size = new NumericStat(sizeValue);
 
-//        damageValue = 30 + (damageValue -1) * 3;
-//        damage = new EquationStat("" + damageValue + " * [Attacker@Spell Damage Multiplier]");
+        if (ability.details.contains(Spell.Detail.SPIRIT_BASED)) {
+            damageValue = 0.2 + (damageValue -1) * 0.05;
+            damage = new EquationStat("" + damageValue + " * [Attacker@Spirit] * [Attacker@Spell Damage Multiplier]");
+        } else if (ability.details.contains(Spell.Detail.INTELLIGENCE_BASED)) {
+            damageValue = 0.2 + (damageValue -1) * 0.05;
+            damage = new EquationStat("" + damageValue + " * [Attacker@Intelligence] * [Attacker@Spell Damage Multiplier]");
+        } else if (ability.details.contains(Spell.Detail.PERCEPTION_BASED)) {
+            damageValue = 0.2 + (damageValue -1) * 0.05;
+            damage = new EquationStat("" + damageValue + " * [Attacker@Perception] * [Attacker@Spell Damage Multiplier]");
+        } else {
+            damageValue = 30 + (damageValue -1) * 3;
+            damage = new EquationStat("" + damageValue + " * [Attacker@Spell Damage Multiplier]");
+        }
+        
+        
 
-        name = element.name;
+        name = "Fireball";
 
         AttackDefinition missile;
 
 
         missile = new AttackDefinition(name, new VectorCircle(1), element.name);
         missile.addStat("Ranged Attack", new BinaryStat());
-//        missile.addStat("Damage", damage);
+        missile.addStat("Damage", damage);
         missile.addStat("Size", size);
         missile.addStat("Speed", speed);
 
@@ -99,21 +121,12 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
         ret.addStat("Cooldown", cooldown);
 
         ret.description += "This spell shoots a missile.";
-//        ret.description += "\nDamage: " + ((EquationStat) damage).equation;
+        ret.description += "\nDamage: " + ((EquationStat) damage).equation;
         ret.description += "\nSpeed: " + ((EquationStat) speed).equation;
         ret.description += "\nSize: " + size.getScore();
 
 
         return ret;
-    }
-
-    public CharacterNode generate() {
-        throw new UnsupportedOperationException();
-    }
-
-    public CharacterNode generate(Object o) {
-        NodeDefinition nodeDef = (NodeDefinition) o; //the definition for the node we're making
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree; //the tree to which the node will belong
         
         CharacterNode node = new AbilityNode(null, tree, generateMissile(nodeDef.ability));
 
@@ -132,4 +145,6 @@ public class MissileGenerator implements GenerationProcedure<CharacterNode> {
     public boolean isApplicable(CharacterNode node) {
         throw new UnsupportedOperationException();
     }
+    
 }
+

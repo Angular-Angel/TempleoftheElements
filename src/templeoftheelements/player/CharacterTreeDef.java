@@ -31,13 +31,13 @@ public class CharacterTreeDef {
     public ArrayList<Focus> secondaryFocuses;
     public ArrayList<Spell.Detail> targetDetails;
     public ArrayList<Spell.Detail> effectDetails;
+    public ArrayList<Spell.Detail> costDetails;
     public ArrayList<Spell.Detail> scalingDetails;
     public ArrayList<StatDescriptor> primaryAttributes;
     public ArrayList<StatDescriptor> secondaryAttributes;
     public Element element;
     public ProceduralGenerator<ClusterDefinition> clusterGenerator;
     public ProceduralGenerator<CharacterNode> nodeGenerator;
-    public ArrayList<Ability> abilities;
     public ArrayList<NodeDefinition> capstones;
     
     public CharacterTreeDef(String name) {
@@ -47,13 +47,15 @@ public class CharacterTreeDef {
         secondaryFocuses = new ArrayList<>();
         targetDetails = new ArrayList<>();
         effectDetails = new ArrayList<>();
+        costDetails = new ArrayList<>();
         scalingDetails = new ArrayList<>();
-        abilities = new ArrayList<>();
     }
     
-    public static class AbilityDefinition {
+    public static class AbilityDefinition extends StatContainer {
+        public Spell.Detail usage;
         public CharacterWheel.CharacterTree tree;
         public ArrayList<Spell.Detail> details;
+        public Ability ability;
         
         public AbilityDefinition() {
             details = new ArrayList<>();

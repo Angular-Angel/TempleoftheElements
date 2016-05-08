@@ -3,6 +3,7 @@ import templeoftheelements.collision.*; // these are used for
 import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;   // the groovy script importing.
 import templeoftheelements.item.*;
+import templeoftheelements.effect.*;
 import stat.*;
 import java.util.Random;
 import java.util.ArrayList;
@@ -74,8 +75,11 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
             capStone.ability = new AbilityDefinition();
 
             capStone.ability.tree = tree;
+            
+            capStone.ability.addStat("Pool", new NumericStat(100));
 
             capStone.ability.details.add(tree.definition.targetDetails.get(random.nextInt(tree.definition.targetDetails.size())));
+            capStone.ability.details.add(tree.definition.effectDetails.get(random.nextInt(tree.definition.costDetails.size())));
             capStone.ability.details.add(tree.definition.effectDetails.get(random.nextInt(tree.definition.effectDetails.size())));
 
             capStone.requirement = new CharacterTreeDef.Requirement(2);

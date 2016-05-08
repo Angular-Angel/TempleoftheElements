@@ -15,8 +15,8 @@ import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.MeleeAttack;
 import templeoftheelements.collision.RangedAttack;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.Effect;
-import templeoftheelements.player.EffectContainer;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 /**
  *

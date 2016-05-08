@@ -31,7 +31,8 @@ import templeoftheelements.player.Ability;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterTreeDef;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
-import templeoftheelements.player.Effect;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectListing;
 import templeoftheelements.player.NodeGenerator;
 import templeoftheelements.player.StatusEffect;
 import util.RawReader;
@@ -51,6 +52,7 @@ public class Registry extends RawReader {
     public HashMap<String, Controller> controllers;
     public HashMap<String, ItemGenerator> itemPools;
     public HashMap<String, Element> elements;
+    public HashMap<String, EffectListing> effects;
     public HashMap<String, StatusEffect> statusEffects;
     public HashMap<String, StatDescriptor> statDescriptors;
     public ArrayList<Element> elementList;
@@ -74,6 +76,7 @@ public class Registry extends RawReader {
         spriteSheets = new HashMap<>();
         statusEffects = new HashMap<>();
         statDescriptors = new HashMap<>();
+        effects = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
         creatureTypeGenerator = new CreatureTypeGenerator();
         nodeGenerator = new NodeGenerator();
@@ -100,6 +103,9 @@ public class Registry extends RawReader {
                    case "Magic Equipment Definition":
                    case "Magic Weapon Definition":
                        readMagicItemDef((JSONObject) obj);
+                       break;
+                   case "Effect":
+                       readEffectListing((JSONObject) obj);
                        break;
                         
                 }
@@ -149,9 +155,27 @@ public class Registry extends RawReader {
         }
         
         ja = (JSONArray) obj.get("Details");
-        if (ja != null)
-        for (Object o : ja) {
-            ret.details.add(Spell.Detail.valueOf((String) o));
+        if (ja != null) {
+            JSONArray details = (JSONArray) ja.get(0);
+            for (Object detail : details) {
+                ret.targetDetails.add(Spell.Detail.valueOf((String) detail));
+
+            }
+            details = (JSONArray) ja.get(1);
+            for (Object detail : details) {
+                ret.effectDetails.add(Spell.Detail.valueOf((String) detail));
+
+            }
+            details = (JSONArray) ja.get(2);
+            for (Object detail : details) {
+                ret.costDetails.add(Spell.Detail.valueOf((String) detail));
+
+            }
+            details = (JSONArray) ja.get(3);
+            for (Object detail : details) {
+                ret.scalingDetails.add(Spell.Detail.valueOf((String) detail));
+
+            }
         }
         
         ja = (JSONArray) obj.get("Focuses");
@@ -342,6 +366,21 @@ public class Registry extends RawReader {
     public void addCreatureDef(String name, CreatureDefinition def) {
         creatureDefs.put(name, def);
         creatureList.add(def);
+    }
+    
+    public EffectListing readEffectListing(JSONObject obj) {
+        String name = (String) obj.get("Name");
+        EffectListing ret = new EffectListing(name);
+        
+        JSONArray variables = (JSONArray) obj.get("Variables"); 
+        
+        for (Object o : variables) ret.variables.add((String) o);
+        
+        ret.effect = (String) obj.get("Effect");
+        
+        effects.put(name, ret);
+        
+        return ret;
     }
     
 }

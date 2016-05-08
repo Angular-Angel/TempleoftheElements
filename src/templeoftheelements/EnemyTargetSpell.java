@@ -12,7 +12,7 @@ import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
 import templeoftheelements.player.Clickable;
-import templeoftheelements.player.Effect;
+import templeoftheelements.effect.Effect;
 
 /**
  *
