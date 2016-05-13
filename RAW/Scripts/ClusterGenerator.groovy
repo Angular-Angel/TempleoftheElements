@@ -72,15 +72,7 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
 
             NodeDefinition capStone = tree.definition.newNode(tree);
 
-            capStone.ability = new AbilityDefinition();
-
-            capStone.ability.tree = tree;
-            
-            capStone.ability.addStat("Pool", new NumericStat(100));
-
-            capStone.ability.details.add(tree.definition.targetDetails.get(random.nextInt(tree.definition.targetDetails.size())));
-            capStone.ability.details.add(tree.definition.effectDetails.get(random.nextInt(tree.definition.costDetails.size())));
-            capStone.ability.details.add(tree.definition.effectDetails.get(random.nextInt(tree.definition.effectDetails.size())));
+            capStone.ability = Registry.abilityGenerator.generate(tree);
 
             capStone.requirement = new CharacterTreeDef.Requirement(2);
             capStone.position = CharacterTreeDef.Position.RADIAL;

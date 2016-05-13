@@ -53,12 +53,15 @@ public class CharacterTreeDef {
     
     public static class AbilityDefinition extends StatContainer {
         public Spell.Detail usage;
+        public Spell.Detail targeting;
         public CharacterWheel.CharacterTree tree;
-        public ArrayList<Spell.Detail> details;
+        public ArrayList<Spell.Detail> costDetails;
+        public ArrayList<Spell.Detail> effectDetails;
         public Ability ability;
         
         public AbilityDefinition() {
-            details = new ArrayList<>();
+            costDetails = new ArrayList<>();
+            effectDetails = new ArrayList<>();
         }
         
     }

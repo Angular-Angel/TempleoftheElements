@@ -73,15 +73,16 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
          if (nodeDef.ability == null) {
             node = new CharacterNode(req, tree);
         } else {
-            for (Spell.Detail detail : nodeDef.ability.details) {
-                if (procedures.containsKey(detail)) {
-                    if (node == null) {
-                        node = procedures.get(detail).generate(o);
-                        node.requirements = req;
-                    } else
-                        node = procedures.get(detail).modify(node);
-                }
-            }
+             node = new AbilityNode(req, tree, nodeDef.ability.ability);
+//            for (Spell.Detail detail : nodeDef.ability.details) {
+//                if (procedures.containsKey(detail)) {
+//                    if (node == null) {
+//                        node = procedures.get(detail).generate(o);
+//                        node.requirements = req;
+//                    } else
+//                        node = procedures.get(detail).modify(node);
+//                }
+//            }
         }
 
         for (StatDescriptor stat : nodeDef.stats) {
