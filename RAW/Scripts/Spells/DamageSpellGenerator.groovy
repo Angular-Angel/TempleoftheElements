@@ -16,21 +16,21 @@ import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import org.jbox2d.common.Vec2;
 
-public class DamageSpellGenerator implements GenerationProcedure<CharacterNode> {
+public class DamageSpellGenerator implements GenerationProcedure<AbilityDefinition> {
 
      //our random number generator;
     Random random = new Random();
 
-    public CharacterNode generate() {
+    public AbilityDefinition generate() {
         throw new UnsupportedOperationException();
     }
 
-    public CharacterNode generate(Object o) {
+    public AbilityDefinition generate(Object o) {
         throw new UnsupportedOperationException();
     }
     
-    public CharacterNode modify(CharacterNode node) {
-        AbilityNode abilityNode = (AbilityNode) node;
+    public AbilityDefinition modify(AbilityDefinition abilityDef) {
+        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
         
         Spell spell = (Spell) node.ability;
         
@@ -78,10 +78,7 @@ public class DamageSpellGenerator implements GenerationProcedure<CharacterNode> 
         return node;
     }
     
-    public boolean isApplicable(CharacterNode node) {
-        if (!(node instanceof AbilityNode)) return false;
-        AbilityNode abilityNode = (AbilityNode) node;
-        
-        return (node.ability instanceof Spell);
+    public boolean isApplicable(Ability ability) {
+        return (ability instanceof Spell);
     }
 }

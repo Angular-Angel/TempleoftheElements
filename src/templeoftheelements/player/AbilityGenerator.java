@@ -23,25 +23,26 @@ import templeoftheelements.player.CharacterWheel.CharacterTree;
  *
  * @author angle
  */
-public class AbilityGenerator implements ProceduralGenerator<Ability> {
+public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> {
 
     Random random = new Random();
-    HashMap<Spell.Detail, GenerationProcedure<Ability>> procedures = new HashMap<>();
+    HashMap<Spell.Detail, GenerationProcedure<AbilityDefinition>> procedures = new HashMap<>();
+    
+    public void addProcedure(Spell.Detail detail, GenerationProcedure<AbilityDefinition> procedure) {
+        procedures.put(detail, procedure);
+    }
     
     @Override
-    public Ability generate() {
+    public AbilityDefinition generate() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Ability generate(Object o) {
+    public AbilityDefinition generate(Object o) {
         CharacterTree tree = (CharacterTree) o;
-        
-        Ability ability = null;
         
         AbilityDefinition abilityDef = new AbilityDefinition();
         
-        abilityDef.ability = ability;
         
         abilityDef.addStat("Pool", new NumericStat(100));
         abilityDef.addStat("Complexity", new NumericStat(5 + tree.layers.size()));
@@ -67,15 +68,18 @@ public class AbilityGenerator implements ProceduralGenerator<Ability> {
         //Then pick the tergeting method 
         
         Spell.Detail targeting;
-        
         ArrayList<Spell.Detail> values = new ArrayList<>();
         values.addAll(Arrays.asList(Spell.Detail.values()));
         values = new ArrayList<>(values.subList(values.indexOf(Spell.Detail._TARGETING_) +1, values.indexOf(Spell.Detail._COMMON_)));
-        targeting = values.get(random.nextInt(values.size()));
         
-        abilityDef.targeting = targeting;
+        do {
+            
+            targeting = values.get(random.nextInt(values.size()));
+
+            abilityDef.targeting = targeting;
+        } while (!procedures.containsKey(targeting));
         
-        ability = procedures.get(targeting).generate(abilityDef);
+        abilityDef = procedures.get(targeting).generate(abilityDef);
         
         //Then, depending on the above, pick what costs this spell will have.
         
@@ -87,6 +91,7 @@ public class AbilityGenerator implements ProceduralGenerator<Ability> {
             
             abilityDef.addStat("Cost Complexity", new NumericStat(costcomplex));
             
+            int i = 0;
             while (abilityDef.getScore("Cost Complexity") > 0) {
                 Spell.Detail cost;
 
@@ -112,7 +117,7 @@ public class AbilityGenerator implements ProceduralGenerator<Ability> {
 
                 do {
                     effect = abilityDef.tree.definition.effectDetails.get(random.nextInt(abilityDef.tree.definition.effectDetails.size()));
-                } while (!abilityDef.costDetails.contains(effect) && effect.cost > abilityDef.getScore("Complexity"));
+                } while (!abilityDef.effectDetails.contains(effect) && effect.cost > abilityDef.getScore("Complexity"));
 
                 abilityDef.effectDetails.add(effect);
                 abilityDef.getStat("Complexity").modify(-effect.cost);
@@ -135,6 +140,7 @@ public class AbilityGenerator implements ProceduralGenerator<Ability> {
                 if (i >= abilityDef.costDetails.size())
                     i = 0;
                 
+                System.out.println("" + i + ", " + cost + ", " + abilityDef.getScore("Cost Pool"));
                 procedures.get(cost).generate(abilityDef);
                 
             }
@@ -152,15 +158,16 @@ public class AbilityGenerator implements ProceduralGenerator<Ability> {
                 
                 if (i >= abilityDef.effectDetails.size())
                     i = 0;
-                
-                procedures.get(effect).generate(abilityDef);
+                System.out.println("" + i + ", " + effect + ", " + abilityDef.getScore("Pool"));
+                abilityDef = procedures.get(effect).generate(abilityDef);
                 
             }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AbilityGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
+                System.out.println("Done");
         
-        return ability;
+        return abilityDef;
     }
     
 }

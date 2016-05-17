@@ -14,38 +14,34 @@ import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import org.jbox2d.common.Vec2;
 
-public class EnemyTargetSpellGenerator implements GenerationProcedure<CharacterNode> {
+public class EnemyTargetSpellGenerator implements GenerationProcedure<AbilityDefinition> {
 
      //our random number generator;
     Random random = new Random();
 
-    public CharacterNode generate() {
+    public AbilityDefinition generate() {
         throw new UnsupportedOperationException();
     }
 
-    public CharacterNode generate(Object o) {
-        NodeDefinition nodeDef = (NodeDefinition) o; //the definition for the node we're making
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree; //the tree to which the node will belong
+    public AbilityDefinition generate(Object o) {
+        AbilityDefinition abilityDef = (AbilityDefinition) o; //the definition for the node we're making
+        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
         
         EnemyTargetSpell spell = new EnemyTargetSpell("Enemy Target Spell", new VectorCircle(0.5));
         
-        spell.addStat("Mana Cost", new NumericStat(1));
+        spell.addStat("Cast Time", new NumericStat(0));
+        spell.addStat("Mana Cost", new NumericStat(0));
+        spell.addStat("Cooldown", new NumericStat(0));
         
-        CharacterNode node = new AbilityNode(null, tree, spell);
-
-        for (StatDescriptor stat : nodeDef.stats) {
-            node.addStat(stat.name, new NumericStat(stat.increase));
-        }
-
-        node.nodeDef = nodeDef;
-        return node;
+        abilityDef.ability = spell
+        return abilityDef;
     }
     
-    public CharacterNode modify(CharacterNode node) {
+    public AbilityDefinition modify(AbilityDefinition node) {
         throw new UnsupportedOperationException();
     }
     
-    public boolean isApplicable(CharacterNode node) {
+    public boolean isApplicable(AbilityDefinition node) {
         throw new UnsupportedOperationException();
     }
 }

@@ -87,7 +87,7 @@ public class CharacterTreeDef {
     public class NodeDefinition {
         public String description;
         public boolean free;
-        public AbilityDefinition ability;
+        public AbilityDefinition abilityDef;
         public ArrayList<StatDescriptor> stats;
         public CharacterWheel.CharacterTree tree;
         public int layer, cluster;

@@ -8,6 +8,7 @@ import stat.StatContainer;
 import stat.Trait;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.display.Renderable;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
  *
@@ -18,6 +19,7 @@ import templeoftheelements.display.Renderable;
 public abstract class Action extends Trait implements Ability {
 
     private int cooldown;
+    private AbilityDefinition def;
     
     public Action(String name, StatContainer stats) {
         super(name, true, stats);
@@ -55,5 +57,15 @@ public abstract class Action extends Trait implements Ability {
     }
     
     public abstract Ability clone();
+    
+    @Override
+    public CharacterTreeDef.AbilityDefinition getDef() {
+        return def;
+    }
+
+    @Override
+    public void setDef(CharacterTreeDef.AbilityDefinition def) {
+        this.def = def;
+    }
     
 }

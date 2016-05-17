@@ -16,7 +16,7 @@ import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import org.jbox2d.common.Vec2;
 
-public class AreaSpellGenerator implements GenerationProcedure<AbilityDefinition> {
+public class CastTimeSpellGenerator implements GenerationProcedure<AbilityDefinition> {
 
      //our random number generator;
     Random random = new Random();
@@ -29,34 +29,20 @@ public class AreaSpellGenerator implements GenerationProcedure<AbilityDefinition
         AbilityDefinition abilityDef = (AbilityDefinition) o; //the definition for the node we're making
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
         
-        //Create the effect that this spell will have. EDIT: We do this later, in other scripts.
-//        Effect effect = new Effect() {
-//
-//            @Override
-//            public float effect(EffectSource source, Object obj) {
-//                Vec2 pos = (Vec2) obj;
-//                AreaEffect areaEffect = new AreaEffect((Creature) source, 200, 1, pos);
-//                areaEffect.ongoingEffects.add(new Effect() {
-//
-//                    @Override
-//                    public float effect(EffectSource src, Object object) {
-//                        if (object instanceof Creature)
-//                        ((Creature) object).takeDamage(1, "Crushing");
-//                        return 0;
-//                    }
-//                });
-//                game.addActor(areaEffect);
-//                return 0;
-//            }
-//        }
         
-        AreaSpell spell = new AreaSpell("Area Spell", new VectorCircle(0.5));
+        int pool = Math.min(10, (abilityDef.getScore("Cost Pool")));
+        if (pool == 0) {
+            abilityDef.getStat("Cost Pool").modifyBase(-1);
+            return abilityDef.ability;
+        }
         
-        spell.addStat("Cast Time", new NumericStat(0));
-        spell.addStat("Mana Cost", new NumericStat(0));
-        spell.addStat("Cooldown", new NumericStat(0));
+        int castTime = 1 + random.nextInt(pool) / Spell.Detail.CAST_TIME.cost;
         
-        abilityDef.ability = spell
+        abilityDef.ability.addStat("Cooldown", new NumericStat(castTime));
+        
+        abilityDef.getStat("Cost Pool").modifyBase(-castTime * Spell.Detail.CAST_TIME.cost);
+        abilityDef.getStat("Pool").modifyBase(castTime * Spell.Detail.CAST_TIME.cost);
+        
         return abilityDef;
     }
     

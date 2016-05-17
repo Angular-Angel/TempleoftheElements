@@ -9,6 +9,7 @@ import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.player.Ability;
 import templeoftheelements.effect.Effect;
+import templeoftheelements.player.CharacterTreeDef;
 
 /**
  *

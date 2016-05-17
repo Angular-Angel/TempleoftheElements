@@ -71,8 +71,8 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
             //generate ability
 
             NodeDefinition capStone = tree.definition.newNode(tree);
-
-            capStone.ability = Registry.abilityGenerator.generate(tree);
+            
+            capStone.abilityDef = game.registry.abilityGenerator.generate(tree);
 
             capStone.requirement = new CharacterTreeDef.Requirement(2);
             capStone.position = CharacterTreeDef.Position.RADIAL;

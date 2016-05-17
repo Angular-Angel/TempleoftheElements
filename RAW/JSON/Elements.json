@@ -54,7 +54,7 @@
                      ["BUFF", "DEBUFF", "ON_HIT_EFFECT", "ON_ATTACK_EFFECT", "ON_CAST_EFFECT",
                       "AREA_OF_EFFECT", "SLOW", "STUN", "IMMOBILIZATION", "SILENCE", 
                       "BLIND", "MOVEMENT", "MULTI_TARGET", "HOMING"], 
-                     ["NO_COOLDOWN", "DELAY", "NORMAL_MANA_COST", "CHARGE"], 
+                     ["DELAY", "MANA_COST", "CHARGE"], 
                      ["DEXTERITY_BASED", "INTELLIGENCE_BASED"]],
         "Focuses" : ["OFFENSE", "DEFENSE", "UTILITY", "MOVEMENT"]
     },
@@ -69,7 +69,7 @@
                       "ON_HIT_EFFECT", "ON_ATTACK_EFFECT", "ON_CAST_EFFECT", 
                       "AREA_OF_EFFECT", "STUN", "MULTI_TARGET", "HOMING", 
                       "MOVEMENT", "TELEPORTATION", "CONFUSION", "MANA_DRAIN"], 
-                     ["HIGH_MANA_COST", "LONG_COOLDOWN", "CHARGE"], 
+                     ["MANA_COST", "COOLDOWN", "CHARGE"], 
                      ["SPIRIT_BASED", "INTELLIGENCE_BASED"]],
         "Focuses" : ["OFFENSE", "UTILITY", "MOVEMENT"]
     }

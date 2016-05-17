@@ -26,6 +26,11 @@ public class AreaSpell extends Spell {
         effects.add(effect);
     }
     
+    public AreaSpell(String name, Renderable sprite) {
+        super(name, sprite);
+        this.effects = new ArrayList<>();
+    }
+    
     @Override
     public void perform(Creature creature, Vec2 in) {
         if (!isPossible(creature)) return;

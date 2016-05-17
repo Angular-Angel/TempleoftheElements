@@ -101,11 +101,14 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             
             ret.effectDetails.add(Spell.Detail.DAMAGE);
             
-            ArrayList<Spell.Detail> arrayList = new ArrayList<Spell.Detail>();
-            arrayList.addAll(Arrays.asList(Spell.Detail.values()));
-            arrayList = arrayList.subList(arrayList.indexOf(Spell.Detail._COSTS_) +1, arrayList.indexOf(Spell.Detail._TARGETING_));
-        
-        ret.costDetails.add(arrayList);
+//            ArrayList<Spell.Detail> arrayList = new ArrayList<Spell.Detail>();
+//            arrayList.addAll(Arrays.asList(Spell.Detail.values()));
+//            arrayList = arrayList.subList(arrayList.indexOf(Spell.Detail._COSTS_) +1, arrayList.indexOf(Spell.Detail._TARGETING_));
+//        
+//            ret.costDetails.addAll(arrayList);
+            ret.costDetails.addAll(Spell.Detail.MANA_COST);
+            ret.costDetails.addAll(Spell.Detail.CAST_TIME);
+            ret.costDetails.addAll(Spell.Detail.COOLDOWN);
         
         
         //while (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];

@@ -5,16 +5,11 @@
  */
 package templeoftheelements.player;
 
-import generation.GenerationProcedure;
 import generation.ProceduralGenerator;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Random;
 import stat.NumericStat;
 import stat.StatDescriptor;
-import templeoftheelements.CreatureDefinition;
-import templeoftheelements.Spell;
 import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 
 /**
@@ -24,24 +19,24 @@ import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
 
     Random random = new Random();
-    HashMap<Spell.Detail, GenerationProcedure<CharacterNode>> procedures = new HashMap<>();
+//    HashMap<Spell.Detail, GenerationProcedure<CharacterNode>> procedures = new HashMap<>();
 
     @Override
     public CharacterNode generate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void addProcedure(Spell.Detail detail, GenerationProcedure<CharacterNode> procedure) {
-        procedures.put(detail, procedure);
-    }
-    
+//    public void addProcedure(Spell.Detail detail, GenerationProcedure<CharacterNode> procedure) {
+//        procedures.put(detail, procedure);
+//    }
+//    
     @Override
     public CharacterNode generate(Object o) {
         
         NodeDefinition nodeDef = (NodeDefinition) o; //the definition for the node we're making
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) nodeDef.tree; //the tree to which the node will belong
 
-        Requirement req = new AndRequirement(); //the variable that will keep track of what nodes this node requires
+        Requirement req; //the variable that will keep track of what nodes this node requires
 
         //the layer we're gonna add this node too.
         ArrayList<CharacterNode> curLayerNodes = tree.layers.get(nodeDef.layer); 
@@ -57,7 +52,7 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
         //This variable helps determine which nodes this node will require.
         int num = curLayerNodes.size() * prevLayerNodes.size() / tree.layerSize;
 
-       if (prevLayerNodes.size() == 0) {
+       if (prevLayerNodes.isEmpty()) {
             req = new AndRequirement();
         } else if (prevLayerNodes.size() > num-1 && nodeDef.requirement.number == 2) {
             req = new OrRequirement(prevLayerNodes.get(num), prevLayerNodes.get(num+1));
@@ -67,13 +62,13 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
             req = prevLayerNodes.get(0);
         }
        
-        CharacterNode node = null;
+        CharacterNode node;
 
         //decide whether the node will give a stat boost or a new ability.
-         if (nodeDef.ability == null) {
+         if (nodeDef.abilityDef == null) {
             node = new CharacterNode(req, tree);
         } else {
-             node = new AbilityNode(req, tree, nodeDef.ability.ability);
+             node = new AbilityNode(req, tree, nodeDef.abilityDef.ability);
 //            for (Spell.Detail detail : nodeDef.ability.details) {
 //                if (procedures.containsKey(detail)) {
 //                    if (node == null) {
