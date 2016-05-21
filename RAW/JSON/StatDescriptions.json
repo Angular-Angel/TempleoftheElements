@@ -187,5 +187,12 @@
         "Stat": [1],
         "Base": 1.0,
         "Increase": 0.0,
+    },
+    {
+        "Name": "Accuracy",
+        "Type": "Stat Description",
+        "Stat": ["[Dexterity] / 2"],
+        "Base": 50.0,
+        "Increase": 0.5,
     }
 ]

@@ -33,7 +33,7 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
         
         int pool = Math.min(20, (abilityDef.getScore("Pool")));
         
-        int damageValue = (Spell.Detail.DAMAGE.cost + random.nextInt(pool-Spell.Detail.DAMAGE.cost)) / Spell.Detail.DAMAGE.cost;
+        int damageValue = 1 + (random.nextInt(pool) / Spell.Detail.DAMAGE.cost);
         Stat damage;
         
         if (spell instanceof AreaSpell) {

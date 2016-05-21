@@ -159,7 +159,8 @@ public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> 
                 if (i >= abilityDef.effectDetails.size())
                     i = 0;
                 System.out.println("" + i + ", " + effect + ", " + abilityDef.getScore("Pool"));
-                abilityDef = procedures.get(effect).generate(abilityDef);
+                if (abilityDef.getScore("Pool") > effect.cost) abilityDef = procedures.get(effect).generate(abilityDef);
+                else abilityDef.getStat("Pool").modify(-1);
                 
             }
         } catch (NoSuchStatException ex) {

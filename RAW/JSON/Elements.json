@@ -5,7 +5,7 @@
         "Resistances" : [["Fire", 0.25], ["Water", 2.0], ["Earth", 1.25], ["Air", 1.25]],
         "PrimaryAttributes" : ["Intelligence", "Spirit"],
         "SecondaryAttributes" : ["Spell Damage Multiplier", "Mana Regen Multiplier"],
-        "DebuffAttributes" : [],
+        "DebuffAttributes" : ["Dexterity", "Strength", "Constitution"],
         "Details" : [["PROJECTILE", "AREA_TARGET", "ENEMY_TARGET", "SELF_TARGET"], 
                      ["DAMAGE", "BUFF", "ON_HIT_EFFECT", "ON_ATTACK_EFFECT",
                       "ON_CAST_EFFECT", "DAMAGE_OVER_TIME", "AREA_OF_EFFECT"],

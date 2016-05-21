@@ -3,6 +3,7 @@ import templeoftheelements.collision.*; // these are used for
 import templeoftheelements.display.*;   // the groovy script importing.
 import templeoftheelements.player.*;   // the groovy script importing.
 import templeoftheelements.item.*;
+import templeoftheelements.effect.*;
 import stat.*;
 import generation.*;
 import java.util.Random;
@@ -10,46 +11,58 @@ import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
 import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
-import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
-import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.effect.Effect;
 
-public class DebuffSpellGenerator implements GenerationProcedure<CharacterNode> {
+public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefinition> {
 
      //our random number generator;
     Random random = new Random();
 
-    public CharacterNode generate() {
+    public AbilityDefinition generate() {
         throw new UnsupportedOperationException();
     }
 
-    public CharacterNode generate(Object o) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public CharacterNode modify(CharacterNode node) {
-        AbilityNode abilityNode = (AbilityNode) node;
-        Ability ability = abilityNode.ability;
+    public AbilityDefinition generate(Object o) {
+        AbilityDefinition abilityDef = (AbilityDefinition) o; //the definition for the node we're making
+        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
         
         String name = "Debuff";
         
-        StatusEffect debuff = new StatusEffect(name);
+        final ArrayList<StatDescriptor> debuffAttributes = tree.definition.element.debuffAttributes;
         
-        node.de
+        System.out.println(debuffAttributes.size());
+        
+        final Debuff debuff = new Debuff(name, 30, null);
+        
+        int pool = Math.min(20, (abilityDef.getScore("Pool"))), i = 0;
+        
+        while (pool > Spell.Detail.DEBUFF.cost && i < 10) {
+            i++;
+            StatDescriptor debuffStat = debuffAttributes.get(random.nextInt(debuffAttributes.size()));
+            System.out.println(debuffStat.name);
+            int debuffValue = 1 + random.nextInt((int) (pool / Spell.Detail.DEBUFF.cost) - 1);
+            debuff.addStat(debuffStat.name, new NumericStat(debuffValue));
+            abilityDef.getStat("Pool").modifyBase(-debuffValue * Spell.Detail.DAMAGE.cost);
+        }
         
         Effect effect = new Effect() {
             @Override
-            public float effect(EffectSource source, Object o) {
+            public float effect(EffectSource source, Object obj) {
+                if (source instanceof Creature) debuff.origin = (Creature) source;
                 if (o instanceof Creature)
-                    ((Creature) o).addStatusEffect(debuff);
+                    ((Creature) obj).addStatusEffect(debuff);
+                return 0;
             }
         };
         
-        if (ability instanceof MissileSpell) {
-            AttackDefinition missile = ((MissileSpell) ability).missile;
-        }
+        ((Spell) abilityDef.ability).addOnHitEffect(effect);
     }
     
-    public boolean isApplicable(CharacterNode node) {
+    public AbilityDefinition modify(AbilityDefinition abilityDef) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public boolean isApplicable(AbilityDefinition abilityDef) {
         throw new UnsupportedOperationException();
     }
 }

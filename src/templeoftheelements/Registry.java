@@ -157,6 +157,12 @@ public class Registry extends RawReader {
             ret.secondaryAttributes.add(statDescriptors.get((String) o));
         }
         
+        ja = (JSONArray) obj.get("DebuffAttributes");
+        if (ja != null)
+        for (Object o : ja) {
+            ret.debuffAttributes.add(statDescriptors.get((String) o));
+        }
+        
         ja = (JSONArray) obj.get("Details");
         if (ja != null) {
             JSONArray details = (JSONArray) ja.get(0);

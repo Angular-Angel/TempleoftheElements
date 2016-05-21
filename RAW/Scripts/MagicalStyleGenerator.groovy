@@ -100,6 +100,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             ret.targetDetails.add(Spell.Detail.ENEMY_TARGET);
             
             ret.effectDetails.add(Spell.Detail.DAMAGE);
+            ret.effectDetails.add(Spell.Detail.DEBUFF);
             
 //            ArrayList<Spell.Detail> arrayList = new ArrayList<Spell.Detail>();
 //            arrayList.addAll(Arrays.asList(Spell.Detail.values()));

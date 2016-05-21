@@ -57,6 +57,7 @@ public class CharacterTreeDef {
         public CharacterWheel.CharacterTree tree;
         public ArrayList<Spell.Detail> costDetails;
         public ArrayList<Spell.Detail> effectDetails;
+        public ArrayList<Spell.Detail> scalingDetails;
         public Ability ability;
         
         public AbilityDefinition() {

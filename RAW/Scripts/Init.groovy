@@ -27,7 +27,8 @@ class Initiator implements InitScript {
         game.registry.abilityGenerator.addProcedure(Spell.Detail.MANA_COST, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/ManaCostSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Spell.Detail.COOLDOWN, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/CooldownSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Spell.Detail.CAST_TIME, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/CastTimeSpellGenerator.groovy")));
-       // game.registry.nodeGenerator.addProcedure(Spell.Detail.DAMAGE, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/DamageSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.DAMAGE, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/DamageSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.DEBUFF, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/DebuffSpellGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("RAW/Scripts/Wanderer.groovy"));

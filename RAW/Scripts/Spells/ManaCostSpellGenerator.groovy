@@ -38,7 +38,7 @@ public class ManaCostSpellGenerator implements GenerationProcedure<AbilityDefini
         
         int manaCost = 1 + random.nextInt(pool) / Spell.Detail.MANA_COST.cost;
         
-        abilityDef.ability.addStat("Mana Cost", new NumericStat(5 * manaCost));
+        abilityDef.ability.addStat("Mana Cost", new NumericStat(manaCost));
         
         abilityDef.getStat("Cost Pool").modifyBase(-manaCost * Spell.Detail.MANA_COST.cost);
         abilityDef.getStat("Pool").modifyBase(manaCost * Spell.Detail.MANA_COST.cost);
