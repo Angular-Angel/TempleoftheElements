@@ -50,11 +50,6 @@ public class AreaSpell extends Spell {
     }
 
     @Override
-    public String getDescription() {
-        return "This is an aea Spell.";
-    }
-
-    @Override
     public void addEffect(Effect effect) {
         effects.add(effect);
     }

@@ -30,8 +30,6 @@ public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefiniti
         
         final ArrayList<StatDescriptor> debuffAttributes = tree.definition.element.debuffAttributes;
         
-        System.out.println(debuffAttributes.size());
-        
         final Debuff debuff = new Debuff(name, 30, null);
         
         int pool = Math.min(20, (abilityDef.getScore("Pool"))), i = 0;
@@ -39,7 +37,6 @@ public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefiniti
         while (pool > Spell.Detail.DEBUFF.cost && i < 10) {
             i++;
             StatDescriptor debuffStat = debuffAttributes.get(random.nextInt(debuffAttributes.size()));
-            System.out.println(debuffStat.name);
             int debuffValue = 1 + random.nextInt((int) (pool / Spell.Detail.DEBUFF.cost) - 1);
             debuff.addStat(debuffStat.name, new NumericStat(debuffValue));
             abilityDef.getStat("Pool").modifyBase(-debuffValue * Spell.Detail.DAMAGE.cost);
@@ -55,7 +52,9 @@ public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefiniti
             }
         };
         
-        ((Spell) abilityDef.ability).addOnHitEffect(effect);
+        ((Spell) abilityDef.ability).addEffect(effect);
+        
+        return abilityDef;
     }
     
     public AbilityDefinition modify(AbilityDefinition abilityDef) {

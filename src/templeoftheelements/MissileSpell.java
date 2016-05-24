@@ -20,7 +20,6 @@ import templeoftheelements.player.CharacterTreeDef;
 public class MissileSpell extends Spell {
 
     public AttackDefinition missile;
-    public String description;
     
     public MissileSpell(AttackDefinition attack) {
         this(attack.getName(), attack, new StatContainer());
@@ -46,10 +45,6 @@ public class MissileSpell extends Spell {
     @Override
     public void cast(Creature caster, Vec2 in) {
         caster.attack(getMissile());
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     @Override

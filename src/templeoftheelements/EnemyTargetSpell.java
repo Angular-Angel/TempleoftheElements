@@ -48,11 +48,6 @@ public class EnemyTargetSpell extends Spell {
     }
 
     @Override
-    public String getDescription() {
-        return "Enemy Target Spell.";
-    }
-
-    @Override
     public void addEffect(Effect effect) {
         effects.add(effect);
     }

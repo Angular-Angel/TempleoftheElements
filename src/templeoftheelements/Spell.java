@@ -60,6 +60,7 @@ public abstract class Spell extends Action implements Ability {
     
     private Renderable sprite;
     public ArrayList<Detail> details;
+    public String description;
 
     public Spell(String name, Renderable sprite) {
         this(name, sprite, new StatContainer());
@@ -70,6 +71,7 @@ public abstract class Spell extends Action implements Ability {
         super(name, stats);
         this.sprite = sprite;
         this.details = new ArrayList<>();
+        this.description = "";
     }
     
     @Override
@@ -95,6 +97,10 @@ public abstract class Spell extends Action implements Ability {
     }
     
     public abstract void cast(Creature caster, Vec2 in);
+    
+    public String getDescription() {
+        return description;
+    }
     
     public Renderable getSprite() {
         return sprite;
