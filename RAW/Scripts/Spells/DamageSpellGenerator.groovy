@@ -36,32 +36,53 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
         int damageValue = (Spell.Detail.DAMAGE.cost + random.nextInt(pool-Spell.Detail.DAMAGE.cost)) / Spell.Detail.DAMAGE.cost;
         Stat damage;
         
-        if (spell instanceof AreaSpell) {
-            AreaSpell areaSpell = (AreaSpell) spell;    
-        } else if (spell instanceof MissileSpell) {
+        
+        abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
+        
+       if (spell instanceof MissileSpell) {
             
             AttackDefinition missile = ((MissileSpell) spell).missile;
             damage = new EquationStat("" + damageValue * 3 + " * [Attacker@Spell Damage Multiplier]");
             missile.addStat("Damage", damage);
-//            }
             
-        } else {
-//            Effect e = new Effect() {
-//
-//                @Override
-//                public float effect(EffectSource src, Object object) {
-//                    if (!(object instanceof Creature && src instanceof Creature)) return 0;
-//
-//                    Creature source = (Creature) src;
-//
-//                    
-//                    return ((Creature) object).takeDamage(damage, "Fire");
-//                }
-//            };
-//
-//            spell.addEffect(e)
+            spell.description += "\nDamage: " + ((EquationStat) damage).equation;
+        
+            return abilityDef;
+        } else if (spell instanceof AreaSpell) {
+            
+            damage = new EquationStat("" + damageValue * 0.5 + " * [Attacker@Spell Damage Multiplier]");
+            
+        } else if (spell instanceof EnemyTargetSpell) {
+            
+            damage = new EquationStat("" + damageValue * 1 + " * [Attacker@Spell Damage Multiplier]");
+            
         }
-        abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
+            
+        spell.description += "\nDamage: " + ((EquationStat) damage).equation;
+
+        Effect e = new Effect(false) {
+
+            @Override
+            public float effect(EffectSource src, Object object) {
+                if (!(object instanceof Creature && src instanceof Creature)) return 0;
+
+                Creature source = (Creature) src;
+
+                clearReferences();
+
+                active = true;
+
+                addReference("Attacker", source);
+
+                refactor();
+
+                return ((Creature) object).takeDamage(getScore("Damage"), "Fire");
+            }
+        };
+
+        e.addStat("Damage", damage);
+
+        spell.addEffect(e)
         
         return abilityDef;
     }

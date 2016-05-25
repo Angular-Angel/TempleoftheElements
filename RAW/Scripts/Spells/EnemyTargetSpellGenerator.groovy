@@ -33,6 +33,9 @@ public class EnemyTargetSpellGenerator implements GenerationProcedure<AbilityDef
         spell.addStat("Mana Cost", new NumericStat(0));
         spell.addStat("Cooldown", new NumericStat(0));
         
+        
+        spell.description += "This spell targets an enemy.";
+        
         abilityDef.ability = spell
         return abilityDef;
     }
