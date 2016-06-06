@@ -13,6 +13,7 @@ import templeoftheelements.item.Item;
 import static templeoftheelements.TempleOfTheElements.PIXELS_PER_METER;
 import static templeoftheelements.TempleOfTheElements.game;
 import static templeoftheelements.TempleOfTheElements.rotate;
+import templeoftheelements.collision.Position;
 import templeoftheelements.collision.Room;
 import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.display.HUD;
@@ -53,7 +54,7 @@ public class Player implements Controller {
     
     public void init() {
         hud = new HUD(this);
-        leftClick = new SelectIcon(new Vec2(200, 50), 100, 100);
+        leftClick = new SelectIcon(new Position(200, 50), 100, 100);
         hud.addIcon(leftClick);
         refactorHUD();
         characterPoints += 3;

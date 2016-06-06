@@ -120,7 +120,7 @@ public class RangedAttack extends Attack {
     }
 
     @Override
-    public void createBody(Vec2 position) {
+    public void createBody(Position position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -141,12 +141,12 @@ public class RangedAttack extends Attack {
     }
 
     @Override
-    public Vec2 getPosition() {
-        return getBody().getPosition();
+    public Position getPosition() {
+        return new Position(getBody().getPosition());
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         getBody().setTransform(position, 0);
     }
 

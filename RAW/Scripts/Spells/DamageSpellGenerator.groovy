@@ -43,7 +43,12 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
             
             AttackDefinition missile = ((MissileSpell) spell).missile;
             damage = new EquationStat("" + damageValue * 3 + " * [Attacker@Spell Damage Multiplier]");
-            missile.addStat("Damage", damage);
+            
+            if (!missile.hasStat("Damage"))
+                missile.addStat("Damage", damage);
+            else {
+                
+            }
             
             spell.description += "\nDamage: " + ((EquationStat) damage).equation;
         

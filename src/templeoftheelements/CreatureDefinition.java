@@ -10,6 +10,7 @@ import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.item.ItemDrop;
 import templeoftheelements.player.Ability;
@@ -33,7 +34,7 @@ public class CreatureDefinition extends StatContainer {
     public ArrayList<Detail> details;
     
     public static enum Detail {
-        Tough, Strong, Fast, Frenzied, Spined, Armored, Enduring, Regenerating;
+        TOUGH, STRONG, FAST, FRENZIED, SPINED, ARMORED, ENDURING, REGENERATING;
     }
     
     public CreatureDefinition(String name) {
@@ -70,7 +71,7 @@ public class CreatureDefinition extends StatContainer {
     }
     
     public Creature genCreature(float x, float y) throws NoSuchStatException {
-        Creature ret = new Creature(new Vec2(x, y), this);
+        Creature ret = new Creature(new Position(x, y), this);
         if (sprite != null) ret.setSprite(sprite);
         for (BodyPartDefinition b : bodyParts) b.genBodyPart(ret);
         for (String type : resistances.keySet()) ret.addResistance(type, resistances.get(type));

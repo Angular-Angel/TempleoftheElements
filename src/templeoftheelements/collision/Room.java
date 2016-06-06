@@ -175,17 +175,17 @@ public class Room implements Renderable, Collidable, Actor {
     }
 
     @Override
-    public void createBody(Vec2 position) {
+    public void createBody(Position position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Vec2 getPosition() {
+    public Position getPosition() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -210,10 +210,10 @@ public class Room implements Renderable, Collidable, Actor {
     }
     
     public Door createDoor(float x1, float y1, float x2, float y2) {
-        return createDoor(new Vec2(x1, y1), new Vec2(x2, y2));
+        return createDoor(new Position(x1, y1), new Position(x2, y2));
     }
     
-    public Door createDoor(Vec2 exitPos, Vec2 entrance) {
+    public Door createDoor(Position exitPos, Position entrance) {
         Door door= new Door(exitPos);
         door.setEntrance(entrance);
         add(door);
@@ -247,10 +247,10 @@ public class Room implements Renderable, Collidable, Actor {
     
     public class Door implements Collidable, Renderable {
         private Door destination;
-        private Vec2 exitPosition, entrancePosition, point1, point2; //the last two are for drawing.
+        private Position exitPosition, entrancePosition, point1, point2; //the last two are for drawing.
         private Fixture fixture;
 
-        public Door(Vec2 exitPos) {
+        public Door(Position exitPos) {
             exitPosition = exitPos;
         }
         
@@ -262,7 +262,7 @@ public class Room implements Renderable, Collidable, Actor {
             destination = dest;
         }
         
-        public Vec2 getExit() {
+        public Position getExit() {
             return exitPosition;
         }
         
@@ -270,7 +270,7 @@ public class Room implements Renderable, Collidable, Actor {
             return entrancePosition.clone();
         }
         
-        public void setEntrance(Vec2 entrance) {
+        public void setEntrance(Position entrance) {
             entrancePosition = entrance;
         }
         
@@ -279,12 +279,11 @@ public class Room implements Renderable, Collidable, Actor {
         }
         
         @Override
-        public Vec2 getPosition() {
-            return fixture.getBody().getPosition().clone();
+        public Position getPosition() {
+            return new Position(fixture.getBody().getPosition());
         }
 
-        @Override
-        public void setPosition(Vec2 position) {
+        public void setPosition(Position position) {
             fixture.getBody().setTransform(position, 0);
             entrancePosition = position;
         }
@@ -306,16 +305,15 @@ public class Room implements Renderable, Collidable, Actor {
 
         @Override
         public void createBody(float x, float y) {
-            createBody(new Vec2 (x, y));
+            createBody(new Position (x, y));
         }
 
         @Override
         public void createBody(int x, int y) {
-            createBody(new Vec2 (x, y));
+            createBody(new Position (x, y));
         }
 
-        @Override
-        public void createBody(Vec2 position) {
+        public void createBody(Position position) {
             entrancePosition = position;
             BodyDef bodydef = new BodyDef();
             bodydef.position.set(position);
@@ -323,12 +321,12 @@ public class Room implements Renderable, Collidable, Actor {
             PolygonShape bodyshape = new PolygonShape();
             if (position.x == -width/2 || position.x == width/2) {
                 bodyshape.setAsBox(0.1f, 1);
-                point1 = new Vec2(0, 1f);
-                point2 = new Vec2(0, -1f);
+                point1 = new Position(0, 1f);
+                point2 = new Position(0, -1f);
             } else {
                 bodyshape.setAsBox(1, 0.1f);
-                point1 = new Vec2(1f, 0);
-                point2 = new Vec2(-1f, 0);
+                point1 = new Position(1f, 0);
+                point2 = new Position(-1f, 0);
             }
             Body body = TempleOfTheElements.game.world.createBody(bodydef);
             FixtureDef fixtureDef = new FixtureDef();

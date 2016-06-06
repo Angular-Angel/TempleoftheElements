@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Collidable;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.VectorCircle;
 import templeoftheelements.effect.Effect;
@@ -99,7 +100,7 @@ public class AreaEffect implements Collidable, Actor, Renderable {
     }
 
     @Override
-    public void createBody(Vec2 position) {
+    public void createBody(Position position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -119,12 +120,12 @@ public class AreaEffect implements Collidable, Actor, Renderable {
     }
 
     @Override
-    public Vec2 getPosition() {
-        return fixture.getBody().getPosition().clone();
+    public Position getPosition() {
+        return new Position(fixture.getBody().getPosition());
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         fixture.getBody().setTransform(position, 0);
     }
 

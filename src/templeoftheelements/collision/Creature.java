@@ -35,7 +35,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     private float direction, timer;
     private MeleeAttack curAttack;
     private HashSet<Action> abilities;
-    private Vec2 createPosition; //only used for a createBody method, not for 
+    private Position createPosition; //only used for a createBody method, not for 
     //determining ongoing position. This is for when you want to store a body in 
     //a room without creating it.
     public ArrayList<BodyPart> bodyParts;
@@ -48,14 +48,14 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     private String name; //For display and debug purposes.
 
     public Creature() {
-        this(new Vec2(), new StatContainer() {});
+        this(new Position(), new StatContainer() {});
     }
     
     public Creature(StatContainer stats) {
-        this(new Vec2(), stats);
+        this(new Position(), stats);
     }
     
-    public Creature(Vec2 pos, StatContainer stats) {
+    public Creature(Position pos, StatContainer stats) {
         timer = 0; direction = 0;
         createPosition = pos;
         winded = false;
@@ -147,16 +147,16 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     
     @Override
     public void createBody(float x, float y) {
-        createBody(new Vec2(x, y));
+        createBody(new Position(x, y));
     }
     
     @Override
     public void createBody(int x, int y) {
-        createBody(new Vec2(x, y));
+        createBody(new Position(x, y));
     }
     
     @Override
-    public void createBody(Vec2 position) {
+    public void createBody(Position position) {
         BodyDef bodydef = new BodyDef();
         bodydef.position.set(position);
         bodydef.type = BodyType.DYNAMIC;
@@ -183,10 +183,10 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     }
     
     public void setCreatePosition(int x, int y) {
-        setCreatePosition(new Vec2(x, y));
+        setCreatePosition(new Position(x, y));
     }
     
-    public void setCreatePosition(Vec2 pos) {
+    public void setCreatePosition(Position pos) {
         createPosition = pos;
     }
     
@@ -194,8 +194,8 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
      * @return the position
      */
     @Override
-    public Vec2 getPosition() {
-        return getBody().getPosition().clone();
+    public Position getPosition() {
+        return new Position( getBody().getPosition());
     }
 
     @Override
@@ -369,7 +369,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         fixture.getBody().setTransform(position, 0);
     }
 

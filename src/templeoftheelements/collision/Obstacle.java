@@ -24,15 +24,15 @@ public class Obstacle implements Damageable, Renderable{
     private Shape shape;
     private Renderable sprite;
     private float size;
-    private Vec2 createPosition; //only used for a createBody method, not for 
+    private Position createPosition; //only used for a createBody method, not for 
     //determining ongoing position. This is for when you want to store an obstacle
     // in a room without creating it.
     
     public Obstacle(float x, float y, Shape shape, Renderable sprite, float size) {
-        this(new Vec2(x, y), shape, sprite, size);
+        this(new Position(x, y), shape, sprite, size);
     }
     
-    public Obstacle(Vec2 pos, Shape shape, Renderable sprite, float size) {
+    public Obstacle(Position pos, Shape shape, Renderable sprite, float size) {
         this.size = size;
         createPosition = pos;
         this.shape = shape;
@@ -57,16 +57,16 @@ public class Obstacle implements Damageable, Renderable{
     
     @Override
     public void createBody(float x, float y) {
-        createBody(new Vec2(x, y));
+        createBody(new Position(x, y));
     }
     
     @Override
     public void createBody(int x, int y) {
-        createBody(new Vec2(x, y));
+        createBody(new Position(x, y));
     }
     
     @Override
-    public void createBody(Vec2 position) {
+    public void createBody(Position position) {
         BodyDef bodydef = new BodyDef();
         bodydef.position.set(position);
         bodydef.type = BodyType.STATIC;
@@ -86,12 +86,12 @@ public class Obstacle implements Damageable, Renderable{
     }
 
     @Override
-    public Vec2 getPosition() {
-        return getBody().getPosition();
+    public Position getPosition() {
+        return new Position(getBody().getPosition());
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -31,6 +31,22 @@ public final class TempleOfTheElements extends Game {
     public static TempleOfTheElements game;
     public static final int PIXELS_PER_METER = 30;
     
+    public final Font font;
+    public final CfgResolution res;
+    public final MenuScreen menu;
+    
+    public Set<Renderable> sprites;
+    public Set<Actor> actors;
+    public Set<Actor> newActors;
+    public Set<Clickable> clickables;
+    public Set<Collidable> collidables;
+    public Registry registry;
+    public Player player;
+    public World world;
+    public Room room;
+    
+    public Screen screen;
+    
     public static void main(String[] args) throws Exception {
         Game.init();
         try {
@@ -73,22 +89,6 @@ public final class TempleOfTheElements extends Game {
         Mat2 m = Mat2.rotation(ang);
         return v.mult(m);
     }
-    
-    public final Font font;
-    public final CfgResolution res;
-    public final MenuScreen menu;
-    
-    public Set<Renderable> sprites;
-    public Set<Actor> actors;
-    public Set<Actor> newActors;
-    public Set<Clickable> clickables;
-    public Set<Collidable> collidables;
-    public Registry registry;
-    public Player player;
-    public World world;
-    public Room room;
-    
-    public Screen screen;
 
     private TempleOfTheElements() throws IOException{
         super();
@@ -247,7 +247,7 @@ public final class TempleOfTheElements extends Game {
                 
                 if (creatureName != null) {
                         Creature creature = registry.creatureDefs.get(creatureName).genCreature();
-                        creature.createBody(new Vec2(-10,-10));
+                        creature.createBody(new Position(-10,-10));
                         addActor(creature);
                         addSprite(creature);
                         room.add(creature);

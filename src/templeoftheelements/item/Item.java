@@ -11,6 +11,7 @@ import stat.NoSuchStatException;
 import stat.Stat;
 import stat.StatContainer;
 import static templeoftheelements.TempleOfTheElements.game;
+import templeoftheelements.collision.Position;
 import templeoftheelements.collision.Positionable;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Clickable;
@@ -24,7 +25,7 @@ import templeoftheelements.effect.EffectSource;
 
 public abstract class Item extends StatContainer implements Renderable, Clickable, Positionable, EffectSource {
 
-    private Vec2 position;
+    private Position position;
     private Vec2i size;
     private Renderable sprite;
     private String name;
@@ -47,7 +48,7 @@ public abstract class Item extends StatContainer implements Renderable, Clickabl
         addAllStats(stats);
         this.name = name;
         this.sprite = sprite;
-        this.position = new Vec2();
+        this.position = new Position();
         this.size = size;
         inInventory = false;
         this.level = level;
@@ -99,12 +100,12 @@ public abstract class Item extends StatContainer implements Renderable, Clickabl
     }
 
     @Override
-    public Vec2 getPosition() {
+    public Position getPosition() {
         return position;
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 

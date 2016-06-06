@@ -4,6 +4,7 @@ package templeoftheelements.display;
 import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
+import templeoftheelements.collision.Position;
 import templeoftheelements.collision.Positionable;
 import templeoftheelements.player.Clickable;
 
@@ -17,11 +18,11 @@ public class Icon implements Renderable, Clickable, Positionable {
 
     protected float width, height;
 
-    protected Vec2 position;
+    protected Position position;
 
     private Renderable sprite;
 
-    public Icon(Vec2 pos, Renderable sprite, float width, float height) {
+    public Icon(Position pos, Renderable sprite, float width, float height) {
         this.sprite = sprite;
         this.width = width;
         this.height = height;
@@ -56,12 +57,12 @@ public class Icon implements Renderable, Clickable, Positionable {
     }
 
     @Override
-    public Vec2 getPosition() {
-        return position.clone();
+    public Position getPosition() {
+        return new Position(position);
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 

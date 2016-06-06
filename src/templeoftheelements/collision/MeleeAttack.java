@@ -100,8 +100,8 @@ public class MeleeAttack extends Attack {
     }
 
     @Override
-    public Vec2 getPosition() {
-        return fixture.getBody().getPosition().clone();
+    public Position getPosition() {
+        return new Position (fixture.getBody().getPosition());
     }
 
     @Override
@@ -120,14 +120,14 @@ public class MeleeAttack extends Attack {
         return fixture.getBody();
     }
     
-    public void move(Vec2 pos, float direction) {
+    public void move(Position pos, float direction) {
         pos.x += 2 * dist * (float) Math.sin(Math.toRadians(angle + direction));
         pos.y += 2 * dist * (float) Math.cos(Math.toRadians(angle + direction));
         setPosition(pos);
     }
 
     @Override
-    public void setPosition(Vec2 position) {
+    public void setPosition(Position position) {
         fixture.getBody().setTransform(position, 0);
     }
 
@@ -158,7 +158,7 @@ public class MeleeAttack extends Attack {
     }
 
     @Override
-    public void createBody(Vec2 position) {
+    public void createBody(Position position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

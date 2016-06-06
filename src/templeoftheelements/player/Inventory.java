@@ -13,6 +13,7 @@ import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Creature.Hand;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Screen;
 import templeoftheelements.item.Consumable;
 import templeoftheelements.item.Equipment;
@@ -66,7 +67,7 @@ public class Inventory extends Screen {
             for (int y = 0; y < gridY; y++) {
                 if (itemFits(x, y, i)) {
                     inventory.add(i);
-                    i.setPosition(new Vec2(x, y));
+                    i.setPosition(new Position(x, y));
                     i.setInInventory(true);
                     return true;
                 }
@@ -201,7 +202,7 @@ public class Inventory extends Screen {
                 if (origin != null) {
                     origin.unequip();
                 }
-                dragging.setPosition(new Vec2(x, y));
+                dragging.setPosition(new Position(x, y));
                 dragging = null;
                 origin = null;
                 return;

@@ -31,33 +31,7 @@ class MonsterGenerator implements GenerationProcedure<CreatureDefinition> {
         
         //Choose primary strength: Tough, Strong, Fast, Frenzied, Spined, Armored, Enduring, Regenerating.
         rand = random.nextInt(4);
-        switch (rand) {
-            case 0: 
-                ret.details.add(CreatureDefinition.Detail.Tough);
-                break;
-            case 1: 
-                ret.details.add(CreatureDefinition.Detail.Strong);
-                break;
-            case 2: 
-                ret.details.add(CreatureDefinition.Detail.Fast);
-                break;
-            case 3: 
-                ret.details.add(CreatureDefinition.Detail.Frenzied);
-                break;
-            case 4: 
-                ret.details.add(CreatureDefinition.Detail.Spined);
-                break;
-            case 5: 
-                ret.details.add(CreatureDefinition.Detail.Armored);
-                break;
-            case 6: 
-                ret.details.add(CreatureDefinition.Detail.Enduring);
-                break;
-            case 7: 
-                ret.details.add(CreatureDefinition.Detail.Regenerating);
-                break;
-                
-        }
+        ret.details.add(CreatureDefinition.Detail.values()[rand]);
         
 //        for (CreatureDefinition.Detail detail : ret.details) {
 //            System.out.println(detail);
@@ -80,16 +54,16 @@ class MonsterGenerator implements GenerationProcedure<CreatureDefinition> {
         
         ret.getStat("Constitution").modifyBase(statTotal);
         
-        if (ret.details.contains(CreatureDefinition.Detail.Tough))
+        if (ret.details.contains(CreatureDefinition.Detail.TOUGH))
             ret.getStat("Constitution").modifyBase(5);
             
-        if (ret.details.contains(CreatureDefinition.Detail.Strong))
+        if (ret.details.contains(CreatureDefinition.Detail.STRONG))
             ret.getStat("Strength").modifyBase(5);
             
-        if (ret.details.contains(CreatureDefinition.Detail.Fast))
+        if (ret.details.contains(CreatureDefinition.Detail.FAST))
             ret.getStat("Dexterity").modifyBase(5);
             
-        if (ret.details.contains(CreatureDefinition.Detail.Frenzied)) {
+        if (ret.details.contains(CreatureDefinition.Detail.FRENZIED)) {
             String equation = ((EquationStat) ret.getStat("Attack Speed")).equation;
             equation += " * 0.80";
             ((EquationStat) ret.getStat("Attack Speed")).equation = equation;

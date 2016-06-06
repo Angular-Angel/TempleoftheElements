@@ -9,6 +9,7 @@ import static templeoftheelements.TempleOfTheElements.PIXELS_PER_METER;
 import static templeoftheelements.TempleOfTheElements.game;
 import static templeoftheelements.TempleOfTheElements.rotate;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.player.Action;
 
 /**
@@ -23,7 +24,7 @@ public class SelectIcon extends Icon {
     private ArrayList<Option> options;
     private boolean selecting;
     
-    public SelectIcon(Vec2 pos, float width, float height) {
+    public SelectIcon(Position pos, float width, float height) {
         super(pos, null, width, height);
         options = new ArrayList<>();
         selecting = false;
@@ -40,12 +41,12 @@ public class SelectIcon extends Icon {
     }
     
     public void addOption(Renderable sprite, Action action) {
-        options.add(new Option(position.clone().add(new Vec2(0, (options.size()+1)*height)), sprite, action, width, height));
+        options.add(new Option(new Position(position.copy().add(new Position(0, (options.size()+1)*height))), sprite, action, width, height));
         if (selected == null) selected = options.get(0);
     }
     
     public void addOption(Action action) {
-        options.add(new Option(position.clone().add(new Vec2(0, (options.size()+1)*height)), 
+        options.add(new Option(new Position(position.copy().add(new Position(0, (options.size()+1)*height))), 
                 new VectorCircle(10 + (20 * options.size())), action, width, height));
         if (selected == null) selected = options.get(0);
     }
@@ -91,7 +92,7 @@ public class SelectIcon extends Icon {
         
         public Action action;
         
-        public Option(Vec2 pos, Renderable r, Action a, float width, float height) {
+        public Option(Position pos, Renderable r, Action a, float width, float height) {
             super(pos, r, width, height);
             action = a;
         }

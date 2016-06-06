@@ -11,6 +11,6 @@ import org.jbox2d.common.Vec2;
 
 public interface Positionable {
     
-    public Vec2 getPosition();
-    public void setPosition(Vec2 position);
+    public Position getPosition();
+    public void setPosition(Position position);
 }

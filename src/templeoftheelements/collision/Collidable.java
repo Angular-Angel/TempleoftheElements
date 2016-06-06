@@ -18,7 +18,7 @@ public interface Collidable extends Positionable, EffectSource{
     public void createBody();
     public void createBody(float x, float y);
     public void createBody(int x, int y);
-    public void createBody(Vec2 position);
+    public void createBody(Position position);
     public boolean isImpassable();
     public boolean isDamaging();
     public float hit(Object o);
