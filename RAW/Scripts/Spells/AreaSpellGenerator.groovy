@@ -56,8 +56,6 @@ public class AreaSpellGenerator implements GenerationProcedure<AbilityDefinition
         spell.addStat("Mana Cost", new NumericStat(0));
         spell.addStat("Cooldown", new NumericStat(0));
         
-        spell.description += "This spell targets an area.";
-        
         abilityDef.ability = spell
         return abilityDef;
     }

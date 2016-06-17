@@ -109,7 +109,7 @@ public class Player implements Controller {
             if (c != null && !(c instanceof Creature)) {
                 c.mouseEvent(button, action, mods);
             }
-            else leftClick.performAction(creature, button, action, mods, click);
+            else leftClick.performAction(creature, button, action, mods, new Position(click));
         }
     }
     

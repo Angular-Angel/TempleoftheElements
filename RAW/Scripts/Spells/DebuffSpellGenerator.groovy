@@ -40,7 +40,7 @@ public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefiniti
             int debuffValue = 1 + random.nextInt((int) (pool / Spell.Detail.DEBUFF.cost) - 1);
             debuff.addStat(debuffStat.name, new NumericStat(debuffValue));
             abilityDef.getStat("Pool").modifyBase(-debuffValue * Spell.Detail.DAMAGE.cost);
-            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
+//            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
         }
         
         Effect effect = new Effect() {

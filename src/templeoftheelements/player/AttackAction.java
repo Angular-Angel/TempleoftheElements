@@ -6,6 +6,7 @@ import org.jbox2d.common.Vec2;
 import stat.StatContainer;
 import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 
 /**
@@ -31,7 +32,7 @@ public class AttackAction extends Action {
     }
     
     @Override
-    public void perform(Creature creature, Vec2 in) {
+    public void perform(Creature creature, Position in) {
         creature.attack(attack);
     }
 

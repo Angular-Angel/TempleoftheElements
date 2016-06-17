@@ -7,6 +7,7 @@ import stat.Stat;
 import stat.StatContainer;
 import stat.Trait;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
@@ -40,7 +41,7 @@ public abstract class Action extends Trait implements Ability {
      *
      * @param in
      */
-    public abstract void perform(Creature creature, Vec2 in);
+    public abstract void perform(Creature creature, Position in);
 
     /**
      * @return the cooldown

@@ -8,6 +8,7 @@ package templeoftheelements;
 import java.util.ArrayList;
 import org.jbox2d.common.Vec2;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
 import templeoftheelements.effect.Effect;
@@ -32,16 +33,16 @@ public class AreaSpell extends Spell {
     }
     
     @Override
-    public void perform(Creature creature, Vec2 in) {
+    public void perform(Creature creature, Position pos) {
         if (!isPossible(creature)) return;
-        super.perform(creature, in);
-        cast(creature, in);
+        super.perform(creature, pos);
+        cast(creature, pos);
     }
     
     @Override
-    public void cast(Creature caster, Vec2 in) {
+    public void cast(Creature caster, Position pos) {
         for (Effect e : effects)
-            e.effect(caster, in);
+            e.effect(caster, pos);
     }
 
     @Override
@@ -52,6 +53,11 @@ public class AreaSpell extends Spell {
     @Override
     public void addEffect(Effect effect) {
         effects.add(effect);
+    }
+
+    @Override
+    public String getDescription() {
+        return "";
     }
     
 }

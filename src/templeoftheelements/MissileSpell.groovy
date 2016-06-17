@@ -3,10 +3,15 @@ package templeoftheelements;
 
 import templeoftheelements.item.AttackDefinition;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
+import stat.EquationStat;
+import stat.NoSuchStatException;
 import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position
 import templeoftheelements.player.Ability;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.player.CharacterTreeDef;
@@ -32,18 +37,17 @@ public class MissileSpell extends Spell {
     public MissileSpell(String name, AttackDefinition attack, StatContainer stats) {
         super(name, attack.getSprite(), stats);
         missile = attack;
-        description = "";
     }
 
     @Override
-    public void perform(Creature creature, Vec2 in) {
+    public void perform(Creature creature, Position pos) {
         if (!isPossible(creature)) return;
-        super.perform(creature, in);
-        cast(creature, in);
+        super.perform(creature, pos);
+        cast(creature, pos);
     }
 
     @Override
-    public void cast(Creature caster, Vec2 in) {
+    public void cast(Creature caster, Position pos) {
         caster.attack(getMissile());
     }
 
@@ -62,6 +66,23 @@ public class MissileSpell extends Spell {
     @Override
     public void addEffect(Effect effect) {
         missile.addOnHitEffect(effect);
+    }
+
+    @Override
+    public String getDescription() {
+            
+        String ret = "";
+        ret += "This spell shoots a missile.";
+        
+        try {
+            ret += "\nSpeed: " + missile.getScore("Speed") + " (" + ((EquationStat) missile.getStat("Speed")).equation + ")";
+            ret += "\nSize: " + missile.getScore("Size");
+            ret += "\nDamage: " + missile.getScore("Damage") + " (" + ((EquationStat) missile.getStat("Damage")).equation + ")";
+        } catch (NoSuchStatException ex) {
+            Logger.getLogger(MissileSpell.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ret;
     }
     
 }

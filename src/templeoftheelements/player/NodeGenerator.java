@@ -81,7 +81,7 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
         }
 
         for (StatDescriptor stat : nodeDef.stats) {
-            node.addStat(stat.name, new NumericStat(stat.increase));
+            node.addStat(stat.identifier, new NumericStat(stat.increase));
         }
 
         node.nodeDef = nodeDef;

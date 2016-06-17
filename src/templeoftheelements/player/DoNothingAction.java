@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 
 /**
@@ -23,7 +24,7 @@ public class DoNothingAction extends Action {
     }
 
     @Override
-    public void perform(Creature creature, Vec2 in) {
+    public void perform(Creature creature, Position in) {
         
     }
 

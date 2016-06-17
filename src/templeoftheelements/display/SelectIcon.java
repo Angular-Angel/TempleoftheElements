@@ -30,7 +30,7 @@ public class SelectIcon extends Icon {
         selecting = false;
     }
     
-    public void performAction(Creature creature, int button, int action, int mods, Vec2 click) {
+    public void performAction(Creature creature, int button, int action, int mods, Position click) {
         if (selected == null) return;
         selected.action.perform(creature, click);
     }

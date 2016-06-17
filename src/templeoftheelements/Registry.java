@@ -100,7 +100,7 @@ public class Registry extends RawReader {
                    case "Weapon Definition": readWeaponDef((JSONObject) obj);
                        break;
                    case "Stat Description": StatDescriptor stat = readStatDescriptor((JSONObject) obj);
-                       statDescriptors.put(stat.name, stat);
+                       statDescriptors.put(stat.identifier, stat);
                        break;
                    case "Magic Item Definition":
                    case "Magic Equipment Definition":

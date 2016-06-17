@@ -59,10 +59,6 @@ public class MissileGenerator implements GenerationProcedure<AbilityDefinition> 
         ret.addStat("Mana Cost", new NumericStat(0));
         ret.addStat("Cooldown", new NumericStat(0));
 
-        ret.description += "This spell shoots a missile.";
-        ret.description += "\nSpeed: " + ((EquationStat) speed).equation;
-        ret.description += "\nSize: " + size.getScore();
-
         abilityDef.ability = ret;
         
         return abilityDef;

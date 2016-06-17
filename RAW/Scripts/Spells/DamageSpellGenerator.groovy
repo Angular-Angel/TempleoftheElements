@@ -42,15 +42,14 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
        if (spell instanceof MissileSpell) {
             
             AttackDefinition missile = ((MissileSpell) spell).missile;
-            damage = new EquationStat("" + damageValue * 3 + " * [Attacker@Spell Damage Multiplier]");
+            missile.addStat("Damage Value", new NumericStat(damageValue * 3));
             
-            if (!missile.hasStat("Damage"))
+            if (!missile.hasStat("Damage")) {
+                damage = new EquationStat("[Damage Value] * [Attacker@Spell Damage Multiplier]");
                 missile.addStat("Damage", damage);
-            else {
-                
             }
             
-            spell.description += "\nDamage: " + ((EquationStat) damage).equation;
+//            spell.description += "\nDamage: " + damageValue * 3;
         
             return abilityDef;
         } else if (spell instanceof AreaSpell) {
@@ -62,8 +61,6 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
             damage = new EquationStat("" + damageValue * 1 + " * [Attacker@Spell Damage Multiplier]");
             
         }
-            
-        spell.description += "\nDamage: " + ((EquationStat) damage).equation;
 
         Effect e = new Effect(false) {
 

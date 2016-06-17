@@ -8,6 +8,7 @@ package templeoftheelements.item;
 import org.jbox2d.common.Vec2;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
 import templeoftheelements.player.Action;
@@ -30,7 +31,7 @@ public class WeaponStrike extends Action {
     }
 
     @Override
-    public void perform(Creature creature, Vec2 in) {
+    public void perform(Creature creature, Position in) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

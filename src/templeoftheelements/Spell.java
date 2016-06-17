@@ -11,6 +11,7 @@ import stat.NoSuchStatException;
 import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
+import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
 import templeoftheelements.player.Action;
@@ -60,7 +61,6 @@ public abstract class Spell extends Action implements Ability {
     
     private Renderable sprite;
     public ArrayList<Detail> details;
-    public String description;
 
     public Spell(String name, Renderable sprite) {
         this(name, sprite, new StatContainer());
@@ -71,7 +71,6 @@ public abstract class Spell extends Action implements Ability {
         super(name, stats);
         this.sprite = sprite;
         this.details = new ArrayList<>();
-        this.description = "";
     }
     
     @Override
@@ -87,7 +86,7 @@ public abstract class Spell extends Action implements Ability {
     public abstract void addEffect(Effect effect);
     
     @Override
-    public void perform(Creature creature, Vec2 in) {
+    public void perform(Creature creature, Position pos) {
         try {
             creature.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.USED_SPELL, this));
             creature.getStat("Mana").modifyBase(-getScore("Mana Cost"));
@@ -96,11 +95,9 @@ public abstract class Spell extends Action implements Ability {
         }
     }
     
-    public abstract void cast(Creature caster, Vec2 in);
+    public abstract void cast(Creature caster, Position pos);
     
-    public String getDescription() {
-        return description;
-    }
+    public abstract String getDescription();
     
     public Renderable getSprite() {
         return sprite;
