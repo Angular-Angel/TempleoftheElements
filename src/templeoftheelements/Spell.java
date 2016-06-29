@@ -120,4 +120,8 @@ public abstract class Spell extends Action implements Ability {
         return sprite;
     }
     
+    public abstract boolean containsEffect(String s);
+    
+    public abstract Effect getEffect(String s);
+    
 }

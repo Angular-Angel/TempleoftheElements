@@ -94,7 +94,8 @@ public class AttackDefinition extends Trait {
         return ret;
     }
     
-    public void addReferenceaddReference(String s, StatContainer container) {
+    @Override
+    public void addReference(String s, StatContainer container) {
         super.addReference(s, container);
         for (Effect e : onHitEffects.values()) {
             e.addReference(s, container);

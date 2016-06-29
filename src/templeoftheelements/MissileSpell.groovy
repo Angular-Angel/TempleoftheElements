@@ -101,4 +101,12 @@ public class MissileSpell extends Spell {
         missile.setActive(true);
     }
     
+    public boolean containsEffect(String s) {
+        return missile.onHitEffects.containsKey(s);
+    }
+    
+    @Override
+    public Effect getEffect(String s) {
+        return missile.onHitEffects.get(s);
+    }    
 }

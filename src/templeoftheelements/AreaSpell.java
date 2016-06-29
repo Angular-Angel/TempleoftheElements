@@ -6,6 +6,7 @@
 package templeoftheelements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;
@@ -19,17 +20,16 @@ import templeoftheelements.effect.Effect;
  */
 public class AreaSpell extends Spell {
 
-    ArrayList<Effect> effects;
+    HashMap<String, Effect> effects;
 
     public AreaSpell(String name, Renderable sprite, Effect effect) {
-        super(name, sprite);
-        this.effects = new ArrayList<>();
-        effects.add(effect);
+        this(name, sprite);
+        effects.put(effect.name, effect);
     }
     
     public AreaSpell(String name, Renderable sprite) {
         super(name, sprite);
-        this.effects = new ArrayList<>();
+        this.effects = new HashMap<>();
     }
     
     @Override
@@ -41,7 +41,7 @@ public class AreaSpell extends Spell {
     
     @Override
     public void cast(Creature caster, Position pos) {
-        for (Effect e : effects)
+        for (Effect e : effects.values())
             e.effect(caster, pos);
     }
 
@@ -52,12 +52,22 @@ public class AreaSpell extends Spell {
 
     @Override
     public void addEffect(Effect effect) {
-        effects.add(effect);
+        effects.put(effect.name, effect);
     }
 
     @Override
     public String getDescription() {
         return "";
+    }
+
+    @Override
+    public boolean containsEffect(String s) {
+        return effects.containsKey(s);
+    }
+
+    @Override
+    public Effect getEffect(String s) {
+        return effects.get(s);
     }
     
 }

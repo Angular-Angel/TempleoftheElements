@@ -40,17 +40,20 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
         
         abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
         
-       if (spell instanceof MissileSpell) {
+        String effectName = element.name + " Damage";
+        
+        if (spell.containsEffect(effectName)) {
+            
+            Effect e = spell.getEffect(effectName);
+            
+            e.addStat("Damage Value", new NumericStat(damageValue));
+            
+        } else if (spell instanceof MissileSpell) {
             
             AttackDefinition missile = spell.missile;
 //            missile.addStat("Damage Value", new NumericStat(damageValue * 3));
             
-            if (missile.onHitEffects.containsKey(element.name + " Damage")) {
-                missile.onHitEffects.get(element.name + " Damage").addStat("Damage Value", new NumericStat(damageValue));
-                return;
-            } else {
-                damage = new EquationStat(" [Damage Value] * 3 * [Source@Spell Damage Multiplier]");
-            }
+            damage = new EquationStat(" [Damage Value] * 3 * [Source@Spell Damage Multiplier]");
             
 //            spell.description += "\nDamage: " + damageValue * 3;
         } else if (spell instanceof AreaSpell) {
@@ -63,7 +66,7 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
             
         }
 
-        Effect e = new Effect(element.name + " Damage", false) {
+        Effect e = new Effect(effectName, false) {
             
             Element ele = element;
 
