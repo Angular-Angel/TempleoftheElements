@@ -42,13 +42,18 @@ public class AttackAction extends Action {
     }
 
     @Override
-    public Ability clone() {
+    public Ability copy() {
         return new AttackAction(this.getName(), attack);
     }
 
     @Override
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public void init(Creature c) {
+        creature = c;
     }
     
 }

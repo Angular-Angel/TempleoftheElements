@@ -10,8 +10,8 @@ import templeoftheelements.collision.Collidable;
 
 
 public class EffectContainer {
-    private Effect effect;
-    private EffectSource origin;
+    public final Effect effect;
+    public final EffectSource origin;
     
     public EffectContainer(Effect effect, EffectSource source) {
         this.effect = effect;

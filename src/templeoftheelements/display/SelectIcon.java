@@ -11,6 +11,7 @@ import static templeoftheelements.TempleOfTheElements.rotate;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.player.Action;
+import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
  *

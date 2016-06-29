@@ -7,7 +7,7 @@ package templeoftheelements.player;
  */
 
 
-public interface CreatureListener extends CreatureAbility {
+public interface CreatureListener {
     
     public void handle(CreatureEvent event);
     

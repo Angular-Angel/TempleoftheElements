@@ -34,7 +34,7 @@ public class DoNothingAction extends Action {
     }
 
     @Override
-    public Ability clone() {
+    public Ability copy() {
         return new DoNothingAction(sprite);
     }
 

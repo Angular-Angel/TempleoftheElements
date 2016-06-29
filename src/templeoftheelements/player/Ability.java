@@ -1,6 +1,7 @@
 
 package templeoftheelements.player;
 
+import templeoftheelements.collision.Creature;
 import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
@@ -15,10 +16,12 @@ public interface Ability {
     
     public String getDescription();
     
-    public Ability clone();
+    public Ability copy();
     
     public AbilityDefinition getDef();
     
     public void setDef(AbilityDefinition def);
+    
+    public void init(Creature c);
     
 }

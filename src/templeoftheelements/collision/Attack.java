@@ -2,6 +2,7 @@
 package templeoftheelements.collision;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import stat.StatContainer;
 import templeoftheelements.Actor;
 import templeoftheelements.display.Renderable;
@@ -17,21 +18,21 @@ import templeoftheelements.effect.EffectContainer;
 
 public abstract class Attack extends StatContainer implements Actor, Renderable, Collidable {
     
-    private ArrayList<EffectContainer> onHitEffects;
+    private HashMap<String, EffectContainer> onHitEffects;
     protected Creature origin;
     
     public Attack(Creature c) {
-        onHitEffects = new ArrayList<>();
+        onHitEffects = new HashMap<>();
         origin = c;
-        addReference("Attacker", c);
+        addReference("Source", c);
     }
     
     public void addOnHitEffect(Effect effect) {
-        onHitEffects.add(new EffectContainer(effect, origin));
+        onHitEffects.put(effect.name, new EffectContainer(effect, origin));
     }
     
     public void addOnHitEffect(EffectContainer effect) {
-        onHitEffects.add(effect);
+        onHitEffects.put(effect.effect.name, effect);
     }
     
     @Override
@@ -39,7 +40,7 @@ public abstract class Attack extends StatContainer implements Actor, Renderable,
         float damage = 0;
         if (o instanceof Creature) {
             origin.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.HIT_ENEMY, o));
-            for(EffectContainer e : onHitEffects) {
+            for(EffectContainer e : onHitEffects.values()) {
                 damage += e.apply((Creature) o);
             }
         }

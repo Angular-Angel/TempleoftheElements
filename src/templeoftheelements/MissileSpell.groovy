@@ -52,8 +52,8 @@ public class MissileSpell extends Spell {
     }
 
     @Override
-    public Ability clone() {
-        return new MissileSpell(this.getName(), getMissile(), this);
+    public Ability copy() {
+        return new MissileSpell(this.getName(), getMissile().copy(), this);
     }
 
     /**
@@ -71,18 +71,34 @@ public class MissileSpell extends Spell {
     @Override
     public String getDescription() {
             
+        missile.refactor();
+        
         String ret = "";
         ret += "This spell shoots a missile.";
+        
+        ret += showCosts();
         
         try {
             ret += "\nSpeed: " + missile.getScore("Speed") + " (" + ((EquationStat) missile.getStat("Speed")).equation + ")";
             ret += "\nSize: " + missile.getScore("Size");
-            ret += "\nDamage: " + missile.getScore("Damage") + " (" + ((EquationStat) missile.getStat("Damage")).equation + ")";
+//            ret += "\nDamage: " + missile.getScore("Damage") + " (" + ((EquationStat) missile.getStat("Damage")).equation + ")";
+
+            for (Effect e : missile.onHitEffects.values()) {
+                ret += "\n" + e.getDescription();
+            }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(MissileSpell.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return ret;
+    }
+    
+    
+    @Override
+    public void init(Creature c) {
+        super.init(c);
+        missile.addReference("Source", c);
+        missile.setActive(true);
     }
     
 }

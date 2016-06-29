@@ -36,51 +36,52 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
         int damageValue = (Spell.Detail.DAMAGE.cost + random.nextInt(pool-Spell.Detail.DAMAGE.cost)) / Spell.Detail.DAMAGE.cost;
         Stat damage;
         
+        Element element = tree.definition.element;
         
         abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
         
        if (spell instanceof MissileSpell) {
             
-            AttackDefinition missile = ((MissileSpell) spell).missile;
-            missile.addStat("Damage Value", new NumericStat(damageValue * 3));
+            AttackDefinition missile = spell.missile;
+//            missile.addStat("Damage Value", new NumericStat(damageValue * 3));
             
-            if (!missile.hasStat("Damage")) {
-                damage = new EquationStat("[Damage Value] * [Attacker@Spell Damage Multiplier]");
-                missile.addStat("Damage", damage);
+            if (missile.onHitEffects.containsKey(element.name + " Damage")) {
+                missile.onHitEffects.get(element.name + " Damage").addStat("Damage Value", new NumericStat(damageValue));
+                return;
+            } else {
+                damage = new EquationStat(" [Damage Value] * 3 * [Source@Spell Damage Multiplier]");
             }
             
 //            spell.description += "\nDamage: " + damageValue * 3;
-        
-            return abilityDef;
         } else if (spell instanceof AreaSpell) {
             
-            damage = new EquationStat("" + damageValue * 0.5 + " * [Attacker@Spell Damage Multiplier]");
+            damage = new EquationStat(" [Damage Value] * 0.5 * [Source@Spell Damage Multiplier]");
             
         } else if (spell instanceof EnemyTargetSpell) {
             
-            damage = new EquationStat("" + damageValue * 1 + " * [Attacker@Spell Damage Multiplier]");
+            damage = new EquationStat(" [Damage Value] * [Source@Spell Damage Multiplier]");
             
         }
 
-        Effect e = new Effect(false) {
+        Effect e = new Effect(element.name + " Damage", false) {
+            
+            Element ele = element;
 
             @Override
             public float effect(EffectSource src, Object object) {
                 if (!(object instanceof Creature && src instanceof Creature)) return 0;
 
-                Creature source = (Creature) src;
-
-                clearReferences();
-
-                active = true;
-
-                addReference("Attacker", source);
-
+                return ((Creature) object).takeDamage(getScore("Damage"), ele.name);
+            }
+            
+            public String getDescription() {
                 refactor();
-
-                return ((Creature) object).takeDamage(getScore("Damage"), "Fire");
+                
+                return "Deals " + getScore("Damage") + " " + ele.name + " Damage.";
             }
         };
+        
+        e.addStat("Damage Value", new NumericStat(damageValue));
 
         e.addStat("Damage", damage);
 

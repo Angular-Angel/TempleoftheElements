@@ -43,13 +43,17 @@ public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefiniti
 //            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
         }
         
-        Effect effect = new Effect() {
+        Effect effect = new Effect("Debuff") {
             @Override
             public float effect(EffectSource source, Object obj) {
                 if (source instanceof Creature) debuff.origin = (Creature) source;
                 if (o instanceof Creature)
                     ((Creature) obj).addStatusEffect(debuff);
                 return 0;
+            }
+            
+            public String getDescription() {
+                return "Debuffs the target.";
             }
         };
         

@@ -75,14 +75,14 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         }
     }
     
-    public void addAbility(Object a) {
-        if (a instanceof Action) abilities.add((Action) a);
+    public void addAbility(Ability a) {
+        if (a instanceof Action) abilities.add((Action) a.copy());
         if (a instanceof PassiveAbility) passives.add((PassiveAbility) a);
         if (a instanceof CreatureListener) listeners.add((CreatureListener) a);
-        if (a instanceof CreatureAbility) ((CreatureAbility) a).init(this);
+        a.init(this);
     }
     
-    public void removeAbility(Object a) {
+    public void removeAbility(Ability a) {
         if (a instanceof Action) abilities.remove((Action) a);
         if (a instanceof PassiveAbility) passives.remove((PassiveAbility) a);
         if (a instanceof CreatureListener) listeners.remove((CreatureListener) a);

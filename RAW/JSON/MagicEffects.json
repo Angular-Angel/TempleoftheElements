@@ -20,8 +20,17 @@
                   \n import templeoftheelements.effect.Effect;
                   \n import templeoftheelements.effect.EffectSource;
                   \n public class BludgeonEffect extends Effect { 
+
+                        public BludgeonEffect() {
+                            super(\"Bludgeon\");
+                        }
+
                         public float effect(EffectSource source, Object o) {
                             return ((Creature) o).takeDamage(1, \"Crushing\");
+                        }
+
+                        public String getDescription() {
+                            return \"Deals 1 crushing damage to the target.\";
                         }
                      }"]
     },

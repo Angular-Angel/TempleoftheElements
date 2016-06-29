@@ -36,7 +36,7 @@ public class WeaponStrike extends Action {
     }
 
     @Override
-    public Ability clone() {
+    public Ability copy() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

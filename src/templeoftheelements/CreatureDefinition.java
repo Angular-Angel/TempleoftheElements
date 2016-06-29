@@ -61,7 +61,7 @@ public class CreatureDefinition extends StatContainer {
         for (String s : resistances.keySet()) ret.addResistance(s, resistances.get(s));
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
         for (Ability a :abilities) {
-            ret.addAbility(a.clone());
+            ret.addAbility(a.copy());
         }
         return ret;
     }
@@ -78,7 +78,7 @@ public class CreatureDefinition extends StatContainer {
         ret.addStat("HP", new NumericStat(ret.getScore("Max HP")));
         ret.addStat("Mana", new NumericStat(ret.getScore("Max Mana")));
         ret.addStat("Stamina", new NumericStat(ret.getScore("Max Stamina")));
-        for (Object o : abilities) ret.addAbility(o);
+        for (Ability a : abilities) ret.addAbility(a);
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
         ret.setController(controllerType.clone(ret));
         return ret;

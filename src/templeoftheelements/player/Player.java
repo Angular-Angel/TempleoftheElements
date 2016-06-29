@@ -19,6 +19,7 @@ import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.display.HUD;
 import templeoftheelements.display.Screen;
 import templeoftheelements.display.SelectIcon;
+import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
  *

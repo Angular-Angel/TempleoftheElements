@@ -7,7 +7,7 @@ package templeoftheelements.player;
  */
 
 
-public interface PassiveAbility extends CreatureAbility {
+public interface PassiveAbility extends Ability {
     
     public void step(float dt);
 }

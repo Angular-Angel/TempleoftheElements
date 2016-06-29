@@ -2,6 +2,7 @@
 package templeoftheelements.item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -9,6 +10,7 @@ import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import stat.NoSuchStatException;
 import stat.NumericStat;
+import stat.StatContainer;
 import stat.Trait;
 import templeoftheelements.collision.Attack;
 import templeoftheelements.collision.Creature;
@@ -25,7 +27,7 @@ import templeoftheelements.effect.EffectContainer;
 
 public class AttackDefinition extends Trait {
 
-    private ArrayList<Effect> onHitEffects;
+    public HashMap<String, Effect> onHitEffects;
     private Shape shape;
     private Renderable sprite;
     private String type;
@@ -39,7 +41,7 @@ public class AttackDefinition extends Trait {
         this.shape = shape;
         this.sprite = sprite;
         this.type = type;
-        onHitEffects = new ArrayList<>();
+        onHitEffects = new HashMap<>();
     }
     
     public Renderable getSprite() {
@@ -71,7 +73,7 @@ public class AttackDefinition extends Trait {
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AttackDefinition.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (Effect e : onHitEffects) attack.addOnHitEffect(e);
+        for (Effect e : onHitEffects.values()) attack.addOnHitEffect(e);
         return attack;
     }
 
@@ -83,7 +85,27 @@ public class AttackDefinition extends Trait {
     }
     
     public void addOnHitEffect(Effect e) {
-        onHitEffects.add(e);
+        onHitEffects.put(e.name, e);
+    }
+    
+    public AttackDefinition copy() {
+        AttackDefinition ret = new AttackDefinition(type, sprite, shape, type);
+        ret.addAllStats(this);
+        return ret;
+    }
+    
+    public void addReferenceaddReference(String s, StatContainer container) {
+        super.addReference(s, container);
+        for (Effect e : onHitEffects.values()) {
+            e.addReference(s, container);
+        }
+    }
+    
+    public void setActive(boolean active) {
+        this.active = active;
+        for (Effect e : onHitEffects.values()) {
+            e.active = active;
+        }
     }
     
 }

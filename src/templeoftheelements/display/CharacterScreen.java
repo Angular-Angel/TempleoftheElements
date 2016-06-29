@@ -14,6 +14,7 @@ import templeoftheelements.player.AbilityNode;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterWheel;
 import templeoftheelements.player.Inventory;
+import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
  *

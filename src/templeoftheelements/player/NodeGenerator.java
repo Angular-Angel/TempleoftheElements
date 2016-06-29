@@ -9,6 +9,7 @@ import generation.ProceduralGenerator;
 import java.util.ArrayList;
 import java.util.Random;
 import stat.NumericStat;
+import stat.Stat;
 import stat.StatDescriptor;
 import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 
@@ -80,8 +81,10 @@ public class NodeGenerator implements ProceduralGenerator<CharacterNode> {
 //            }
         }
 
-        for (StatDescriptor stat : nodeDef.stats) {
-            node.addStat(stat.identifier, new NumericStat(stat.increase));
+        for (StatDescriptor statDescriptor : nodeDef.stats) {
+            Stat stat = new NumericStat(statDescriptor.increase);
+            stat.statDescriptor = statDescriptor;
+            node.addStat(statDescriptor.identifier, stat);
         }
 
         node.nodeDef = nodeDef;

@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
+import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.TempleOfTheElements;
 import static templeoftheelements.TempleOfTheElements.game;
@@ -162,7 +163,10 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         for (String s : getStatList()) {
             try {
                 i -= 20;
-                game.font.draw(s + ": " + getScore(s), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+                if (getStat(s).statDescriptor.type == Stat.Type.INTEGER)
+                    game.font.draw(s + ": " + getScore(s), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+                else if (getStat(s).statDescriptor.type == Stat.Type.PERCENTAGE)
+                    game.font.draw(s + ": " + getScore(s) + "%", new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
             } catch (NoSuchStatException ex) {
                 Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
             }

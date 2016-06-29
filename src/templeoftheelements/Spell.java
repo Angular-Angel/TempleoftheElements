@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
+import stat.EquationStat;
 import stat.NoSuchStatException;
 import stat.Stat;
 import stat.StatContainer;
@@ -98,6 +99,22 @@ public abstract class Spell extends Action implements Ability {
     public abstract void cast(Creature caster, Position pos);
     
     public abstract String getDescription();
+    
+    public String showCosts() {
+        String ret = "";
+        
+        try { 
+            ret += "\ncast Time: " + getScore("Cast Time");
+            
+            ret += "\nMana Cost: " + getScore("Mana Cost");
+            
+            ret += "\nCooldown: " + getScore("Cooldown");
+        } catch (NoSuchStatException ex) {
+            Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ret;
+    }
     
     public Renderable getSprite() {
         return sprite;

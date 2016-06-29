@@ -21,6 +21,7 @@ public abstract class Action extends Trait implements Ability {
 
     private int cooldown;
     private AbilityDefinition def;
+    public Creature creature;
     
     public Action(String name, StatContainer stats) {
         super(name, true, stats);
@@ -57,7 +58,7 @@ public abstract class Action extends Trait implements Ability {
         this.cooldown = cooldown;
     }
     
-    public abstract Ability clone();
+    public abstract Ability copy();
     
     @Override
     public CharacterTreeDef.AbilityDefinition getDef() {
@@ -69,4 +70,10 @@ public abstract class Action extends Trait implements Ability {
         this.def = def;
     }
     
+    @Override
+    public void init(Creature c) {
+        creature = c;
+        addReference("Source", c);
+        this.active = true;
+    }
 }

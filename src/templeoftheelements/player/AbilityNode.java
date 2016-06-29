@@ -24,6 +24,7 @@ public class AbilityNode extends CharacterNode {
     public AbilityNode(Requirement requirements, CharacterWheel.CharacterTree tree, boolean automatic, Ability ability) {
         super(requirements, tree, automatic);
         this.ability = ability;
+        ability.init(tree.getCreature());
     }
     
     public AbilityNode(Requirement requirements, CharacterWheel.CharacterTree tree, Ability ability) {

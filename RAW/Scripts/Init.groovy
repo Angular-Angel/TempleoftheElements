@@ -64,10 +64,14 @@ class Initiator implements InitScript {
         Item item = game.registry.itemPools.get("ItemRoller.groovy").generate(1, 0);
         game.room.add(item);
         
-        Effect effect = new Effect() {
+        Effect effect = new Effect("Mana Crystal") {
             public float effect(EffectSource source, Object o) {
                 ((Creature) o).getStat("Mana").modifyBase(20);
                 return 20;
+            }
+           
+            public String getDescription() {
+                return "Gives the user 20 mana."
             }
         };
         Consumable consumable = new Consumable("Mana Crystal", effect, new VectorCircle(0.4f), 1);
