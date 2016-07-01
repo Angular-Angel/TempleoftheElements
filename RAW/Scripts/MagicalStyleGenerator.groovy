@@ -96,7 +96,6 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
 
         
             ret.targetDetails.add(Spell.Detail.PROJECTILE);
-            ret.targetDetails.add(Spell.Detail.AREA_TARGET);
             ret.targetDetails.add(Spell.Detail.ENEMY_TARGET);
             
             ret.effectDetails.add(Spell.Detail.DAMAGE);

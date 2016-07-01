@@ -9,16 +9,12 @@ import templeoftheelements.collision.Collidable;
  */
 
 
-public class EffectContainer {
-    public final Effect effect;
-    public final EffectSource origin;
+public interface EffectContainer {
     
-    public EffectContainer(Effect effect, EffectSource source) {
-        this.effect = effect;
-        origin = source;
-    }
+    public void addEffect(Effect effect);
     
-    public float apply(Collidable c) {
-        return effect.effect(origin, c);
-    }
+    public boolean containsEffect(String s);
+    
+    public Effect getEffect(String s);
+    
 }

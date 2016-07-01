@@ -56,7 +56,14 @@ public class EnemyTargetSpell extends Spell {
 
     @Override
     public String getDescription() {
-        return "";
+        String ret = "This spell targets an enemy directly.";
+        
+        ret += showCosts();
+        
+        for (Effect e : effects.values()) {
+                ret += "\n" + e.getDescription();
+            }
+        return ret;
     }
 
     @Override
@@ -67,6 +74,20 @@ public class EnemyTargetSpell extends Spell {
     @Override
     public Effect getEffect(String s) {
         return effects.get(s);
+    }
+
+    @Override
+    public float damageValueMultiplier() {
+        return 1;
+    }
+    
+    @Override
+    public void init(Creature c) {
+        super.init(c);
+        for (Effect e : effects.values()) {
+            e.addReference("Source", c);
+            e.active = true;
+        }
     }
     
 }

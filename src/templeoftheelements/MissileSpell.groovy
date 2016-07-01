@@ -65,7 +65,7 @@ public class MissileSpell extends Spell {
 
     @Override
     public void addEffect(Effect effect) {
-        missile.addOnHitEffect(effect);
+        missile.addEffect(effect);
     }
 
     @Override
@@ -102,11 +102,16 @@ public class MissileSpell extends Spell {
     }
     
     public boolean containsEffect(String s) {
-        return missile.onHitEffects.containsKey(s);
+        return missile.containsEffect(s);
     }
     
     @Override
     public Effect getEffect(String s) {
-        return missile.onHitEffects.get(s);
+        return missile.getEffect(s);
     }    
+    
+    @Override
+    public float damageValueMultiplier() {
+        return 3f;
+    }
 }

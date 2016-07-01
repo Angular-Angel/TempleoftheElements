@@ -18,7 +18,7 @@ import templeoftheelements.effect.EffectContainer;
 
 public abstract class Attack extends StatContainer implements Actor, Renderable, Collidable {
     
-    private HashMap<String, EffectContainer> onHitEffects;
+    private HashMap<String, Effect> onHitEffects;
     protected Creature origin;
     
     public Attack(Creature c) {
@@ -28,20 +28,17 @@ public abstract class Attack extends StatContainer implements Actor, Renderable,
     }
     
     public void addOnHitEffect(Effect effect) {
-        onHitEffects.put(effect.name, new EffectContainer(effect, origin));
+        onHitEffects.put(effect.name, effect);
     }
     
-    public void addOnHitEffect(EffectContainer effect) {
-        onHitEffects.put(effect.effect.name, effect);
-    }
     
     @Override
     public float hit(Object o) {
         float damage = 0;
         if (o instanceof Creature) {
             origin.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.HIT_ENEMY, o));
-            for(EffectContainer e : onHitEffects.values()) {
-                damage += e.apply((Creature) o);
+            for(Effect e : onHitEffects.values()) {
+                damage += e.effect(origin, o);
             }
         }
         return damage;

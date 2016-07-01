@@ -18,10 +18,11 @@ import templeoftheelements.player.Ability;
 import templeoftheelements.player.Action;
 import templeoftheelements.player.CreatureEvent;
 import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 
 
-public abstract class Spell extends Action implements Ability {
+public abstract class Spell extends Action implements Ability, EffectContainer {
     
     public static enum Detail {
         
@@ -123,5 +124,7 @@ public abstract class Spell extends Action implements Ability {
     public abstract boolean containsEffect(String s);
     
     public abstract Effect getEffect(String s);
+    
+    public abstract float damageValueMultiplier();
     
 }

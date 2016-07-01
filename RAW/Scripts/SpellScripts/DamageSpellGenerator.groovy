@@ -40,7 +40,7 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
         
         abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
         
-        String effectName = element.name + " Damage";
+        String effectName = "Damage";
         
         if (spell.containsEffect(effectName)) {
             
@@ -48,47 +48,35 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
             
             e.addStat("Damage Value", new NumericStat(damageValue));
             
-        } else if (spell instanceof MissileSpell) {
+        } else {
             
-            AttackDefinition missile = spell.missile;
-//            missile.addStat("Damage Value", new NumericStat(damageValue * 3));
-            
-            damage = new EquationStat(" [Damage Value] * 3 * [Source@Spell Damage Multiplier]");
-            
-//            spell.description += "\nDamage: " + damageValue * 3;
-        } else if (spell instanceof AreaSpell) {
-            
-            damage = new EquationStat(" [Damage Value] * 0.5 * [Source@Spell Damage Multiplier]");
-            
-        } else if (spell instanceof EnemyTargetSpell) {
-            
-            damage = new EquationStat(" [Damage Value] * [Source@Spell Damage Multiplier]");
-            
-        }
-
-        Effect e = new Effect(effectName, false) {
-            
-            Element ele = element;
-
-            @Override
-            public float effect(EffectSource src, Object object) {
-                if (!(object instanceof Creature && src instanceof Creature)) return 0;
-
-                return ((Creature) object).takeDamage(getScore("Damage"), ele.name);
-            }
-            
-            public String getDescription() {
-                refactor();
-                
-                return "Deals " + getScore("Damage") + " " + ele.name + " Damage.";
-            }
-        };
+            damage = new EquationStat(" [Damage Value] * " + spell.damageValueMultiplier() + " * [Source@Spell Damage Multiplier]");
         
-        e.addStat("Damage Value", new NumericStat(damageValue));
 
-        e.addStat("Damage", damage);
+            Effect e = new Effect(effectName, false) {
 
-        spell.addEffect(e)
+                Element ele = element;
+
+                @Override
+                public float effect(EffectSource src, Object object) {
+                    if (!(object instanceof Creature && src instanceof Creature)) return 0;
+
+                    return ((Creature) object).takeDamage(getScore("Damage"), ele.name);
+                }
+
+                public String getDescription() {
+                    refactor();
+
+                    return "Deals " + getScore("Damage") + " " + ele.name + " Damage.";
+                }
+            };
+
+            e.addStat("Damage Value", new NumericStat(damageValue));
+
+            e.addStat("Damage", damage);
+
+            spell.addEffect(e)
+        }
         
         return abilityDef;
     }

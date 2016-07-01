@@ -46,7 +46,7 @@ public class Weapon extends Equipment {
     }
     
     public void addOnHitEffect(Effect e) {
-        for (AttackDefinition a : attacks) a.addOnHitEffect(e);
+        for (AttackDefinition a : attacks) a.addEffect(e);
     }
     
     

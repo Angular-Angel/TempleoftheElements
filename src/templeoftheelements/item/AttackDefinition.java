@@ -25,7 +25,7 @@ import templeoftheelements.effect.EffectContainer;
  * @author angle
  */
 
-public class AttackDefinition extends Trait {
+public class AttackDefinition extends Trait implements EffectContainer{
 
     public HashMap<String, Effect> onHitEffects;
     private Shape shape;
@@ -84,7 +84,8 @@ public class AttackDefinition extends Trait {
         return type;
     }
     
-    public void addOnHitEffect(Effect e) {
+    @Override
+    public void addEffect(Effect e) {
         onHitEffects.put(e.name, e);
     }
     
@@ -107,6 +108,16 @@ public class AttackDefinition extends Trait {
         for (Effect e : onHitEffects.values()) {
             e.active = active;
         }
+    }
+
+    @Override
+    public boolean containsEffect(String s) {
+        return onHitEffects.containsKey(s);
+    }
+
+    @Override
+    public Effect getEffect(String s) {
+        return onHitEffects.get(s);
     }
     
 }

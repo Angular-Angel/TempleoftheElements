@@ -21,14 +21,14 @@ class Initiator implements InitScript {
     public void Init() {
         game.registry.readRaw(new File("RAW/JSON/StatDescriptions.json"));
         game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("RAW/Scripts/MonsterGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.PROJECTILE, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/MissileSpellGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.AREA_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/AreaSpellGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.ENEMY_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/EnemyTargetSpellGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.MANA_COST, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/ManaCostSpellGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.COOLDOWN, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/CooldownSpellGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.CAST_TIME, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/CastTimeSpellGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.DAMAGE, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/DamageSpellGenerator.groovy")));
-        game.registry.abilityGenerator.addProcedure(Spell.Detail.DEBUFF, game.registry.readGroovyScript(new File("RAW/Scripts/Spells/DebuffSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.PROJECTILE, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/MissileSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.AREA_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/AreaSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.ENEMY_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/EnemyTargetSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.MANA_COST, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/ManaCostSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.COOLDOWN, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/CooldownSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.CAST_TIME, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/CastTimeSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.DAMAGE, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/DamageSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Spell.Detail.DEBUFF, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/DebuffSpellGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
         game.registry.loadControllerScript(new File("RAW/Scripts/Wanderer.groovy"));

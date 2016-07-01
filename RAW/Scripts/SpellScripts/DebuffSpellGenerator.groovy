@@ -26,38 +26,58 @@ public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefiniti
         AbilityDefinition abilityDef = (AbilityDefinition) o; //the definition for the node we're making
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
         
-        String name = "Debuff";
+        Spell spell = (Spell) abilityDef.ability;
         
         final ArrayList<StatDescriptor> debuffAttributes = tree.definition.element.debuffAttributes;
         
-        final Debuff debuff = new Debuff(name, 30, null);
-        
         int pool = Math.min(20, (abilityDef.getScore("Pool"))), i = 0;
+        
+        Effect effect;
+        
+        String name = "Debuff";
+        
+        if (spell.containsEffect(name)) {
+            
+            effect = spell.getEffect(name);
+            
+        } else {
+        
+            effect = new Effect(name) {
+
+                @Override
+                public float effect(EffectSource source, Object obj) {
+                    if (source instanceof Creature && obj instanceof Creature) {
+                        Debuff debuff = new Debuff(name, 30, null);
+                        debuff.addAllStats(this);
+                        ((Creature) obj).addStatusEffect(debuff);
+                    } 
+
+                    return 0;
+                }
+
+                public String getDescription() {
+                    String ret = "Debuffs the target:";
+
+                    for (String s : getStatList()) {
+                        ret += "\n" + s + ": -" + getScore(s);
+                    }
+
+                    return ret;
+                }
+            };
+        
+        }
         
         while (pool > Spell.Detail.DEBUFF.cost && i < 10) {
             i++;
             StatDescriptor debuffStat = debuffAttributes.get(random.nextInt(debuffAttributes.size()));
             int debuffValue = 1 + random.nextInt((int) (pool / Spell.Detail.DEBUFF.cost) - 1);
-            debuff.addStat(debuffStat.name, new NumericStat(debuffValue));
+            effect.addStat(debuffStat.name, new NumericStat(debuffValue));
             abilityDef.getStat("Pool").modifyBase(-debuffValue * Spell.Detail.DAMAGE.cost);
 //            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
         }
         
-        Effect effect = new Effect("Debuff") {
-            @Override
-            public float effect(EffectSource source, Object obj) {
-                if (source instanceof Creature) debuff.origin = (Creature) source;
-                if (o instanceof Creature)
-                    ((Creature) obj).addStatusEffect(debuff);
-                return 0;
-            }
-            
-            public String getDescription() {
-                return "Debuffs the target.";
-            }
-        };
-        
-        ((Spell) abilityDef.ability).addEffect(effect);
+        spell.addEffect(effect);
         
         return abilityDef;
     }

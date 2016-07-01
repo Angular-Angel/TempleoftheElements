@@ -3,33 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package templeoftheelements;
+
+package templeoftheelements
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
+import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.player.Ability;
+import templeoftheelements.player.Clickable;
 import templeoftheelements.effect.Effect;
-
 /**
  *
  * @author angle
  */
-public class AreaSpell extends Spell {
-
+class SelfTargetSpell extends Spell {
+    
     HashMap<String, Effect> effects;
 
-    public AreaSpell(String name, Renderable sprite, Effect effect) {
-        this(name, sprite);
-        effects.put(effect.name, effect);
-    }
-    
-    public AreaSpell(String name, Renderable sprite) {
+    public SelfTargetSpell(String name, Renderable sprite) {
         super(name, sprite);
-        this.effects = new HashMap<>();
+        effects = new HashMap<>();
     }
     
     @Override
@@ -38,11 +35,12 @@ public class AreaSpell extends Spell {
         super.perform(creature, pos);
         cast(creature, pos);
     }
-    
+
     @Override
     public void cast(Creature caster, Position pos) {
-        for (Effect e : effects.values())
-            e.effect(caster, pos);
+        if (c instanceof Creature) {
+            for (Effect e : effects.values()) e.effect(caster, caster);
+        }
     }
 
     @Override
@@ -57,7 +55,7 @@ public class AreaSpell extends Spell {
 
     @Override
     public String getDescription() {
-        String ret = "This spell targets an area.";
+        String ret = "This spell targets your own character.";
         
         ret += showCosts();
         
@@ -79,7 +77,7 @@ public class AreaSpell extends Spell {
 
     @Override
     public float damageValueMultiplier() {
-        return 0.5f;
+        return 1;
     }
     
     @Override
@@ -90,5 +88,5 @@ public class AreaSpell extends Spell {
             e.active = true;
         }
     }
-    
 }
+
