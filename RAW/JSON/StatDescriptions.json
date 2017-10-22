@@ -213,7 +213,7 @@
         "Stat Type": "PERCENTAGE",
         "Stat": [1],
         "Base": 1.0,
-        "Increase": 0.05,
+        "Increase": -0.05,
     },
     {
         "Name": "Size",

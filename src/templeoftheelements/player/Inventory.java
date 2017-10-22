@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
@@ -39,7 +38,7 @@ public class Inventory extends Screen {
     public Inventory(Player player) {
         inventory = new HashSet<>();
         this.player = player;
-        gridX = game.res.width/2;
+        gridX = game.getResolutionWidth()/2;
         gridY = 50;
         gridWidth = 20;
         gridHeight = 10;
@@ -49,7 +48,7 @@ public class Inventory extends Screen {
         int i = 0;
         for (Creature.BodyPart b : player.getCreature().bodyParts) {
             float x, y;
-            y = game.res.height -110 - 105 * (i/3);
+            y = game.getResolutionHeight() -110 - 105 * (i/3);
             x = 40 + 105 * (i % 3);
             if (b instanceof Hand) itemSlots.add(new WeaponSlot((Hand) b, x, y, 90, 90));
             else itemSlots.add(new ItemSlot(b, x, y, 90, 90));

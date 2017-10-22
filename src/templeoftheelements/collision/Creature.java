@@ -217,7 +217,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
                 if (!curAttack.isDead()) {
                     curAttack.move(getPosition(), getDirection());
                 } else {
-                    timer = (int) curAttack.getScore("Recovery Time");
+                    timer = (int) curAttack.getScore("Recovery Time") * getScore("Attack Speed Multiplier");
                     curAttack = null;
                 }
             }

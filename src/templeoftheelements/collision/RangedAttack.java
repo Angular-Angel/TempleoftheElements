@@ -71,6 +71,7 @@ public class RangedAttack extends Attack {
 
     @Override
     public void step(float dt) {  
+        System.out.println("" + getPosition().x + ", " + getPosition().y);
     }
 
     @Override

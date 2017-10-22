@@ -1,6 +1,8 @@
 
 package templeoftheelements.player;
 
+import stat.StatContainer;
+import stat.Trait;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
@@ -10,18 +12,32 @@ import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
  */
 
 
-public interface Ability {
+public abstract class Ability  extends Trait {
     
-    public String getName();
+    public Ability() {
+        super("Ability", true);
+    }
     
-    public String getDescription();
+    public Ability(String name) {
+        super(name, true);
+    }
     
-    public Ability copy();
+    public Ability(String name, boolean active) {
+        super(name, active);
+    }
     
-    public AbilityDefinition getDef();
+    public Ability(String name, boolean active, StatContainer stats) {
+        super(name, active, stats);
+    }
     
-    public void setDef(AbilityDefinition def);
+    public abstract String getDescription();
     
-    public void init(Creature c);
+    public abstract Ability copy();
+    
+    public abstract AbilityDefinition getDef();
+    
+    public abstract void setDef(AbilityDefinition def);
+    
+    public abstract void init(Creature c);
     
 }

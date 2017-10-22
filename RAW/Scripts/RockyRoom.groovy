@@ -26,16 +26,16 @@ class RockyRoom implements GenerationProcedure<Room> {
     }
     
     public Room modify(Room room) {
-        for (int i = 0; i < room.width/10; i++) {
-            int x, y, size;
-            x = -room.width/3 + random.nextInt((int) room.width/1.5);
-            y = -room.width/3 + random.nextInt((int) room.width/1.5);
-            x /= 2;
-            y /= 2;
-            size = random.nextInt((int) room.width/5);
-            Obstacle obstacle = new Obstacle(x, y, new CircleShape(), new VectorCircle(size), size);
-            room.add(obstacle);
-        }
+//        for (int i = 0; i < room.width*room.height/100; i++) {
+//            int x, y, size;
+//            x = -room.width/3 + random.nextInt((int) room.width/1.5);
+//            y = -room.height/3 + random.nextInt((int) room.height/1.5);
+//            x /= 2;
+//            y /= 2;
+//            size = random.nextInt((int) room.width/5);
+//            Obstacle obstacle = new Obstacle(x, y, new CircleShape(), new VectorCircle(size), size);
+//            room.add(obstacle);
+//        }
         
         for (int i = 0; i < room.width/10; i++) {
             Creature creature = game.registry.creatureList.get(random.nextInt(game.registry.creatureList.size())).genCreature();

@@ -31,10 +31,24 @@ public class CreatureDefinition extends StatContainer {
     private HashMap<String, Float> resistances;
     public ArrayList<ItemDrop> itemDrops;
     public ArrayList<Ability> abilities;
+    public ArrayList<Detail> types;
     public ArrayList<Detail> details;
     
     public static enum Detail {
-        TOUGH, STRONG, FAST, FRENZIED, SPINED, ARMORED, ENDURING, REGENERATING;
+        //types:
+        
+        _TYPES_, HUMANOID, BEAST, MONSTROUS_HUMANOID, ELEMENTAL, CONSTRUCT, DEMON, 
+        
+        //physical details
+        _PHYSICAL_, TOUGH, STRONG, FAST, FRENZIED, SPINED, ENDURING, REGENERATING, //ARMOURED,
+        
+        //Natural Attacks
+        
+        _NATURAL_ATTACKS_, CLAW, BITE, //PINCER, STING, TENTACLE,
+        
+        _END_
+        
+        ;
     }
     
     public CreatureDefinition(String name) {
@@ -44,6 +58,7 @@ public class CreatureDefinition extends StatContainer {
         itemDrops = new ArrayList<>();
         abilities = new ArrayList<>();
         details = new ArrayList<>();
+        types = new ArrayList<>();
     }
     
     public void addResistance(String type, float f) {
@@ -78,7 +93,7 @@ public class CreatureDefinition extends StatContainer {
         ret.addStat("HP", new NumericStat(ret.getScore("Max HP")));
         ret.addStat("Mana", new NumericStat(ret.getScore("Max Mana")));
         ret.addStat("Stamina", new NumericStat(ret.getScore("Max Stamina")));
-        for (Ability a : abilities) ret.addAbility(a);
+        for (Ability a : abilities) ret.addAbility(a.copy());
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
         ret.setController(controllerType.clone(ret));
         return ret;

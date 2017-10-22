@@ -46,7 +46,9 @@ public class EnemyTargetSpell extends Spell {
 
     @Override
     public Ability copy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EnemyTargetSpell ret = new EnemyTargetSpell(name, sprite);
+        for (Effect e : effects.values()) ret.addEffect(e);
+        return ret;
     }
 
     @Override

@@ -2,18 +2,13 @@
 package templeoftheelements.display;
 
 import com.samrj.devil.math.Vec4;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
-import static templeoftheelements.TempleOfTheElements.rotate;
 import templeoftheelements.player.AbilityNode;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterWheel;
-import templeoftheelements.player.Inventory;
 import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
@@ -40,7 +35,7 @@ public class CharacterScreen extends Screen {
     public void render() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glPushMatrix();
-        GL11.glTranslated(game.res.width/2, game.res.height/2, 0);
+        GL11.glTranslated(game.config.resolution.x/2, game.config.resolution.y/2, 0);
         GL11.glTranslated(view.x, view.y, 0);
         GL11.glRotatef(angle, 0, 0, 1);
         for (CharacterNode r : wheel.nodes) {
@@ -54,8 +49,8 @@ public class CharacterScreen extends Screen {
     public void mouseEvent(int button, int action, int mods) {
         if (action != GLFW.GLFW_PRESS || button != GLFW.GLFW_MOUSE_BUTTON_1) return;
         Vec2 pos = new Vec2(game.mouse.getX(), game.mouse.getY());
-        pos.x -= game.res.width/2;
-        pos.y -= game.res.height/2;
+        pos.x -= game.config.resolution.x/2;
+        pos.y -= game.config.resolution.y/2;
         pos.x -= view.x;
         pos.y -= view.y;
         pos = rotate(new Vec2(0,0), pos, -angle);
@@ -119,8 +114,8 @@ public class CharacterScreen extends Screen {
     @Override
     public void mouseMoved(float x, float y, float dx, float dy) {
         Vec2 pos = new Vec2(game.mouse.getX(), game.mouse.getY());
-        pos.x -= game.res.width/2;
-        pos.y -= game.res.height/2;
+        pos.x -= game.config.resolution.x/2;
+        pos.y -= game.config.resolution.y/2;
         pos.x -= view.x;
         pos.y -= view.y;
         pos = rotate(new Vec2(0,0), pos, -angle);

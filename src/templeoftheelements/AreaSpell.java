@@ -24,7 +24,7 @@ public class AreaSpell extends Spell {
 
     public AreaSpell(String name, Renderable sprite, Effect effect) {
         this(name, sprite);
-        effects.put(effect.name, effect);
+        addEffect(effect);
     }
     
     public AreaSpell(String name, Renderable sprite) {
@@ -47,7 +47,9 @@ public class AreaSpell extends Spell {
 
     @Override
     public Ability copy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AreaSpell ret = new AreaSpell(name, sprite);
+        for (Effect e : effects.values()) ret.addEffect(e);
+        return ret;
     }
 
     @Override

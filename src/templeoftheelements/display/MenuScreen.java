@@ -21,24 +21,24 @@ public class MenuScreen extends Screen {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glColor3f(255, 0, 0);
         GL11.glBegin(GL11.GL_LINE_STRIP);
-        GL11.glVertex2f(game.res.width/6,game.res.height/6);
-        GL11.glVertex2f(game.res.width*5/6, game.res.height/6);
-        GL11.glVertex2f(game.res.width*5/6, game.res.height*5/6);
-        GL11.glVertex2f(game.res.width/6, game.res.height*5/6);
-        GL11.glVertex2f(game.res.width/6, game.res.height/6);
+        GL11.glVertex2f(game.getResolutionWidth()/6, game.getResolutionHeight()/6);
+        GL11.glVertex2f(game.getResolutionWidth()*5/6, game.getResolutionHeight()/6);
+        GL11.glVertex2f(game.getResolutionWidth()*5/6, game.getResolutionHeight()*5/6);
+        GL11.glVertex2f(game.getResolutionWidth()/6, game.getResolutionHeight()*5/6);
+        GL11.glVertex2f(game.getResolutionWidth()/6, game.getResolutionHeight()/6);
         GL11.glEnd();
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         if (!controlView) {
-            Vec2 position = new Vec2((game.res.width*1f/6) + 5, (game.res.height*4.5f/6) + 20);
+            Vec2 position = new Vec2((game.getResolutionWidth()*1f/6) + 5, (game.getResolutionHeight()*4.5f/6) + 20);
             game.font.getTexture().bind();
 
             game.font.draw("Start", position);
             position.y -= 20;
             game.font.draw("Controls", position);
         } else {
-            Vec2 position = new Vec2((game.res.width*1f/6) + 5, (game.res.height*4.5f/6) + 20);
+            Vec2 position = new Vec2((game.getResolutionWidth()*1f/6) + 5, (game.getResolutionHeight()*4.5f/6) + 20);
             game.font.getTexture().bind();
 
             game.font.draw("Controls:", position);
@@ -80,8 +80,8 @@ public class MenuScreen extends Screen {
 
     public void mouseEvent(int button, int action, int mods) {
         if (button != GLFW.GLFW_MOUSE_BUTTON_1) return;
-        if (game.mouse.getX() >= game.res.width*1f/6 && game.mouse.getX() <= game.res.width*5f/6) {
-            int i = (int) (Math.abs(game.mouse.getY() - game.res.height) - game.res.height/6 -10)/20;
+        if (game.mouse.getX() >= game.getResolutionWidth()*1f/6 && game.mouse.getX() <= game.getResolutionWidth()*5f/6) {
+            int i = (int) (Math.abs(game.mouse.getY() - game.getResolutionHeight()) - game.getResolutionHeight()/6 -10)/20;
             if (i == 0) {
                 game.screen = null;
             } else if (i == 1) {

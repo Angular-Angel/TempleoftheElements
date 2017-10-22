@@ -4,7 +4,9 @@ package templeoftheelements;
 import generation.GenerationProcedure;
 import generation.ProceduralGenerator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+import templeoftheelements.player.CharacterTreeDef;
 
 /**
  *
@@ -15,17 +17,22 @@ import java.util.Random;
 public class CreatureTypeGenerator implements ProceduralGenerator<CreatureDefinition> {
 
     Random random = new Random();
-    ArrayList<GenerationProcedure<CreatureDefinition>> baseProcedures = new ArrayList<>();
+    public HashMap<CreatureDefinition.Detail, GenerationProcedure<CreatureDefinition>> procedures = new HashMap<>();
+    
+    public void addProcedure(CreatureDefinition.Detail detail, GenerationProcedure<CreatureDefinition> procedure) {
+        procedures.put(detail, procedure);
+    }
     
     @Override
     public CreatureDefinition generate() {
-        CreatureDefinition ret = baseProcedures.get(random.nextInt(baseProcedures.size())).generate();
+        CreatureDefinition ret = procedures.get(CreatureDefinition.Detail.MONSTROUS_HUMANOID).generate();
+        
+        for (CreatureDefinition.Detail detail : ret.details) {
+            System.out.println(detail);
+            ret = procedures.get(detail).modify(ret);
+        }
         
         return ret;
-    }
-    
-    public void addBaseProcedure(GenerationProcedure<CreatureDefinition> procedure) {
-        baseProcedures.add(procedure);
     }
 
     @Override

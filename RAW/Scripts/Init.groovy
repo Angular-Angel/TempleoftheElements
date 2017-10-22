@@ -20,7 +20,16 @@ class Initiator implements InitScript {
 
     public void Init() {
         game.registry.readRaw(new File("RAW/JSON/StatDescriptions.json"));
-        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("RAW/Scripts/MonsterGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.MONSTROUS_HUMANOID, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/MonsterGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.STRONG, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/StrongEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.FAST, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/FastEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.TOUGH, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/ToughEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.FRENZIED, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/FrenziedEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.SPINED, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/SpinedEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.REGENERATING, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/RegeneratingEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.ENDURING, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/EnduringEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.CLAW, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/ClawAttackEnemyGenerator.groovy")));
+        game.registry.creatureTypeGenerator.addProcedure(CreatureDefinition.Detail.BITE, game.registry.readGroovyScript(new File("RAW/Scripts/CreatureScripts/BiteAttackEnemyGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Spell.Detail.PROJECTILE, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/MissileSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Spell.Detail.AREA_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/AreaSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Spell.Detail.ENEMY_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/EnemyTargetSpellGenerator.groovy")));
@@ -31,8 +40,8 @@ class Initiator implements InitScript {
         game.registry.abilityGenerator.addProcedure(Spell.Detail.DEBUFF, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/DebuffSpellGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("FighterGenerator.groovy")));
 //        game.registry.creatureTypeGenerator.addBaseProcedure(game.registry.readGroovyScript(new File("WandererGenerator.groovy")));
-        game.registry.loadControllerScript(new File("RAW/Scripts/Wanderer.groovy"));
-        game.registry.loadControllerScript(new File("RAW/Scripts/Fighter.groovy"));
+        game.registry.loadControllerScript(new File("RAW/Scripts/AIScripts/Wanderer.groovy"));
+        game.registry.loadControllerScript(new File("RAW/Scripts/AIScripts/Fighter.groovy"));
         game.registry.loadStatusEffect(new File("RAW/Scripts/Fatigue.groovy"));
         Texture2D glTexture = game.registry.loadTextureRectangle(new File("RAW/Images/Character.png"));
         game.registry.loadTextureRectangle(new File("RAW/Images/Icons.png"));

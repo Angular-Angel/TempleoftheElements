@@ -17,7 +17,7 @@ import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
  */
 
 
-public abstract class Action extends Trait implements Ability {
+public abstract class Action extends Ability {
 
     private int cooldown;
     private AbilityDefinition def;

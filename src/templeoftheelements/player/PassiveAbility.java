@@ -1,13 +1,31 @@
 
 package templeoftheelements.player;
 
+import stat.StatContainer;
+
 /**
  *
  * @author angle
  */
 
 
-public interface PassiveAbility extends Ability {
+public abstract class PassiveAbility extends Ability {
+
+    public PassiveAbility() {
+        super("PassiveAbility");
+    }
     
-    public void step(float dt);
+    public PassiveAbility(String name) {
+        super(name);
+    }
+    
+    public PassiveAbility(String name, boolean active) {
+        super(name, active);
+    }
+    
+    public PassiveAbility(String name, boolean active, StatContainer stats) {
+        super(name, active, stats);
+    }
+    
+    public abstract void step(float dt);
 }

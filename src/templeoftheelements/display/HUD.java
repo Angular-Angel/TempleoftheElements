@@ -48,18 +48,18 @@ public class HUD implements Renderable, Clickable {
         GL11.glColor3f(255, 0, 0);
         GL11.glBegin(GL11.GL_QUADS);
         GL11.glVertex2f(1, 1);
-        GL11.glVertex2f(game.res.width/20, 1);
-        GL11.glVertex2f(game.res.width/20, game.res.height*hp/3);
-        GL11.glVertex2f(1, game.res.height*hp/3);
+        GL11.glVertex2f(game.getResolutionWidth()/20, 1);
+        GL11.glVertex2f(game.getResolutionWidth()/20, game.getResolutionHeight()*hp/3);
+        GL11.glVertex2f(1, game.getResolutionHeight()*hp/3);
 //        GL11.glVertex2f(1, 1);
         GL11.glEnd();
         
         GL11.glColor3f(128, 128, 128);
         GL11.glBegin(GL11.GL_LINE_STRIP);
         GL11.glVertex2f(1, 1);
-        GL11.glVertex2f(game.res.width/20, 1);
-        GL11.glVertex2f(game.res.width/20, game.res.height/3);
-        GL11.glVertex2f(1, game.res.height/3);
+        GL11.glVertex2f(game.getResolutionWidth()/20, 1);
+        GL11.glVertex2f(game.getResolutionWidth()/20, game.getResolutionHeight()/3);
+        GL11.glVertex2f(1, game.getResolutionHeight()/3);
         GL11.glVertex2f(1, 1);
         GL11.glEnd();
         
@@ -76,20 +76,20 @@ public class HUD implements Renderable, Clickable {
         //draw the mana bar.
         GL11.glColor3f(0, 0, 255);
         GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f(19*game.res.width/20, 1);
-        GL11.glVertex2f(game.res.width, 1);
-        GL11.glVertex2f(game.res.width, game.res.height*mana/3);
-        GL11.glVertex2f(19*game.res.width/20, game.res.height*mana/3);
+        GL11.glVertex2f(19*game.getResolutionWidth()/20, 1);
+        GL11.glVertex2f(game.getResolutionWidth(), 1);
+        GL11.glVertex2f(game.getResolutionWidth(), game.getResolutionHeight()*mana/3);
+        GL11.glVertex2f(19*game.getResolutionWidth()/20, game.getResolutionHeight()*mana/3);
 //        GL11.glVertex2f(1, 1);
         GL11.glEnd();
         
         GL11.glColor3f(128, 128, 128);
         GL11.glBegin(GL11.GL_LINE_STRIP);
-        GL11.glVertex2f(19*game.res.width/20, 1);
-        GL11.glVertex2f(game.res.width, 1);
-        GL11.glVertex2f(game.res.width, game.res.height/3);
-        GL11.glVertex2f(19*game.res.width/20, game.res.height/3);
-        GL11.glVertex2f(19*game.res.width/20, 1);
+        GL11.glVertex2f(19*game.getResolutionWidth()/20, 1);
+        GL11.glVertex2f(game.getResolutionWidth(), 1);
+        GL11.glVertex2f(game.getResolutionWidth(), game.getResolutionHeight()/3);
+        GL11.glVertex2f(19*game.getResolutionWidth()/20, game.getResolutionHeight()/3);
+        GL11.glVertex2f(19*game.getResolutionWidth()/20, 1);
         GL11.glEnd();
         
         float stamina = 0;
@@ -105,19 +105,19 @@ public class HUD implements Renderable, Clickable {
         //Draw the Stamina Bar
         GL11.glColor3f(0, 255, 0);
         GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f(1, game.res.height);
-        GL11.glVertex2f(game.res.width*stamina/3, game.res.height);
-        GL11.glVertex2f(game.res.width*stamina/3, 19*game.res.height/20);
-        GL11.glVertex2f(1, 19*game.res.height/20);
+        GL11.glVertex2f(1, game.getResolutionHeight());
+        GL11.glVertex2f(game.getResolutionWidth()*stamina/3, game.getResolutionHeight());
+        GL11.glVertex2f(game.getResolutionWidth()*stamina/3, 19*game.getResolutionHeight()/20);
+        GL11.glVertex2f(1, 19*game.getResolutionHeight()/20);
 //        GL11.glVertex2f(1, 1);
         GL11.glEnd();
         
         GL11.glColor3f(128, 128, 128);
         GL11.glBegin(GL11.GL_LINE_STRIP);
-        GL11.glVertex2f(1, game.res.height);
-        GL11.glVertex2f(game.res.width/3, game.res.height);
-        GL11.glVertex2f(game.res.width/3, 19*game.res.height/20);
-        GL11.glVertex2f(1, 19*game.res.height/20);
+        GL11.glVertex2f(1, game.getResolutionHeight());
+        GL11.glVertex2f(game.getResolutionWidth()/3, game.getResolutionHeight());
+        GL11.glVertex2f(game.getResolutionWidth()/3, 19*game.getResolutionHeight()/20);
+        GL11.glVertex2f(1, 19*game.getResolutionHeight()/20);
         GL11.glVertex2f(1, 1);
         GL11.glEnd();
         
@@ -141,12 +141,12 @@ public class HUD implements Renderable, Clickable {
 
     @Override
     public float getDrawWidth() {
-        return game.res.width;
+        return game.getResolutionWidth();
     }
 
     @Override
     public float getDrawHeight() {
-        return game.res.height;
+        return game.getResolutionHeight();
     }
     
 }

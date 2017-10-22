@@ -11,3 +11,6 @@ dist/
 
 #Error logs
 hs_err_pid*
+native/
+
+TempleoftheElements\.zip

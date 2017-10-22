@@ -22,7 +22,7 @@ import templeoftheelements.effect.EffectContainer;
 
 
 
-public abstract class Spell extends Action implements Ability, EffectContainer {
+public abstract class Spell extends Action implements EffectContainer {
     
     public static enum Detail {
         
@@ -61,7 +61,7 @@ public abstract class Spell extends Action implements Ability, EffectContainer {
 
     }
     
-    private Renderable sprite;
+    protected Renderable sprite;
     public ArrayList<Detail> details;
 
     public Spell(String name, Renderable sprite) {
@@ -85,8 +85,6 @@ public abstract class Spell extends Action implements Ability, EffectContainer {
         return false;
     }
     
-    public abstract void addEffect(Effect effect);
-    
     @Override
     public void perform(Creature creature, Position pos) {
         try {
@@ -99,7 +97,6 @@ public abstract class Spell extends Action implements Ability, EffectContainer {
     
     public abstract void cast(Creature caster, Position pos);
     
-    public abstract String getDescription();
     
     public String showCosts() {
         String ret = "";
@@ -117,13 +114,10 @@ public abstract class Spell extends Action implements Ability, EffectContainer {
         return ret;
     }
     
+    @Override
     public Renderable getSprite() {
         return sprite;
     }
-    
-    public abstract boolean containsEffect(String s);
-    
-    public abstract Effect getEffect(String s);
     
     public abstract float damageValueMultiplier();
     

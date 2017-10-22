@@ -12,7 +12,6 @@ import templeoftheelements.Controller;
 import templeoftheelements.item.Item;
 import static templeoftheelements.TempleOfTheElements.PIXELS_PER_METER;
 import static templeoftheelements.TempleOfTheElements.game;
-import static templeoftheelements.TempleOfTheElements.rotate;
 import templeoftheelements.collision.Position;
 import templeoftheelements.collision.Room;
 import templeoftheelements.display.CharacterScreen;
@@ -99,8 +98,8 @@ public class Player implements Controller {
         
         if (button == GLFW.GLFW_MOUSE_BUTTON_1 && action == GLFW.GLFW_PRESS) {
             Vec2 click = new Vec2(game.mouse.getX(), game.mouse.getY());
-            click.x -= game.res.width/2;
-            click.y -= game.res.height/7;
+            click.x -= game.getResolutionWidth()/2;
+            click.y -= game.getResolutionHeight()/7;
             click.x /= PIXELS_PER_METER;
             click.y /= PIXELS_PER_METER;
             click.x += creature.getPosition().x;

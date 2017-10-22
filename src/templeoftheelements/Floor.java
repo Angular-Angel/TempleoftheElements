@@ -123,7 +123,7 @@ public class Floor {
                 while(schematic[x][y] != null) {
                     x += dir.xmod; y += dir.ymod;
                 }
-                int roomWidth = 1, roomHeight = 3;
+                int roomWidth = 3, roomHeight = 3;
 //                while(roomWidth < 30 && roomHeight < 30 && schematic[x+roomWidth][y+roomHeight] != null) {
 //                    roomWidth++; roomHeight++;
 //                    if (dir.xmod < 0) x--;

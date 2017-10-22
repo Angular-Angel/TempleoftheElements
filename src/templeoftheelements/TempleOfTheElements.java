@@ -1,7 +1,7 @@
 package templeoftheelements;
 
-import com.samrj.devil.config.CfgResolution;
 import com.samrj.devil.game.Game;
+import com.samrj.devil.game.GameConfig;
 import com.samrj.devil.gl.DGL;
 import com.samrj.devil.gl.Texture2D;
 import com.samrj.devil.math.Mat2;
@@ -32,7 +32,7 @@ public final class TempleOfTheElements extends Game {
     public static final int PIXELS_PER_METER = 30;
     
     public final Font font;
-    public final CfgResolution res;
+    public final GameConfig config;
     public final MenuScreen menu;
     
     public Set<Renderable> sprites;
@@ -66,6 +66,14 @@ public final class TempleOfTheElements extends Game {
         return new com.samrj.devil.math.Vec2(v.x, v.y);
     }
     
+    public int getResolutionWidth() {
+        return config.resolution.x;
+    }
+    
+    public int getResolutionHeight() {
+        return config.resolution.y;
+    }
+    
     public static Vec2 rotate(Vec2 center, com.samrj.devil.math.Vec2 point, float angle) {
         com.samrj.devil.math.Vec2 v = new com.samrj.devil.math.Vec2(point.x - center.x, point.y - center.y);
         rotate(v, (float) Math.toRadians(angle));
@@ -93,14 +101,14 @@ public final class TempleOfTheElements extends Game {
     private TempleOfTheElements() throws IOException{
         super();
         
-        res = config.getField("res");
+        config = new GameConfig();
         
         DGL.init();
         
         // init OpenGL
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        GL11.glOrtho(0, res.width, 0, res.height, 1, -1);
+        GL11.glOrtho(0, config.resolution.x, 0, config.resolution.y, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         
         Texture2D glTexture2D = DGL.loadTex2D("mono_20.png");
@@ -181,7 +189,7 @@ public final class TempleOfTheElements extends Game {
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT); 
 
             GL11.glPushMatrix();
-            GL11.glTranslatef(res.width/2, res.height/7, 0);
+            GL11.glTranslatef(config.resolution.x/2, config.resolution.y/7, 0);
             GL11.glRotatef(player.getCreature().getDirection(), 0, 0, 1);
             GL11.glScalef(TempleOfTheElements.PIXELS_PER_METER, TempleOfTheElements.PIXELS_PER_METER, 1f);
             Vec2 pos = player.getCreature().getPosition();
