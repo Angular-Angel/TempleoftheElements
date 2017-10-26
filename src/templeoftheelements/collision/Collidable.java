@@ -11,7 +11,7 @@ import templeoftheelements.effect.EffectSource;
  */
 
 
-public interface Collidable extends Positionable, EffectSource{
+public interface Collidable extends Positionable, EffectSource {
     
     public Body getBody();
     public void collisionLogic(Object o);

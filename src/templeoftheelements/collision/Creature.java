@@ -16,6 +16,7 @@ import templeoftheelements.Actor;
 import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.Controller;
 import templeoftheelements.Damager;
+import templeoftheelements.GameObject;
 import templeoftheelements.item.Equipment;
 import templeoftheelements.item.Item;
 import templeoftheelements.TempleOfTheElements;
@@ -28,7 +29,7 @@ import templeoftheelements.player.*;
 
 
 
-public class Creature extends StatContainer implements Damageable, Actor, Renderable, Clickable, Damager {
+public class Creature extends StatContainer implements Damageable, Actor, Renderable, Clickable, Damager, GameObject {
     private Renderable sprite;
     private Controller controller;
     private Fixture fixture;

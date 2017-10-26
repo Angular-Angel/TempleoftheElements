@@ -159,4 +159,9 @@ public abstract class Item extends StatContainer implements Renderable, Clickabl
         this.level = level;
     }
     
+    @Override
+    public boolean isEnemy() {
+        return false;
+    }
+    
 }

@@ -9,6 +9,8 @@ import com.samrj.devil.ui.Font;
 import com.samrj.devil.util.IdentitySet;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
@@ -35,11 +37,11 @@ public final class TempleOfTheElements extends Game {
     public final GameConfig config;
     public final MenuScreen menu;
     
-    public Set<Renderable> sprites;
-    public Set<Actor> actors;
-    public Set<Actor> newActors;
-    public Set<Clickable> clickables;
-    public Set<Collidable> collidables;
+    private Set<Renderable> sprites;
+    private Set<Actor> actors;
+    private Set<Actor> newActors;
+    private Set<Clickable> clickables;
+    private Set<Collidable> collidables;
     public Registry registry;
     public Player player;
     public World world;
@@ -118,11 +120,11 @@ public final class TempleOfTheElements extends Game {
     }
     
     public void start() {
-        sprites = new IdentitySet<>();
-        actors = new IdentitySet<>();
-        newActors = new IdentitySet<>();
-        collidables = new IdentitySet<>();
-        clickables = new IdentitySet<>();
+        sprites = Collections.newSetFromMap(new IdentityHashMap<>());;
+        actors = Collections.newSetFromMap(new IdentityHashMap<>());;
+        newActors = Collections.newSetFromMap(new IdentityHashMap<>());
+        collidables = Collections.newSetFromMap(new IdentityHashMap<>());;
+        clickables = Collections.newSetFromMap(new IdentityHashMap<>());;
         world = new World(new Vec2());
         world.setContactListener(new CollisionManager());
         registry = new Registry();
@@ -148,9 +150,9 @@ public final class TempleOfTheElements extends Game {
         clickables.remove(c);
     }
     
-//    public void addCollidable(Collidable c) {
-//        collidables.add(c);
-//    }
+    public void addCollidable(Collidable c) {
+        collidables.add(c);
+    }
     
     public void addSprite(Renderable r) {
         sprites.add(r);

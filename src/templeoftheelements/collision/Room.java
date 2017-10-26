@@ -14,6 +14,7 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.lwjgl.opengl.GL11;
 import templeoftheelements.Actor;
+import templeoftheelements.GameObject;
 import templeoftheelements.TempleOfTheElements;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.Renderable;
@@ -27,7 +28,7 @@ public class Room implements Renderable, Collidable, Actor {
     int width, height;
     private Vec4 color;
     Body[] walls;
-    private ArrayList<Object> stuff;
+    private ArrayList<GameObject> stuff;
     private boolean cleared;
     private Texture floor;
     public int experience;
@@ -62,17 +63,17 @@ public class Room implements Renderable, Collidable, Actor {
         floor.draw(width, height);
     }
     
-    public void add(Object o) {
+    public void add(GameObject o) {
         stuff.add(o);
     }
     
-    public void remove(Object o) {
+    public void remove(GameObject o) {
         stuff.remove(o);
     }
     
     public void checkCleared() {
-        for (Actor a : game.actors) {
-            if (a.isEnemy()) {
+        for (GameObject gameObject : stuff) {
+            if (gameObject.isEnemy()) {
                 cleared = false;
                 return;
             }
@@ -372,6 +373,11 @@ public class Room implements Renderable, Collidable, Actor {
         @Override
         public float getDrawHeight() {
             return Math.abs(point1.y - point2.y);
+        }
+
+        @Override
+        public boolean isEnemy() {
+            return false;
         }
     }
     
