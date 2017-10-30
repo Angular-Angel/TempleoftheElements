@@ -19,8 +19,8 @@ import util.Direction;
 
 
 public class Floor {
-    private Room entrance;
-    private Set<Room> rooms;
+    private final Room entrance;
+    private final Set<Room> rooms;
     
     public Floor(Room room) {
         entrance = room;

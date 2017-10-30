@@ -6,7 +6,6 @@ import com.samrj.devil.gl.DGL;
 import com.samrj.devil.gl.Texture2D;
 import com.samrj.devil.math.Mat2;
 import com.samrj.devil.ui.Font;
-import com.samrj.devil.util.IdentitySet;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;

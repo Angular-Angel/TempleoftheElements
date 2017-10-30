@@ -22,7 +22,6 @@ import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.VectorCircle;
 import templeoftheelements.effect.Effect;
-import templeoftheelements.effect.EffectSource;
 
 /**
  *

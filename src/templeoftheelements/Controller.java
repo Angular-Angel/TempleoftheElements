@@ -1,7 +1,6 @@
  
 package templeoftheelements;
 
-import java.util.HashSet;
 import templeoftheelements.collision.Creature;
 import org.jbox2d.common.Vec2;
 import templeoftheelements.player.Action;

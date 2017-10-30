@@ -1,7 +1,6 @@
 
 package templeoftheelements.display;
 
-import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import templeoftheelements.collision.Position;

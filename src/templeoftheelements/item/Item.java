@@ -5,7 +5,6 @@ import com.samrj.devil.math.Vec2i;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jbox2d.common.Vec2;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
 import stat.Stat;

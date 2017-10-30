@@ -1,7 +1,6 @@
 
 package templeoftheelements;
 
-import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;

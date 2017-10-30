@@ -5,9 +5,7 @@
  */
 package templeoftheelements;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import org.jbox2d.common.Vec2;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;

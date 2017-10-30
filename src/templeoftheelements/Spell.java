@@ -2,22 +2,15 @@
 package templeoftheelements;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jbox2d.common.Vec2;
-import stat.EquationStat;
 import stat.NoSuchStatException;
-import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.Ability;
 import templeoftheelements.player.Action;
 import templeoftheelements.player.CreatureEvent;
-import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectContainer;
 
 

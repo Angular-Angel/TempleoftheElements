@@ -28,7 +28,6 @@ import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
 import templeoftheelements.player.Ability;
-import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterTreeDef;
 import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import templeoftheelements.effect.Effect;

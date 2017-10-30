@@ -2,16 +2,12 @@
 package templeoftheelements.display;
 
 import java.util.ArrayList;
-import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-import static templeoftheelements.TempleOfTheElements.PIXELS_PER_METER;
 import static templeoftheelements.TempleOfTheElements.game;
-import static templeoftheelements.TempleOfTheElements.rotate;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.player.Action;
-import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
  *

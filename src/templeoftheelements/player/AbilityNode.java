@@ -5,10 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
-import templeoftheelements.MissileSpell;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.collision.Attack;
-import templeoftheelements.collision.RangedAttack;
 import templeoftheelements.display.CharacterScreen;
 
 /**

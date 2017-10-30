@@ -5,7 +5,6 @@
  */
 package templeoftheelements.item;
 
-import org.jbox2d.common.Vec2;
 import stat.StatContainer;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;

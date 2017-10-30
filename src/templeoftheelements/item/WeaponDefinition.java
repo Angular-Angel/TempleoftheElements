@@ -2,7 +2,6 @@
 package templeoftheelements.item;
 
 import com.samrj.devil.util.IdentitySet;
-import java.util.ArrayList;
 import templeoftheelements.display.Renderable;
 
 /**
