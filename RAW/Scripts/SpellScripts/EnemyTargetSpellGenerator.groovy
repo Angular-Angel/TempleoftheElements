@@ -1,19 +1,10 @@
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import stat.*;
-import generation.*;
+import templeoftheelements.Spell;
+import templeoftheelements.EnemyTargetSpell;
+import templeoftheelements.display.VectorCircle;   // the groovy script importing..*;
+import stat.NumericStat;
 import java.util.Random;
-import java.util.ArrayList;
-import static templeoftheelements.TempleOfTheElements.game;
-import generation.ProceduralGenerator;
 import templeoftheelements.player.characterwheel.*;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
-import org.jbox2d.common.Vec2;
 
 public class EnemyTargetSpellGenerator extends AbilityGenerationProcedure {
 

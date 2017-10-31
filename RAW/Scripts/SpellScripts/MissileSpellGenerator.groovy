@@ -1,19 +1,12 @@
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import templeoftheelements.effect.*;
+import templeoftheelements.Spell;
+import templeoftheelements.Element;
+import templeoftheelements.MissileSpell;
+import templeoftheelements.display.VectorCircle;
+import templeoftheelements.item.AttackDefinition;
 import stat.*;
-import generation.*;
 import java.util.Random;
-import java.util.ArrayList;
-import static templeoftheelements.TempleOfTheElements.game;
-import generation.ProceduralGenerator;
 import templeoftheelements.player.characterwheel.*;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
 
 public class MissileSpellGenerator extends AbilityGenerationProcedure {
 

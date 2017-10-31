@@ -1,19 +1,8 @@
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;
-import templeoftheelements.item.*;
-import templeoftheelements.effect.Effect;
-import templeoftheelements.effect.EffectSource;
-import stat.*;
-import generation.*;
+import templeoftheelements.Spell;
+import stat.NumericStat;
 import java.util.Random;
-import java.util.ArrayList;
-import static templeoftheelements.TempleOfTheElements.game;
-import generation.ProceduralGenerator;
 import templeoftheelements.player.characterwheel.*;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
-import org.jbox2d.common.Vec2;
 
 public class CastTimeSpellGenerator extends AbilityGenerationProcedure {
 
