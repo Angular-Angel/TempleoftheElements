@@ -11,26 +11,20 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.characterwheel.CharacterWheel;
+import templeoftheelements.player.characterwheel.*;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
 import org.jbox2d.common.Vec2;
 
-public class DamageSpellGenerator implements GenerationProcedure<AbilityDefinition> {
+public class DamageOverTimeSpellGenerator extends AbilityGenerationProcedure {
 
      //our random number generator;
     Random random = new Random();
 
-    public AbilityDefinition generate() {
-        throw new UnsupportedOperationException();
-    }
-
-    public AbilityDefinition generate(Object o) {
-        AbilityDefinition abilityDef = (AbilityDefinition) o; //the definition for the node we're making
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
-        
-        Spell spell = (Spell) abilityDef.ability;
+    @Override
+    public AbilityDefinition modify(AbilityDefinition abilityDef) {
+         Spell spell = (Spell) abilityDef.ability;
         
         int pool = Math.min(20, (abilityDef.getScore("Pool")));
         
@@ -65,13 +59,5 @@ public class DamageSpellGenerator implements GenerationProcedure<AbilityDefiniti
         abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
         
         return abilityDef;
-    }
-    
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public boolean isApplicable(AbilityDefinition abilityDef) {
-        return (abilityDef.ability instanceof Spell);
     }
 }

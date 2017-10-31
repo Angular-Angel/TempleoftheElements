@@ -10,21 +10,17 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.characterwheel.CharacterWheel;
+import templeoftheelements.player.characterwheel.*;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.effect.Effect;
 
-public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefinition> {
+public class DebuffSpellGenerator extends AbilityGenerationProcedure {
 
      //our random number generator;
     Random random = new Random();
-
-    public AbilityDefinition generate() {
-        throw new UnsupportedOperationException();
-    }
-
-    public AbilityDefinition generate(Object o) {
-        AbilityDefinition abilityDef = (AbilityDefinition) o; //the definition for the node we're making
+    
+    @Override
+    public AbilityDefinition modify(AbilityDefinition abilityDef) {
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
         
         Spell spell = (Spell) abilityDef.ability;
@@ -81,13 +77,5 @@ public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefiniti
         spell.addEffect(effect);
         
         return abilityDef;
-    }
-    
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public boolean isApplicable(AbilityDefinition abilityDef) {
-        throw new UnsupportedOperationException();
     }
 }

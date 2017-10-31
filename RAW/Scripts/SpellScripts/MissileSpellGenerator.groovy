@@ -10,18 +10,18 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.characterwheel.CharacterWheel;
+import templeoftheelements.player.characterwheel.*;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
 
-public class MissileGenerator implements GenerationProcedure<AbilityDefinition> {
+public class MissileSpellGenerator extends AbilityGenerationProcedure {
 
      //our random number generator;
     Random random = new Random();
     
-    public AbilityDefinition generate(Object o) {
-        AbilityDefinition abilityDef = (AbilityDefinition) o; //the definition for the node we're making
+    @Override
+    public AbilityDefinition modify(AbilityDefinition abilityDef) {
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
 
         String name;
@@ -63,17 +63,5 @@ public class MissileGenerator implements GenerationProcedure<AbilityDefinition> 
         abilityDef.ability = ret;
         
         return abilityDef;
-    }
-
-    public AbilityDefinition generate() {
-        throw new UnsupportedOperationException();
-    }
-    
-    public AbilityDefinition modify(AbilityDefinition node) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public boolean isApplicable(AbilityDefinition node) {
-        throw new UnsupportedOperationException();
     }
 }

@@ -79,7 +79,7 @@ public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> 
             abilityDef.targeting = targeting;
         } while (!procedures.containsKey(targeting));
         
-        abilityDef = procedures.get(targeting).generate(abilityDef);
+        abilityDef = procedures.get(targeting).modify(abilityDef);
         
         //Then, depending on the above, pick what costs this spell will have.
         
@@ -140,7 +140,7 @@ public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> 
                 if (i >= abilityDef.costDetails.size())
                     i = 0;
                 
-                procedures.get(cost).generate(abilityDef);
+                procedures.get(cost).modify(abilityDef);
                 
             }
         } catch (NoSuchStatException ex) {
@@ -159,7 +159,7 @@ public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> 
                     i = 0;
                 
                 if (abilityDef.getScore("Pool") > effect.cost) {
-                    procedures.get(effect).generate(abilityDef);
+                    procedures.get(effect).modify(abilityDef);
                 }
                 else abilityDef.getStat("Pool").modify(-1);
             }
