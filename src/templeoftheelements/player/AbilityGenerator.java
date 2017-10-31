@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 import stat.NoSuchStatException;
 import stat.NumericStat;
 import templeoftheelements.Spell;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
-import templeoftheelements.player.CharacterWheel.CharacterTree;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.characterwheel.CharacterWheel.CharacterTree;
 
 /**
  *

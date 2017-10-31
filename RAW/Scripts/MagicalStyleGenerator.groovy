@@ -9,9 +9,7 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
-import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
-import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.player.characterwheel.CharacterTreeDef;
 
 /**
  *

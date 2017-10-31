@@ -6,7 +6,7 @@ import generation.ProceduralGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.characterwheel.CharacterTreeDef;
 
 /**
  *

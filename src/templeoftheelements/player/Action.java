@@ -1,6 +1,7 @@
 
 package templeoftheelements.player;
 
+import templeoftheelements.player.characterwheel.CharacterTreeDef;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import stat.Stat;
@@ -9,7 +10,7 @@ import stat.Trait;
 import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
 
 /**
  *

@@ -1,6 +1,7 @@
 
 package templeoftheelements.player;
 
+import templeoftheelements.player.characterwheel.CharacterWheel;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,5 +1,5 @@
 
-package templeoftheelements.player;
+package templeoftheelements.player.characterwheel;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,6 +7,8 @@ import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.CharacterScreen;
+import templeoftheelements.player.Ability;
+import templeoftheelements.player.Inventory;
 
 /**
  *
@@ -28,12 +30,14 @@ public class AbilityNode extends CharacterNode {
         this(requirements, tree, false, ability);
     }
     
+    @Override
     public void acquire() {
         super.acquire();
         tree.getCreature().addAbility(ability);
         tree.getCreature().getController().refactorActions();
     }
     
+    @Override
     public void showDescription(CharacterScreen.StatScreen screen) {
         float i = screen.height - 12;
         GL11.glEnable(GL11.GL_BLEND);

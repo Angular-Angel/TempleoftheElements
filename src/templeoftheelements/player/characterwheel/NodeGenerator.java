@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package templeoftheelements.player;
+package templeoftheelements.player.characterwheel;
 
 import generation.ProceduralGenerator;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Random;
 import stat.NumericStat;
 import stat.Stat;
 import stat.StatDescriptor;
-import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
 
 /**
  *

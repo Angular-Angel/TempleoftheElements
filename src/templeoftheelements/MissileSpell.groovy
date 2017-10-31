@@ -14,7 +14,7 @@ import templeoftheelements.collision.Creature;
 import templeoftheelements.collision.Position
 import templeoftheelements.player.Ability;
 import templeoftheelements.effect.Effect;
-import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.CharacterWheel.CharacterTreeDef;
 
 /**
  *

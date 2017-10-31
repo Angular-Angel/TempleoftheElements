@@ -4,7 +4,7 @@ package templeoftheelements;
 import java.util.ArrayList;
 import java.util.HashMap;
 import stat.StatDescriptor;
-import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.characterwheel.CharacterTreeDef;
 
 /**
  *

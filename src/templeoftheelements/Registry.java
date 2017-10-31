@@ -28,12 +28,12 @@ import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
 import templeoftheelements.player.Ability;
-import templeoftheelements.player.CharacterTreeDef;
-import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.player.characterwheel.CharacterTreeDef;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectListing;
 import templeoftheelements.player.AbilityGenerator;
-import templeoftheelements.player.NodeGenerator;
+import templeoftheelements.player.characterwheel.NodeGenerator;
 import templeoftheelements.player.StatusEffect;
 import util.RawReader;
 

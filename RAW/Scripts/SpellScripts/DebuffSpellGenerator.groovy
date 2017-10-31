@@ -10,7 +10,8 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.characterwheel.CharacterWheel;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.effect.Effect;
 
 public class DebuffSpellGenerator implements GenerationProcedure<AbilityDefinition> {

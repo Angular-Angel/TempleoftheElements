@@ -9,7 +9,7 @@ import generation.*;
 import java.util.Random;
 import com.samrj.devil.gl.Texture2D;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
 
 /**
  *

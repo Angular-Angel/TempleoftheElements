@@ -1,12 +1,14 @@
 
-package templeoftheelements.player;
+package templeoftheelements.player.characterwheel;
 
 import com.samrj.devil.math.Vec2;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Creature;
-import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
-import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
+import templeoftheelements.player.Ability;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
+import templeoftheelements.player.Player;
 
 /**
  *

@@ -1,5 +1,5 @@
 
-package templeoftheelements.player;
+package templeoftheelements.player.characterwheel;
 
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
