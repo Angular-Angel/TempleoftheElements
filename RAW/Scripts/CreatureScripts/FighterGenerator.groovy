@@ -1,11 +1,10 @@
-
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import stat.*;
-import generation.*;
+import templeoftheelements.CreatureGenerationProcedure;
+import templeoftheelements.CreatureDefinition;
+import templeoftheelements.display.VectorCircle;   // the groovy script importing.
+import templeoftheelements.player.AttackAction;   // the groovy script importing.
+import templeoftheelements.item.AttackDefinition;
+import stat.NumericStat;
+import stat.BinaryStat;
 import java.util.Random;
 import com.samrj.devil.gl.Texture2D;
 import static templeoftheelements.TempleOfTheElements.game;
@@ -14,7 +13,7 @@ import static templeoftheelements.TempleOfTheElements.game;
  *
  * @author angle
  */
-class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
+class FighterGenerator extends CreatureGenerationProcedure {
 	
     int count = 0;
     Random random = new Random();
@@ -76,14 +75,6 @@ class FighterGenerator implements GenerationProcedure<CreatureDefinition> {
         ret.itemDrops.add(new ItemDrop(game.registry.itemPools.get("ItemRoller.groovy"), 2, 1));
         game.registry.creatureDefs.put(name, ret);
         return ret;
-    }
-    
-    public CreatureDefinition modify(CreatureDefinition definition) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public boolean isApplicable(CreatureDefinition definition) {
-        throw new UnsupportedOperationException();
     }
     
 }

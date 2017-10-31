@@ -1,31 +1,21 @@
 
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import stat.*;
-import generation.*;
+import templeoftheelements.CreatureGenerationProcedure;
+import templeoftheelements.CreatureDefinition;
+import templeoftheelements.display.VectorCircle;   // the groovy script importing.
+import templeoftheelements.player.AttackAction;   // the groovy script importing.
+import templeoftheelements.item.AttackDefinition;
+import stat.NumericStat;
+import stat.BinaryStat;
 import java.util.Random;
-import com.samrj.devil.gl.Texture2D;
-import static templeoftheelements.TempleOfTheElements.game;
 
 /**
  *
  * @author angle
  */
-class BiteAttackEnemyGenerator implements GenerationProcedure<CreatureDefinition> {
+class BiteAttackEnemyGenerator extends CreatureGenerationProcedure {
 	
     int count = 0;
     Random random = new Random();
-    
-    public CreatureDefinition generate(Object o) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public CreatureDefinition generate() {
-        throw new UnsupportedOperationException();
-    }
     
     public CreatureDefinition modify(CreatureDefinition definition) {
         //This script give an enemy a claw attack.
@@ -44,10 +34,6 @@ class BiteAttackEnemyGenerator implements GenerationProcedure<CreatureDefinition
         definition.addAbility(new AttackAction(attack));
         
         return definition;
-    }
-    
-    public boolean isApplicable(CreatureDefinition definition) {
-        throw new UnsupportedOperationException();
     }
     
 }

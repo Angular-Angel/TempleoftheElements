@@ -1,6 +1,6 @@
 import templeoftheelements.Spell;
 import templeoftheelements.EnemyTargetSpell;
-import templeoftheelements.display.VectorCircle;   // the groovy script importing..*;
+import templeoftheelements.display.VectorCircle;
 import stat.NumericStat;
 import java.util.Random;
 import templeoftheelements.player.characterwheel.*;

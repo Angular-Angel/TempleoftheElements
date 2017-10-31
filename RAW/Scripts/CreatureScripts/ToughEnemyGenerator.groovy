@@ -1,31 +1,11 @@
-
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import stat.*;
-import generation.*;
-import java.util.Random;
-import com.samrj.devil.gl.Texture2D;
-import static templeoftheelements.TempleOfTheElements.game;
+import templeoftheelements.CreatureGenerationProcedure;
+import templeoftheelements.CreatureDefinition;
 
 /**
  *
  * @author angle
  */
-class ToughEnemyGenerator implements GenerationProcedure<CreatureDefinition> {
-	
-    int count = 0;
-    Random random = new Random();
-    
-    public CreatureDefinition generate(Object o) {
-        throw new UnsupportedOperationException();
-    }
-    
-    public CreatureDefinition generate() {
-        throw new UnsupportedOperationException();
-    }
+class ToughEnemyGenerator extends CreatureGenerationProcedure {
     
     public CreatureDefinition modify(CreatureDefinition definition) {
         //This script makes an enemy stronger.
@@ -33,10 +13,6 @@ class ToughEnemyGenerator implements GenerationProcedure<CreatureDefinition> {
         definition.getStat("Constitution").modifyBase(50);
         
         return definition;
-    }
-    
-    public boolean isApplicable(CreatureDefinition definition) {
-        throw new UnsupportedOperationException();
     }
     
 }

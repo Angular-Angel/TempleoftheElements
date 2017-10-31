@@ -1,12 +1,12 @@
-
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import stat.*;
-import generation.*;
+import templeoftheelements.CreatureGenerationProcedure;
+import templeoftheelements.CreatureDefinition;
+import templeoftheelements.display.VectorCircle;   // the groovy script importing.
+import templeoftheelements.player.AttackAction;   // the groovy script importing.
+import templeoftheelements.item.AttackDefinition;
+import templeoftheelements.item.ItemDrop;
+import stat.NumericStat;
 import java.util.Random;
+import com.samrj.devil.gl.Texture2D;
 import static templeoftheelements.TempleOfTheElements.game;
 
 /**
