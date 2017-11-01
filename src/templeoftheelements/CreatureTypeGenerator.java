@@ -28,7 +28,6 @@ public class CreatureTypeGenerator implements ProceduralGenerator<CreatureDefini
         CreatureDefinition ret = procedures.get(CreatureDefinition.Detail.MONSTROUS_HUMANOID).generate();
         
         for (CreatureDefinition.Detail detail : ret.details) {
-            System.out.println(detail);
             ret = procedures.get(detail).modify(ret);
         }
         
