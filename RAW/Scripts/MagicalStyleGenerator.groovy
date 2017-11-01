@@ -116,16 +116,19 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Mana"));
         
         if (ret.scalingDetails.contains(Spell.Detail.SPEED_BASED)) 
-        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Speed"));
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Speed"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.CONSTITUTION_BASED) || 
-            ret.scalingDetails.contains(Spell.Detail.STAMINA_BASED) ||
+        if (ret.scalingDetails.contains(Spell.Detail.STAMINA_BASED) ||
             ret.scalingDetails.contains(Spell.Detail.STAMINA_COST)) 
-        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Stamina"));
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Stamina"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.CONSTITUTION_BASED) ||
+        if (ret.scalingDetails.contains(Spell.Detail.HP_BASED) ||
             ret.scalingDetails.contains(Spell.Detail.HP_COST)) 
-        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added HP"));
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added HP"));
+        
+        if (ret.scalingDetails.contains(Spell.Detail.CONSTITUTION_BASED))
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Constitution"));
+        
         
         attributePool.clear();
         attributePool.addAll(element.secondaryAttributes);
