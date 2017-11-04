@@ -1,37 +1,25 @@
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import templeoftheelements.effect.*;
-import stat.*;
+import stat.StatDescriptor;
 import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
 import templeoftheelements.player.characterwheel.CharacterWheel;
 import templeoftheelements.player.characterwheel.CharacterTreeDef;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
 
 //This class generates descriptions of clusters if nodes for character trees.
 
-public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> {
+public class ClusterGenerator implements ProceduralGenerator<CharacterTreeDef.ClusterDefinition> {
 
      //our random number generator;
     Random random = new Random();
-    
-    public ClusterDefinition generate() {
-        throw new UnsupportedOperationException();
-    }
 
-    public ClusterDefinition generate(Object o) {
+    public CharacterTreeDef.ClusterDefinition generate(Object o) {
 
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) o;
 
         //first, generate the capstone. 
 
-        ClusterDefinition ret = new ClusterDefinition();
+        CharacterTreeDef.ClusterDefinition ret = new CharacterTreeDef.ClusterDefinition();
 
         //The stats our cluster will feature.
         StatDescriptor stat1, stat2;
@@ -55,7 +43,7 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
         else
             ret.entry.requirement = new CharacterTreeDef.Requirement(1);
 
-        NodeDefinition bulk = tree.definition.newNode(tree);
+        CharacterTreeDef.NodeDefinition bulk = tree.definition.newNode(tree);
         bulk.requirement = new CharacterTreeDef.Requirement(1);
         bulk.position = CharacterTreeDef.Position.CLOCKWISE20;
         bulk.stats.add(stat1);
@@ -71,7 +59,7 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
         if (random.nextInt(4) == 0) {
             //generate ability
 
-            NodeDefinition capStone = tree.definition.newNode(tree);
+            CharacterTreeDef.NodeDefinition capStone = tree.definition.newNode(tree);
             
             capStone.abilityDef = game.registry.abilityGenerator.generate(tree);
 
@@ -79,7 +67,7 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
             capStone.position = CharacterTreeDef.Position.RADIAL;
             ret.capstone = capStone;
         } else {
-            NodeDefinition capStone = tree.definition.newNode(tree);
+            CharacterTreeDef.NodeDefinition capStone = tree.definition.newNode(tree);
 
             capStone.stats.add(stat1);
             capStone.stats.add(stat2);
@@ -100,11 +88,15 @@ public class ClusterGenerator implements ProceduralGenerator<ClusterDefinition> 
 //            
 //        }
 
-    public ClusterDefinition modify(ClusterDefinition cluster) {
+    public CharacterTreeDef.ClusterDefinition modify(CharacterTreeDef.ClusterDefinition cluster) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean isApplicable(ClusterDefinition cluster) {
+    public boolean isApplicable(CharacterTreeDef.ClusterDefinition cluster) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public CharacterTreeDef.ClusterDefinition generate() {
         throw new UnsupportedOperationException();
     }
 
