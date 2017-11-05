@@ -1,11 +1,11 @@
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.controller.Controller;
+import templeoftheelements.controller.Action;
+import templeoftheelements.controller.AttackAction;
 import org.jbox2d.common.Vec2;
 import stat.NumericStat;
+import stat.NoSuchStatException;
 import java.util.Random;
-import stat.*;
 import static templeoftheelements.TempleOfTheElements.game;
 import util.VecMath;
 
@@ -118,7 +118,7 @@ class Fighter implements Controller {
         return true;
     }
     public boolean isDead() {
-        throw new UnsupportedOperationException();
+        return false;
     }
     public void destroy() {
         creature.destroy();

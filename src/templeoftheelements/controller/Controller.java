@@ -1,9 +1,9 @@
  
-package templeoftheelements;
+package templeoftheelements.controller;
 
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import org.jbox2d.common.Vec2;
-import templeoftheelements.player.Action;
+import templeoftheelements.Actor;
 
 /**
  *

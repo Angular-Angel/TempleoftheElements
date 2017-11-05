@@ -1,13 +1,13 @@
 
-package templeoftheelements.player.characterwheel;
+package templeoftheelements.player;
 
 import com.samrj.devil.math.Vec2;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.collision.Creature;
-import templeoftheelements.player.Ability;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.creature.Ability;
+import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
 import templeoftheelements.player.Player;
 
 /**
@@ -33,10 +33,6 @@ public class CharacterWheel {
     }
     
     public void generate() {
-        ArrayList<CharacterNode> curNodeRing = new ArrayList<>(); // the nodes in the current layer.
-        
-        
-        
         for (int i = 0; i < 5; i++) {
             trees.add(new CharacterTree(game.registry.treeGenerator.generate()));
         }

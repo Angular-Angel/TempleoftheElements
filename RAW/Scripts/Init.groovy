@@ -1,8 +1,13 @@
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;
-import templeoftheelements.item.*;
+import templeoftheelements.InitScript;
+import templeoftheelements.Floor;
+import templeoftheelements.Spell;
+import templeoftheelements.creature.CreatureDefinition;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.display.Sprite;
+import templeoftheelements.display.VectorCircle;
+import templeoftheelements.player.Player;
+import templeoftheelements.item.Item;
+import templeoftheelements.item.Consumable;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectSource;
 import static templeoftheelements.TempleOfTheElements.game;

@@ -1,16 +1,16 @@
 
-package templeoftheelements;
+package templeoftheelements.creature;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.controller.Controller;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.item.ItemDrop;
-import templeoftheelements.player.Ability;
 
 /**
  *

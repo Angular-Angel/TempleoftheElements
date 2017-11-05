@@ -1,10 +1,9 @@
-
-import templeoftheelements.CreatureGenerationProcedure;
-import templeoftheelements.CreatureDefinition;
-import templeoftheelements.collision.Creature;
-import templeoftheelements.player.Ability;
-import templeoftheelements.player.PassiveAbility;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.creature.CreatureGenerationProcedure;
+import templeoftheelements.creature.CreatureDefinition;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.PassiveAbility;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
  *

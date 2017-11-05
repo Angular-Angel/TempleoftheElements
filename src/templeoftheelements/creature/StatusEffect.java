@@ -1,5 +1,5 @@
 
-package templeoftheelements.player;
+package templeoftheelements.creature;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,7 +7,7 @@ import stat.NoSuchStatException;
 import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.Actor;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 
 /**
  *

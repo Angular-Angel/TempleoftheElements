@@ -16,6 +16,7 @@
         "PlayerStats": [],
         "Effects": ["import templeoftheelements.player.*; 
                   \n import templeoftheelements.item.*; 
+                  \n import templeoftheelements.creature.*;
                   \n import templeoftheelements.collision.*;
                   \n import templeoftheelements.effect.Effect;
                   \n import templeoftheelements.effect.EffectSource;

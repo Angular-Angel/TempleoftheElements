@@ -1,5 +1,5 @@
 
-package templeoftheelements.player.characterwheel;
+package templeoftheelements.player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.CharacterScreen;
-import templeoftheelements.player.Ability;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.player.Inventory;
 
 /**

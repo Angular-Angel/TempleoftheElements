@@ -1,6 +1,7 @@
 
 package templeoftheelements.collision;
 
+import templeoftheelements.creature.Creature;
 import com.samrj.devil.gl.Texture2D;
 import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec4;

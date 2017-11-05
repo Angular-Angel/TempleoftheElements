@@ -3,34 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package templeoftheelements.player.characterwheel;
+package templeoftheelements.creature;
 
 import generation.GenerationProcedure;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
 
 /**
  *
  * @author angle
  */
-public abstract class AbilityGenerationProcedure implements GenerationProcedure<AbilityDefinition> {
+public class CreatureGenerationProcedure implements GenerationProcedure<CreatureDefinition>  {
 
     @Override
-    public AbilityDefinition generate() {
+    public CreatureDefinition generate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public AbilityDefinition generate(Object o) {
+    public CreatureDefinition generate(Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public AbilityDefinition modify(AbilityDefinition t) {
+    public CreatureDefinition modify(CreatureDefinition t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean isApplicable(AbilityDefinition t) {
+    public boolean isApplicable(CreatureDefinition t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

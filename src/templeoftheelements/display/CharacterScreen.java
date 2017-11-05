@@ -6,9 +6,9 @@ import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.player.characterwheel.AbilityNode;
-import templeoftheelements.player.characterwheel.CharacterNode;
-import templeoftheelements.player.characterwheel.CharacterWheel;
+import templeoftheelements.player.AbilityNode;
+import templeoftheelements.player.CharacterNode;
+import templeoftheelements.player.CharacterWheel;
 import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**

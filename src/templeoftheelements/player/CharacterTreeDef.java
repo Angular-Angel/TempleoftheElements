@@ -1,5 +1,5 @@
 
-package templeoftheelements.player.characterwheel;
+package templeoftheelements.player;
 
 import generation.ProceduralGenerator;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import stat.StatContainer;
 import stat.StatDescriptor;
 import templeoftheelements.Element;
 import templeoftheelements.Spell;
-import templeoftheelements.player.Ability;
+import templeoftheelements.creature.Ability;
 
 /**
  *

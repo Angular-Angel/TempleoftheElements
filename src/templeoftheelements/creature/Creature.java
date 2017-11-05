@@ -1,6 +1,8 @@
 
-package templeoftheelements.collision;
+package templeoftheelements.creature;
 
+import templeoftheelements.controller.AttackAction;
+import templeoftheelements.controller.Action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,12 +16,16 @@ import stat.NoSuchStatException;
 import stat.StatContainer;
 import templeoftheelements.Actor;
 import templeoftheelements.item.AttackDefinition;
-import templeoftheelements.Controller;
+import templeoftheelements.controller.Controller;
 import templeoftheelements.Damager;
 import templeoftheelements.GameObject;
 import templeoftheelements.item.Equipment;
 import templeoftheelements.item.Item;
 import templeoftheelements.TempleOfTheElements;
+import templeoftheelements.collision.Attack;
+import templeoftheelements.collision.Damageable;
+import templeoftheelements.collision.MeleeAttack;
+import templeoftheelements.collision.Position;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.item.Weapon;
 import templeoftheelements.display.VectorCircle;

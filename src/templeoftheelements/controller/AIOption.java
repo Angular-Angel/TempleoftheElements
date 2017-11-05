@@ -1,5 +1,5 @@
 
-package templeoftheelements.player;
+package templeoftheelements.controller;
 
 /**
  *

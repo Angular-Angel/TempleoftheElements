@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package templeoftheelements.player;
+package templeoftheelements.creature;
 
 import generation.GenerationProcedure;
 import generation.ProceduralGenerator;
@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 import stat.NoSuchStatException;
 import stat.NumericStat;
 import templeoftheelements.Spell;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
-import templeoftheelements.player.characterwheel.CharacterWheel.CharacterTree;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterWheel.CharacterTree;
 
 /**
  *

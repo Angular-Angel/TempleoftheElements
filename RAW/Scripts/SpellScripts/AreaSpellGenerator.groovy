@@ -1,8 +1,8 @@
 import templeoftheelements.AreaSpell;
+import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;   // the groovy script importing.
 import stat.NumericStat;
-import templeoftheelements.player.characterwheel.*;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 public class AreaSpellGenerator extends AbilityGenerationProcedure {
 

@@ -1,10 +1,6 @@
-import templeoftheelements.*;
-import templeoftheelements.collision.*; // these are used for
-import templeoftheelements.display.*;   // the groovy script importing.
-import templeoftheelements.player.*;   // the groovy script importing.
-import templeoftheelements.item.*;
-import stat.*;
-import generation.*;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.collision.Room;
+import generation.GenerationProcedure;
 import java.util.Random;
 import static templeoftheelements.TempleOfTheElements.game;
 import org.jbox2d.collision.shapes.CircleShape;

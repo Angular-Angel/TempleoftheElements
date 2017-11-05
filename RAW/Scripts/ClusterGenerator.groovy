@@ -3,8 +3,8 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.characterwheel.CharacterWheel;
-import templeoftheelements.player.characterwheel.CharacterTreeDef;
+import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.CharacterTreeDef;
 
 //This class generates descriptions of clusters if nodes for character trees.
 
@@ -17,7 +17,7 @@ public class ClusterGenerator implements ProceduralGenerator<CharacterTreeDef.Cl
 
         CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) o;
 
-        //first, generate the capstone. 
+        //first, generate the ClusterDefinition. 
 
         CharacterTreeDef.ClusterDefinition ret = new CharacterTreeDef.ClusterDefinition();
 

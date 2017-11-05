@@ -1,5 +1,5 @@
-import templeoftheelements.CreatureGenerationProcedure;
-import templeoftheelements.CreatureDefinition;
+import templeoftheelements.creature.CreatureGenerationProcedure;
+import templeoftheelements.creature.CreatureDefinition;
 
 /**
  *

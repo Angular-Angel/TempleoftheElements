@@ -1,12 +1,11 @@
-
-import templeoftheelements.CreatureGenerationProcedure;
-import templeoftheelements.CreatureDefinition;
-import templeoftheelements.collision.Creature;
-import templeoftheelements.player.Ability;
-import templeoftheelements.player.TriggeredAbility;
-import templeoftheelements.player.CreatureEvent;
+import templeoftheelements.creature.CreatureGenerationProcedure;
+import templeoftheelements.creature.CreatureDefinition;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.TriggeredAbility;
+import templeoftheelements.creature.CreatureEvent;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
  *

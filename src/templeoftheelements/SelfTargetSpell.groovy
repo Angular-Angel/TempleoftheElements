@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.Ability;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.player.Clickable;
 import templeoftheelements.effect.Effect;
 /**

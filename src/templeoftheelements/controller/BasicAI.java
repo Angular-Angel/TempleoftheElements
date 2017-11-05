@@ -1,13 +1,13 @@
 
-package templeoftheelements;
+package templeoftheelements.controller;
 
+import templeoftheelements.controller.Controller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.collision.Creature;
-import templeoftheelements.player.Action;
+import templeoftheelements.creature.Creature;
 import util.VecMath;
 
 /**

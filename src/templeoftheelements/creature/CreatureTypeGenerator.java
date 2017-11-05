@@ -1,5 +1,5 @@
 
-package templeoftheelements;
+package templeoftheelements.creature;
 
 import generation.GenerationProcedure;
 import generation.ProceduralGenerator;

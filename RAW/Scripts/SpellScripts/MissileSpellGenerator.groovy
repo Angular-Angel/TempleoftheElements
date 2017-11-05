@@ -1,12 +1,16 @@
 import templeoftheelements.Spell;
 import templeoftheelements.Element;
 import templeoftheelements.MissileSpell;
+import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;
 import templeoftheelements.item.AttackDefinition;
-import stat.*;
+import stat.Stat;
+import stat.EquationStat;
+import stat.NumericStat;
+import stat.BinaryStat;
 import java.util.Random;
-import templeoftheelements.player.characterwheel.*;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 public class MissileSpellGenerator extends AbilityGenerationProcedure {
 

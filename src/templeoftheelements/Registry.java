@@ -1,6 +1,10 @@
 
 package templeoftheelements;
 
+import templeoftheelements.controller.BasicAI;
+import templeoftheelements.controller.Controller;
+import templeoftheelements.creature.CreatureDefinition;
+import templeoftheelements.creature.CreatureTypeGenerator;
 import com.samrj.devil.gl.DGL;
 import com.samrj.devil.gl.Texture2D;
 import generation.ProceduralGenerator;
@@ -27,14 +31,14 @@ import templeoftheelements.item.MagicEquipmentDef;
 import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
-import templeoftheelements.player.Ability;
-import templeoftheelements.player.characterwheel.CharacterTreeDef;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.creature.Ability;
+import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectListing;
-import templeoftheelements.player.AbilityGenerator;
-import templeoftheelements.player.characterwheel.NodeGenerator;
-import templeoftheelements.player.StatusEffect;
+import templeoftheelements.creature.AbilityGenerator;
+import templeoftheelements.player.NodeGenerator;
+import templeoftheelements.creature.StatusEffect;
 import util.RawReader;
 
 /**

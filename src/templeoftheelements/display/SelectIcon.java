@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
-import templeoftheelements.player.Action;
+import templeoftheelements.controller.Action;
 
 /**
  *

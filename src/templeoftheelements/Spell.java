@@ -6,11 +6,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import stat.NoSuchStatException;
 import stat.StatContainer;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.Action;
-import templeoftheelements.player.CreatureEvent;
+import templeoftheelements.controller.Action;
+import templeoftheelements.creature.CreatureEvent;
 import templeoftheelements.effect.EffectContainer;
 
 

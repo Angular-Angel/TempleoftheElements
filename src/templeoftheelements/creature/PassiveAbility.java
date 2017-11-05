@@ -1,6 +1,7 @@
 
-package templeoftheelements.player;
+package templeoftheelements.creature;
 
+import templeoftheelements.creature.Ability;
 import stat.StatContainer;
 
 /**

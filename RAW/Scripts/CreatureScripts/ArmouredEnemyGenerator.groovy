@@ -1,5 +1,4 @@
-
-import templeoftheelements.CreatureGenerationProcedure;
+import templeoftheelements.creature.CreatureGenerationProcedure;
 import java.util.Random;
 
 /**

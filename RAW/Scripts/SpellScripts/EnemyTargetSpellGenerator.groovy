@@ -1,10 +1,10 @@
 import templeoftheelements.Spell;
 import templeoftheelements.EnemyTargetSpell;
+import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;
 import stat.NumericStat;
 import java.util.Random;
-import templeoftheelements.player.characterwheel.*;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 public class EnemyTargetSpellGenerator extends AbilityGenerationProcedure {
 

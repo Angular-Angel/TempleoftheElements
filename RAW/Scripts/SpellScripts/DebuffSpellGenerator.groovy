@@ -1,11 +1,12 @@
 import templeoftheelements.Spell;
-import templeoftheelements.collision.Creature; // these are used for
-import templeoftheelements.player.Debuff;   // the groovy script importing.
+import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.Creature; // these are used for
+import templeoftheelements.creature.Debuff;   // the groovy script importing.
 import stat.StatDescriptor;
 import stat.NumericStat;
 import java.util.Random;
-import templeoftheelements.player.characterwheel.*;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectSource;
 

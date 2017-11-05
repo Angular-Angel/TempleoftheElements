@@ -1,5 +1,6 @@
 package templeoftheelements;
 
+import templeoftheelements.creature.Creature;
 import com.samrj.devil.game.Game;
 import com.samrj.devil.game.GameConfig;
 import com.samrj.devil.gl.DGL;

@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.characterwheel.CharacterTreeDef;
+import templeoftheelements.player.CharacterTreeDef;
 
 /**
  *

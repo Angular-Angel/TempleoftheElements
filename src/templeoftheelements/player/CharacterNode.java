@@ -1,5 +1,5 @@
 
-package templeoftheelements.player.characterwheel;
+package templeoftheelements.player;
 
 import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec2;
@@ -14,8 +14,8 @@ import templeoftheelements.TempleOfTheElements;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.NodeDefinition;
-import templeoftheelements.player.characterwheel.CharacterWheel.CharacterTree;
+import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
+import templeoftheelements.player.CharacterWheel.CharacterTree;
 import templeoftheelements.player.Clickable;
 import templeoftheelements.player.Inventory;
 

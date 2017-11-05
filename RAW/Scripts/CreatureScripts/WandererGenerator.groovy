@@ -1,7 +1,7 @@
-import templeoftheelements.CreatureGenerationProcedure;
-import templeoftheelements.CreatureDefinition;
+import templeoftheelements.creature.CreatureGenerationProcedure;
+import templeoftheelements.creature.CreatureDefinition;
 import templeoftheelements.display.VectorCircle;   // the groovy script importing.
-import templeoftheelements.player.AttackAction;   // the groovy script importing.
+import templeoftheelements.controler.AttackAction;   // the groovy script importing.
 import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.item.ItemDrop;
 import stat.NumericStat;

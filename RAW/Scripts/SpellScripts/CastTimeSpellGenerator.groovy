@@ -1,8 +1,8 @@
 import templeoftheelements.Spell;
+import templeoftheelements.creature.AbilityGenerationProcedure;
 import stat.NumericStat;
 import java.util.Random;
-import templeoftheelements.player.characterwheel.*;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 public class CastTimeSpellGenerator extends AbilityGenerationProcedure {
 

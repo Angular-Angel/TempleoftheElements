@@ -12,7 +12,7 @@ import stat.NumericStat;
 import stat.StatContainer;
 import stat.Trait;
 import templeoftheelements.collision.Attack;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.MeleeAttack;
 import templeoftheelements.collision.RangedAttack;
 import templeoftheelements.display.Renderable;

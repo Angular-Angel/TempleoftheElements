@@ -1,11 +1,12 @@
 
 package templeoftheelements.collision;
 
+import templeoftheelements.creature.Creature;
 import java.util.HashMap;
 import stat.StatContainer;
 import templeoftheelements.Actor;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.CreatureEvent;
+import templeoftheelements.creature.CreatureEvent;
 import templeoftheelements.effect.Effect;
 
 

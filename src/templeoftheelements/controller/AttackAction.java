@@ -1,11 +1,13 @@
 
-package templeoftheelements.player;
+package templeoftheelements.controller;
 
+import templeoftheelements.controller.Action;
+import templeoftheelements.creature.Ability;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import stat.StatContainer;
 import templeoftheelements.item.AttackDefinition;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 

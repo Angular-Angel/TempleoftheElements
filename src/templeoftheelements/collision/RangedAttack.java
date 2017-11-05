@@ -1,6 +1,7 @@
 
 package templeoftheelements.collision;
 
+import templeoftheelements.creature.Creature;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.collision.shapes.Shape;
@@ -15,7 +16,7 @@ import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.TempleOfTheElements;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.VectorCircle;
-import templeoftheelements.player.CreatureEvent;
+import templeoftheelements.creature.CreatureEvent;
 
 /**
  *

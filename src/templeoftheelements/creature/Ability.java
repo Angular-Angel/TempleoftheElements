@@ -1,10 +1,10 @@
 
-package templeoftheelements.player;
+package templeoftheelements.creature;
 
 import stat.StatContainer;
 import stat.Trait;
-import templeoftheelements.collision.Creature;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
  *

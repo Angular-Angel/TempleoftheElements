@@ -1,16 +1,17 @@
 
-package templeoftheelements.player;
+package templeoftheelements.controller;
 
-import templeoftheelements.player.characterwheel.CharacterTreeDef;
+import templeoftheelements.creature.Ability;
+import templeoftheelements.player.CharacterTreeDef;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
 import stat.Stat;
 import stat.StatContainer;
 import stat.Trait;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
  *

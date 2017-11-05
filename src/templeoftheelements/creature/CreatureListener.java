@@ -1,5 +1,7 @@
 
-package templeoftheelements.player;
+package templeoftheelements.creature;
+
+import templeoftheelements.creature.CreatureEvent;
 
 /**
  *

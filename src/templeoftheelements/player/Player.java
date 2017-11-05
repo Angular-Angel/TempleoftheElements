@@ -1,15 +1,15 @@
 
 package templeoftheelements.player;
 
-import templeoftheelements.player.characterwheel.CharacterWheel;
+import templeoftheelements.controller.Action;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import stat.NoSuchStatException;
-import templeoftheelements.collision.Creature;
-import templeoftheelements.Controller;
+import templeoftheelements.creature.Creature;
+import templeoftheelements.controller.Controller;
 import templeoftheelements.item.Item;
 import static templeoftheelements.TempleOfTheElements.PIXELS_PER_METER;
 import static templeoftheelements.TempleOfTheElements.game;

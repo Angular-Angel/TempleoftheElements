@@ -10,11 +10,11 @@ import stat.EquationStat;
 import stat.NoSuchStatException;
 import stat.Stat;
 import stat.StatContainer;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position
-import templeoftheelements.player.Ability;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.effect.Effect;
-import templeoftheelements.player.characterwheel.CharacterTreeDef;
+import templeoftheelements.player.CharacterTreeDef;
 
 /**
  *

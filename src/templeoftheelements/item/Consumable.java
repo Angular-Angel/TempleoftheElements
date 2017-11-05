@@ -4,7 +4,7 @@ package templeoftheelements.item;
 import com.samrj.devil.math.Vec2i;
 import java.util.HashMap;
 import stat.Stat;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.effect.Effect;
 

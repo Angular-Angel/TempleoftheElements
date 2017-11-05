@@ -1,12 +1,13 @@
 import templeoftheelements.Spell;
 import templeoftheelements.Element;
-import templeoftheelements.collision.Creature; // these are used for
+import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.Creature; // these are used for
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectSource;
 import stat.*;
 import java.util.Random;
-import templeoftheelements.player.characterwheel.*;
-import templeoftheelements.player.characterwheel.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 public class DamageSpellGenerator extends AbilityGenerationProcedure {
 

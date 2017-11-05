@@ -17,7 +17,7 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.lwjgl.opengl.GL11;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Collidable;
-import templeoftheelements.collision.Creature;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.VectorCircle;
