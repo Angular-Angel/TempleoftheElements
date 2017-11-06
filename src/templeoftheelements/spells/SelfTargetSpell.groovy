@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package templeoftheelements;
+
+package templeoftheelements.spells;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
+import templeoftheelements.spells.Spell;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
@@ -15,40 +17,36 @@ import templeoftheelements.display.Renderable;
 import templeoftheelements.creature.Ability;
 import templeoftheelements.player.Clickable;
 import templeoftheelements.effect.Effect;
-
 /**
  *
  * @author angle
  */
-public class EnemyTargetSpell extends Spell {
+class SelfTargetSpell extends Spell {
     
     HashMap<String, Effect> effects;
 
-    public EnemyTargetSpell(String name, Renderable sprite) {
+    public SelfTargetSpell(String name, Renderable sprite) {
         super(name, sprite);
         effects = new HashMap<>();
     }
     
     @Override
-    public void perform(Creature creature, Position in) {
+    public void perform(Creature creature, Position pos) {
         if (!isPossible(creature)) return;
-        super.perform(creature, in);
-        cast(creature, in);
+        super.perform(creature, pos);
+        cast(creature, pos);
     }
 
     @Override
     public void cast(Creature caster, Position pos) {
-        Clickable c = game.getClickable(pos.x, pos.y);
         if (c instanceof Creature) {
-            for (Effect e : effects.values()) e.effect(caster, c);
+            for (Effect e : effects.values()) e.effect(caster, caster);
         }
     }
 
     @Override
     public Ability copy() {
-        EnemyTargetSpell ret = new EnemyTargetSpell(name, sprite);
-        for (Effect e : effects.values()) ret.addEffect(e);
-        return ret;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -58,7 +56,7 @@ public class EnemyTargetSpell extends Spell {
 
     @Override
     public String getDescription() {
-        String ret = "This spell targets an enemy directly.";
+        String ret = "This spell targets your own character.";
         
         ret += showCosts();
         
@@ -91,5 +89,5 @@ public class EnemyTargetSpell extends Spell {
             e.active = true;
         }
     }
-    
 }
+

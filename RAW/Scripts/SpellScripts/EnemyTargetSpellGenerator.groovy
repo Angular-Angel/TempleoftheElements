@@ -1,5 +1,5 @@
-import templeoftheelements.Spell;
-import templeoftheelements.EnemyTargetSpell;
+import templeoftheelements.spells.Spell;
+import templeoftheelements.spells.EnemyTargetSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;
 import stat.NumericStat;

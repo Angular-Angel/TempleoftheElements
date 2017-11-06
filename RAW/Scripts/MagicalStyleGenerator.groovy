@@ -1,4 +1,4 @@
-import templeoftheelements.Spell;
+import templeoftheelements.spells.Spell;
 import templeoftheelements.Element;
 import stat.StatDescriptor;
 import java.util.Random;

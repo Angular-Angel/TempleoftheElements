@@ -1,6 +1,7 @@
 
 package templeoftheelements;
 
+import templeoftheelements.spells.Spell;
 import templeoftheelements.controller.BasicAI;
 import templeoftheelements.controller.Controller;
 import templeoftheelements.creature.CreatureDefinition;

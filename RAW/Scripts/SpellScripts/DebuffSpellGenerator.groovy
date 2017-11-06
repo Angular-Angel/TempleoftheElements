@@ -1,4 +1,4 @@
-import templeoftheelements.Spell;
+import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.creature.Creature; // these are used for
 import templeoftheelements.creature.Debuff;   // the groovy script importing.

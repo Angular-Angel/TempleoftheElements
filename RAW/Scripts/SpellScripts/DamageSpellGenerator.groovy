@@ -1,4 +1,4 @@
-import templeoftheelements.Spell;
+import templeoftheelements.spells.Spell;
 import templeoftheelements.Element;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.creature.Creature; // these are used for

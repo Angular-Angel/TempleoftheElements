@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package templeoftheelements
+package templeoftheelements.spells;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,36 +15,40 @@ import templeoftheelements.display.Renderable;
 import templeoftheelements.creature.Ability;
 import templeoftheelements.player.Clickable;
 import templeoftheelements.effect.Effect;
+
 /**
  *
  * @author angle
  */
-class SelfTargetSpell extends Spell {
+public class EnemyTargetSpell extends Spell {
     
     HashMap<String, Effect> effects;
 
-    public SelfTargetSpell(String name, Renderable sprite) {
+    public EnemyTargetSpell(String name, Renderable sprite) {
         super(name, sprite);
         effects = new HashMap<>();
     }
     
     @Override
-    public void perform(Creature creature, Position pos) {
+    public void perform(Creature creature, Position in) {
         if (!isPossible(creature)) return;
-        super.perform(creature, pos);
-        cast(creature, pos);
+        super.perform(creature, in);
+        cast(creature, in);
     }
 
     @Override
     public void cast(Creature caster, Position pos) {
+        Clickable c = game.getClickable(pos.x, pos.y);
         if (c instanceof Creature) {
-            for (Effect e : effects.values()) e.effect(caster, caster);
+            for (Effect e : effects.values()) e.effect(caster, c);
         }
     }
 
     @Override
     public Ability copy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EnemyTargetSpell ret = new EnemyTargetSpell(name, sprite);
+        for (Effect e : effects.values()) ret.addEffect(e);
+        return ret;
     }
 
     @Override
@@ -55,7 +58,7 @@ class SelfTargetSpell extends Spell {
 
     @Override
     public String getDescription() {
-        String ret = "This spell targets your own character.";
+        String ret = "This spell targets an enemy directly.";
         
         ret += showCosts();
         
@@ -88,5 +91,5 @@ class SelfTargetSpell extends Spell {
             e.active = true;
         }
     }
+    
 }
-

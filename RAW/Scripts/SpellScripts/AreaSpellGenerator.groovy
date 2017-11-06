@@ -1,4 +1,4 @@
-import templeoftheelements.AreaSpell;
+import templeoftheelements.spells.AreaSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;   // the groovy script importing.
 import stat.NumericStat;

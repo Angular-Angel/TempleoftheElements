@@ -1,6 +1,6 @@
 import templeoftheelements.InitScript;
 import templeoftheelements.Floor;
-import templeoftheelements.Spell;
+import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.CreatureDefinition;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.display.Sprite;

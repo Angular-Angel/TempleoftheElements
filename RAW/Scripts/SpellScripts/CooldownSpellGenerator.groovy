@@ -1,4 +1,4 @@
-import templeoftheelements.Spell;
+import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import stat.NumericStat;
 import java.util.Random;

@@ -1,6 +1,6 @@
-import templeoftheelements.Spell;
+import templeoftheelements.spells.Spell;
 import templeoftheelements.Element;
-import templeoftheelements.MissileSpell;
+import templeoftheelements.spells.MissileSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;
 import templeoftheelements.item.AttackDefinition;

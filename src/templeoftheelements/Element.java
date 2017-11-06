@@ -1,6 +1,7 @@
 
 package templeoftheelements;
 
+import templeoftheelements.spells.Spell;
 import java.util.ArrayList;
 import java.util.HashMap;
 import stat.StatDescriptor;

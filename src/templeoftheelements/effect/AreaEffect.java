@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package templeoftheelements;
+package templeoftheelements.effect;
 
 import java.util.ArrayList;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -15,13 +15,14 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.lwjgl.opengl.GL11;
+import templeoftheelements.Actor;
+import templeoftheelements.TempleOfTheElements;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Collidable;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.VectorCircle;
-import templeoftheelements.effect.Effect;
 
 /**
  *

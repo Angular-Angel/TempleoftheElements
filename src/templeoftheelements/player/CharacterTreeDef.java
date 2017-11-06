@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import stat.StatContainer;
 import stat.StatDescriptor;
 import templeoftheelements.Element;
-import templeoftheelements.Spell;
+import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.Ability;
 
 /**

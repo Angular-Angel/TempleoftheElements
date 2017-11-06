@@ -1,5 +1,5 @@
 
-package templeoftheelements;
+package templeoftheelements.spells;
 
 import templeoftheelements.item.AttackDefinition;
 import java.util.HashMap;
