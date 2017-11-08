@@ -10,28 +10,24 @@ import java.util.ArrayList;
 
 
 public class SwitchRequirement implements Requirement{
-    private Requirement requirements;
+    private Requirement requirement;
     private ArrayList<CharacterNode> branches;
 
-    public SwitchRequirement(Requirement... reqs) {
-        requirements = new AndRequirement(reqs);
-        branches = new ArrayList<>();
+    public SwitchRequirement(Requirement requirement, CharacterNode... branches) {
+        this.requirement = requirement;
+        this.branches = new ArrayList<>();
+        for (CharacterNode node : branches) {
+            this.branches.add(node);
+        }
     }
 
     @Override
     public boolean isMet() {
-        if (!requirements.isMet()) return false;
+        if (!requirement.isMet()) return false;
         for (CharacterNode node : branches) {
             if (node.isAcquired()) return false;
         }
         return true;
-    }
-
-    @Override
-    public ArrayList<Requirement> getReqs() {
-        ArrayList<Requirement> ret = new ArrayList<>();
-        ret.add(requirements);
-        return ret;
     }
 
     @Override

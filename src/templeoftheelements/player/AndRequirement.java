@@ -28,11 +28,6 @@ public class AndRequirement implements Requirement{
     }
 
     @Override
-    public ArrayList<Requirement> getReqs() {
-        return requirements;
-    }
-
-    @Override
     public void draw(Requirement req) {
         
     }

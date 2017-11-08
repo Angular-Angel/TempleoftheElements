@@ -29,11 +29,6 @@ public class OrRequirement implements Requirement{
     }
 
     @Override
-    public ArrayList<Requirement> getReqs() {
-        return requirements;
-    }
-
-    @Override
     public void draw(Requirement req) {
         CharacterNode source;
         if (!(req instanceof CharacterNode)) return;

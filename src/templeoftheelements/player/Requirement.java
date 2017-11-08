@@ -11,6 +11,5 @@ import java.util.ArrayList;
 
 public interface Requirement {
     public boolean isMet();
-    public ArrayList<Requirement> getReqs();
     public void draw(Requirement req);
 }
