@@ -5,7 +5,7 @@ import templeoftheelements.spells.Spell;
 import java.util.ArrayList;
 import java.util.HashMap;
 import stat.StatDescriptor;
-import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.CharacterTree;
 
 /**
  *
@@ -16,7 +16,7 @@ import templeoftheelements.player.CharacterTreeDef;
 public class Element {
     public final String name;
     
-    public ArrayList<CharacterTreeDef.Focus> focuses;
+    public ArrayList<CharacterTree.Focus> focuses;
     public ArrayList<Spell.Detail> targetDetails;
     public ArrayList<Spell.Detail> effectDetails;
     public ArrayList<Spell.Detail> costDetails;

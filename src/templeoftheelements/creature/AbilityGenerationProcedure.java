@@ -6,31 +6,31 @@
 package templeoftheelements.creature;
 
 import generation.GenerationProcedure;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 /**
  *
  * @author angle
  */
-public abstract class AbilityGenerationProcedure implements GenerationProcedure<AbilityDefinition> {
+public abstract class AbilityGenerationProcedure implements GenerationProcedure<AbilitySkill> {
 
     @Override
-    public AbilityDefinition generate() {
+    public AbilitySkill generate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public AbilityDefinition generate(Object o) {
+    public AbilitySkill generate(Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public AbilityDefinition modify(AbilityDefinition t) {
+    public AbilitySkill modify(AbilitySkill t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean isApplicable(AbilityDefinition t) {
+    public boolean isApplicable(AbilitySkill t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

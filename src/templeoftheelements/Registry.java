@@ -8,6 +8,7 @@ import templeoftheelements.creature.CreatureDefinition;
 import templeoftheelements.creature.CreatureTypeGenerator;
 import com.samrj.devil.gl.DGL;
 import com.samrj.devil.gl.Texture2D;
+import generation.GenerationProcedure;
 import generation.ProceduralGenerator;
 import java.io.File;
 import java.io.FileReader;
@@ -33,12 +34,10 @@ import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
 import templeoftheelements.creature.Ability;
-import templeoftheelements.player.CharacterTreeDef;
-import templeoftheelements.player.CharacterTreeDef.ClusterDefinition;
+import templeoftheelements.player.CharacterTree;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectListing;
 import templeoftheelements.creature.AbilityGenerator;
-import templeoftheelements.player.NodeGenerator;
 import templeoftheelements.creature.StatusEffect;
 import util.RawReader;
 
@@ -64,9 +63,8 @@ public class Registry extends RawReader {
     public ArrayList<MagicItemDef> magicEffects;
     public ArrayList<CreatureDefinition> creatureList;
     public CreatureTypeGenerator creatureTypeGenerator;
-    public ProceduralGenerator<CharacterTreeDef> treeGenerator;
-    public ProceduralGenerator<ClusterDefinition> clusterGenerator;
-    public NodeGenerator nodeGenerator;
+    public ProceduralGenerator<CharacterTree> treeGenerator;
+    public GenerationProcedure<CharacterTree> clusterGenerator;
     public AbilityGenerator abilityGenerator;
     
     public Registry() {
@@ -85,7 +83,6 @@ public class Registry extends RawReader {
         effects = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
         creatureTypeGenerator = new CreatureTypeGenerator();
-        nodeGenerator = new NodeGenerator();
         abilityGenerator = new AbilityGenerator();
     }
     
@@ -194,7 +191,7 @@ public class Registry extends RawReader {
         ja = (JSONArray) obj.get("Focuses");
         if (ja != null)
         for (Object o : ja) {
-            ret.focuses.add(CharacterTreeDef.Focus.valueOf((String) o));
+            ret.focuses.add(CharacterTree.Focus.valueOf((String) o));
         }
         
         elements.put(name, ret);

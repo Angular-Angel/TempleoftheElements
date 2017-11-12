@@ -2,16 +2,10 @@
 package templeoftheelements.controller;
 
 import templeoftheelements.creature.Ability;
-import templeoftheelements.player.CharacterTreeDef;
-import java.util.HashMap;
-import org.jbox2d.common.Vec2;
-import stat.Stat;
 import stat.StatContainer;
-import stat.Trait;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
  *
@@ -22,7 +16,6 @@ import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 public abstract class Action extends Ability {
 
     private int cooldown;
-    private AbilityDefinition def;
     public Creature creature;
     
     public Action(String name, StatContainer stats) {
@@ -61,16 +54,6 @@ public abstract class Action extends Ability {
     }
     
     public abstract Ability copy();
-    
-    @Override
-    public CharacterTreeDef.AbilityDefinition getDef() {
-        return def;
-    }
-
-    @Override
-    public void setDef(CharacterTreeDef.AbilityDefinition def) {
-        this.def = def;
-    }
     
     @Override
     public void init(Creature c) {

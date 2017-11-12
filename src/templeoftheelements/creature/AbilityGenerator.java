@@ -15,92 +15,89 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import stat.NoSuchStatException;
 import stat.NumericStat;
-import templeoftheelements.spells.Spell;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
-import templeoftheelements.player.CharacterWheel.CharacterTree;
+import templeoftheelements.player.AbilitySkill;
+import templeoftheelements.player.CharacterTree;
 
 /**
  *
  * @author angle
  */
-public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> {
+public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
 
     Random random = new Random();
-    HashMap<Spell.Detail, GenerationProcedure<AbilityDefinition>> procedures = new HashMap<>();
+    HashMap<Ability.Detail, AbilityGenerationProcedure> procedures = new HashMap<>();
     
-    public void addProcedure(Spell.Detail detail, GenerationProcedure<AbilityDefinition> procedure) {
+    public void addProcedure(Ability.Detail detail, AbilityGenerationProcedure procedure) {
         procedures.put(detail, procedure);
     }
     
     @Override
-    public AbilityDefinition generate() {
+    public AbilitySkill generate() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public AbilityDefinition generate(Object o) {
+    public AbilitySkill generate(Object o) {
         CharacterTree tree = (CharacterTree) o;
         
-        AbilityDefinition abilityDef = new AbilityDefinition();
-        
-        
-        abilityDef.addStat("Pool", new NumericStat(100));
-        abilityDef.addStat("Complexity", new NumericStat(5 + tree.layers.size()));
-        
-        abilityDef.tree = tree;
+        AbilitySkill abilitySkill = new AbilitySkill();
         
         //Important info - the skill tree this ability is for and the abilities that skill tree currently has on it.
         
         //First, pick the usage of the ability.
         
+        Ability.Detail usage;
+        Ability.Detail targeting;
+        ArrayList<Ability.Detail> costDetails;
+        ArrayList<Ability.Detail> effectDetails;
+        ArrayList<Ability.Detail> scalingDetails;
         
         if (tree.spammables / tree.abilities.size() < 0.4) {
-            abilityDef.usage = Spell.Detail.SPAMMABLE;
-            abilityDef.addStat("Cost Pool", new NumericStat(10));
-            abilityDef.addStat("Cost Complexity", new NumericStat(5 + tree.layers.size()));
+            usage = Ability.Detail.SPAMMABLE;
+            abilitySkill.addStat("Cost Pool", new NumericStat(10));
+            abilitySkill.addStat("Cost Complexity", new NumericStat(5 + tree.numLayers));
             tree.spammables++;
         } else {
-            abilityDef.usage = Spell.Detail.SITUATIONAL;
-            abilityDef.addStat("Cost Pool", new NumericStat(30));
-            abilityDef.addStat("Cost Complexity", new NumericStat(10 + tree.layers.size() * 2));
+            usage = Ability.Detail.SITUATIONAL;
+            abilitySkill.addStat("Cost Pool", new NumericStat(30));
+            abilitySkill.addStat("Cost Complexity", new NumericStat(10 + tree.numLayers * 2));
         }
         
-        //Then pick the tergeting method 
+        //Then pick the targeting method 
         
-        Spell.Detail targeting;
-        ArrayList<Spell.Detail> values = new ArrayList<>();
-        values.addAll(Arrays.asList(Spell.Detail.values()));
-        values = new ArrayList<>(values.subList(values.indexOf(Spell.Detail._TARGETING_) +1, values.indexOf(Spell.Detail._COMMON_)));
+        ArrayList<Ability.Detail> targetingMethods = new ArrayList<>();
+        targetingMethods.addAll(Arrays.asList(Ability.Detail.values()));
+        targetingMethods = new ArrayList<>(targetingMethods.subList(targetingMethods.indexOf(Ability.Detail._TARGETING_) +1, targetingMethods.indexOf(Ability.Detail._COMMON_)));
         
         do {
             
-            targeting = values.get(random.nextInt(values.size()));
+            targeting = targetingMethods.get(random.nextInt(targetingMethods.size()));
 
-            abilityDef.targeting = targeting;
+            abilitySkill.targeting = targeting;
         } while (!procedures.containsKey(targeting));
         
-        abilityDef = procedures.get(targeting).modify(abilityDef);
+        abilitySkill = procedures.get(targeting).modify(abilitySkill);
         
         //Then, depending on the above, pick what costs this spell will have.
         
         try {
             
-            int costcomplex = (int) (abilityDef.getScore("Complexity") * (0.2 + (0.4 * random.nextFloat())));
+            int costcomplex = (int) (abilitySkill.getScore("Complexity") * (0.2 + (0.4 * random.nextFloat())));
         
-            abilityDef.getStat("Complexity").modify(-costcomplex);
+            abilitySkill.getStat("Complexity").modify(-costcomplex);
             
-            abilityDef.addStat("Cost Complexity", new NumericStat(costcomplex));
+            abilitySkill.addStat("Cost Complexity", new NumericStat(costcomplex));
             
             int i = 0;
-            while (abilityDef.getScore("Cost Complexity") > 0) {
-                Spell.Detail cost;
+            while (abilitySkill.getScore("Cost Complexity") > 0) {
+                Ability.Detail cost;
 
                 do {
-                    cost = abilityDef.tree.definition.costDetails.get(random.nextInt(abilityDef.tree.definition.costDetails.size()));
-                } while (!abilityDef.costDetails.contains(cost) && cost.cost > abilityDef.getScore("Cost Complexity"));
+                    cost = tree.costDetails.get(random.nextInt(tree.costDetails.size()));
+                } while (!abilitySkill.costDetails.contains(cost) && cost.cost > abilitySkill.getScore("Cost Complexity"));
 
-                abilityDef.costDetails.add(cost);
-                abilityDef.getStat("Cost Complexity").modify(-cost.cost);
+                abilitySkill.costDetails.add(cost);
+                abilitySkill.getStat("Cost Complexity").modify(-cost.cost);
                 
             }
         } catch (NoSuchStatException ex) {
@@ -112,15 +109,15 @@ public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> 
         
         try {
             
-            while (abilityDef.getScore("Complexity") > 0) {
-                Spell.Detail effect;
+            while (abilitySkill.getScore("Complexity") > 0) {
+                Ability.Detail effect;
 
                 do {
-                    effect = abilityDef.tree.definition.effectDetails.get(random.nextInt(abilityDef.tree.definition.effectDetails.size()));
-                } while (!abilityDef.effectDetails.contains(effect) && effect.cost > abilityDef.getScore("Complexity"));
+                    effect = tree.effectDetails.get(random.nextInt(tree.effectDetails.size()));
+                } while (!abilitySkill.effectDetails.contains(effect) && effect.cost > abilitySkill.getScore("Complexity"));
 
-                abilityDef.effectDetails.add(effect);
-                abilityDef.getStat("Complexity").modify(-effect.cost);
+                abilitySkill.effectDetails.add(effect);
+                abilitySkill.getStat("Complexity").modify(-effect.cost);
                 
             }
         } catch (NoSuchStatException ex) {
@@ -131,16 +128,16 @@ public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> 
         
         try {
             
-            Spell.Detail cost;
+            Ability.Detail cost;
             int i = 0;
-            while (abilityDef.getScore("Cost Pool") > 0) {
+            while (abilitySkill.getScore("Cost Pool") > 0) {
                 
-                cost = abilityDef.costDetails.get(i++);
+                cost = abilitySkill.costDetails.get(i++);
                 
-                if (i >= abilityDef.costDetails.size())
+                if (i >= abilitySkill.costDetails.size())
                     i = 0;
                 
-                procedures.get(cost).modify(abilityDef);
+                procedures.get(cost).modify(abilitySkill);
                 
             }
         } catch (NoSuchStatException ex) {
@@ -149,25 +146,25 @@ public class AbilityGenerator implements ProceduralGenerator<AbilityDefinition> 
         
         try {
             
-            Spell.Detail effect;
+            Ability.Detail effect;
             int i = 0;
-            while (abilityDef.getScore("Pool") > 0) {
+            while (abilitySkill.getScore("Pool") > 0) {
                 
-                effect = abilityDef.effectDetails.get(i++);
+                effect = abilitySkill.effectDetails.get(i++);
                 
-                if (i >= abilityDef.effectDetails.size())
+                if (i >= abilitySkill.effectDetails.size())
                     i = 0;
                 
-                if (abilityDef.getScore("Pool") > effect.cost) {
-                    procedures.get(effect).modify(abilityDef);
+                if (abilitySkill.getScore("Pool") > effect.cost) {
+                    procedures.get(effect).modify(abilitySkill);
                 }
-                else abilityDef.getStat("Pool").modify(-1);
+                else abilitySkill.getStat("Pool").modify(-1);
             }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AbilityGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return abilityDef;
+        return abilitySkill;
     }
     
 }

@@ -105,7 +105,7 @@
         "Stat Type": "INTEGER",
         "Stat": [0],
         "Base": 0.0,
-        "Increase": 10.0,
+        "Increase": 20.0,
     },
     {
         "Name": "Increased HP",
@@ -123,7 +123,7 @@
         "Stat Type": "INTEGER",
         "Stat": [0],
         "Base": 0.0,
-        "Increase": 10.0,
+        "Increase": 20.0,
     },
     {
         "Name": "Increased Mana",

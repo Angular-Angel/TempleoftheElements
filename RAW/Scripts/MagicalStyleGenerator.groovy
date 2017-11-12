@@ -5,26 +5,23 @@ import java.util.Random;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import generation.ProceduralGenerator;
-import templeoftheelements.player.CharacterTreeDef;
+import templeoftheelements.player.CharacterTree;
+import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.creature.Ability;
 
 /**
  *
  * @author angle
  */
-class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
+class MagicalStyleGenerator implements ProceduralGenerator<CharacterTree> {
     
     //our random number generator;
     Random random = new Random();
     
-    //an unused method from the interface. Sloppy, I know.
-    public CharacterTreeDef generate(Object o) {
-//        CharacterWheel wheel = (CharacterWheel) o;
-        throw new UnsupportedOperationException();
-    }
-    
     //the main method. This generates the description of the character tree that 
     //the generator uses to generate the substance.
-    public CharacterTreeDef generate() {
+    public CharacterTree generate(Object o) {
+        CharacterWheel wheel = (CharacterWheel) o;
         
         //the elements this style uses for it's magic. 
         Element element;
@@ -49,16 +46,16 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         attributePool.addAll(element.primaryAttributes);
         
         //generates a new CharacterTreeDef to hold all this information.
-        CharacterTreeDef ret = new CharacterTreeDef(name);
+        CharacterTree ret = new CharacterTree(name, wheel);
         
         ret.element = element;
         
         //now we need to pick out what kind of things this style focuses on doing.
         //First, we pick out all our options, weighting in favor of some things...
-        ArrayList<CharacterTreeDef.Focus> focusPool = new ArrayList<>();
+        ArrayList<CharacterTree.Focus> focusPool = new ArrayList<>();
         
         //first, we have a chance to get any focus there is.
-        focusPool.addAll(CharacterTreeDef.Focus.values());
+        focusPool.addAll(CharacterTree.Focus.values());
         
         //Then theres an adfitional chance to get a focus associated with one of 
         //the elements used for this magical style. 
@@ -81,7 +78,7 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         
 //        Spell.Detail[] values = Arrays.copyOfRange(Spell.Detail.values(), Spell.Detail._TARGETING_.ordinal()+1, Spell.Detail._COMMON_.ordinal());
         
-        Spell.Detail detail;
+        Ability.Detail detail;
         
 //        for (int i = 0; i < values.length/2; i++) {
 //            detail = values[random.nextInt(values.length)];
@@ -89,20 +86,20 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
 //        }
 
         
-            ret.targetDetails.add(Spell.Detail.PROJECTILE);
-            ret.targetDetails.add(Spell.Detail.ENEMY_TARGET);
+            ret.targetDetails.add(Ability.Detail.PROJECTILE);
+            ret.targetDetails.add(Ability.Detail.ENEMY_TARGET);
             
-            ret.effectDetails.add(Spell.Detail.DAMAGE);
-            ret.effectDetails.add(Spell.Detail.DEBUFF);
+            ret.effectDetails.add(Ability.Detail.DAMAGE);
+            ret.effectDetails.add(Ability.Detail.DEBUFF);
             
 //            ArrayList<Spell.Detail> arrayList = new ArrayList<Spell.Detail>();
 //            arrayList.addAll(Arrays.asList(Spell.Detail.values()));
 //            arrayList = arrayList.subList(arrayList.indexOf(Spell.Detail._COSTS_) +1, arrayList.indexOf(Spell.Detail._TARGETING_));
 //        
 //            ret.costDetails.addAll(arrayList);
-            ret.costDetails.addAll(Spell.Detail.MANA_COST);
-            ret.costDetails.addAll(Spell.Detail.CAST_TIME);
-            ret.costDetails.addAll(Spell.Detail.COOLDOWN);
+            ret.costDetails.addAll(Ability.Detail.MANA_COST);
+            ret.costDetails.addAll(Ability.Detail.CAST_TIME);
+            ret.costDetails.addAll(Ability.Detail.COOLDOWN);
         
         
         //while (ret.details.contains(detail)) detail = Spell.Detail.values()[random.nextInt(Spell.Detail.values().length)];
@@ -111,18 +108,18 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
         
         ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Mana"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.SPEED_BASED)) 
+        if (ret.scalingDetails.contains(Ability.Detail.SPEED_BASED)) 
             ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Speed"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.STAMINA_BASED) ||
-            ret.scalingDetails.contains(Spell.Detail.STAMINA_COST)) 
+        if (ret.scalingDetails.contains(Ability.Detail.STAMINA_BASED) ||
+            ret.scalingDetails.contains(Ability.Detail.STAMINA_COST)) 
             ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Stamina"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.HP_BASED) ||
-            ret.scalingDetails.contains(Spell.Detail.HP_COST)) 
+        if (ret.scalingDetails.contains(Ability.Detail.HP_BASED) ||
+            ret.scalingDetails.contains(Ability.Detail.HP_COST)) 
             ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added HP"));
         
-        if (ret.scalingDetails.contains(Spell.Detail.CONSTITUTION_BASED))
+        if (ret.scalingDetails.contains(Ability.Detail.CONSTITUTION_BASED))
             ret.secondaryAttributes.add(game.registry.statDescriptors.get("Constitution"));
         
         
@@ -135,17 +132,19 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTreeDef> {
             ret.secondaryAttributes.add(attribute);
         }
         
-        ret.nodeGenerator = game.registry.nodeGenerator;
-        ret.clusterGenerator = game.registry.clusterGenerator;
-        
         return ret;
     }
     
-    public CharacterTreeDef modify(CharacterTreeDef tree) {
+    //an unused method from the interface. Sloppy, I know.
+    public CharacterTree generate() {
         throw new UnsupportedOperationException();
     }
     
-    public boolean isApplicable(CharacterTreeDef tree) {
+    public CharacterTree modify(CharacterTree tree) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public boolean isApplicable(CharacterTree tree) {
         throw new UnsupportedOperationException();
     }
     

@@ -8,25 +8,20 @@ import stat.NoSuchStatException;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.creature.Ability;
-import templeoftheelements.player.Inventory;
 
-/**
- *
- * @author angle
- */
 
 
 public class AbilityNode extends CharacterNode {
 
     public final Ability ability;
     
-    public AbilityNode(Requirement requirements, CharacterWheel.CharacterTree tree, boolean automatic, Ability ability) {
+    public AbilityNode(Requirement requirements, CharacterTree tree, boolean automatic, Ability ability) {
         super(requirements, tree, automatic);
         this.ability = ability;
         ability.init(tree.getCreature());
     }
     
-    public AbilityNode(Requirement requirements, CharacterWheel.CharacterTree tree, Ability ability) {
+    public AbilityNode(Requirement requirements, CharacterTree tree, Ability ability) {
         this(requirements, tree, false, ability);
     }
     

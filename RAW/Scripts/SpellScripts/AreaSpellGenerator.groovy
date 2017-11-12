@@ -2,7 +2,7 @@ import templeoftheelements.spells.AreaSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;   // the groovy script importing.
 import stat.NumericStat;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class AreaSpellGenerator extends AbilityGenerationProcedure {
 
@@ -10,14 +10,14 @@ public class AreaSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
         AreaSpell spell = new AreaSpell("Area Spell", new VectorCircle(0.5));
         
         spell.addStat("Cast Time", new NumericStat(0));
         spell.addStat("Mana Cost", new NumericStat(0));
         spell.addStat("Cooldown", new NumericStat(0));
         
-        abilityDef.ability = spell
-        return abilityDef;
+        abilitySkill.ability = spell
+        return abilitySkill;
     }
 }

@@ -14,10 +14,6 @@ import templeoftheelements.TempleOfTheElements;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.display.Renderable;
-import templeoftheelements.player.CharacterTreeDef.NodeDefinition;
-import templeoftheelements.player.CharacterWheel.CharacterTree;
-import templeoftheelements.player.Clickable;
-import templeoftheelements.player.Inventory;
 
 /**
  *
@@ -27,14 +23,15 @@ import templeoftheelements.player.Inventory;
 
 public class CharacterNode extends StatContainer implements Requirement , Renderable, Clickable {
     
+    
     protected Vec2 position;
     protected CharacterTree tree;
     protected boolean acquired;
     protected Requirement requirements;
     public String description;
     protected final boolean free; //is this gem acquired automatically?
-    public NodeDefinition nodeDef;
-    public int cluster;
+    public int layer, cluster;
+    public ArrayList<CharacterNode> dependents;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();
@@ -43,10 +40,20 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         this.requirements = requirements;
         this.free = free;
         description = "";
+        dependents = new ArrayList<>();
     }
     
     public CharacterNode(Requirement requirements, CharacterTree tree) {
         this(requirements, tree, false);
+    }
+    
+    public CharacterNode(CharacterTree tree) {
+        position = new Vec2();
+        acquired = false;
+        this.tree = tree;
+        this.free = false;
+        description = "";
+        dependents = new ArrayList<>();
     }
     
     /**
@@ -142,6 +149,10 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     @Override
     public float getDrawHeight() {
         return 40; 
+    }
+    
+    public void setReqs(Requirement requirement) {
+        this.requirements = requirement;
     }
     
     public void showDescription(CharacterScreen.StatScreen screen) {

@@ -10,7 +10,7 @@ import stat.NumericStat;
 import stat.BinaryStat;
 import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class MissileSpellGenerator extends AbilityGenerationProcedure {
 
@@ -18,16 +18,16 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
+        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilitySkill.tree; //the tree to which the node will belong
 
         String name;
 
         Element element = tree.definition.element;
 
-        int sizeValue = 1, speedValue = 1, pool = abilityDef.getScore("Pool")/4 + random.nextInt((int) (abilityDef.getScore("Pool") / 4));
+        int sizeValue = 1, speedValue = 1, pool = abilitySkill.getScore("Pool")/4 + random.nextInt((int) (abilitySkill.getScore("Pool") / 4));
 
-        abilityDef.getStat("Pool").modify(-pool);
+        abilitySkill.getStat("Pool").modify(-pool);
 
         //Stats: Range, Size, Speed, Damage, Cast Speed, Mana Cost
         Stat size, speed;
@@ -57,8 +57,8 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
         ret.addStat("Mana Cost", new NumericStat(0));
         ret.addStat("Cooldown", new NumericStat(0));
 
-        abilityDef.ability = ret;
+        abilitySkill.ability = ret;
         
-        return abilityDef;
+        return abilitySkill;
     }
 }
