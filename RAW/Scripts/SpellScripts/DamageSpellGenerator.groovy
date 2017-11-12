@@ -1,13 +1,14 @@
 import templeoftheelements.spells.Spell;
 import templeoftheelements.Element;
 import templeoftheelements.creature.AbilityGenerationProcedure;
-import templeoftheelements.creature.Creature; // these are used for
+import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectSource;
 import stat.*;
 import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class DamageSpellGenerator extends AbilityGenerationProcedure {
 
@@ -15,18 +16,18 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
-        Spell spell = (Spell) abilityDef.ability;
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
+        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilitySkill.tree; //the tree to which the node will belong
+        Spell spell = (Spell) abilitySkill.ability;
         
-        int pool = Math.min(20, (abilityDef.getScore("Pool")));
+        int pool = Math.min(20, (abilitySkill.getScore("Pool")));
         
-        int damageValue = (Spell.Detail.DAMAGE.cost + random.nextInt(pool-Spell.Detail.DAMAGE.cost)) / Spell.Detail.DAMAGE.cost;
+        int damageValue = (Ability.Detail.DAMAGE.cost + random.nextInt(pool-Ability.Detail.DAMAGE.cost)) / Ability.Detail.DAMAGE.cost;
         Stat damage;
         
         Element element = tree.definition.element;
         
-        abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
+        abilitySkill.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
         
         String effectName = "Damage";
         
@@ -66,6 +67,6 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
             spell.addEffect(e)
         }
         
-        return abilityDef;
+        return abilitySkill;
     }
 }

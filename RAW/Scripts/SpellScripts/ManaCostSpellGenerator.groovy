@@ -1,8 +1,8 @@
-import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.Ability;
 import stat.NumericStat;
 import java.util.Random;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class ManaCostSpellGenerator extends AbilityGenerationProcedure {
 
@@ -10,20 +10,20 @@ public class ManaCostSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        int pool = Math.min(10, (abilityDef.getScore("Cost Pool")));
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
+        int pool = Math.min(10, (abilitySkill.getScore("Cost Pool")));
         if (pool == 0) {
-            abilityDef.getStat("Cost Pool").modifyBase(-1);
-            return abilityDef.ability;
+            abilitySkill.getStat("Cost Pool").modifyBase(-1);
+            return abilitySkill.ability;
         }
         
-        int manaCost = 1 + random.nextInt(pool) / Spell.Detail.MANA_COST.cost;
+        int manaCost = 1 + random.nextInt(pool) / Ability.Detail.MANA_COST.cost;
         
-        abilityDef.ability.addStat("Mana Cost", new NumericStat(manaCost));
+        abilitySkill.ability.addStat("Mana Cost", new NumericStat(manaCost));
         
-        abilityDef.getStat("Cost Pool").modifyBase(-manaCost * Spell.Detail.MANA_COST.cost);
-        abilityDef.getStat("Pool").modifyBase(manaCost * Spell.Detail.MANA_COST.cost);
+        abilitySkill.getStat("Cost Pool").modifyBase(-manaCost * Ability.Detail.MANA_COST.cost);
+        abilitySkill.getStat("Pool").modifyBase(manaCost * Ability.Detail.MANA_COST.cost);
         
-        return abilityDef;
+        return abilitySkill;
     }
 }

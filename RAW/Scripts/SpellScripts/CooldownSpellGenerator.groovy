@@ -1,8 +1,8 @@
-import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.Ability;
 import stat.NumericStat;
 import java.util.Random;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class CooldownSpellGenerator extends AbilityGenerationProcedure {
 
@@ -10,20 +10,20 @@ public class CooldownSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        int pool = Math.min(10, (abilityDef.getScore("Cost Pool")));
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
+        int pool = Math.min(10, (abilitySkill.getScore("Cost Pool")));
         if (pool == 0) {
-            abilityDef.getStat("Cost Pool").modifyBase(-1);
-            return abilityDef.ability;
+            abilitySkill.getStat("Cost Pool").modifyBase(-1);
+            return abilitySkill.ability;
         }
         
-        int cooldown = 1 + random.nextInt(pool) / Spell.Detail.COOLDOWN.cost;
+        int cooldown = 1 + random.nextInt(pool) / Ability.Detail.COOLDOWN.cost;
         
-        abilityDef.ability.addStat("Cooldown", new NumericStat(cooldown));
+        abilitySkill.ability.addStat("Cooldown", new NumericStat(cooldown));
         
-        abilityDef.getStat("Cost Pool").modifyBase(-cooldown * Spell.Detail.COOLDOWN.cost);
-        abilityDef.getStat("Pool").modifyBase(cooldown * Spell.Detail.COOLDOWN.cost);
+        abilitySkill.getStat("Cost Pool").modifyBase(-cooldown * Ability.Detail.COOLDOWN.cost);
+        abilitySkill.getStat("Pool").modifyBase(cooldown * Ability.Detail.COOLDOWN.cost);
         
-        return abilityDef;
+        return abilitySkill;
     }
 }

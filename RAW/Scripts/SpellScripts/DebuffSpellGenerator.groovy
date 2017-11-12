@@ -1,12 +1,13 @@
 import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.Creature; // these are used for
 import templeoftheelements.creature.Debuff;   // the groovy script importing.
 import stat.StatDescriptor;
 import stat.NumericStat;
 import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectSource;
 
@@ -16,14 +17,14 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilityDef.tree; //the tree to which the node will belong
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
+        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilitySkill.tree; //the tree to which the node will belong
         
-        Spell spell = (Spell) abilityDef.ability;
+        Spell spell = (Spell) abilitySkill.ability;
         
         final ArrayList<StatDescriptor> debuffAttributes = tree.definition.element.debuffAttributes;
         
-        int pool = Math.min(20, (abilityDef.getScore("Pool"))), i = 0;
+        int pool = Math.min(20, (abilitySkill.getScore("Pool"))), i = 0;
         
         Effect effect;
         
@@ -61,17 +62,17 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
         
         }
         
-        while (pool > Spell.Detail.DEBUFF.cost && i < 10) {
+        while (pool > Ability.Detail.DEBUFF.cost && i < 10) {
             i++;
             StatDescriptor debuffStat = debuffAttributes.get(random.nextInt(debuffAttributes.size()));
-            int debuffValue = 1 + random.nextInt((int) (pool / Spell.Detail.DEBUFF.cost) - 1);
+            int debuffValue = 1 + random.nextInt((int) (pool / Ability.Detail.DEBUFF.cost) - 1);
             effect.addStat(debuffStat.name, new NumericStat(debuffValue));
-            abilityDef.getStat("Pool").modifyBase(-debuffValue * Spell.Detail.DAMAGE.cost);
+            abilitySkill.getStat("Pool").modifyBase(-debuffValue * Ability.Detail.DEBUFF.cost);
 //            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
         }
         
         spell.addEffect(effect);
         
-        return abilityDef;
+        return abilitySkill;
     }
 }

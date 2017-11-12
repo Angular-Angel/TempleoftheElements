@@ -1,10 +1,9 @@
-import templeoftheelements.spells.Spell;
 import templeoftheelements.spells.EnemyTargetSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;
 import stat.NumericStat;
 import java.util.Random;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class EnemyTargetSpellGenerator extends AbilityGenerationProcedure {
 
@@ -12,14 +11,14 @@ public class EnemyTargetSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
         EnemyTargetSpell spell = new EnemyTargetSpell("Enemy Target Spell", new VectorCircle(0.5));
         
         spell.addStat("Cast Time", new NumericStat(0));
         spell.addStat("Mana Cost", new NumericStat(0));
         spell.addStat("Cooldown", new NumericStat(0));
         
-        abilityDef.ability = spell
-        return abilityDef;
+        abilitySkill.ability = spell
+        return abilitySkill;
     }
 }

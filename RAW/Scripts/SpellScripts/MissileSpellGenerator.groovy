@@ -1,4 +1,3 @@
-import templeoftheelements.spells.Spell;
 import templeoftheelements.Element;
 import templeoftheelements.spells.MissileSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;

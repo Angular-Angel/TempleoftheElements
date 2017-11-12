@@ -1,8 +1,8 @@
-import templeoftheelements.spells.Spell;
-import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.AbilityGenerationProcedure;;
+import templeoftheelements.creature.Ability;
 import stat.NumericStat;
 import java.util.Random;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class CastTimeSpellGenerator extends AbilityGenerationProcedure {
 
@@ -10,21 +10,21 @@ public class CastTimeSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
     
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-        int pool = Math.min(10, (abilityDef.getScore("Cost Pool")));
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
+        int pool = Math.min(10, (abilitySkill.getScore("Cost Pool")));
         if (pool == 0) {
-            abilityDef.getStat("Cost Pool").modifyBase(-1);
-            return abilityDef.ability;
+            abilitySkill.getStat("Cost Pool").modifyBase(-1);
+            return abilitySkill.ability;
         }
         
-        int castTime = 1 + random.nextInt(pool) / Spell.Detail.CAST_TIME.cost;
+        int castTime = 1 + random.nextInt(pool) / Ability.Detail.CAST_TIME.cost;
         
-        abilityDef.ability.addStat("Cooldown", new NumericStat(castTime));
+        abilitySkill.ability.addStat("Cooldown", new NumericStat(castTime));
         
-        abilityDef.getStat("Cost Pool").modifyBase(-castTime * Spell.Detail.CAST_TIME.cost);
-        abilityDef.getStat("Pool").modifyBase(castTime * Spell.Detail.CAST_TIME.cost);
+        abilitySkill.getStat("Cost Pool").modifyBase(-castTime * Ability.Detail.CAST_TIME.cost);
+        abilitySkill.getStat("Pool").modifyBase(castTime * Ability.Detail.CAST_TIME.cost);
         
-        return abilityDef;
+        return abilitySkill;
     }
 
 }

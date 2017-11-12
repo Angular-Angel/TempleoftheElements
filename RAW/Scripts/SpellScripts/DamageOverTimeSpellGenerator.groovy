@@ -1,8 +1,9 @@
 import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.effect.Effect;
 import java.util.Random;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
+import templeoftheelements.player.AbilitySkill;
 
 public class DamageOverTimeSpellGenerator extends AbilityGenerationProcedure {
 
@@ -10,12 +11,12 @@ public class DamageOverTimeSpellGenerator extends AbilityGenerationProcedure {
     Random random = new Random();
 
     @Override
-    public AbilityDefinition modify(AbilityDefinition abilityDef) {
-         Spell spell = (Spell) abilityDef.ability;
+    public AbilitySkill modify(AbilitySkill abilitySkill) {
+         Spell spell = (Spell) abilitySkill.ability;
         
         int pool = Math.min(20, (abilityDef.getScore("Pool")));
         
-        int damageValue = 1 + (random.nextInt(pool) / Spell.Detail.DAMAGE.cost);
+        int damageValue = 1 + (random.nextInt(pool) / Ability.Detail.DAMAGE.cost);
         Stat damage;
         
         if (spell instanceof AreaSpell) {
@@ -43,8 +44,8 @@ public class DamageOverTimeSpellGenerator extends AbilityGenerationProcedure {
 //
 //            spell.addEffect(e)
         }
-        abilityDef.getStat("Pool").modifyBase(-damageValue * Spell.Detail.DAMAGE.cost);
+        abilitySkill.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
         
-        return abilityDef;
+        return abilitySkill;
     }
 }
