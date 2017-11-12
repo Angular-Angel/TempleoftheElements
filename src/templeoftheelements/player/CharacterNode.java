@@ -143,13 +143,6 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     public float getDrawHeight() {
         return 40; 
     }
-
-    @Override
-    public ArrayList<Requirement> getReqs() {
-        ArrayList<Requirement> ret = new ArrayList<>();
-        ret.add(this);
-        return ret;
-    }
     
     public void showDescription(CharacterScreen.StatScreen screen) {
         float i = screen.height - 12;
