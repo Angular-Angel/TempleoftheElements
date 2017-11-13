@@ -176,6 +176,9 @@ public class CharacterNode extends StatContainer implements Requirement , Render
                     game.font.draw(s + ": " + getScore(s) + "%", new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
             } catch (NoSuchStatException ex) {
                 Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                System.err.println(s);
+                Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

@@ -39,14 +39,16 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         StatDescriptor stat1 = randomStat(characterTree), stat2 = randomStat(characterTree);
 
         CharacterNode node = new CharacterNode(characterTree);
-        node.addStat(stat1.identifier, new NumericStat(stat1.increase));
-        node.addStat(stat2.identifier, new NumericStat(stat2.increase));
+        node.addStat(stat1, new NumericStat(stat1.increase));
+        node.addStat(stat2, new NumericStat(stat2.increase));
+            characterTree.addNode(node);
         
         CharacterNode entry = node; //remember our first node
         
         for (int i = 0; i < 3; i++) {
             node = new CharacterNode(node, characterTree);
-            node.addStat(stat1.identifier, new NumericStat(stat1.increase));
+            node.addStat(stat1, new NumericStat(stat1.increase));
+            characterTree.addNode(node);
         }
         
         CharacterNode endLine1 = node;
@@ -55,7 +57,8 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         
         for (int i = 0; i < 3; i++) {
             node = new CharacterNode(node, characterTree);
-            node.addStat(stat2.identifier, new NumericStat(stat2.increase));
+            node.addStat(stat2, new NumericStat(stat2.increase));
+            characterTree.addNode(node);
         }
         
         CharacterNode endLine2 = node;
@@ -66,12 +69,15 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
 
             node = new SkillNode(new OrRequirement(endLine1, endLine2), characterTree, 
                 game.registry.abilityGenerator.generate(characterTree));
+            
+            characterTree.addNode(node);
 
         } else {
             node = new CharacterNode(new OrRequirement(endLine1, endLine2), characterTree);
 
-            node.addStat(stat1.identifier, new NumericStat(stat1.increase));
-            node.addStat(stat2.identifier, new NumericStat(stat2.increase));
+            node.addStat(stat1, new NumericStat(stat1.increase));
+            node.addStat(stat2, new NumericStat(stat2.increase));
+            characterTree.addNode(node);
         }
 
 
