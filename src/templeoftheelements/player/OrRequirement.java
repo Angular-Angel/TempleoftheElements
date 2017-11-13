@@ -54,5 +54,10 @@ public class OrRequirement implements Requirement{
         }
         }
     }
+
+    @Override
+    public boolean isNode() {
+        return false;
+    }
     
 }

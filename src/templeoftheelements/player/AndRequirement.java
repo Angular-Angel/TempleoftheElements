@@ -31,5 +31,10 @@ public class AndRequirement implements Requirement{
     public void draw(Requirement req) {
         
     }
+
+    @Override
+    public boolean isNode() {
+        return false;
+    }
     
 }

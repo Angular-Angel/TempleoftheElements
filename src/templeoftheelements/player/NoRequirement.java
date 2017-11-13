@@ -19,5 +19,10 @@ public class NoRequirement implements Requirement {
     @Override
     public void draw(Requirement req) {
     }
+
+    @Override
+    public boolean isNode() {
+        return false;
+    }
     
 }

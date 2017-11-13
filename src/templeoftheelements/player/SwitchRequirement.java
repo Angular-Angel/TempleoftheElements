@@ -34,5 +34,10 @@ public class SwitchRequirement implements Requirement{
     public void draw(Requirement req) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean isNode() {
+        return false;
+    }
     
 }

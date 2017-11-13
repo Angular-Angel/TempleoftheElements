@@ -31,7 +31,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     public String description;
     protected final boolean free; //is this gem acquired automatically?
     public int layer, cluster;
-    public ArrayList<CharacterNode> dependents;
+    public ArrayList<CharacterNode> parents;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();
@@ -40,7 +40,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         this.requirements = requirements;
         this.free = free;
         description = "";
-        dependents = new ArrayList<>();
+        parents = new ArrayList<>();
     }
     
     public CharacterNode(Requirement requirements, CharacterTree tree) {
@@ -54,7 +54,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         requirements =  new NoRequirement();
         this.free = false;
         description = "";
-        dependents = new ArrayList<>();
+        parents = new ArrayList<>();
     }
     
     /**
@@ -90,6 +90,11 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     @Override
     public boolean isMet() {
         return isAcquired();
+    }
+
+    @Override
+    public boolean isNode() {
+        return true;
     }
 
     @Override
