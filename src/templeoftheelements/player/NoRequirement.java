@@ -5,6 +5,8 @@
  */
 package templeoftheelements.player;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author angle
@@ -21,8 +23,8 @@ public class NoRequirement implements Requirement {
     }
 
     @Override
-    public boolean isNode() {
-        return false;
+    public ArrayList<CharacterNode> getNodes() {
+        return new ArrayList<>();
     }
     
 }

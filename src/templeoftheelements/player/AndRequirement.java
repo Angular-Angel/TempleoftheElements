@@ -33,8 +33,13 @@ public class AndRequirement implements Requirement{
     }
 
     @Override
-    public boolean isNode() {
-        return false;
+    public ArrayList<CharacterNode> getNodes() {
+        ArrayList<CharacterNode> ret =  new ArrayList<>();
+        for (Requirement r : requirements) {
+            ret.addAll(r.getNodes());
+        }
+        return ret;
     }
+    
     
 }

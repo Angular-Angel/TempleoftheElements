@@ -37,27 +37,31 @@ public class OrRequirement implements Requirement{
             if (!(requirement instanceof CharacterNode)) return;
             
             if (requirement instanceof CharacterNode) {
-            CharacterNode target = (CharacterNode) requirement;
-            if (source.isAcquired() && target.isMet()) {
-                GL11.glColor3f(0, 0, 255);
-            } else if (target.isMet()) {
-                GL11.glColor3f(0, 255, 0);
-            } else
-                GL11.glColor3f(255, 0, 0);
-            
-            GL11.glBegin(GL11.GL_LINE_LOOP);
-            
-            GL11.glVertex2f(source.position.x, source.position.y);
-            GL11.glVertex2f(target.position.x, target.position.y);
-            
-            GL11.glEnd();
-        }
+                CharacterNode target = (CharacterNode) requirement;
+                if (source.isAcquired() && target.isMet()) {
+                    GL11.glColor3f(0, 0, 255);
+                } else if (target.isMet()) {
+                    GL11.glColor3f(0, 255, 0);
+                } else
+                    GL11.glColor3f(255, 0, 0);
+
+                GL11.glBegin(GL11.GL_LINE_LOOP);
+
+                GL11.glVertex2f(source.position.x, source.position.y);
+                GL11.glVertex2f(target.position.x, target.position.y);
+
+                GL11.glEnd();
+            }
         }
     }
 
     @Override
-    public boolean isNode() {
-        return false;
+    public ArrayList<CharacterNode> getNodes() {
+        ArrayList<CharacterNode> ret =  new ArrayList<>();
+        for (Requirement r : requirements) {
+            ret.addAll(r.getNodes());
+        }
+        return ret;
     }
     
 }

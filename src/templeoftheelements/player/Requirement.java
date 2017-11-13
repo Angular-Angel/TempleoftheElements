@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public interface Requirement {
     public boolean isMet();
-    public boolean isNode();
+    public ArrayList<CharacterNode> getNodes();
     public void draw(Requirement req);
+    
 }

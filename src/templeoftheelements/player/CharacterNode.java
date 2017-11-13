@@ -4,6 +4,7 @@ package templeoftheelements.player;
 import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec2;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.opengl.GL11;
@@ -31,7 +32,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     public String description;
     protected final boolean free; //is this gem acquired automatically?
     public int layer, cluster;
-    public ArrayList<CharacterNode> parents;
+    public ArrayList<CharacterNode> dependents;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();
@@ -40,7 +41,13 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         this.requirements = requirements;
         this.free = free;
         description = "";
-        parents = new ArrayList<>();
+        dependents = new ArrayList<>();
+        
+        CharacterNode self = this;
+        
+        requirements.getNodes().forEach((CharacterNode node) -> {
+            node.dependents.add(self);
+        });
     }
     
     public CharacterNode(Requirement requirements, CharacterTree tree) {
@@ -54,7 +61,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         requirements =  new NoRequirement();
         this.free = false;
         description = "";
-        parents = new ArrayList<>();
+        dependents = new ArrayList<>();
     }
     
     /**
@@ -90,11 +97,6 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     @Override
     public boolean isMet() {
         return isAcquired();
-    }
-
-    @Override
-    public boolean isNode() {
-        return true;
     }
 
     @Override
@@ -186,6 +188,13 @@ public class CharacterNode extends StatContainer implements Requirement , Render
                 Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    @Override
+    public ArrayList<CharacterNode> getNodes() {
+        ArrayList<CharacterNode> ret =  new ArrayList<>();
+        ret.add(this);
+        return ret;
     }
     
 }

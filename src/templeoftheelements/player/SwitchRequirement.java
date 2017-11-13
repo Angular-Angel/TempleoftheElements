@@ -36,8 +36,8 @@ public class SwitchRequirement implements Requirement{
     }
 
     @Override
-    public boolean isNode() {
-        return false;
+    public ArrayList<CharacterNode> getNodes() {
+        return requirement.getNodes();
     }
     
 }
