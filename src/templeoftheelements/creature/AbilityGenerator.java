@@ -40,27 +40,27 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
     public AbilitySkill generate(Object o) {
         CharacterTree tree = (CharacterTree) o;
         
-        AbilitySkill abilitySkill = new AbilitySkill();
+        AbilitySkill abilitySkill = new AbilitySkill(tree);
         
         //Important info - the skill tree this ability is for and the abilities that skill tree currently has on it.
         
         //First, pick the usage of the ability.
         
-        Ability.Detail usage;
-        Ability.Detail targeting;
-        ArrayList<Ability.Detail> costDetails;
-        ArrayList<Ability.Detail> effectDetails;
-        ArrayList<Ability.Detail> scalingDetails;
+        abilitySkill.addStat("Pool", new NumericStat(100)); 
+        abilitySkill.addStat("Complexity", new NumericStat(5 + tree.numLayers)); 
         
-        if (tree.spammables / tree.abilities.size() < 0.4) {
-            usage = Ability.Detail.SPAMMABLE;
+        if (tree.spammables == 0 || tree.spammables / tree.abilities < 0.4) {
+            abilitySkill.usage = Ability.Detail.SPAMMABLE;
             abilitySkill.addStat("Cost Pool", new NumericStat(10));
             abilitySkill.addStat("Cost Complexity", new NumericStat(5 + tree.numLayers));
             tree.spammables++;
+            tree.abilities++;
         } else {
-            usage = Ability.Detail.SITUATIONAL;
+            abilitySkill.usage = Ability.Detail.SITUATIONAL;
             abilitySkill.addStat("Cost Pool", new NumericStat(30));
             abilitySkill.addStat("Cost Complexity", new NumericStat(10 + tree.numLayers * 2));
+            tree.situationals++;
+            tree.abilities++;
         }
         
         //Then pick the targeting method 
@@ -71,12 +71,11 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
         
         do {
             
-            targeting = targetingMethods.get(random.nextInt(targetingMethods.size()));
+            abilitySkill.targeting = targetingMethods.get(random.nextInt(targetingMethods.size()));
 
-            abilitySkill.targeting = targeting;
-        } while (!procedures.containsKey(targeting));
+        } while (!procedures.containsKey(abilitySkill.targeting));
         
-        abilitySkill = procedures.get(targeting).modify(abilitySkill);
+        abilitySkill = procedures.get(abilitySkill.targeting).modify(abilitySkill);
         
         //Then, depending on the above, pick what costs this spell will have.
         

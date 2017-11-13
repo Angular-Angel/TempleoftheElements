@@ -6,9 +6,10 @@ import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.player.AbilityNode;
+import templeoftheelements.player.SkillNode;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterWheel;
+import static templeoftheelements.TempleOfTheElements.rotate;
 import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
@@ -142,12 +143,12 @@ public class CharacterScreen extends Screen {
             height = (node.getStatList().size()) * 20;
             for (String s : node.getStatList()) 
                 if (width < s.length() * 20 + 100) width = s.length() * 20 + 100;
-            if (node instanceof AbilityNode) {
+            if (node instanceof SkillNode) {
                 height += 20;
-                String[] split = ((AbilityNode) node).ability.getDescription().split("\n");
+                String[] split = ((SkillNode) node).skill.getDescription().split("\n");
                 height += split.length * 20;
-                if (width < ((AbilityNode) node).ability.getName().length() * 13) 
-                    width = ((AbilityNode) node).ability.getName().length() * 13;
+                if (width < ((SkillNode) node).skill.getName().length() * 13) 
+                    width = ((SkillNode) node).skill.getName().length() * 13;
                 for (String s : split)
                 if (width < s.length() * 13) 
                     width = s.length() * 13;

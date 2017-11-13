@@ -24,6 +24,7 @@ public class CharacterWheel {
         nodes = new ArrayList<>();
         trees = new ArrayList<>();
         this.player = player;
+        generate();
     }
     
     public void generate() {
@@ -41,59 +42,6 @@ public class CharacterWheel {
                 }
             }
         }
-        
-        /*for (int i = 0; i < 10; i++) { //for each layer
-            for (CharacterTree tree : trees) { //for each tree
-                int ring = i/5 +1; //What ring are we on?
-                if (i % 5 == 0) { //Are we at the start f the ring?
-                    for (int j = 0; j < ring; j++) { 
-                        //generate the cluster definition
-                        tree.cluster = j;
-                        tree.clusters.add(tree.definition.clusterGenerator.generate(tree));
-                    }
-                }
-                
-                for (int j = 0; j < tree.clusters.size(); j++) { //for each cluster
-                    NodeCluster cluster = tree.clusters.get(j); //get the cluster definition
-                    tree.cluster = j; //tell the tree which cluster we're generating.
-                    switch (i % 5) { //where in the cluster are we?
-                        case 0: //if we're at the start, make the entry node.
-                            tree.layerSize = ring;
-                            
-                            //generate the lead-in node
-                            CharacterNode entryNode = cluster.entry;
-                            entryNode.layer = i;
-                            entryNode.cluster = tree.cluster;
-                            tree.layers.get(i).add(entryNode);
-                            break;
-                        case 1:
-                        case 2:
-                        case 3:
-                            //generate the bulk nodes
-                            tree.layerSize = cluster.nodes.size() * (ring);
-                            for (CharacterNode bulkNode : cluster.nodes) {
-                                
-                                bulkNode.layer = i;
-                                bulkNode.cluster = tree.cluster;
-                                tree.layers.get(i).add(bulkNode);
-                            }
-                            break;
-                        case 4:
-                            //generate the capstonecluster.bulk
-                            tree.layerSize = ring;
-                            cluster.capstone.layer = i;
-                            cluster.capstone.cluster = tree.cluster;
-                            CharacterNode capstoneNode = cluster.capstone;
-                            capstoneNode.cluster = tree.cluster;
-                            tree.layers.get(i).add(capstoneNode);
-                            tree.cluster++;
-                            break;
-                    }   
-                }
-                tree.newLayer(); 
-            }
-            
-        }*/
         
         for (int k = 0; k < trees.size(); k++) { //for each tree
             CharacterTree tree = trees.get(k); //get the tree
@@ -152,6 +100,10 @@ public class CharacterWheel {
     }
     
     public Creature getCreature() {
-            return player.getCreature();
-        }
+        return player.getCreature();
+    }
+    
+    public void addNode(CharacterNode node) {
+        nodes.add(node);
+    }
 }

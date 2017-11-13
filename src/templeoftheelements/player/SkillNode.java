@@ -11,24 +11,23 @@ import templeoftheelements.creature.Ability;
 
 
 
-public class AbilityNode extends CharacterNode {
+public class SkillNode extends CharacterNode {
 
-    public final Ability ability;
+    public final Skill skill;
     
-    public AbilityNode(Requirement requirements, CharacterTree tree, boolean automatic, Ability ability) {
+    public SkillNode(Requirement requirements, CharacterTree tree, boolean automatic, Skill skill) {
         super(requirements, tree, automatic);
-        this.ability = ability;
-        ability.init(tree.getCreature());
+        this.skill = skill;
     }
     
-    public AbilityNode(Requirement requirements, CharacterTree tree, Ability ability) {
-        this(requirements, tree, false, ability);
+    public SkillNode(Requirement requirements, CharacterTree tree, Skill skill) {
+        this(requirements, tree, false, skill);
     }
     
     @Override
     public void acquire() {
         super.acquire();
-        tree.getCreature().addAbility(ability);
+        skill.beAcquired(tree.getCreature());
         tree.getCreature().getController().refactorActions();
     }
     
@@ -39,8 +38,8 @@ public class AbilityNode extends CharacterNode {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor3f(255, 0, 0);
         game.font.getTexture().bind();i -= 20;
-        game.font.draw(ability.getName(), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
-        String[] split = ability.getDescription().split("\n");
+        game.font.draw(skill.getName(), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+        String[] split = skill.getDescription().split("\n");
         for (String s : split) {
             i -= 20;
             game.font.draw(s, new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));

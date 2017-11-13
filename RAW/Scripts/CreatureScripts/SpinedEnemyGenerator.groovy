@@ -5,7 +5,6 @@ import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.TriggeredAbility;
 import templeoftheelements.creature.CreatureEvent;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.player.CharacterTreeDef.AbilityDefinition;
 
 /**
  *
@@ -30,14 +29,6 @@ class SpinedEnemyGenerator extends CreatureGenerationProcedure {
 
             public Ability copy() {
                 return this.getClass().newInstance();
-            }
-
-            public AbilityDefinition getDef() {
-                throw new UnsupportedOperationException();
-            }
-
-            public void setDef(AbilityDefinition abilityDef) {
-                throw new UnsupportedOperationException();
             }
 
             public void init(Creature c) {

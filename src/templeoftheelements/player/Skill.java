@@ -6,6 +6,7 @@
 package templeoftheelements.player;
 
 import stat.StatContainer;
+import templeoftheelements.creature.Creature;
 
 /**
  *
@@ -14,6 +15,18 @@ import stat.StatContainer;
 public class Skill extends StatContainer {
     private Player player;
     private int level;
+    private String name;
     
+    public void beAcquired(Creature creature) {
+        creature.addAllStats(this);
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getDescription() {
+        return "Nothing to see here.";
+    }
     
 }

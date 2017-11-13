@@ -46,8 +46,7 @@ public class CharacterTree {
     public ArrayList<StatDescriptor> secondaryAttributes;
     public ArrayList<CharacterNode> capstones;
     public ArrayList<CharacterNode> nodes;
-    public ArrayList<Ability> abilities;
-    public int numLayers, spammables, situationals;
+    public int numLayers, abilities, spammables, situationals;
         
     
     public CharacterTree(String name, CharacterWheel wheel) {
@@ -60,10 +59,20 @@ public class CharacterTree {
         effectDetails = new ArrayList<>();
         costDetails = new ArrayList<>();
         scalingDetails = new ArrayList<>();
+        nodes = new ArrayList<>();
+        abilities = 0;
+        numLayers = 0;
+        spammables = 0;
+        situationals = 0;
     }
     
     public Creature getCreature() {
         return wheel.getCreature();
+    }
+    
+    public void addNode(CharacterNode node) {
+        nodes.add(node);
+        wheel.addNode(node);
     }
     
 }

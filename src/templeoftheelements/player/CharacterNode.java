@@ -51,6 +51,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         position = new Vec2();
         acquired = false;
         this.tree = tree;
+        requirements =  new NoRequirement();
         this.free = false;
         description = "";
         dependents = new ArrayList<>();

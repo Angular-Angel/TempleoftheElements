@@ -7,6 +7,7 @@ import stat.StatDescriptor;
 import stat.NumericStat;
 import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.CharacterTree;
 import templeoftheelements.player.AbilitySkill;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectSource;
@@ -18,11 +19,11 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilitySkill.tree; //the tree to which the node will belong
+        CharacterTree tree = (CharacterTree) abilitySkill.tree; //the tree to which the node will belong
         
         Spell spell = (Spell) abilitySkill.ability;
         
-        final ArrayList<StatDescriptor> debuffAttributes = tree.definition.element.debuffAttributes;
+        final ArrayList<StatDescriptor> debuffAttributes = tree.element.debuffAttributes;
         
         int pool = Math.min(20, (abilitySkill.getScore("Pool"))), i = 0;
         

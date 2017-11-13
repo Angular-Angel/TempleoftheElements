@@ -9,6 +9,7 @@ import stat.NumericStat;
 import stat.BinaryStat;
 import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.CharacterTree;
 import templeoftheelements.player.AbilitySkill;
 
 public class MissileSpellGenerator extends AbilityGenerationProcedure {
@@ -18,11 +19,11 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilitySkill.tree; //the tree to which the node will belong
+        CharacterTree tree = (CharacterTree) abilitySkill.tree; //the tree to which the node will belong
 
         String name;
-
-        Element element = tree.definition.element;
+        
+        Element element = tree.element;
 
         int sizeValue = 1, speedValue = 1, pool = abilitySkill.getScore("Pool")/4 + random.nextInt((int) (abilitySkill.getScore("Pool") / 4));
 

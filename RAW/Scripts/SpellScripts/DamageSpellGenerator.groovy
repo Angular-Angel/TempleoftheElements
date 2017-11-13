@@ -8,6 +8,7 @@ import templeoftheelements.effect.EffectSource;
 import stat.*;
 import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
+import templeoftheelements.player.CharacterTree;
 import templeoftheelements.player.AbilitySkill;
 
 public class DamageSpellGenerator extends AbilityGenerationProcedure {
@@ -17,7 +18,7 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        CharacterWheel.CharacterTree tree = (CharacterWheel.CharacterTree) abilitySkill.tree; //the tree to which the node will belong
+        CharacterTree tree = (CharacterTree) abilitySkill.tree; //the tree to which the node will belong
         Spell spell = (Spell) abilitySkill.ability;
         
         int pool = Math.min(20, (abilitySkill.getScore("Pool")));
@@ -25,7 +26,7 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
         int damageValue = (Ability.Detail.DAMAGE.cost + random.nextInt(pool-Ability.Detail.DAMAGE.cost)) / Ability.Detail.DAMAGE.cost;
         Stat damage;
         
-        Element element = tree.definition.element;
+        Element element = tree.element;
         
         abilitySkill.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
         

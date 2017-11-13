@@ -22,4 +22,11 @@ public class AbilitySkill extends Skill {
     public ArrayList<Ability.Detail> effectDetails;
     public ArrayList<Ability.Detail> scalingDetails;
     
+    public AbilitySkill(CharacterTree tree) {
+        this.tree = tree;
+        costDetails = new ArrayList<>();
+        effectDetails = new ArrayList<>();
+        scalingDetails =  new ArrayList<>();
+    }
+    
 }
