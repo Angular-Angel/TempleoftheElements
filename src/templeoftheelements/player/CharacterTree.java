@@ -47,6 +47,7 @@ public class CharacterTree {
     public ArrayList<CharacterNode> capstones;
     public ArrayList<CharacterNode> nodes;
     public int numLayers, abilities, spammables, situationals;
+    public double number; //This determines which section of the character tree this skill tree gets.
         
     
     public CharacterTree(String name, CharacterWheel wheel) {

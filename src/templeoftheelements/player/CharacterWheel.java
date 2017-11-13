@@ -28,12 +28,16 @@ public class CharacterWheel {
     }
     
     public void generate() {
+        
         for (int i = 0; i < 5; i++) {
-            trees.add(game.registry.treeGenerator.generate(this));
+            CharacterTree tree = game.registry.treeGenerator.generate(this);
+            tree.number = i;
+            trees.add(tree);
         }
         
-        //the slice of the character wheel that each tree gets.
         double slice = Math.toRadians(360/(double) trees.size());
+        
+        //the slice of the character wheel that each tree gets.
         
         for (int i = 0; i < 2; i++) { //for each ring
             for (CharacterTree tree : trees) { //for each tree
@@ -46,7 +50,7 @@ public class CharacterWheel {
         for (int k = 0; k < trees.size(); k++) { //for each tree
             CharacterTree tree = trees.get(k); //get the tree
             for (CharacterNode node : tree.nodes) { //for each node in the layer
-                
+                node.place(slice);
             }
             
             

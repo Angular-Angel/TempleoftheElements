@@ -31,8 +31,9 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     protected Requirement requirements;
     public String description;
     protected final boolean free; //is this gem acquired automatically?
-    public int layer, cluster;
-    public ArrayList<CharacterNode> dependents;
+    private int layer;
+    private ArrayList<CharacterNode> dependents;
+    private ArrayList<CharacterNode> parents;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();
@@ -42,11 +43,17 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         this.free = free;
         description = "";
         dependents = new ArrayList<>();
+        parents = new ArrayList<>();
         
         CharacterNode self = this;
         
+        layer = 0;
+        
         requirements.getNodes().forEach((CharacterNode node) -> {
             node.dependents.add(self);
+            self.parents.add(node);
+            if (node.layer >= this.layer)
+                this.layer = node.layer +1;
         });
     }
     
@@ -62,6 +69,8 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         this.free = false;
         description = "";
         dependents = new ArrayList<>();
+        parents = new ArrayList<>();
+        layer = 0;
     }
     
     /**
@@ -197,4 +206,17 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         return ret;
     }
     
+    public void place(double slice) {
+        double angle;
+        double diff = 40; // The arc between each node in this layer of the tree.
+        if (parents.size() == 0) {
+            angle = (tree.number * slice);
+            angle -= 0.5 * diff * Math.floor(layer/5);
+            position = new Vec2();
+            position.x = (float) (65 * (layer + 1) * Math.sin(angle));
+            position.y = (float) (65 * (layer + 1) * Math.cos(angle));
+        } else if (parents.size() == 1 && parents.get(0).dependents.size() > 1) {
+            
+        }
+    }
 }
