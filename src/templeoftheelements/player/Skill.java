@@ -15,7 +15,11 @@ import templeoftheelements.creature.Creature;
 public class Skill extends StatContainer {
     private Player player;
     private int level;
-    private String name;
+    private final String name;
+    
+    public Skill(String name) {
+        this.name = name;
+    }
     
     public void beAcquired(Creature creature) {
         creature.addAllStats(this);

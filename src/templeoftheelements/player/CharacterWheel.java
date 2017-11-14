@@ -1,6 +1,7 @@
 
 package templeoftheelements.player;
 
+import com.samrj.devil.math.Vec2;
 import java.util.ArrayList;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.creature.Creature;
@@ -50,33 +51,40 @@ public class CharacterWheel {
         }
         
         for (int k = 0; k < trees.size(); k++) { //for each tree
-            CharacterTree tree = trees.get(k); //get the tree
-            for (CharacterNode node : tree.nodes) { //for each node in the layer
-                node.place(slice);
-            }
+            CharacterTree tree = trees.get(k);
             
-            
-            /*for (int i = 0; i < tree.layers.size(); i++) { //for each layer
+            for (int i = 0; i < tree.layers.size(); i++) { //for each layer
                 ArrayList<CharacterNode> layer = tree.layers.get(i); //get the layer
                 double angle; //the angle which we use to place our node relative to the center of the character wheel.
-                double slice = Math.toRadians(360/(double) trees.size()); //the slice of the character wheel that this tree gets
                 double diff = (slice/(double) layer.size()); // The arc between each node in this layer of the tree.
                 for (int j = 0; j < layer.size(); j++) { //for each node in the layer
                     CharacterNode node = layer.get(j); //get the node
-                    int ring = (int) (Math.floor(i/5)+1); //figure out which ring we're in.
+                    int ring = node.getLayer(); //figure out which ring we're in.
                     //offset = diff * (Math.floor(i/5));
                     Vec2 position;
-                    switch (node.nodeDef.position) {
-                        case RADIAL:
-                            angle = (k * slice) + (diff * j);
-                            angle -= 0.5 * diff * Math.floor(i/5);
+                    if (node.children.size() != 1) {
+                        angle = (k * slice) + (diff * j);
+                        angle -= 0.5 * diff * Math.floor(i/5);
+                        position = new Vec2();
+                        position.x = (float) (65 * (i + 1) * Math.sin(angle));
+                        position.y = (float) (65 * (i + 1) * Math.cos(angle));
+                        node.setPosition(position);
+                    } else {
+                        if (node.parents.size() == 1) {
+                            angle = (k * ring + j / 2) * Math.toRadians(360/(double) (trees.size() * ring));
+                            angle -= 0.5 * Math.toRadians(360/(double) (trees.size() * ring)) * Math.floor(i/5);
                             position = new Vec2();
                             position.x = (float) (65 * (i + 1) * Math.sin(angle));
                             position.y = (float) (65 * (i + 1) * Math.cos(angle));
+                            angle -= 30;
+                            angle += (j % 2) * 60;
+                            position.x += (float) (30 * Math.sin(angle));
+                            position.y += (float) (30 * Math.cos(angle));
                             node.setPosition(position);
-                            nodes.add(node);
-                            break;
-                        case CLOCKWISE20:
+                        }
+            
+                    }
+                        /*case CLOCKWISE20:
                             angle = (k * ring + node.cluster) * Math.toRadians(360/(double) (trees.size() * ring));
                             angle -= 0.5 * Math.toRadians(360/(double) (trees.size() * ring)) * Math.floor(i/5);
                             position = new Vec2();
@@ -98,9 +106,9 @@ public class CharacterWheel {
                             node.setPosition(position);
                             nodes.add(node);
                             break;
-                    }
+                    }*/
                 }
-            }*/
+            }
         }
     
     }

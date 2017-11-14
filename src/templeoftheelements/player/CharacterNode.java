@@ -32,8 +32,8 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     public String description;
     protected final boolean free; //is this gem acquired automatically?
     private int layer;
-    private ArrayList<CharacterNode> dependents;
-    private ArrayList<CharacterNode> parents;
+    ArrayList<CharacterNode> children; //These are package private
+    ArrayList<CharacterNode> parents;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();
@@ -42,7 +42,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         this.requirements = requirements;
         this.free = free;
         description = "";
-        dependents = new ArrayList<>();
+        children = new ArrayList<>();
         parents = new ArrayList<>();
         
         CharacterNode self = this;
@@ -50,7 +50,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         layer = 0;
         
         requirements.getNodes().forEach((CharacterNode node) -> {
-            node.dependents.add(self);
+            node.children.add(self);
             self.parents.add(node);
             if (node.layer >= this.layer)
                 this.layer = node.layer +1;
@@ -68,7 +68,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         requirements =  new NoRequirement();
         this.free = false;
         description = "";
-        dependents = new ArrayList<>();
+        children = new ArrayList<>();
         parents = new ArrayList<>();
         layer = 0;
     }
@@ -211,15 +211,12 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         return ret;
     }
     
-    public void place(double slice) {
-        double angle;
-        double diff = 40; // The arc between each node in this layer of the tree.
+    public void place(double angle) {
         if (parents.size() == 0) { //Put the root nodes at the start of their trees.
-            angle = (tree.number * slice);
             position = new Vec2();
             position.x = (float) (65 * Math.sin(angle));
             position.y = (float) (65 * Math.cos(angle));
-        } else if (parents.size() == 1 && parents.get(0).dependents.size() > 1) {
+        } else if (parents.size() == 1 && parents.get(0).children.size() > 1) {
             
         }
     }
