@@ -47,18 +47,18 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
         //First, pick the usage of the ability.
         
         abilitySkill.addStat("Pool", new NumericStat(100)); 
-        abilitySkill.addStat("Complexity", new NumericStat(5 + tree.numLayers)); 
+        abilitySkill.addStat("Complexity", new NumericStat(5 + tree.layers.size())); 
         
         if (tree.spammables == 0 || tree.spammables / tree.abilities < 0.4) {
             abilitySkill.usage = Ability.Detail.SPAMMABLE;
             abilitySkill.addStat("Cost Pool", new NumericStat(10));
-            abilitySkill.addStat("Cost Complexity", new NumericStat(5 + tree.numLayers));
+            abilitySkill.addStat("Cost Complexity", new NumericStat(5 + tree.layers.size()));
             tree.spammables++;
             tree.abilities++;
         } else {
             abilitySkill.usage = Ability.Detail.SITUATIONAL;
             abilitySkill.addStat("Cost Pool", new NumericStat(30));
-            abilitySkill.addStat("Cost Complexity", new NumericStat(10 + tree.numLayers * 2));
+            abilitySkill.addStat("Cost Complexity", new NumericStat(10 + tree.layers.size() * 2));
             tree.situationals++;
             tree.abilities++;
         }
@@ -99,14 +99,6 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                 abilitySkill.getStat("Cost Complexity").modify(-cost.cost);
                 
             }
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(AbilityGenerator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //Then loop through and determine all the effects the spell will have.
-        
-        
-        try {
             
             while (abilitySkill.getScore("Complexity") > 0) {
                 Ability.Detail effect;
@@ -119,16 +111,9 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                 abilitySkill.getStat("Complexity").modify(-effect.cost);
                 
             }
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(AbilityGenerator.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
-        //Finally, run all the scripts that will generate the spell.
-        
-        try {
-            
             Ability.Detail cost;
-            int i = 0;
+            i = 0;
             while (abilitySkill.getScore("Cost Pool") > 0) {
                 
                 cost = abilitySkill.costDetails.get(i++);
@@ -139,14 +124,9 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                 procedures.get(cost).modify(abilitySkill);
                 
             }
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(AbilityGenerator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
             
             Ability.Detail effect;
-            int i = 0;
+            i = 0;
             while (abilitySkill.getScore("Pool") > 0) {
                 
                 effect = abilitySkill.effectDetails.get(i++);

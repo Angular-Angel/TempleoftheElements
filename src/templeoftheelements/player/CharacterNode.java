@@ -88,7 +88,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     }
     
     public boolean isAccessible() {
-        return requirements.isMet();
+        return !isAcquired() && requirements.isMet();
     }
 
     /**
@@ -99,6 +99,10 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     }
     
     public void acquire() {
+        if (isAcquired()) {
+            System.out.println("??");
+            return;
+        }
         acquired = true;
         tree.getCreature().addAllStats(this);
     }
@@ -110,6 +114,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
 
     @Override
     public void draw() {
+        
         if (isAcquired()) {
             GL11.glColor3f(0, 0, 255);
         } else if (requirements.isMet()) {
@@ -209,14 +214,20 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     public void place(double slice) {
         double angle;
         double diff = 40; // The arc between each node in this layer of the tree.
-        if (parents.size() == 0) {
+        if (parents.size() == 0) { //Put the root nodes at the start of their trees.
             angle = (tree.number * slice);
-            angle -= 0.5 * diff * Math.floor(layer/5);
             position = new Vec2();
-            position.x = (float) (65 * (layer + 1) * Math.sin(angle));
-            position.y = (float) (65 * (layer + 1) * Math.cos(angle));
+            position.x = (float) (65 * Math.sin(angle));
+            position.y = (float) (65 * Math.cos(angle));
         } else if (parents.size() == 1 && parents.get(0).dependents.size() > 1) {
             
         }
+    }
+
+    /**
+     * @return the layer
+     */
+    public int getLayer() {
+        return layer;
     }
 }

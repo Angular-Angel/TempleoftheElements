@@ -44,7 +44,9 @@ public class CharacterWheel {
                 for (int j = 0; j < i + 1; j++) { //generate one cluster for the first ring, two for the second, and so on.
                     game.registry.clusterGenerator.modify(tree);
                 }
+                tree.curLayer = tree.layers.size() - 1;
             }
+            
         }
         
         for (int k = 0; k < trees.size(); k++) { //for each tree

@@ -37,8 +37,13 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
     public CharacterTree modify(CharacterTree characterTree) {
 
         StatDescriptor stat1 = randomStat(characterTree), stat2 = randomStat(characterTree);
-
-        CharacterNode node = new CharacterNode(characterTree);
+        
+        CharacterNode node;
+        
+        if (characterTree.curLayer > 0) {
+            node = new CharacterNode(characterTree.layers.get(characterTree.curLayer).get(0), characterTree);
+        } else node = new CharacterNode(characterTree);
+        
         node.addStat(stat1, new NumericStat(stat1.increase));
         node.addStat(stat2, new NumericStat(stat2.increase));
             characterTree.addNode(node);

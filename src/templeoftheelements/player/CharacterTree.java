@@ -44,9 +44,9 @@ public class CharacterTree {
     public ArrayList<Spell.Detail> scalingDetails;
     public ArrayList<StatDescriptor> primaryAttributes;
     public ArrayList<StatDescriptor> secondaryAttributes;
-    public ArrayList<CharacterNode> capstones;
+    public ArrayList<ArrayList<CharacterNode>> layers;
     public ArrayList<CharacterNode> nodes;
-    public int numLayers, abilities, spammables, situationals;
+    public int curLayer, abilities, spammables, situationals;
     public double number; //This determines which section of the character tree this skill tree gets.
         
     
@@ -61,8 +61,10 @@ public class CharacterTree {
         costDetails = new ArrayList<>();
         scalingDetails = new ArrayList<>();
         nodes = new ArrayList<>();
+        layers = new ArrayList<>();
+        layers.add(new ArrayList<>());
+        curLayer = 0;
         abilities = 0;
-        numLayers = 0;
         spammables = 0;
         situationals = 0;
     }
@@ -73,6 +75,9 @@ public class CharacterTree {
     
     public void addNode(CharacterNode node) {
         nodes.add(node);
+        if (layers.size() < node.getLayer() + 1)
+            layers.add(new ArrayList<>());
+        layers.get(node.getLayer()).add(node);
         wheel.addNode(node);
     }
     
