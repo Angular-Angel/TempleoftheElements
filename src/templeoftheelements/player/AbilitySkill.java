@@ -23,11 +23,15 @@ public class AbilitySkill extends Skill {
     public ArrayList<Ability.Detail> scalingDetails;
     
     public AbilitySkill(String name, CharacterTree tree) {
-        super(name);
         this.tree = tree;
         costDetails = new ArrayList<>();
         effectDetails = new ArrayList<>();
         scalingDetails =  new ArrayList<>();
+    }
+
+    @Override
+    public String getName() {
+        return ability.getName();
     }
     
 }
