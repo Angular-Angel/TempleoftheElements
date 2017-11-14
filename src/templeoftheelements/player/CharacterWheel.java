@@ -59,7 +59,7 @@ public class CharacterWheel {
                 double diff = (slice/(double) layer.size()); // The arc between each node in this layer of the tree.
                 for (int j = 0; j < layer.size(); j++) { //for each node in the layer
                     CharacterNode node = layer.get(j); //get the node
-                    int ring = node.getLayer(); //figure out which ring we're in.
+                    int ring = (int) (Math.floor(i/5)+1); //figure out which ring we're in.
                     //offset = diff * (Math.floor(i/5));
                     Vec2 position;
                     if (node.children.size() != 1) {
