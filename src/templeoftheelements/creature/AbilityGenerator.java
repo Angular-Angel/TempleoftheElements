@@ -40,7 +40,7 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
     public AbilitySkill generate(Object o) {
         CharacterTree tree = (CharacterTree) o;
         
-        AbilitySkill abilitySkill = new AbilitySkill("Unnamed Skill", tree);
+        AbilitySkill abilitySkill = new AbilitySkill(tree);
         
         //Important info - the skill tree this ability is for and the abilities that skill tree currently has on it.
         

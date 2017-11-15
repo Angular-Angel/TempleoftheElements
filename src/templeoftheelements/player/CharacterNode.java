@@ -99,10 +99,6 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     }
     
     public void acquire() {
-        if (isAcquired()) {
-            System.out.println("??");
-            return;
-        }
         acquired = true;
         tree.getCreature().addAllStats(this);
     }
@@ -209,16 +205,6 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         ArrayList<CharacterNode> ret =  new ArrayList<>();
         ret.add(this);
         return ret;
-    }
-    
-    public void place(double angle) {
-        if (parents.size() == 0) { //Put the root nodes at the start of their trees.
-            position = new Vec2();
-            position.x = (float) (65 * Math.sin(angle));
-            position.y = (float) (65 * Math.cos(angle));
-        } else if (parents.size() == 1 && parents.get(0).children.size() > 1) {
-            
-        }
     }
 
     /**

@@ -70,18 +70,16 @@ public class CharacterWheel {
                         position.y = (float) (65 * (i + 1) * Math.cos(angle));
                         node.setPosition(position);
                     } else {
-                        if (node.parents.size() == 1) {
-                            angle = (k * ring + j / 2) * Math.toRadians(360/(double) (trees.size() * ring));
-                            angle -= 0.5 * Math.toRadians(360/(double) (trees.size() * ring)) * Math.floor(i/5);
-                            position = new Vec2();
-                            position.x = (float) (65 * (i + 1) * Math.sin(angle));
-                            position.y = (float) (65 * (i + 1) * Math.cos(angle));
-                            angle -= 30;
-                            angle += (j % 2) * 60;
-                            position.x += (float) (30 * Math.sin(angle));
-                            position.y += (float) (30 * Math.cos(angle));
-                            node.setPosition(position);
-                        }
+                        angle = (k * ring + j / 2) * Math.toRadians(360/(double) (trees.size() * ring));
+                        angle -= 0.5 * Math.toRadians(360/(double) (trees.size() * ring)) * Math.floor(i/5);
+                        position = new Vec2();
+                        position.x = (float) (65 * (i + 1) * Math.sin(angle));
+                        position.y = (float) (65 * (i + 1) * Math.cos(angle));
+                        angle -= 30;
+                        angle += (j % 2) * 60;
+                        position.x += (float) (30 * Math.sin(angle));
+                        position.y += (float) (30 * Math.cos(angle));
+                        node.setPosition(position);
             
                     }
                         /*case CLOCKWISE20:
