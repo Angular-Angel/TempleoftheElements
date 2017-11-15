@@ -1,14 +1,10 @@
 
 package templeoftheelements.player;
 
-import generation.ProceduralGenerator;
-import generation.GenerationProcedure;
 import java.util.ArrayList;
-import stat.StatContainer;
 import stat.StatDescriptor;
 import templeoftheelements.Element;
 import templeoftheelements.spells.Spell;
-import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.Creature;
 
 /**
@@ -74,6 +70,7 @@ public class CharacterTree {
     }
     
     public void addNode(CharacterNode node) {
+        node.init(getCreature());
         nodes.add(node);
         if (layers.size() < node.getLayer() + 1)
             layers.add(new ArrayList<>());

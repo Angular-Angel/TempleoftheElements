@@ -139,6 +139,11 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                 }
                 else abilitySkill.getStat("Pool").modify(-1);
             }
+            
+            abilitySkill.removeStat("Pool");
+            abilitySkill.removeStat("Cost Pool");
+            abilitySkill.removeStat("Complexity");
+            abilitySkill.removeStat("Cost Complexity");
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AbilityGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -8,6 +8,7 @@ package templeoftheelements.spells;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.jbox2d.common.Vec2;
+import stat.StatContainer;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
@@ -84,11 +85,10 @@ public class EnemyTargetSpell extends Spell {
     }
     
     @Override
-    public void init(Creature c) {
+    public void init(StatContainer c) {
         super.init(c);
         for (Effect e : effects.values()) {
-            e.addReference("Source", c);
-            e.active = true;
+            e.init(c);
         }
     }
     

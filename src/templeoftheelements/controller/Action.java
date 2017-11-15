@@ -16,7 +16,6 @@ import templeoftheelements.display.Renderable;
 public abstract class Action extends Ability {
 
     private int cooldown;
-    public Creature creature;
     
     public Action(String name, StatContainer stats) {
         super(name, true, stats);
@@ -54,12 +53,6 @@ public abstract class Action extends Ability {
         this.cooldown = cooldown;
     }
     
-    public abstract Ability copy();
-    
     @Override
-    public void init(Creature c) {
-        creature = c;
-        addReference("Source", c);
-        this.active = true;
-    }
+    public abstract Ability copy();
 }

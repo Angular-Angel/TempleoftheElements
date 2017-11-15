@@ -6,6 +6,7 @@
 package templeoftheelements.player;
 
 import java.util.ArrayList;
+import stat.StatContainer;
 import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.Creature;
 
@@ -30,8 +31,16 @@ public class AbilitySkill extends Skill {
         scalingDetails =  new ArrayList<>();
     }
     
+    @Override
     public void beAcquired(Creature creature) {
+        super.beAcquired(creature);
         creature.addAbility(ability);
+    }
+    
+    @Override
+    public void init(StatContainer c) {
+        ability.init(c);
+        super.init(c);
     }
 
     @Override

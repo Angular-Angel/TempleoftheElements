@@ -86,6 +86,4 @@ public abstract class Ability  extends Trait {
     
     public abstract Ability copy();
     
-    public abstract void init(Creature c);
-    
 }

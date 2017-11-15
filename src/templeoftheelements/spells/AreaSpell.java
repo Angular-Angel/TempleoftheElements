@@ -6,6 +6,7 @@
 package templeoftheelements.spells;
 
 import java.util.HashMap;
+import stat.StatContainer;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
@@ -83,11 +84,10 @@ public class AreaSpell extends Spell {
     }
     
     @Override
-    public void init(Creature c) {
+    public void init(StatContainer c) {
         super.init(c);
         for (Effect e : effects.values()) {
-            e.addReference("Source", c);
-            e.active = true;
+            e.init(c);
         }
     }
     

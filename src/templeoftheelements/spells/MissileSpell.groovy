@@ -94,10 +94,9 @@ public class MissileSpell extends Spell {
     
     
     @Override
-    public void init(Creature c) {
+    public void init(StatContainer c) {
         super.init(c);
-        missile.addReference("Source", c);
-        missile.setActive(true);
+        missile.init(c);
     }
     
     public boolean containsEffect(String s) {

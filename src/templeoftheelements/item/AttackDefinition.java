@@ -102,10 +102,11 @@ public class AttackDefinition extends Trait implements EffectContainer{
         }
     }
     
+    @Override
     public void setActive(boolean active) {
-        this.active = active;
+        super.setActive(active);
         for (Effect e : onHitEffects.values()) {
-            e.active = active;
+            e.setActive(active);
         }
     }
 

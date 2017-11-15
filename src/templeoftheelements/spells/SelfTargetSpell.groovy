@@ -85,8 +85,7 @@ class SelfTargetSpell extends Spell {
     public void init(Creature c) {
         super.init(c);
         for (Effect e : effects.values()) {
-            e.addReference("Source", c);
-            e.active = true;
+            e.init(c);
         }
     }
 }

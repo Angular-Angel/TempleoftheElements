@@ -5,9 +5,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
+import stat.StatContainer;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.Creature;
 
 
 
@@ -29,6 +31,13 @@ public class SkillNode extends CharacterNode {
         super.acquire();
         skill.beAcquired(tree.getCreature());
         tree.getCreature().getController().refactorActions();
+    }
+    
+    @Override
+    public void init(StatContainer c) {
+        System.out.println("Init!");
+        skill.init(c);
+        super.init(c);
     }
     
     @Override
