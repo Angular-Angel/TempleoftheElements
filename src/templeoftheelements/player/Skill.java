@@ -23,8 +23,6 @@ public abstract class Skill extends StatContainer {
     
     public abstract String getName();
     
-    public String getDescription() {
-        return "Nothing to see here.";
-    }
+    public abstract String getDescription();
     
 }

@@ -7,6 +7,7 @@ package templeoftheelements.player;
 
 import java.util.ArrayList;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.Creature;
 
 /**
  *
@@ -28,10 +29,19 @@ public class AbilitySkill extends Skill {
         effectDetails = new ArrayList<>();
         scalingDetails =  new ArrayList<>();
     }
+    
+    public void beAcquired(Creature creature) {
+        creature.addAbility(ability);
+    }
 
     @Override
     public String getName() {
         return ability.getName();
+    }
+
+    @Override
+    public String getDescription() {
+        return ability.getDescription();
     }
     
 }
