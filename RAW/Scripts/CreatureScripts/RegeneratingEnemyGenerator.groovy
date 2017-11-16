@@ -3,6 +3,7 @@ import templeoftheelements.creature.CreatureDefinition;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.PassiveAbility;
+import stat.StatContainer;
 
 /**
  *
@@ -15,7 +16,7 @@ class RegeneratingEnemyGenerator extends CreatureGenerationProcedure {
         
         PassiveAbility regeneration = new PassiveAbility() {
             
-            Creature creature;
+            StatContainer creature;
             
             public String getDescription() {
                 return "This ability heals it's owner very quickly.";
@@ -25,8 +26,9 @@ class RegeneratingEnemyGenerator extends CreatureGenerationProcedure {
                 return this.getClass().newInstance();
             }
 
-            public void init(Creature c) {
+            public void init(StatContainer c) {
                 creature = c;
+                super.init(c);
             }
             
             public void step(float dt) {
