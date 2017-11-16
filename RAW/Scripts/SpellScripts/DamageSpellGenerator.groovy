@@ -36,7 +36,7 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
             
             Effect e = spell.getEffect(effectName);
             
-            e.addStat("Damage Value", new NumericStat(damageValue));
+            e.addStat("Damage Value", new NumericStat(damageValue*5));
             
         } else {
             

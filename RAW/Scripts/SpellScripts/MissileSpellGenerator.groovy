@@ -36,7 +36,7 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
         
         speedValue = pool - sizeValue;
 
-        speedValue = 40 + (speedValue -1) * 4;
+        speedValue = 100 + (speedValue -1) * 10;
         speed = new EquationStat("" + speedValue + " * [Source@Spell Speed Multiplier]");
 
         sizeValue = 0.3 + (sizeValue -1) * 0.03;
