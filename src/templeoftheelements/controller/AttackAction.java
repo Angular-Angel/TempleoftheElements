@@ -52,10 +52,5 @@ public class AttackAction extends Action {
     public String getDescription() {
         return description;
     }
-
-    @Override
-    public void init(Creature c) {
-        creature = c;
-    }
     
 }
