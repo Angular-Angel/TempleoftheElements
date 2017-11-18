@@ -42,8 +42,8 @@ public class CharacterTree {
     public ArrayList<StatDescriptor> secondaryAttributes;
     public ArrayList<ArrayList<CharacterNode>> layers;
     public ArrayList<CharacterNode> nodes;
-    public int curLayer, abilities, spammables, situationals;
-    public double number; //This determines which section of the character tree this skill tree gets.
+    public int number, curLayer, abilities, spammables, situationals;
+    public double arcLength, curAngle; //This determines how much of an arc the skill tree gets.
         
     
     public CharacterTree(String name, CharacterWheel wheel) {
@@ -72,10 +72,18 @@ public class CharacterTree {
     public void addNode(CharacterNode node) {
         node.init(getCreature());
         nodes.add(node);
-        if (layers.size() < node.getLayer() + 1)
+        while (layers.size() < node.getLayer() + 1) {
+            System.err.println("had to add layer!");
             layers.add(new ArrayList<>());
+        }
         layers.get(node.getLayer()).add(node);
         wheel.addNode(node);
+    }
+    
+    public void addRing() {
+        for (int i = 0; i < 5; i++) {
+            layers.add(new ArrayList<>());
+        }
     }
     
 }

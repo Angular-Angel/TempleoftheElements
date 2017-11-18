@@ -9,6 +9,7 @@ import templeoftheelements.player.CharacterTree;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.SkillNode;
 import templeoftheelements.player.OrRequirement;
+import com.samrj.devil.math.Vec2;
 
 //This class generates descriptions of clusters if nodes for character trees.
 
@@ -21,39 +22,55 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         throw new UnsupportedOperationException();
     }
     
-    private StatDescriptor randomStat(CharacterTree characterTree) {
+    private StatDescriptor randomStat(CharacterTree tree) {
         StatDescriptor stat;
         if (random.nextInt(2) == 0) {
             //Use a primary stat
-            stat = characterTree.primaryAttributes.get(random.nextInt(characterTree.primaryAttributes.size()));
+            stat = tree.primaryAttributes.get(random.nextInt(tree.primaryAttributes.size()));
         } else {
             //use a secondary stat.
-            stat = characterTree.secondaryAttributes.get(random.nextInt(characterTree.secondaryAttributes.size()));
+            stat = tree.secondaryAttributes.get(random.nextInt(tree.secondaryAttributes.size()));
         }
         
         return stat;
     }
 
-    public CharacterTree modify(CharacterTree characterTree) {
+    public CharacterTree modify(CharacterTree tree) {
 
-        StatDescriptor stat1 = randomStat(characterTree), stat2 = randomStat(characterTree);
+        StatDescriptor stat1 = randomStat(tree), stat2 = randomStat(tree);
         
-        CharacterNode node;
+        CharacterNode node; //whichever node we're currently working on.
         
-        if (characterTree.curLayer > 0) {
-            node = new CharacterNode(characterTree.layers.get(characterTree.curLayer).get(0), characterTree);
-        } else node = new CharacterNode(characterTree);
+        
+        // Generate the entry node
+        if (tree.curLayer > 0) {
+            node = new CharacterNode(tree.layers.get(tree.curLayer - 1).get(0), tree);
+        } else node = new CharacterNode(tree);
+        
+        //Set the position of the entry node
+        Vec2 position = new Vec2();
+        position.x = (float) (65 * (tree.curLayer + 1) * Math.sin(tree.curAngle));
+        position.y = (float) (65 * (tree.curLayer + 1) * Math.cos(tree.curAngle));
+        node.setPosition(position);
         
         node.addStat(stat1, new NumericStat(stat1.increase));
         node.addStat(stat2, new NumericStat(stat2.increase));
-            characterTree.addNode(node);
+        tree.addNode(node);
         
         CharacterNode entry = node; //remember our first node
         
         for (int i = 0; i < 3; i++) {
-            node = new CharacterNode(node, characterTree);
+            node = new CharacterNode(node, tree);
             node.addStat(stat1, new NumericStat(stat1.increase));
-            characterTree.addNode(node);
+            
+            position = new Vec2();
+            position.x = (float) (65 * (tree.curLayer + 2 + i) * Math.sin(tree.curAngle));
+            position.y = (float) (65 * (tree.curLayer + 2 + i) * Math.cos(tree.curAngle));
+            position.x += (float) (30 * Math.sin(tree.curAngle - 30));
+            position.y += (float) (30 * Math.cos(tree.curAngle - 30));
+            node.setPosition(position);
+            
+            tree.addNode(node);
         }
         
         CharacterNode endLine1 = node;
@@ -61,9 +78,17 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         node = entry; //return to the first node of the cluseter, so we end up with two separate lines of ndes.
         
         for (int i = 0; i < 3; i++) {
-            node = new CharacterNode(node, characterTree);
+            node = new CharacterNode(node, tree);
             node.addStat(stat2, new NumericStat(stat2.increase));
-            characterTree.addNode(node);
+            
+            position = new Vec2();
+            position.x = (float) (65 * (tree.curLayer + 2 + i) * Math.sin(tree.curAngle));
+            position.y = (float) (65 * (tree.curLayer + 2 + i) * Math.cos(tree.curAngle));
+            position.x += (float) (30 * Math.sin(tree.curAngle + 30));
+            position.y += (float) (30 * Math.cos(tree.curAngle + 30));
+            node.setPosition(position);
+            
+            tree.addNode(node);
         }
         
         CharacterNode endLine2 = node;
@@ -72,21 +97,22 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         if (random.nextInt(4) == 0) {
             //generate skill
 
-            node = new SkillNode(new OrRequirement(endLine1, endLine2), characterTree, 
-                game.registry.abilityGenerator.generate(characterTree));
-            
-            characterTree.addNode(node);
-
+            node = new SkillNode(new OrRequirement(endLine1, endLine2), tree, 
+                game.registry.abilityGenerator.generate(tree));
         } else {
-            node = new CharacterNode(new OrRequirement(endLine1, endLine2), characterTree);
+            node = new CharacterNode(new OrRequirement(endLine1, endLine2), tree);
 
             node.addStat(stat1, new NumericStat(stat1.increase));
             node.addStat(stat2, new NumericStat(stat2.increase));
-            characterTree.addNode(node);
         }
+        position = new Vec2();
+        position.x = (float) (65 * (tree.curLayer + 5) * Math.sin(tree.curAngle));
+        position.y = (float) (65 * (tree.curLayer + 5) * Math.cos(tree.curAngle));
+        node.setPosition(position);
+        
+        tree.addNode(node);
 
-
-        return characterTree;
+        return tree;
     }
 
     public boolean isApplicable(CharacterTree tree) {

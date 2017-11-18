@@ -25,7 +25,7 @@ import templeoftheelements.display.Renderable;
 public class CharacterNode extends StatContainer implements Requirement , Renderable, Clickable {
     
     
-    protected Vec2 position;
+    private Vec2 position;
     protected CharacterTree tree;
     protected boolean acquired;
     protected Requirement requirements;
@@ -119,7 +119,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
             GL11.glColor3f(255, 0, 0);
             
         
-        GraphicsUtil.drawCircle(position, 20, 32);
+        GraphicsUtil.drawCircle(getPosition(), 20, 32);
         
         requirements.draw(this);
     }
@@ -138,8 +138,8 @@ public class CharacterNode extends StatContainer implements Requirement , Render
             
             GL11.glBegin(GL11.GL_LINE_LOOP);
             
-            GL11.glVertex2f(source.position.x, source.position.y);
-            GL11.glVertex2f(this.position.x, this.position.y);
+            GL11.glVertex2f(source.getPosition().x, source.getPosition().y);
+            GL11.glVertex2f(this.getPosition().x, this.getPosition().y);
             
             GL11.glEnd();
         }
@@ -147,7 +147,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
 
     @Override
     public boolean isClicked(float x, float y) {
-        return (position.dist(new Vec2(x, y)) <= 25);
+        return (getPosition().dist(new Vec2(x, y)) <= 25);
     }
 
     @Override

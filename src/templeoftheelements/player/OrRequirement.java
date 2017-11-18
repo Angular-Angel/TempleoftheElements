@@ -47,8 +47,8 @@ public class OrRequirement implements Requirement{
 
                 GL11.glBegin(GL11.GL_LINE_LOOP);
 
-                GL11.glVertex2f(source.position.x, source.position.y);
-                GL11.glVertex2f(target.position.x, target.position.y);
+                GL11.glVertex2f(source.getPosition().x, source.getPosition().y);
+                GL11.glVertex2f(target.getPosition().x, target.getPosition().y);
 
                 GL11.glEnd();
             }
