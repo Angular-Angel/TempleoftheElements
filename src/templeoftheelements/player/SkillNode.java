@@ -35,7 +35,6 @@ public class SkillNode extends CharacterNode {
     
     @Override
     public void init(StatContainer c) {
-        System.out.println("Init!");
         skill.init(c);
         super.init(c);
     }

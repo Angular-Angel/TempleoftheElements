@@ -33,7 +33,6 @@ public abstract class Spell extends Action implements EffectContainer {
         try {
             return (super.isPossible(c) && c.getScore("Mana") > getScore("Mana Cost"));
         } catch (NoSuchStatException ex) {
-            //System.out.println(showCosts());
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;

@@ -242,11 +242,7 @@ public class Player implements Controller {
     }
     
     public void debug() {
-        try {
-            System.out.println(creature.getScore("Stamina Regen"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
     
 }
