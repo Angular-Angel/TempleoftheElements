@@ -34,7 +34,6 @@ class RegeneratingEnemyGenerator extends CreatureGenerationProcedure {
             public void step(float dt) {
                 if (creature.getScore("HP") < creature.getScore("Max HP")) {
                     creature.getStat("HP").modifyBase(dt);
-                    System.out.println(creature.getScore("HP"));
                 }
             }
         }

@@ -34,11 +34,6 @@ class MonsterGenerator extends CreatureGenerationProcedure {
         
         rand = random.nextInt(arrayList.size());
         ret.details.add(arrayList.get(rand));
-
-        
-//        for (CreatureDefinition.Detail detail : ret.details) {
-//            System.out.println(detail);
-//        }
         
         //Determine secondary strengths and then choose them.
         
