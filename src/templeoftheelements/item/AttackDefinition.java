@@ -54,8 +54,8 @@ public class AttackDefinition extends Trait implements EffectContainer{
             if (hasStat("Ranged Attack")) {
                 attack = new RangedAttack(attacker, this, shape);
                 Vec2 pos = attacker.getPosition();
-                pos.x += (attacker.getScore("Size") + 1) * (float) Math.sin(Math.toRadians(attacker.getDirection()));
-                pos.y += (attacker.getScore("Size") + 1) * (float) Math.cos(Math.toRadians(attacker.getDirection()));
+                pos.x += (attacker.stats.getScore("Size") + 1) * (float) Math.sin(Math.toRadians(attacker.getDirection()));
+                pos.y += (attacker.stats.getScore("Size") + 1) * (float) Math.cos(Math.toRadians(attacker.getDirection()));
                 Vec2 vector = new Vec2();
                 vector.x += 2 * attack.getScore("Speed") * (float) Math.sin(Math.toRadians(attacker.getDirection()));
                 vector.y += 2 * attack.getScore("Speed") * (float) Math.cos(Math.toRadians(attacker.getDirection()));
@@ -63,10 +63,10 @@ public class AttackDefinition extends Trait implements EffectContainer{
                 attack.getBody().applyForceToCenter(vector);
             } else {
                 int dir = -(int) (getScore("Angular Travel")/2);
-                float reach = getScore("Reach") + attacker.getScore("Size")/2;
+                float reach = getScore("Reach") + attacker.stats.getScore("Size")/2;
                 attack = new MeleeAttack(attacker, this, shape, dir, reach);
                 ((MeleeAttack) attack).move(attacker.getPosition(), 0);
-                attack.addStat("Damage", new NumericStat(attacker.getScore("Physical Damage") 
+                attack.addStat("Damage", new NumericStat(attacker.stats.getScore("Physical Damage") 
                         * attack.getScore("Damage Multiplier")));
             }
         } catch (NoSuchStatException ex) {

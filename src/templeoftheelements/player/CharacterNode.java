@@ -100,7 +100,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     
     public void acquire() {
         acquired = true;
-        tree.getCreature().addAllStats(this);
+        tree.getCreature().stats.addAllStats(this);
     }
 
     @Override

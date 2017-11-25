@@ -13,13 +13,9 @@ import templeoftheelements.creature.Creature;
 
 
 public class CharacterWheel {
-    private Player player;
+    private final Player player;
     public ArrayList<CharacterNode> nodes; //all the nodes in the character wheel.
     public ArrayList<CharacterTree> trees; //The list of trees on the character wheel.
-    public int statNodes = 0;
-    public int abilityNodes = 0;
-    public int activeNodes = 0;
-    public int passiveNodes = 0;
     
     public final static int NUM_SKILL_TREES = 5;
     

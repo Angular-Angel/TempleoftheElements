@@ -35,6 +35,7 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         return stat;
     }
 
+    @Override
     public CharacterTree modify(CharacterTree tree) {
 
         StatDescriptor stat1 = randomStat(tree), stat2 = randomStat(tree);

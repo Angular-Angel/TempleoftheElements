@@ -19,7 +19,7 @@ public abstract class Attack extends StatContainer implements Actor, Renderable,
     public Attack(Creature c) {
         onHitEffects = new HashMap<>();
         origin = c;
-        addReference("Source", c);
+        addReference("Source", c.stats);
     }
     
     public void addOnHitEffect(Effect effect) {

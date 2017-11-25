@@ -31,7 +31,7 @@ public abstract class Spell extends Action implements EffectContainer {
     @Override
     public boolean isPossible(Creature c) {
         try {
-            return (super.isPossible(c) && c.getScore("Mana") > getScore("Mana Cost"));
+            return (super.isPossible(c) && c.stats.getScore("Mana") > getScore("Mana Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,7 +42,7 @@ public abstract class Spell extends Action implements EffectContainer {
     public void perform(Creature creature, Position pos) {
         try {
             creature.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.USED_SPELL, this));
-            creature.getStat("Mana").modifyBase(-getScore("Mana Cost"));
+            creature.stats.getStat("Mana").modifyBase(-getScore("Mana Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -28,10 +28,10 @@ public abstract class StatusEffect extends StatContainer implements Actor {
     public void updateStat(String name, Stat stat) {
         try {
             if (hasStat(name)) {
-                creature.getStat(name).modify(-getScore(name));
+                creature.stats.getStat(name).modify(-getScore(name));
                 removeStat(name);
                 addStat(name, stat);
-                creature.getStat(name).modify(getScore(name));
+                creature.stats.getStat(name).modify(getScore(name));
             }
             else addStat(name, stat);
             

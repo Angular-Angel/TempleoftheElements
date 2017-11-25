@@ -7,7 +7,6 @@ import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
 import templeoftheelements.controller.Controller;
-import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.item.ItemDrop;
@@ -25,7 +24,7 @@ public class CreatureDefinition extends StatContainer {
     public Renderable sprite;
     
     public ArrayList<BodyPartDefinition> bodyParts;
-    private HashMap<String, Float> resistances;
+    private final HashMap<String, Float> resistances;
     public ArrayList<ItemDrop> itemDrops;
     public ArrayList<Ability> abilities;
     public ArrayList<Detail> types;
@@ -82,14 +81,14 @@ public class CreatureDefinition extends StatContainer {
         return genCreature(0, 0);
     }
     
-    public Creature genCreature(float x, float y) throws NoSuchStatException {
+    public Creature genCreature(float x, float y) {
         Creature ret = new Creature(new Position(x, y), this);
         if (sprite != null) ret.setSprite(sprite);
         for (BodyPartDefinition b : bodyParts) b.genBodyPart(ret);
         for (String type : resistances.keySet()) ret.addResistance(type, resistances.get(type));
-        ret.addStat("HP", new NumericStat(ret.getScore("Max HP")));
-        ret.addStat("Mana", new NumericStat(ret.getScore("Max Mana")));
-        ret.addStat("Stamina", new NumericStat(ret.getScore("Max Stamina")));
+        ret.stats.addStat("HP", new NumericStat(ret.stats.getScore("Max HP")));
+        ret.stats.addStat("Mana", new NumericStat(ret.stats.getScore("Max Mana")));
+        ret.stats.addStat("Stamina", new NumericStat(ret.stats.getScore("Max Stamina")));
         for (Ability a : abilities) ret.addAbility(a.copy());
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
         ret.setController(controllerType.clone(ret));

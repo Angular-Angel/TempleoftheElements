@@ -39,7 +39,7 @@ public class HUD implements Renderable, Clickable {
         try {
             //How much health we got?
 
-            hp = player.getCreature().getScore("HP")/player.getCreature().getScore("Max HP");
+            hp = player.getCreature().stats.getScore("HP")/player.getCreature().stats.getScore("Max HP");
         } catch (NoSuchStatException ex) {
             Logger.getLogger(HUD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,14 +64,8 @@ public class HUD implements Renderable, Clickable {
         GL11.glEnd();
         
         float mana = 0;
-        
-        try {
-            //How much mana we got?
-
-            mana = player.getCreature().getScore("Mana")/player.getCreature().getScore("Max Mana");
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(HUD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println(player.getCreature().stats.getStatList().size());
+        mana = player.getCreature().stats.getScore("Mana")/player.getCreature().stats.getScore("Max Mana");
         
         //draw the mana bar.
         GL11.glColor3f(0, 0, 255);
@@ -97,7 +91,7 @@ public class HUD implements Renderable, Clickable {
         try {
             //How much stamina we got?
 
-            stamina = player.getCreature().getScore("Stamina")/player.getCreature().getScore("Max Stamina");
+            stamina = player.getCreature().stats.getScore("Stamina")/player.getCreature().stats.getScore("Max Stamina");
         } catch (NoSuchStatException ex) {
             Logger.getLogger(HUD.class.getName()).log(Level.SEVERE, null, ex);
         }

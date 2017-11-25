@@ -35,7 +35,7 @@ import templeoftheelements.player.*;
 
 
 
-public class Creature extends StatContainer implements Damageable, Actor, Renderable, Clickable, Damager, GameObject {
+public class Creature implements Damageable, Actor, Renderable, Clickable, Damager, GameObject {
     private Renderable sprite;
     private Controller controller;
     private Fixture fixture;
@@ -53,6 +53,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     private ArrayList<PassiveAbility> passives;
     private boolean winded;
     private String name; //For display and debug purposes.
+    public StatContainer stats;
 
     public Creature() {
         this(new Position(), new StatContainer() {});
@@ -73,20 +74,16 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         statusEffects = new HashMap<>();
         listeners = new ArrayList<>();
         passives = new ArrayList<>();
-        addAllStats(stats);
-        try {
-            sprite = new VectorCircle(getScore("Size"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-            sprite = new VectorCircle(1);
-        }
+        this.stats = new StatContainer(stats);
+        this.stats.refactor();
+        sprite = new VectorCircle(stats.getScore("Size"));
     }
     
     public void addAbility(Ability a) {
         if (a instanceof Action) abilities.add((Action) a.copy());
         if (a instanceof PassiveAbility) passives.add((PassiveAbility) a);
         if (a instanceof CreatureListener) listeners.add((CreatureListener) a);
-        a.init(this);
+        a.init(this.stats);
     }
     
     public void removeAbility(Ability a) {
@@ -99,12 +96,13 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         return abilities;
     }
     
-    @Override
     public void refactor() {
         for (StatusEffect effect : statusEffects.values()) {
             defactorStatusEffect(effect);
         }
-        super.refactor();
+        
+        stats.refactor();
+        
         for (BodyPart part : bodyParts) {
             part.factor();
         }
@@ -169,7 +167,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         bodydef.type = BodyType.DYNAMIC;
         CircleShape bodyShape = new CircleShape();
         try {
-            bodyShape.setRadius(getScore("Size"));
+            bodyShape.setRadius(stats.getScore("Size"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
             bodyShape.setRadius(1);
@@ -211,24 +209,24 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         if (controller == null) return;
         controller.step(dt);
         try {
-            if (!winded && getScore("Stamina") < getScore("Max Stamina")) {
-                getStat("Stamina").modifyBase(getScore("Stamina Regen") * dt * 150);
-                if (getScore("Stamina") > getScore("Max Stamina")) getStat("Stamina").set(getScore("Max Stamina"));
+            if (!winded && stats.getScore("Stamina") < stats.getScore("Max Stamina")) {
+                stats.getStat("Stamina").modifyBase(stats.getScore("Stamina Regen") * dt * 150);
+                if (stats.getScore("Stamina") > stats.getScore("Max Stamina")) stats.getStat("Stamina").set(stats.getScore("Max Stamina"));
             }
-            Vec2 speed = getBody().getLinearVelocity().mul(1 - getScore("Acceleration")/getScore("Max Speed"));
+            Vec2 speed = getBody().getLinearVelocity().mul(1 - stats.getScore("Acceleration")/stats.getScore("Max Speed"));
             getBody().setLinearVelocity(speed);
-            getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(getScore("Acceleration")));
+            getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(stats.getScore("Acceleration")));
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.MOVED, getBody().getLinearVelocity().length()));
             if (curAttack != null) {
                 winded = true;
                 if (!curAttack.isDead()) {
                     curAttack.move(getPosition(), getDirection());
                 } else {
-                    timer = (int) curAttack.getScore("Recovery Time") * getScore("Attack Speed Multiplier");
+                    timer = (int) curAttack.getScore("Recovery Time") / stats.getScore("Attack Speed");
                     curAttack = null;
                 }
             }
-            float staminaPercentage = getScore("Stamina") / getScore("Max Stamina");
+            float staminaPercentage = stats.getScore("Stamina") / stats.getScore("Max Stamina");
             if (staminaPercentage < 0.9) {
                 if (statusEffects.containsKey("Fatigue") && statusEffects.get("Fatigue").severity < (int) (10 -10 * staminaPercentage)) {
                     StatusEffect effect = game.registry.statusEffects.get("Fatigue").clone();
@@ -291,7 +289,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.TOOK_DAMAGE, damage, type));
         if (resistances.containsKey(type)) damage *= (1 - resistances.get(type));
         try {
-            getStat("HP").modifyBase(-damage);
+            stats.getStat("HP").modifyBase(-damage);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -302,13 +300,13 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     public void attack(AttackDefinition attack) {
         try {
             if (curAttack != null || timer > 0) return;
-            if (attack.hasStat("Stamina Cost") && attack.getScore("Stamina Cost") > getScore("Stamina")) return;
+            if (attack.hasStat("Stamina Cost") && attack.getScore("Stamina Cost") > stats.getScore("Stamina")) return;
             Attack a = attack.generate(this);
             TempleOfTheElements.game.addSprite(a);
             TempleOfTheElements.game.addActor(a);
             if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
-            if (attack.hasStat("Stamina Cost")) getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
+            if (attack.hasStat("Stamina Cost")) stats.getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -330,7 +328,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     
     public void modifyDirection(int direction) {
         try {
-            this.direction += direction * getScore("Turning Speed");
+            this.direction += direction * stats.getScore("Turning Speed");
             while (getDirection() > 360) {
                 this.direction -= 360;
             }
@@ -345,7 +343,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     @Override
     public boolean isDead() {
         try {
-            return !(getScore("HP") > 0);
+            return !(stats.getScore("HP") > 0);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -369,7 +367,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         TempleOfTheElements.game.removeSprite(this);
         
         try {
-            TempleOfTheElements.game.player.gainExperience((int) getScore("XP"));
+            TempleOfTheElements.game.player.gainExperience((int) stats.getScore("XP"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -436,7 +434,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     }
     
     private void factorStatusEffect(StatusEffect statusEffect) {
-        addAllStats(statusEffect);
+        stats.addAllStats(statusEffect);
     }
 
     public void removeStatusEffect(StatusEffect statusEffect) {
@@ -449,14 +447,14 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
     }
     
     private void defactorStatusEffect(StatusEffect statusEffect) {
-        removeAllStats(statusEffect);
+        stats.removeAllStats(statusEffect);
     }
 
     @Override
     public boolean isClicked(float x, float y) {
         try {
-            return (x > getPosition().x - getScore("Size")/2 && x < getPosition().x + getScore("Size")/2
-                    && y > getPosition().y - getScore("Size")/2 && y < getPosition().y + getScore("Size")/2);
+            return (x > getPosition().x - stats.getScore("Size")/2 && x < getPosition().x + stats.getScore("Size")/2
+                    && y > getPosition().y - stats.getScore("Size")/2 && y < getPosition().y + stats.getScore("Size")/2);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -492,13 +490,8 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         }
         
         public void unequip() {
-            removeAllStats(equipment.playerStats);
+            stats.removeAllStats(equipment.playerStats);
             equipment = null;
-        }
-        
-        public void refactor() {
-            Creature.super.refactor();
-            
         }
         
         public boolean canEquip(Equipment e) {
@@ -514,7 +507,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         
         private void factor() {
             if (equipment == null) return;
-            addAllStats(equipment.playerStats);
+            stats.addAllStats(equipment.playerStats);
         }
         
         /**
@@ -546,7 +539,7 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
         }
         
         public void unequip() {
-            removeAllStats(equipment.playerStats);
+            stats.removeAllStats(equipment.playerStats);
             equipment = null;
             controller.refactorActions();
         }
@@ -555,10 +548,5 @@ public class Creature extends StatContainer implements Damageable, Actor, Render
             for (AttackDefinition a : ((Weapon) equipment).getAttacks()) 
                 controller.addAction(new AttackAction(a)); 
         }
-        
-        public void refactor() {
-            super.refactor();
-        }
-        
     }
 }

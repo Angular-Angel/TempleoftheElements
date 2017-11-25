@@ -18,7 +18,7 @@ public abstract class Skill extends StatContainer {
     
     
     public void beAcquired(Creature creature) {
-        creature.addAllStats(this);
+        creature.stats.addAllStats(this);
     }
     
     public abstract String getName();

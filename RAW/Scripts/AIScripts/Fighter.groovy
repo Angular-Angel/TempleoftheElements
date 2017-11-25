@@ -68,7 +68,7 @@ class Fighter implements Controller {
         Vec2 position = getCreature().getPosition();
         accel = new Vec2();
         try {
-            if (VecMath.dist(position, pos) < getCreature().getScore("Sight Range")) {
+            if (VecMath.dist(position, pos) < getCreature().stats.getScore("Sight Range")) {
                 accel = VecMath.direction(position, pos);
                 accel.normalize();
                 Vec2 dir = new Vec2(accel);

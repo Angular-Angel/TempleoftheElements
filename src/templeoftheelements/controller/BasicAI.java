@@ -47,7 +47,7 @@ public class BasicAI implements Controller {
         Vec2 pos = game.player.getCreature().getPosition();
         Vec2 position = getCreature().getPosition();
         try {
-            if (VecMath.dist(position, pos) < getCreature().getScore("Sight Range")) {
+            if (VecMath.dist(position, pos) < getCreature().stats.getScore("Sight Range")) {
                 accel = VecMath.direction(position, pos);
                 accel.normalize();
             }

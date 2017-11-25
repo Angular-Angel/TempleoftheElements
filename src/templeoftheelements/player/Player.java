@@ -215,11 +215,11 @@ public class Player implements Controller {
     
     public void roomCleared(Room room) {
         try {
-            creature.getStat("Stamina").set(creature.getScore("Max Stamina"));
-            creature.getStat("Mana").modifyBase(creature.getScore("Mana Regen"));
-            if (creature.getScore("Mana")> creature.getScore("Max Mana")) creature.getStat("Mana").set(creature.getScore("Max Mana"));
-            creature.getStat("HP").modifyBase(creature.getScore("HP Regen"));
-            if (creature.getScore("HP")> creature.getScore("Max HP")) creature.getStat("HP").set(creature.getScore("Max HP"));
+            creature.stats.getStat("Stamina").set(creature.stats.getScore("Max Stamina"));
+            creature.stats.getStat("Mana").modifyBase(creature.stats.getScore("Mana Regen"));
+            if (creature.stats.getScore("Mana")> creature.stats.getScore("Max Mana")) creature.stats.getStat("Mana").set(creature.stats.getScore("Max Mana"));
+            creature.stats.getStat("HP").modifyBase(creature.stats.getScore("HP Regen"));
+            if (creature.stats.getScore("HP")> creature.stats.getScore("Max HP")) creature.stats.getStat("HP").set(creature.stats.getScore("Max HP"));
             gainExperience(room.experience);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
