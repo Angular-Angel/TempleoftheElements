@@ -81,16 +81,16 @@ class Initiator implements InitScript {
         
         Effect effect = new Effect("Mana Crystal") {
             public float effect(EffectSource source, Object o) {
-                ((Creature) o).getStat("Mana").modifyBase(20);
-                return 20;
+                ((Creature) o).getStat("Mana").modifyBase(200);
+                return 200;
             }
            
             public String getDescription() {
-                return "Gives the user 20 mana."
+                return "Gives the user 200 mana."
             }
         };
         Consumable consumable = new Consumable("Mana Crystal", effect, new VectorCircle(0.4f), 1);
-        consumable.addStat("Size", new NumericStat(0.3f));
+        consumable.stats.addStat("Size", new NumericStat(0.3f));
         game.room.add(consumable);
         
         game.player.gainExperience(999999);

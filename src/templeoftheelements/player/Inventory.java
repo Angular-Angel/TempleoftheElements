@@ -260,8 +260,8 @@ public class Inventory extends Screen {
             if (item == i) return;
             item = i;
             width = 0;
-            height = (item.getStatList().size() + 1) * 20;
-            for (String s : item.getStatList()) 
+            height = (item.stats.getStatList().size() + 1) * 20;
+            for (String s : item.stats.getStatList()) 
                 if (width < s.length() * 20 + 100) width = s.length() * 20 + 100;
         }
         
@@ -274,9 +274,9 @@ public class Inventory extends Screen {
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GL11.glColor3f(255, 0, 0);
             game.font.getTexture().bind();
-            for (String s : item.getStatList()) {
+            for (String s : item.stats.getStatList()) {
                 try {
-                    game.font.draw(s + ": " + item.getScore(s), new com.samrj.devil.math.Vec2(x, y + i));
+                    game.font.draw(s + ": " + item.stats.getScore(s), new com.samrj.devil.math.Vec2(x, y + i));
                     i += 20;
                 } catch (NoSuchStatException ex) {
                     Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);

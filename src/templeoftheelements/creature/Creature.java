@@ -75,7 +75,6 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         listeners = new ArrayList<>();
         passives = new ArrayList<>();
         this.stats = new StatContainer(stats);
-        this.stats.refactor();
         sprite = new VectorCircle(stats.getScore("Size"));
     }
     

@@ -64,7 +64,6 @@ public class HUD implements Renderable, Clickable {
         GL11.glEnd();
         
         float mana = 0;
-        System.out.println(player.getCreature().stats.getStatList().size());
         mana = player.getCreature().stats.getScore("Mana")/player.getCreature().stats.getScore("Max Mana");
         
         //draw the mana bar.

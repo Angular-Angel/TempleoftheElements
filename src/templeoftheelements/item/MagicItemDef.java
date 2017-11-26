@@ -24,7 +24,7 @@ public class MagicItemDef {
     }
     
     public void apply(Item i) {
-        i.addAllStats(bonuses);
+        i.stats.addAllStats(bonuses);
         i.setName(name + " " + i.getName());
     }
 

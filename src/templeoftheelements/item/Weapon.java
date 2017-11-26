@@ -5,6 +5,7 @@ import com.samrj.devil.math.Vec2i;
 import java.util.ArrayList;
 import java.util.HashMap;
 import stat.Stat;
+import stat.StatContainer;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.effect.Effect;
 
@@ -25,10 +26,10 @@ public class Weapon extends Equipment {
     
     
     public Weapon(AttackDefinition attack, String name, Renderable sprite, int level) {
-        this(attack, name, sprite, new HashMap<>(), level);
+        this(attack, name, sprite, new StatContainer(), level);
     }
     
-    public Weapon(AttackDefinition attack, String name, Renderable sprite, HashMap<String, Stat> stats, int level) {
+    public Weapon(AttackDefinition attack, String name, Renderable sprite, StatContainer stats, int level) {
         super(name, "Weapon", sprite, new Vec2i(1, 1), stats, level);
         attacks = new ArrayList<>();
         attacks.add(attack);

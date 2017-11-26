@@ -30,7 +30,7 @@ public class EquipmentDefinition extends ItemDefinition {
     @Override
     public Item generate() {
         Equipment ret = new Equipment(name, type, sprite, level);
-        ret.addAllStats(viewStats());
+        ret.stats.addAllStats(viewStats());
         return ret;
     }
     

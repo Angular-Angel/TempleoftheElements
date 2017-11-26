@@ -19,10 +19,10 @@ public class Equipment extends Item {
     public StatContainer playerStats;
     
     public Equipment(String name, String type, Renderable sprite, int level) {
-        this(name, type, sprite, new Vec2i(1,1), new HashMap<>(), level);
+        this(name, type, sprite, new Vec2i(1,1), new StatContainer(), level);
     }
 
-    public Equipment(String name, String type, Renderable sprite, Vec2i size, HashMap<String, Stat> stats, int level) {
+    public Equipment(String name, String type, Renderable sprite, Vec2i size, StatContainer stats, int level) {
         super(name, sprite, size, stats, level);
         this.type = type;
         playerStats = new StatContainer();

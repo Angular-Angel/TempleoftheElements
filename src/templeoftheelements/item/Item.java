@@ -22,7 +22,7 @@ import templeoftheelements.effect.EffectSource;
  */
 
 
-public abstract class Item extends StatContainer implements Renderable, Clickable, Positionable, EffectSource {
+public abstract class Item implements Renderable, Clickable, Positionable, EffectSource {
 
     private Position position;
     private Vec2i size;
@@ -30,21 +30,22 @@ public abstract class Item extends StatContainer implements Renderable, Clickabl
     private String name;
     private int level;
     private boolean inInventory;
+    public StatContainer stats;
     
     public Item (String name, Renderable sprite, int level) {
-        this(name, sprite, new Vec2i(1, 1), new HashMap<>(), level);
+        this(name, sprite, new Vec2i(1, 1), new StatContainer(), level);
     }
     
     public Item (String name, Renderable sprite, int width, int height, int level) {
-        this(name, sprite, new Vec2i(width, height), new HashMap<>(), level);
+        this(name, sprite, new Vec2i(width, height), new StatContainer(), level);
     }
     
-    public Item (String name, Renderable sprite, HashMap<String, Stat> stats, int level) {
+    public Item (String name, Renderable sprite, StatContainer stats, int level) {
         this(name, sprite, new Vec2i(1, 1), stats, level);
     }
     
-    public Item (String name, Renderable sprite, Vec2i size, HashMap<String, Stat> stats, int level) {
-        addAllStats(stats);
+    public Item (String name, Renderable sprite, Vec2i size, StatContainer stats, int level) {
+        this.stats = new StatContainer(stats);
         this.name = name;
         this.sprite = sprite;
         this.position = new Position();
@@ -89,8 +90,8 @@ public abstract class Item extends StatContainer implements Renderable, Clickabl
     @Override
     public boolean isClicked(float x, float y) {
         try {
-            if (Math.abs(position.x - x) < getScore("Size") && 
-                Math.abs(position.y - y) < getScore("Size"))
+            if (Math.abs(position.x - x) < stats.getScore("Size") && 
+                Math.abs(position.y - y) < stats.getScore("Size"))
                 return true;
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
