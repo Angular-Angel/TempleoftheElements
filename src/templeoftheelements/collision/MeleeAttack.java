@@ -37,11 +37,11 @@ public class MeleeAttack extends Attack {
     
     public MeleeAttack(Creature c, AttackDefinition attack, Shape bodyShape, int angle, float distance) {
         super(c);
-        addAllStats(attack.viewStats());
+        addAllStats(attack.stats.viewStats());
         expired = false;
         try {
-            this.timer = (int) attack.getScore("Duration");
-            sprite = new VectorCircle(attack.getScore("Size"));
+            this.timer = (int) attack.stats.getScore("Duration");
+            sprite = new VectorCircle(attack.stats.getScore("Size"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(MeleeAttack.class.getName()).log(Level.SEVERE, null, ex);
         }

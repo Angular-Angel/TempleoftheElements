@@ -33,12 +33,12 @@ public class RangedAttack extends Attack {
 
     public RangedAttack(Creature c, AttackDefinition attack, Shape bodyShape) {
         super(c);
-        addAllStats(attack.viewStats());
+        addAllStats(attack.stats.viewStats());
         dead = false;
         this.type = attack.getType();
         
         try {
-            sprite = new VectorCircle(attack.getScore("Size"));
+            sprite = new VectorCircle(attack.stats.getScore("Size"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(RangedAttack.class.getName()).log(Level.SEVERE, null, ex);
         }

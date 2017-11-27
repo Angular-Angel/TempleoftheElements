@@ -10,7 +10,6 @@ import org.jbox2d.common.Vec2;
 import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
-import stat.Trait;
 import templeoftheelements.collision.Attack;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.MeleeAttack;
@@ -24,23 +23,25 @@ import templeoftheelements.effect.EffectContainer;
  * @author angle
  */
 
-public class AttackDefinition extends Trait implements EffectContainer{
+public class AttackDefinition implements EffectContainer{
 
     public HashMap<String, Effect> onHitEffects;
     private Shape shape;
     private Renderable sprite;
-    private String type;
+    private final String name, type;
+    public StatContainer stats;
     
     public AttackDefinition(String name, Renderable sprite, String type) {
         this(name, sprite, new CircleShape(), type);
     }
     
     public AttackDefinition(String name, Renderable sprite, Shape shape, String type) {
-        super(name, false);
         this.shape = shape;
         this.sprite = sprite;
         this.type = type;
+        this.name = name;
         onHitEffects = new HashMap<>();
+        this.stats = new StatContainer();
     }
     
     public Renderable getSprite() {
@@ -50,8 +51,8 @@ public class AttackDefinition extends Trait implements EffectContainer{
     public Attack generate(Creature attacker) {
         Attack attack = null;
         try {
-            if (shape instanceof CircleShape && shape.m_radius == 0) shape.setRadius(getScore("Size"));
-            if (hasStat("Ranged Attack")) {
+            if (shape instanceof CircleShape && shape.m_radius == 0) shape.setRadius(stats.getScore("Size"));
+            if (stats.hasStat("Ranged Attack")) {
                 attack = new RangedAttack(attacker, this, shape);
                 Vec2 pos = attacker.getPosition();
                 pos.x += (attacker.stats.getScore("Size") + 1) * (float) Math.sin(Math.toRadians(attacker.getDirection()));
@@ -62,8 +63,8 @@ public class AttackDefinition extends Trait implements EffectContainer{
                 attack.getBody().setTransform(pos, 0);
                 attack.getBody().applyForceToCenter(vector);
             } else {
-                int dir = -(int) (getScore("Angular Travel")/2);
-                float reach = getScore("Reach") + attacker.stats.getScore("Size")/2;
+                int dir = -(int) (stats.getScore("Angular Travel")/2);
+                float reach = stats.getScore("Reach") + attacker.stats.getScore("Size")/2;
                 attack = new MeleeAttack(attacker, this, shape, dir, reach);
                 ((MeleeAttack) attack).move(attacker.getPosition(), 0);
                 attack.addStat("Damage", new NumericStat(attacker.stats.getScore("Physical Damage") 
@@ -90,21 +91,19 @@ public class AttackDefinition extends Trait implements EffectContainer{
     
     public AttackDefinition copy() {
         AttackDefinition ret = new AttackDefinition(type, sprite, shape, type);
-        ret.addAllStats(this);
+        ret.stats.addAllStats(this.stats);
         return ret;
     }
     
-    @Override
     public void addReference(String s, StatContainer container) {
-        super.addReference(s, container);
+        stats.addReference(s, container);
         for (Effect e : onHitEffects.values()) {
             e.addReference(s, container);
         }
     }
     
-    @Override
     public void setActive(boolean active) {
-        super.setActive(active);
+        stats.setActive(active);
         for (Effect e : onHitEffects.values()) {
             e.setActive(active);
         }
@@ -118,6 +117,13 @@ public class AttackDefinition extends Trait implements EffectContainer{
     @Override
     public Effect getEffect(String s) {
         return onHitEffects.get(s);
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
     
 }

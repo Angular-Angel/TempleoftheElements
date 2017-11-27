@@ -299,13 +299,13 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     public void attack(AttackDefinition attack) {
         try {
             if (curAttack != null || timer > 0) return;
-            if (attack.hasStat("Stamina Cost") && attack.getScore("Stamina Cost") > stats.getScore("Stamina")) return;
+            if (attack.stats.hasStat("Stamina Cost") && attack.stats.getScore("Stamina Cost") > stats.getScore("Stamina")) return;
             Attack a = attack.generate(this);
             TempleOfTheElements.game.addSprite(a);
             TempleOfTheElements.game.addActor(a);
             if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
-            if (attack.hasStat("Stamina Cost")) stats.getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
+            if (attack.stats.hasStat("Stamina Cost")) stats.getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }

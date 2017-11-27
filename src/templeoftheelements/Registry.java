@@ -307,7 +307,7 @@ public class Registry extends RawReader {
         Renderable sprite = readSprite((JSONArray) ja.get(2));
         JSONArray stats = (JSONArray) ja.get(3); 
         AttackDefinition ret = new AttackDefinition(name, sprite, type);
-        ret.addAllStats(readJSONStats(stats)); //add the stats that the attack def will have.
+        ret.stats.addAllStats(readJSONStats(stats)); //add the stats that the attack def will have.
         
         return ret;
     }
