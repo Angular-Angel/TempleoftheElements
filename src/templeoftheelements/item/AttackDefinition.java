@@ -58,8 +58,8 @@ public class AttackDefinition implements EffectContainer{
                 pos.x += (attacker.stats.getScore("Size") + 1) * (float) Math.sin(Math.toRadians(attacker.getDirection()));
                 pos.y += (attacker.stats.getScore("Size") + 1) * (float) Math.cos(Math.toRadians(attacker.getDirection()));
                 Vec2 vector = new Vec2();
-                vector.x += 2 * attack.getScore("Speed") * (float) Math.sin(Math.toRadians(attacker.getDirection()));
-                vector.y += 2 * attack.getScore("Speed") * (float) Math.cos(Math.toRadians(attacker.getDirection()));
+                vector.x += 2 * attack.stats.getScore("Speed") * (float) Math.sin(Math.toRadians(attacker.getDirection()));
+                vector.y += 2 * attack.stats.getScore("Speed") * (float) Math.cos(Math.toRadians(attacker.getDirection()));
                 attack.getBody().setTransform(pos, 0);
                 attack.getBody().applyForceToCenter(vector);
             } else {
@@ -67,8 +67,8 @@ public class AttackDefinition implements EffectContainer{
                 float reach = stats.getScore("Reach") + attacker.stats.getScore("Size")/2;
                 attack = new MeleeAttack(attacker, this, shape, dir, reach);
                 ((MeleeAttack) attack).move(attacker.getPosition(), 0);
-                attack.addStat("Damage", new NumericStat(attacker.stats.getScore("Physical Damage") 
-                        * attack.getScore("Damage Multiplier")));
+                attack.stats.addStat("Damage", new NumericStat(attacker.stats.getScore("Physical Damage") 
+                        * attack.stats.getScore("Damage Multiplier")));
             }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AttackDefinition.class.getName()).log(Level.SEVERE, null, ex);

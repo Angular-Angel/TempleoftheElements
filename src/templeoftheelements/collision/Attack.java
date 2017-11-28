@@ -11,15 +11,17 @@ import templeoftheelements.effect.Effect;
 
 
 
-public abstract class Attack extends StatContainer implements Actor, Renderable, Collidable {
+public abstract class Attack implements Actor, Renderable, Collidable {
     
     private final HashMap<String, Effect> onHitEffects;
     protected Creature origin;
+    public final StatContainer stats;
     
     public Attack(Creature c) {
         onHitEffects = new HashMap<>();
         origin = c;
-        addReference("Source", c.stats);
+        stats = new StatContainer();
+        stats.addReference("Source", c.stats);
     }
     
     public void addOnHitEffect(Effect effect) {

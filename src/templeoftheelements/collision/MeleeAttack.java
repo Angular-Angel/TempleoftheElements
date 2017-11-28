@@ -37,7 +37,7 @@ public class MeleeAttack extends Attack {
     
     public MeleeAttack(Creature c, AttackDefinition attack, Shape bodyShape, int angle, float distance) {
         super(c);
-        addAllStats(attack.stats.viewStats());
+        stats.addAllStats(attack.stats.viewStats());
         expired = false;
         try {
             this.timer = (int) attack.stats.getScore("Duration");
@@ -66,10 +66,10 @@ public class MeleeAttack extends Attack {
         if (timer > 0) {
             try {
                 timer--;
-                if (getScore("Angular Travel") > 0)
-                    angle += getScore("Angular Travel")/getScore("Duration");
-                if (getScore("Distance Travel") > 0)
-                    dist += getScore("Distance Travel")/getScore("Duration");
+                if (stats.getScore("Angular Travel") > 0)
+                    angle += stats.getScore("Angular Travel")/stats.getScore("Duration");
+                if (stats.getScore("Distance Travel") > 0)
+                    dist += stats.getScore("Distance Travel")/stats.getScore("Duration");
             } catch (NoSuchStatException ex) {
                 Logger.getLogger(MeleeAttack.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -83,7 +83,7 @@ public class MeleeAttack extends Attack {
         Creature creature = (Creature) o;
         float damage = super.hit(o);
         try {
-            damage += creature.takeDamage(getScore("Damage"), type);
+            damage += creature.takeDamage(stats.getScore("Damage"), type);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(MeleeAttack.class.getName()).log(Level.SEVERE, null, ex);
         } expired = true;

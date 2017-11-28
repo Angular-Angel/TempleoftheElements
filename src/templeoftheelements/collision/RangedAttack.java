@@ -33,7 +33,7 @@ public class RangedAttack extends Attack {
 
     public RangedAttack(Creature c, AttackDefinition attack, Shape bodyShape) {
         super(c);
-        addAllStats(attack.stats.viewStats());
+        stats.addAllStats(attack.stats.viewStats());
         dead = false;
         this.type = attack.getType();
         
@@ -61,7 +61,7 @@ public class RangedAttack extends Attack {
         Creature creature = (Creature) o;
         float damage = super.hit(o);
         try {
-            if (hasStat("Damage")) damage += creature.takeDamage(getScore("Damage"), type);
+            if (stats.hasStat("Damage")) damage += creature.takeDamage(stats.getScore("Damage"), type);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(MeleeAttack.class.getName()).log(Level.SEVERE, null, ex);
         } dead = true;

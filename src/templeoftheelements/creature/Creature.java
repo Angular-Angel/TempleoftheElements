@@ -221,7 +221,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
                 if (!curAttack.isDead()) {
                     curAttack.move(getPosition(), getDirection());
                 } else {
-                    timer = (int) curAttack.getScore("Recovery Time") / stats.getScore("Attack Speed");
+                    timer = (int) curAttack.stats.getScore("Recovery Time") / stats.getScore("Attack Speed");
                     curAttack = null;
                 }
             }
@@ -305,7 +305,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
             TempleOfTheElements.game.addActor(a);
             if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
-            if (attack.stats.hasStat("Stamina Cost")) stats.getStat("Stamina").modifyBase(-a.getScore("Stamina Cost"));
+            if (attack.stats.hasStat("Stamina Cost")) stats.getStat("Stamina").modifyBase(-a.stats.getScore("Stamina Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
