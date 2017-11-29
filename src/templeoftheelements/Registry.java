@@ -342,7 +342,7 @@ public class Registry extends RawReader {
         JSONArray stats = (JSONArray) obj.get("Stats"); 
         
         if (stats != null)
-            ret.addAllStats(readJSONStats(stats)); //add the stats that the creature def will have.
+            ret.stats.addAllStats(readJSONStats(stats)); //add the stats that the creature def will have.
 
         JSONArray bodyParts = (JSONArray) obj.get("Body Parts");
 

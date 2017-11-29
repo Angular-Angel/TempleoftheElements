@@ -56,14 +56,14 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     public StatContainer stats;
 
     public Creature() {
-        this(new Position(), new StatContainer() {});
+        this(new Position(), new CreatureDefinition(""));
     }
     
-    public Creature(StatContainer stats) {
-        this(new Position(), stats);
+    public Creature(CreatureDefinition def) {
+        this(new Position(), def);
     }
     
-    public Creature(Position pos, StatContainer stats) {
+    public Creature(Position pos, CreatureDefinition def) {
         timer = 0; direction = 0;
         createPosition = pos;
         winded = false;
@@ -74,7 +74,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         statusEffects = new HashMap<>();
         listeners = new ArrayList<>();
         passives = new ArrayList<>();
-        this.stats = new StatContainer(stats);
+        this.stats = new StatContainer(def.stats);
         sprite = new VectorCircle(stats.getScore("Size"));
     }
     

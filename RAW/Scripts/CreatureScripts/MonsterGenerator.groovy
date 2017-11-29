@@ -44,13 +44,13 @@ class MonsterGenerator extends CreatureGenerationProcedure {
         int statTotal = 120; //Set the total amount of core attribute bonuses available.
         int tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.getStat("Strength").modifyBase(tempStat-50);
+        ret.stats.getStat("Strength").modifyBase(tempStat-50);
         
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.getStat("Dexterity").modifyBase(tempStat-50);
+        ret.stats.getStat("Dexterity").modifyBase(tempStat-50);
         
-        ret.getStat("Constitution").modifyBase(statTotal-50);
+        ret.stats.getStat("Constitution").modifyBase(statTotal-50);
         
         //Choose primary attack
         

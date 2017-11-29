@@ -17,7 +17,7 @@ import templeoftheelements.item.ItemDrop;
  */
 
 
-public class CreatureDefinition extends StatContainer {
+public class CreatureDefinition {
     
     public String name;
     public Controller controllerType;
@@ -29,6 +29,7 @@ public class CreatureDefinition extends StatContainer {
     public ArrayList<Ability> abilities;
     public ArrayList<Detail> types;
     public ArrayList<Detail> details;
+    public StatContainer stats;
     
     public static enum Detail {
         //types:
@@ -55,6 +56,7 @@ public class CreatureDefinition extends StatContainer {
         abilities = new ArrayList<>();
         details = new ArrayList<>();
         types = new ArrayList<>();
+        stats = new StatContainer();
     }
     
     public void addResistance(String type, float f) {
@@ -67,7 +69,7 @@ public class CreatureDefinition extends StatContainer {
     
     public CreatureDefinition clone() {
         CreatureDefinition ret = new CreatureDefinition(name);
-        ret.addAllStats(viewStats());
+        ret.stats.addAllStats(stats.viewStats());
         for (BodyPartDefinition b : bodyParts) ret.addBodyPart(b.name, b.position);
         for (String s : resistances.keySet()) ret.addResistance(s, resistances.get(s));
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
