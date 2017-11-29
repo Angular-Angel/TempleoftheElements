@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
 import stat.Stat;
 import stat.StatContainer;
+import stat.StatDescriptor;
 import templeoftheelements.TempleOfTheElements;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.display.CharacterScreen;
@@ -187,9 +188,9 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         for (String s : getStatList()) {
             try {
                 i -= 20;
-                if (getStat(s).statDescriptor.type == Stat.Type.INTEGER)
+                if (getStat(s).statDescriptor.type == StatDescriptor.StatType.INTEGER)
                     game.font.draw(s + ": " + getScore(s), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
-                else if (getStat(s).statDescriptor.type == Stat.Type.PERCENTAGE)
+                else if (getStat(s).statDescriptor.type == StatDescriptor.StatType.PERCENTAGE)
                     game.font.draw(s + ": " + getScore(s) + "%", new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
             } catch (NoSuchStatException ex) {
                 Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);

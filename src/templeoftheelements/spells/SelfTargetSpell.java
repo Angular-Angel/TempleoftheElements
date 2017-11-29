@@ -6,16 +6,12 @@
 
 package templeoftheelements.spells;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import org.jbox2d.common.Vec2;
-import templeoftheelements.spells.Spell;
-import static templeoftheelements.TempleOfTheElements.game;
+import stat.StatContainer;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.creature.Ability;
-import templeoftheelements.player.Clickable;
 import templeoftheelements.effect.Effect;
 /**
  *
@@ -39,9 +35,7 @@ class SelfTargetSpell extends Spell {
 
     @Override
     public void cast(Creature caster, Position pos) {
-        if (c instanceof Creature) {
-            for (Effect e : effects.values()) e.effect(caster, caster);
-        }
+        for (Effect e : effects.values()) e.effect(caster, caster);
     }
 
     @Override
@@ -82,8 +76,8 @@ class SelfTargetSpell extends Spell {
     }
     
     @Override
-    public void init(Creature c) {
-        super.init(c);
+    public void init(StatContainer c) {
+        stats.init(c);
         for (Effect e : effects.values()) {
             e.init(c);
         }

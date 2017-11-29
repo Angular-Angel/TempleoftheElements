@@ -13,9 +13,9 @@ public class AreaSpellGenerator extends AbilityGenerationProcedure {
     public AbilitySkill modify(AbilitySkill abilitySkill) {
         AreaSpell spell = new AreaSpell("Area Spell", new VectorCircle(0.5));
         
-        spell.addStat("Cast Time", new NumericStat(0));
-        spell.addStat("Mana Cost", new NumericStat(0));
-        spell.addStat("Cooldown", new NumericStat(0));
+        spell.stats.addStat("Cast Time", new NumericStat(0));
+        spell.stats.addStat("Mana Cost", new NumericStat(0));
+        spell.stats.addStat("Cooldown", new NumericStat(0));
         
         abilitySkill.ability = spell
         return abilitySkill;

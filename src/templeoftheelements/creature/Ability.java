@@ -3,12 +3,18 @@ package templeoftheelements.creature;
 
 import java.util.ArrayList;
 import stat.StatContainer;
-import stat.Trait;
 import templeoftheelements.spells.Spell;
 
 
 
-public abstract class Ability  extends Trait {
+public abstract class Ability {
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
     
     public static enum Detail {
         
@@ -50,40 +56,36 @@ public abstract class Ability  extends Trait {
     
     public Spell.Detail usage;
     public Spell.Detail targeting;
+    private final String name;
     public ArrayList<Spell.Detail> costDetails;
     public ArrayList<Spell.Detail> effectDetails;
     public ArrayList<Spell.Detail> scalingDetails;
+    public StatContainer stats;
     
     public Ability() {
-        super("Ability", true);
-        this.costDetails = new ArrayList<>();
-        this.effectDetails = new ArrayList<>();
-        this.scalingDetails = new ArrayList<>();
+        this("Ability");
     }
     
     public Ability(String name) {
-        super(name, true);
-        this.costDetails = new ArrayList<>();
-        this.effectDetails = new ArrayList<>();
-        this.scalingDetails = new ArrayList<>();
+        this(name, true);
     }
     
     public Ability(String name, boolean active) {
-        super(name, active);
-        this.costDetails = new ArrayList<>();
-        this.effectDetails = new ArrayList<>();
-        this.scalingDetails = new ArrayList<>();
+        this(name, active, new StatContainer());
     }
     
     public Ability(String name, boolean active, StatContainer stats) {
-        super(name, active, stats);
+        this.name = name;
         this.costDetails = new ArrayList<>();
         this.effectDetails = new ArrayList<>();
         this.scalingDetails = new ArrayList<>();
+        this.stats = new StatContainer(active, stats);
     }
     
     public abstract String getDescription();
     
     public abstract Ability copy();
+    
+    public abstract void init(StatContainer c);
     
 }

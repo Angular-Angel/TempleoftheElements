@@ -6,7 +6,6 @@ import templeoftheelements.item.AttackDefinition;
 import stat.Stat;
 import stat.EquationStat;
 import stat.NumericStat;
-import stat.BinaryStat;
 import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
 import templeoftheelements.player.CharacterTree;
@@ -48,14 +47,14 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
 
 
         missile = new AttackDefinition(name, new VectorCircle(1), element.name);
-        missile.addStat("Ranged Attack", new BinaryStat());
-        missile.addStat("Size", size);
-        missile.addStat("Speed", speed);
+        missile.stats.addStat("Ranged Attack", new NumericStat(1));
+        missile.stats.addStat("Size", size);
+        missile.stats.addStat("Speed", speed);
 
         MissileSpell ret = new MissileSpell(missile);
-        ret.addStat("Cast Time", new NumericStat(0));
-        ret.addStat("Mana Cost", new NumericStat(0));
-        ret.addStat("Cooldown", new NumericStat(0));
+        ret.stats.addStat("Cast Time", new NumericStat(0));
+        ret.stats.addStat("Mana Cost", new NumericStat(0));
+        ret.stats.addStat("Cooldown", new NumericStat(0));
 
         abilitySkill.ability = ret;
         

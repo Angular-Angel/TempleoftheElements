@@ -19,7 +19,7 @@ public class CooldownSpellGenerator extends AbilityGenerationProcedure {
         
         int cooldown = 1 + random.nextInt(pool) / Ability.Detail.COOLDOWN.cost;
         
-        abilitySkill.ability.addStat("Cooldown", new NumericStat(cooldown));
+        abilitySkill.ability.stats.addStat("Cooldown", new NumericStat(cooldown));
         
         abilitySkill.getStat("Cost Pool").modifyBase(-cooldown * Ability.Detail.COOLDOWN.cost);
         abilitySkill.getStat("Pool").modifyBase(cooldown * Ability.Detail.COOLDOWN.cost);

@@ -49,5 +49,10 @@ public class AttackAction extends Action {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public void init(StatContainer c) {
+        attack.init(c);
+    }
     
 }

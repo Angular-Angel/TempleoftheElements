@@ -5,9 +5,7 @@
  */
 package templeoftheelements.spells;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import org.jbox2d.common.Vec2;
 import stat.StatContainer;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.creature.Creature;
@@ -47,7 +45,7 @@ public class EnemyTargetSpell extends Spell {
 
     @Override
     public Ability copy() {
-        EnemyTargetSpell ret = new EnemyTargetSpell(name, sprite);
+        EnemyTargetSpell ret = new EnemyTargetSpell(getName(), sprite);
         for (Effect e : effects.values()) ret.addEffect(e);
         return ret;
     }
@@ -86,7 +84,7 @@ public class EnemyTargetSpell extends Spell {
     
     @Override
     public void init(StatContainer c) {
-        super.init(c);
+        stats.init(c);
         for (Effect e : effects.values()) {
             e.init(c);
         }

@@ -2,16 +2,13 @@
 package templeoftheelements.spells;
 
 import templeoftheelements.item.AttackDefinition;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jbox2d.common.Vec2;
 import stat.EquationStat;
 import stat.NoSuchStatException;
-import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.creature.Creature;
-import templeoftheelements.collision.Position
+import templeoftheelements.collision.Position;
 import templeoftheelements.creature.Ability;
 import templeoftheelements.effect.Effect;
 
@@ -52,7 +49,7 @@ public class MissileSpell extends Spell {
 
     @Override
     public Ability copy() {
-        return new MissileSpell(this.getName(), getMissile().copy(), this);
+        return new MissileSpell(this.getName(), getMissile().copy(), this.stats);
     }
 
     /**
@@ -70,7 +67,7 @@ public class MissileSpell extends Spell {
     @Override
     public String getDescription() {
             
-        missile.refactor();
+        missile.stats.refactor();
         
         String ret = "";
         ret += "This spell shoots a missile.";
@@ -78,8 +75,8 @@ public class MissileSpell extends Spell {
         ret += showCosts();
         
         try {
-            ret += "\nSpeed: " + missile.getScore("Speed") + " (" + ((EquationStat) missile.getStat("Speed")).equation + ")";
-            ret += "\nSize: " + missile.getScore("Size");
+            ret += "\nSpeed: " + missile.stats.getScore("Speed") + " (" + ((EquationStat) missile.stats.getStat("Speed")).equation + ")";
+            ret += "\nSize: " + missile.stats.getScore("Size");
 //            ret += "\nDamage: " + missile.getScore("Damage") + " (" + ((EquationStat) missile.getStat("Damage")).equation + ")";
 
             for (Effect e : missile.onHitEffects.values()) {
@@ -95,10 +92,10 @@ public class MissileSpell extends Spell {
     
     @Override
     public void init(StatContainer c) {
-        super.init(c);
         missile.init(c);
     }
     
+    @Override
     public boolean containsEffect(String s) {
         return missile.containsEffect(s);
     }

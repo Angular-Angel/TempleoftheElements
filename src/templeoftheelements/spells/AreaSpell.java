@@ -46,7 +46,8 @@ public class AreaSpell extends Spell {
 
     @Override
     public Ability copy() {
-        AreaSpell ret = new AreaSpell(name, sprite);
+        AreaSpell ret = new AreaSpell(getName(), sprite);
+        ret.stats.addAllStats(stats);
         for (Effect e : effects.values()) ret.addEffect(e);
         return ret;
     }
@@ -85,7 +86,7 @@ public class AreaSpell extends Spell {
     
     @Override
     public void init(StatContainer c) {
-        super.init(c);
+        stats.init(c);
         for (Effect e : effects.values()) {
             e.init(c);
         }

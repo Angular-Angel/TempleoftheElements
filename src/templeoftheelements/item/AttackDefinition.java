@@ -41,7 +41,7 @@ public class AttackDefinition implements EffectContainer{
         this.type = type;
         this.name = name;
         onHitEffects = new HashMap<>();
-        this.stats = new StatContainer();
+        this.stats = new StatContainer(false);
     }
     
     public Renderable getSprite() {
@@ -124,6 +124,13 @@ public class AttackDefinition implements EffectContainer{
      */
     public String getName() {
         return name;
+    }
+    
+    public void init(StatContainer c) {
+        stats.init(c);
+        for (Effect e : onHitEffects.values()) {
+            e.init(c);
+        }
     }
     
 }

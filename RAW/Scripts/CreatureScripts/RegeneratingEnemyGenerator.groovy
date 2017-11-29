@@ -28,7 +28,6 @@ class RegeneratingEnemyGenerator extends CreatureGenerationProcedure {
 
             public void init(StatContainer c) {
                 creature = c;
-                super.init(c);
             }
             
             public void step(float dt) {

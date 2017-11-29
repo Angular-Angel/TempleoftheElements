@@ -4,6 +4,7 @@ import templeoftheelements.creature.Creature;
 import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.TriggeredAbility;
 import templeoftheelements.creature.CreatureEvent;
+import stat.StatContainer;
 import static templeoftheelements.TempleOfTheElements.game;
 
 /**
@@ -41,6 +42,8 @@ class SpinedEnemyGenerator extends CreatureGenerationProcedure {
                 }
                    
             }
+            
+            public void init(StatContainer c) {}
         }
         
         definition.addAbility(ability);

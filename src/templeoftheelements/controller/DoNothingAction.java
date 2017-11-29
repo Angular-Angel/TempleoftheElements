@@ -44,5 +44,8 @@ public class DoNothingAction extends Action {
     public String getDescription() {
         return "Do Nothing.";
     }
+
+    @Override
+    public void init(StatContainer c) {}
     
 }

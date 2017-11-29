@@ -4,7 +4,6 @@ import templeoftheelements.display.VectorCircle;   // the groovy script importin
 import templeoftheelements.controller.AttackAction;   // the groovy script importing.
 import templeoftheelements.item.AttackDefinition;
 import stat.NumericStat;
-import stat.BinaryStat;
 import java.util.Random;
 
 /**
@@ -20,7 +19,7 @@ class BiteAttackEnemyGenerator extends CreatureGenerationProcedure {
         //This script give an enemy a claw attack.
         
         AttackDefinition attack = new AttackDefinition("Bite", new VectorCircle(1), "Piercing");
-        attack.stats.addStat("Melee Attack", new BinaryStat());
+        attack.stats.addStat("Melee Attack", new NumericStat(1));
         attack.stats.addStat("Size", new NumericStat(0.43));
         attack.stats.addStat("Duration", new NumericStat(2));
         attack.stats.addStat("Reach", new NumericStat(0.8)); 

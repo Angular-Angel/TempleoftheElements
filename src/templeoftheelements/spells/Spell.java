@@ -31,7 +31,7 @@ public abstract class Spell extends Action implements EffectContainer {
     @Override
     public boolean isPossible(Creature c) {
         try {
-            return (super.isPossible(c) && c.stats.getScore("Mana") > getScore("Mana Cost"));
+            return (super.isPossible(c) && c.stats.getScore("Mana") > stats.getScore("Mana Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,7 +42,7 @@ public abstract class Spell extends Action implements EffectContainer {
     public void perform(Creature creature, Position pos) {
         try {
             creature.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.USED_SPELL, this));
-            creature.stats.getStat("Mana").modifyBase(-getScore("Mana Cost"));
+            creature.stats.getStat("Mana").modifyBase(-stats.getScore("Mana Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,11 +55,11 @@ public abstract class Spell extends Action implements EffectContainer {
         String ret = "";
         
         try { 
-            ret += "\ncast Time: " + getScore("Cast Time");
+            ret += "\ncast Time: " + stats.getScore("Cast Time");
             
-            ret += "\nMana Cost: " + getScore("Mana Cost");
+            ret += "\nMana Cost: " + stats.getScore("Mana Cost");
             
-            ret += "\nCooldown: " + getScore("Cooldown");
+            ret += "\nCooldown: " + stats.getScore("Cooldown");
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }

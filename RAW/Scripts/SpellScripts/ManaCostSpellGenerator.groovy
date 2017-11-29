@@ -19,7 +19,7 @@ public class ManaCostSpellGenerator extends AbilityGenerationProcedure {
         
         int manaCost = 1 + random.nextInt(pool) / Ability.Detail.MANA_COST.cost;
         
-        abilitySkill.ability.addStat("Mana Cost", new NumericStat(manaCost));
+        abilitySkill.ability.stats.addStat("Mana Cost", new NumericStat(manaCost));
         
         abilitySkill.getStat("Cost Pool").modifyBase(-manaCost * Ability.Detail.MANA_COST.cost);
         abilitySkill.getStat("Pool").modifyBase(manaCost * Ability.Detail.MANA_COST.cost);
