@@ -21,14 +21,14 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
         CharacterTree tree = (CharacterTree) abilitySkill.tree; //the tree to which the node will belong
         Spell spell = (Spell) abilitySkill.ability;
         
-        int pool = Math.min(20, (abilitySkill.getScore("Pool")));
+        int pool = Math.min(20, (abilitySkill.stats.getScore("Pool")));
         
         int damageValue = (Ability.Detail.DAMAGE.cost + random.nextInt(pool-Ability.Detail.DAMAGE.cost)) / Ability.Detail.DAMAGE.cost;
         Stat damage;
         
         Element element = tree.element;
         
-        abilitySkill.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
+        abilitySkill.stats.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
         
         String effectName = "Damage";
         

@@ -10,7 +10,6 @@ import templeoftheelements.player.SkillNode;
 import templeoftheelements.player.CharacterNode;
 import templeoftheelements.player.CharacterWheel;
 import static templeoftheelements.TempleOfTheElements.rotate;
-import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
  *
@@ -140,8 +139,8 @@ public class CharacterScreen extends Screen {
         public void setNode(CharacterNode node) {
             this.node = node;
             width = 0;
-            height = (node.getStatList().size()) * 20;
-            for (String s : node.getStatList()) 
+            height = (node.stats.getStatList().size()) * 20;
+            for (String s : node.stats.getStatList()) 
                 if (width < s.length() * 20 + 100) width = s.length() * 20 + 100;
             if (node instanceof SkillNode) {
                 height += 20;

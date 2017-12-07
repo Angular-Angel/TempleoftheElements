@@ -36,7 +36,7 @@ public class CharacterNode implements Requirement , Renderable, Clickable {
     private int layer;
     ArrayList<CharacterNode> children; //These are package private
     ArrayList<CharacterNode> parents;
-    protected StatContainer stats;
+    public StatContainer stats;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();
@@ -74,6 +74,7 @@ public class CharacterNode implements Requirement , Renderable, Clickable {
         description = "";
         children = new ArrayList<>();
         parents = new ArrayList<>();
+        stats = new StatContainer();
         layer = 0;
     }
     

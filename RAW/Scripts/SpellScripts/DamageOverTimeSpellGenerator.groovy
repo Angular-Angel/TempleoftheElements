@@ -44,7 +44,7 @@ public class DamageOverTimeSpellGenerator extends AbilityGenerationProcedure {
 //
 //            spell.addEffect(e)
         }
-        abilitySkill.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
+        abilitySkill.stats.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
         
         return abilitySkill;
     }

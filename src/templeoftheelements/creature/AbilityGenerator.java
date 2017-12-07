@@ -46,19 +46,19 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
         
         //First, pick the usage of the ability.
         
-        abilitySkill.addStat("Pool", new NumericStat(100)); 
-        abilitySkill.addStat("Complexity", new NumericStat(5 + tree.layers.size())); 
+        abilitySkill.stats.addStat("Pool", new NumericStat(100)); 
+        abilitySkill.stats.addStat("Complexity", new NumericStat(5 + tree.layers.size())); 
         
         if (tree.spammables == 0 || tree.spammables / tree.abilities < 0.4) {
             abilitySkill.usage = Ability.Detail.SPAMMABLE;
-            abilitySkill.addStat("Cost Pool", new NumericStat(10));
-            abilitySkill.addStat("Cost Complexity", new NumericStat(5 + tree.layers.size()));
+            abilitySkill.stats.addStat("Cost Pool", new NumericStat(10));
+            abilitySkill.stats.addStat("Cost Complexity", new NumericStat(5 + tree.layers.size()));
             tree.spammables++;
             tree.abilities++;
         } else {
             abilitySkill.usage = Ability.Detail.SITUATIONAL;
-            abilitySkill.addStat("Cost Pool", new NumericStat(30));
-            abilitySkill.addStat("Cost Complexity", new NumericStat(10 + tree.layers.size() * 2));
+            abilitySkill.stats.addStat("Cost Pool", new NumericStat(30));
+            abilitySkill.stats.addStat("Cost Complexity", new NumericStat(10 + tree.layers.size() * 2));
             tree.situationals++;
             tree.abilities++;
         }
@@ -81,40 +81,40 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
         
         try {
             
-            int costcomplex = (int) (abilitySkill.getScore("Complexity") * (0.2 + (0.4 * random.nextFloat())));
+            int costcomplex = (int) (abilitySkill.stats.getScore("Complexity") * (0.2 + (0.4 * random.nextFloat())));
         
-            abilitySkill.getStat("Complexity").modify(-costcomplex);
+            abilitySkill.stats.getStat("Complexity").modify(-costcomplex);
             
-            abilitySkill.addStat("Cost Complexity", new NumericStat(costcomplex));
+            abilitySkill.stats.addStat("Cost Complexity", new NumericStat(costcomplex));
             
             int i = 0;
-            while (abilitySkill.getScore("Cost Complexity") > 0) {
+            while (abilitySkill.stats.getScore("Cost Complexity") > 0) {
                 Ability.Detail cost;
 
                 do {
                     cost = tree.costDetails.get(random.nextInt(tree.costDetails.size()));
-                } while (!abilitySkill.costDetails.contains(cost) && cost.cost > abilitySkill.getScore("Cost Complexity"));
+                } while (!abilitySkill.costDetails.contains(cost) && cost.cost > abilitySkill.stats.getScore("Cost Complexity"));
 
                 abilitySkill.costDetails.add(cost);
-                abilitySkill.getStat("Cost Complexity").modify(-cost.cost);
+                abilitySkill.stats.getStat("Cost Complexity").modify(-cost.cost);
                 
             }
             
-            while (abilitySkill.getScore("Complexity") > 0) {
+            while (abilitySkill.stats.getScore("Complexity") > 0) {
                 Ability.Detail effect;
 
                 do {
                     effect = tree.effectDetails.get(random.nextInt(tree.effectDetails.size()));
-                } while (!abilitySkill.effectDetails.contains(effect) && effect.cost > abilitySkill.getScore("Complexity"));
+                } while (!abilitySkill.effectDetails.contains(effect) && effect.cost > abilitySkill.stats.getScore("Complexity"));
 
                 abilitySkill.effectDetails.add(effect);
-                abilitySkill.getStat("Complexity").modify(-effect.cost);
+                abilitySkill.stats.getStat("Complexity").modify(-effect.cost);
                 
             }
         
             Ability.Detail cost;
             i = 0;
-            while (abilitySkill.getScore("Cost Pool") > 0) {
+            while (abilitySkill.stats.getScore("Cost Pool") > 0) {
                 
                 cost = abilitySkill.costDetails.get(i++);
                 
@@ -127,23 +127,23 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
             
             Ability.Detail effect;
             i = 0;
-            while (abilitySkill.getScore("Pool") > 0) {
+            while (abilitySkill.stats.getScore("Pool") > 0) {
                 
                 effect = abilitySkill.effectDetails.get(i++);
                 
                 if (i >= abilitySkill.effectDetails.size())
                     i = 0;
                 
-                if (abilitySkill.getScore("Pool") > effect.cost) {
+                if (abilitySkill.stats.getScore("Pool") > effect.cost) {
                     procedures.get(effect).modify(abilitySkill);
                 }
-                else abilitySkill.getStat("Pool").modify(-1);
+                else abilitySkill.stats.getStat("Pool").modify(-1);
             }
             
-            abilitySkill.removeStat("Pool");
-            abilitySkill.removeStat("Cost Pool");
-            abilitySkill.removeStat("Complexity");
-            abilitySkill.removeStat("Cost Complexity");
+            abilitySkill.stats.removeStat("Pool");
+            abilitySkill.stats.removeStat("Cost Pool");
+            abilitySkill.stats.removeStat("Complexity");
+            abilitySkill.stats.removeStat("Cost Complexity");
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AbilityGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }

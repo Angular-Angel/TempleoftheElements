@@ -11,9 +11,9 @@ public class ManaCostSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        int pool = Math.min(10, (abilitySkill.getScore("Cost Pool")));
+        int pool = Math.min(10, (abilitySkill.stats.getScore("Cost Pool")));
         if (pool == 0) {
-            abilitySkill.getStat("Cost Pool").modifyBase(-1);
+            abilitySkill.stats.getStat("Cost Pool").modifyBase(-1);
             return abilitySkill.ability;
         }
         
@@ -21,8 +21,8 @@ public class ManaCostSpellGenerator extends AbilityGenerationProcedure {
         
         abilitySkill.ability.stats.addStat("Mana Cost", new NumericStat(manaCost));
         
-        abilitySkill.getStat("Cost Pool").modifyBase(-manaCost * Ability.Detail.MANA_COST.cost);
-        abilitySkill.getStat("Pool").modifyBase(manaCost * Ability.Detail.MANA_COST.cost);
+        abilitySkill.stats.getStat("Cost Pool").modifyBase(-manaCost * Ability.Detail.MANA_COST.cost);
+        abilitySkill.stats.getStat("Pool").modifyBase(manaCost * Ability.Detail.MANA_COST.cost);
         
         return abilitySkill;
     }

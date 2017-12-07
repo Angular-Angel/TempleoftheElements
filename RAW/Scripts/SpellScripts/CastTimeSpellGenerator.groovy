@@ -11,9 +11,9 @@ public class CastTimeSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        int pool = Math.min(10, (abilitySkill.getScore("Cost Pool")));
+        int pool = Math.min(10, (abilitySkill.stats.getScore("Cost Pool")));
         if (pool == 0) {
-            abilitySkill.getStat("Cost Pool").modifyBase(-1);
+            abilitySkill.stats.getStat("Cost Pool").modifyBase(-1);
             return abilitySkill.ability;
         }
         
@@ -21,8 +21,8 @@ public class CastTimeSpellGenerator extends AbilityGenerationProcedure {
         
         abilitySkill.ability.stats.addStat("Cast Time", new NumericStat(castTime));
         
-        abilitySkill.getStat("Cost Pool").modifyBase(-castTime * Ability.Detail.CAST_TIME.cost);
-        abilitySkill.getStat("Pool").modifyBase(castTime * Ability.Detail.CAST_TIME.cost);
+        abilitySkill.stats.getStat("Cost Pool").modifyBase(-castTime * Ability.Detail.CAST_TIME.cost);
+        abilitySkill.stats.getStat("Pool").modifyBase(castTime * Ability.Detail.CAST_TIME.cost);
         
         return abilitySkill;
     }

@@ -25,7 +25,7 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
         
         final ArrayList<StatDescriptor> debuffAttributes = tree.element.debuffAttributes;
         
-        int pool = Math.min(20, (abilitySkill.getScore("Pool"))), i = 0;
+        int pool = Math.min(20, (abilitySkill.stats.getScore("Pool"))), i = 0;
         
         Effect effect;
         
@@ -68,7 +68,7 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
             StatDescriptor debuffStat = debuffAttributes.get(random.nextInt(debuffAttributes.size()));
             int debuffValue = 1 + random.nextInt((int) (pool / Ability.Detail.DEBUFF.cost) - 1);
             effect.addStat(debuffStat.name, new NumericStat(debuffValue));
-            abilitySkill.getStat("Pool").modifyBase(-debuffValue * Ability.Detail.DEBUFF.cost);
+            abilitySkill.stats.getStat("Pool").modifyBase(-debuffValue * Ability.Detail.DEBUFF.cost);
 //            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
         }
         

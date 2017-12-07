@@ -40,7 +40,7 @@ public class AbilitySkill extends Skill {
     @Override
     public void init(Creature c) {
         super.init(c);
-        ability.init(c);
+        ability.init(c.stats);
     }
 
     @Override

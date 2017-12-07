@@ -24,9 +24,9 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
         
         Element element = tree.element;
 
-        int sizeValue = 1, speedValue = 1, pool = abilitySkill.getScore("Pool")/4 + random.nextInt((int) (abilitySkill.getScore("Pool") / 4));
+        int sizeValue = 1, speedValue = 1, pool = abilitySkill.stats.getScore("Pool")/4 + random.nextInt((int) (abilitySkill.stats.getScore("Pool") / 4));
 
-        abilitySkill.getStat("Pool").modify(-pool);
+        abilitySkill.stats.getStat("Pool").modify(-pool);
 
         //Stats: Range, Size, Speed, Damage, Cast Speed, Mana Cost
         Stat size, speed;

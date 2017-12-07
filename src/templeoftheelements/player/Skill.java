@@ -15,7 +15,7 @@ import templeoftheelements.creature.Creature;
 public abstract class Skill {
     private Player player;
     private int level;
-    private StatContainer stats;
+    public StatContainer stats;
     
     public Skill() {
         stats = new StatContainer(false);

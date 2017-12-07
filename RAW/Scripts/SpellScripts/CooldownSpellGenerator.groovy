@@ -11,9 +11,9 @@ public class CooldownSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        int pool = Math.min(10, (abilitySkill.getScore("Cost Pool")));
+        int pool = Math.min(10, (abilitySkill.stats.getScore("Cost Pool")));
         if (pool == 0) {
-            abilitySkill.getStat("Cost Pool").modifyBase(-1);
+            abilitySkill.stats.getStat("Cost Pool").modifyBase(-1);
             return abilitySkill.ability;
         }
         
@@ -21,8 +21,8 @@ public class CooldownSpellGenerator extends AbilityGenerationProcedure {
         
         abilitySkill.ability.stats.addStat("Cooldown", new NumericStat(cooldown));
         
-        abilitySkill.getStat("Cost Pool").modifyBase(-cooldown * Ability.Detail.COOLDOWN.cost);
-        abilitySkill.getStat("Pool").modifyBase(cooldown * Ability.Detail.COOLDOWN.cost);
+        abilitySkill.stats.getStat("Cost Pool").modifyBase(-cooldown * Ability.Detail.COOLDOWN.cost);
+        abilitySkill.stats.getStat("Pool").modifyBase(cooldown * Ability.Detail.COOLDOWN.cost);
         
         return abilitySkill;
     }
