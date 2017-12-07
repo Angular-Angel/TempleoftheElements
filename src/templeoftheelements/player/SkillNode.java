@@ -1,15 +1,14 @@
 
 package templeoftheelements.player;
 
+import com.samrj.devil.math.Vec2;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
-import stat.StatContainer;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.display.CharacterScreen;
-import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.Creature;
+import templeoftheelements.display.CharacterScreen;
 
 
 
@@ -34,9 +33,9 @@ public class SkillNode extends CharacterNode {
     }
     
     @Override
-    public void init(StatContainer c) {
-        skill.init(c);
+    public void init(Creature c) {
         super.init(c);
+        skill.init(c);
     }
     
     @Override
@@ -46,11 +45,11 @@ public class SkillNode extends CharacterNode {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor3f(255, 0, 0);
         game.font.getTexture().bind();i -= 20;
-        game.font.draw(skill.getName(), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+        game.font.draw(skill.getName(), new Vec2(screen.x +2, screen.y + i));
         String[] split = skill.getDescription().split("\n");
         for (String s : split) {
             i -= 20;
-            game.font.draw(s, new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+            game.font.draw(s, new Vec2(screen.x +2, screen.y + i));
 //            screen.height += 20;
         }
         
@@ -66,10 +65,10 @@ public class SkillNode extends CharacterNode {
 //            }
 //        }
         
-        for (String s : getStatList()) {
+        for (String s : stats.getStatList()) {
             try {
                 i -= 20;
-                game.font.draw(s + ": " + getScore(s), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+                game.font.draw(s + ": " + stats.getScore(s), new Vec2(screen.x +2, screen.y + i));
             } catch (NoSuchStatException ex) {
                 Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
             }

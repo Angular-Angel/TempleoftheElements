@@ -14,6 +14,7 @@ import stat.StatContainer;
 import stat.StatDescriptor;
 import templeoftheelements.TempleOfTheElements;
 import static templeoftheelements.TempleOfTheElements.game;
+import templeoftheelements.creature.Creature;
 import templeoftheelements.display.CharacterScreen;
 import templeoftheelements.display.Renderable;
 
@@ -23,7 +24,7 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public class CharacterNode extends StatContainer implements Requirement , Renderable, Clickable {
+public class CharacterNode implements Requirement , Renderable, Clickable {
     
     
     private Vec2 position;
@@ -35,6 +36,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     private int layer;
     ArrayList<CharacterNode> children; //These are package private
     ArrayList<CharacterNode> parents;
+    protected StatContainer stats;
     
     public CharacterNode(Requirement requirements, CharacterTree tree, boolean free) {
         position = new Vec2();
@@ -45,6 +47,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         description = "";
         children = new ArrayList<>();
         parents = new ArrayList<>();
+        stats = new StatContainer();
         
         CharacterNode self = this;
         
@@ -101,7 +104,7 @@ public class CharacterNode extends StatContainer implements Requirement , Render
     
     public void acquire() {
         acquired = true;
-        tree.getCreature().stats.addAllStats(this);
+        tree.getCreature().stats.addAllStats(this.stats);
     }
 
     @Override
@@ -170,6 +173,10 @@ public class CharacterNode extends StatContainer implements Requirement , Render
         return 40; 
     }
     
+    public void init(Creature c) {
+        stats.init(c.stats);
+    }
+    
     public void setReqs(Requirement requirement) {
         this.requirements = requirement;
     }
@@ -185,13 +192,13 @@ public class CharacterNode extends StatContainer implements Requirement , Render
             screen.height += 20;
             game.font.draw(description, new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
         }
-        for (String s : getStatList()) {
+        for (String s : stats.getStatList()) {
             try {
                 i -= 20;
-                if (getStat(s).statDescriptor.type == StatDescriptor.StatType.INTEGER)
-                    game.font.draw(s + ": " + getScore(s), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
-                else if (getStat(s).statDescriptor.type == StatDescriptor.StatType.PERCENTAGE)
-                    game.font.draw(s + ": " + getScore(s) + "%", new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+                if (stats.getStat(s).getStatDescriptor().type == StatDescriptor.StatType.INTEGER)
+                    game.font.draw(s + ": " + stats.getScore(s), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
+                else if (stats.getStat(s).getStatDescriptor().type == StatDescriptor.StatType.PERCENTAGE)
+                    game.font.draw(s + ": " + stats.getScore(s) + "%", new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
             } catch (NoSuchStatException ex) {
                 Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NullPointerException ex) {

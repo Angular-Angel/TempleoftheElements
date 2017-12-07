@@ -12,13 +12,21 @@ import templeoftheelements.creature.Creature;
  *
  * @author angle
  */
-public abstract class Skill extends StatContainer {
+public abstract class Skill {
     private Player player;
     private int level;
+    private StatContainer stats;
     
+    public Skill() {
+        stats = new StatContainer(false);
+    }
+    
+    public void init(Creature c) {
+        stats.init(c.stats);
+    }
     
     public void beAcquired(Creature creature) {
-        creature.stats.addAllStats(this);
+        creature.stats.addAllStats(this.stats);
     }
     
     public abstract String getName();

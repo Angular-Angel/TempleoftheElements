@@ -6,7 +6,6 @@
 package templeoftheelements.player;
 
 import java.util.ArrayList;
-import stat.StatContainer;
 import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.Creature;
 
@@ -25,6 +24,7 @@ public class AbilitySkill extends Skill {
     public ArrayList<Ability.Detail> scalingDetails;
     
     public AbilitySkill(CharacterTree tree) {
+        super();
         this.tree = tree;
         costDetails = new ArrayList<>();
         effectDetails = new ArrayList<>();
@@ -38,9 +38,9 @@ public class AbilitySkill extends Skill {
     }
     
     @Override
-    public void init(StatContainer c) {
-        ability.init(c);
+    public void init(Creature c) {
         super.init(c);
+        ability.init(c);
     }
 
     @Override

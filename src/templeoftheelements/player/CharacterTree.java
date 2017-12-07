@@ -70,7 +70,7 @@ public class CharacterTree {
     }
     
     public void addNode(CharacterNode node) {
-        node.init(getCreature().stats);
+        node.init(getCreature());
         nodes.add(node);
         while (layers.size() < node.getLayer() + 1) {
             System.err.println("had to add layer!");
