@@ -66,9 +66,9 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
         while (pool > Ability.Detail.DEBUFF.cost && i < 10) {
             i++;
             StatDescriptor debuffStat = debuffAttributes.get(random.nextInt(debuffAttributes.size()));
-            int debuffValue = 1 + random.nextInt((int) (pool / Ability.Detail.DEBUFF.cost) - 1);
-            effect.addStat(debuffStat.name, new NumericStat(debuffValue));
-            abilitySkill.stats.getStat("Pool").modifyBase(-debuffValue * Ability.Detail.DEBUFF.cost);
+//            int debuffValue = 1 + random.nextInt((int) (pool / Ability.Detail.DEBUFF.cost) - 1);
+//            effect.addStat(debuffStat.name, new NumericStat(debuffValue));
+//            abilitySkill.getStat("Pool").modifyBase(-debuffValue * Ability.Detail.DEBUFF.cost);
 //            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
         }
         

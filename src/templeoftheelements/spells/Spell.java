@@ -7,14 +7,15 @@ import stat.NoSuchStatException;
 import stat.StatContainer;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
-import templeoftheelements.display.Renderable;
 import templeoftheelements.controller.Action;
+import templeoftheelements.display.Renderable;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.CreatureEvent;
 import templeoftheelements.effect.EffectContainer;
 
 
 
-public abstract class Spell extends Action implements EffectContainer {
+public abstract class Spell extends Ability implements EffectContainer, Action {
     
     protected Renderable sprite;
 
@@ -31,7 +32,7 @@ public abstract class Spell extends Action implements EffectContainer {
     @Override
     public boolean isPossible(Creature c) {
         try {
-            return (super.isPossible(c) && c.stats.getScore("Mana") > stats.getScore("Mana Cost"));
+            return (c.stats.getScore("Mana") > stats.getScore("Mana Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,5 +74,10 @@ public abstract class Spell extends Action implements EffectContainer {
     }
     
     public abstract float damageValueMultiplier();
+    
+    
+    public void init(Creature c) {
+        c.addAction(this);
+    }
     
 }

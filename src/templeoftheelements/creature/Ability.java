@@ -3,7 +3,6 @@ package templeoftheelements.creature;
 
 import java.util.ArrayList;
 import stat.StatContainer;
-import templeoftheelements.spells.Spell;
 
 
 
@@ -54,12 +53,12 @@ public abstract class Ability {
     }
     
     
-    public Spell.Detail usage;
-    public Spell.Detail targeting;
+    public Detail usage;
+    public Detail targeting;
     private final String name;
-    public ArrayList<Spell.Detail> costDetails;
-    public ArrayList<Spell.Detail> effectDetails;
-    public ArrayList<Spell.Detail> scalingDetails;
+    public ArrayList<Detail> costDetails;
+    public ArrayList<Detail> effectDetails;
+    public ArrayList<Detail> scalingDetails;
     public StatContainer stats;
     
     public Ability() {
@@ -74,6 +73,10 @@ public abstract class Ability {
         this(name, active, new StatContainer());
     }
     
+    public Ability(String name, StatContainer stats) {
+        this(name, true, stats);
+    }
+    
     public Ability(String name, boolean active, StatContainer stats) {
         this.name = name;
         this.costDetails = new ArrayList<>();
@@ -84,8 +87,8 @@ public abstract class Ability {
     
     public abstract String getDescription();
     
-    public abstract Ability copy();
+    public abstract void init(Creature c);
     
-    public abstract void init(StatContainer c);
+    public abstract void deInit(Creature c);
     
 }

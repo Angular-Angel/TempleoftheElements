@@ -34,7 +34,7 @@ public class CreatureDefinition {
     public static enum Detail {
         //types:
         
-        _TYPES_, HUMANOID, BEAST, MONSTROUS_HUMANOID, ELEMENTAL, CONSTRUCT, DEMON, 
+        _TYPES_, HUMANOID, BEAST, MONSTROUS_HUMANOID, ELEMENTAL, CONSTRUCT, DEMON, FEY,
         
         //physical details
         _PHYSICAL_, TOUGH, STRONG, FAST, FRENZIED, SPINED, ENDURING, REGENERATING, //ARMOURED,
@@ -74,7 +74,7 @@ public class CreatureDefinition {
         for (String s : resistances.keySet()) ret.addResistance(s, resistances.get(s));
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
         for (Ability a :abilities) {
-            ret.addAbility(a.copy());
+            ret.addAbility(a);
         }
         return ret;
     }
@@ -91,7 +91,7 @@ public class CreatureDefinition {
         ret.stats.addStat("HP", new NumericStat(ret.stats.getScore("Max HP")));
         ret.stats.addStat("Mana", new NumericStat(ret.stats.getScore("Max Mana")));
         ret.stats.addStat("Stamina", new NumericStat(ret.stats.getScore("Max Stamina")));
-        for (Ability a : abilities) ret.addAbility(a.copy());
+        for (Ability a : abilities) ret.addAbility(a);
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
         ret.setController(controllerType.clone(ret));
         return ret;

@@ -16,7 +16,7 @@ class RegeneratingEnemyGenerator extends CreatureGenerationProcedure {
         
         PassiveAbility regeneration = new PassiveAbility() {
             
-            StatContainer creature;
+            Creature creature;
             
             public String getDescription() {
                 return "This ability heals it's owner very quickly.";
@@ -26,14 +26,18 @@ class RegeneratingEnemyGenerator extends CreatureGenerationProcedure {
                 return this.getClass().newInstance();
             }
 
-            public void init(StatContainer c) {
+            public void init(Creature c) {
                 creature = c;
             }
             
             public void step(float dt) {
-                if (creature.getScore("HP") < creature.getScore("Max HP")) {
-                    creature.getStat("HP").modifyBase(dt);
+                if (creature.stats.getScore("HP") < creature.stats.getScore("Max HP")) {
+                    creature.stats.getStat("HP").modifyBase(dt);
                 }
+            }
+            
+            public void deInit(Creature c) {
+                
             }
         }
         

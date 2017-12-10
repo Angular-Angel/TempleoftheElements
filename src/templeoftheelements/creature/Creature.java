@@ -41,7 +41,8 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     private Fixture fixture;
     private float direction, timer;
     private MeleeAttack curAttack;
-    private HashSet<Action> abilities;
+    private HashSet<Action> actions;
+    private HashSet<Ability> abilities;
     private Position createPosition; //only used for a createBody method, not for 
     //determining ongoing position. This is for when you want to store a body in 
     //a room without creating it.
@@ -67,32 +68,43 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         timer = 0; direction = 0;
         createPosition = pos;
         winded = false;
-        abilities = new HashSet<>();
+        actions = new HashSet<>();
         bodyParts = new ArrayList<>();
         resistances = new HashMap<>();
         itemDrops = new ArrayList<>();
         statusEffects = new HashMap<>();
         listeners = new ArrayList<>();
         passives = new ArrayList<>();
+        abilities = new HashSet<>();
         this.stats = new StatContainer(def.stats);
         sprite = new VectorCircle(stats.getScore("Size"));
     }
     
     public void addAbility(Ability a) {
-        if (a instanceof Action) abilities.add((Action) a.copy());
-        if (a instanceof PassiveAbility) passives.add((PassiveAbility) a);
-        if (a instanceof CreatureListener) listeners.add((CreatureListener) a);
-        a.init(this.stats);
+        abilities.add(a);
+        a.init(this);
+    }
+    
+    public void addAction(Action a) {
+        actions.add(a);
+    }
+    
+    public void addPassive(PassiveAbility a) {
+        passives.add(a);
+    }
+    
+    public void addListener(CreatureListener a) {
+        listeners.add(a);
     }
     
     public void removeAbility(Ability a) {
-        if (a instanceof Action) abilities.remove((Action) a);
+        if (a instanceof Action) actions.remove((Action) a);
         if (a instanceof PassiveAbility) passives.remove((PassiveAbility) a);
         if (a instanceof CreatureListener) listeners.remove((CreatureListener) a);
     }
     
     public HashSet<Action> getActions() {
-        return abilities;
+        return actions;
     }
     
     public void refactor() {
@@ -111,7 +123,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     }
     
     public void refactorActions() {
-        for (Action a : abilities) controller.addAction(a);
+        for (Action a : actions) controller.addAction(a);
         for (BodyPart b : bodyParts) {
             if (b instanceof Hand && ((Hand) b).equipment != null) {
                 for (AttackDefinition a : ((Weapon) ((Hand) b).equipment).getAttacks()) 

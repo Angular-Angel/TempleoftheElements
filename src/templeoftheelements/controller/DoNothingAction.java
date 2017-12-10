@@ -16,12 +16,11 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public class DoNothingAction extends Action {
+public class DoNothingAction implements Action {
 
     private Renderable sprite;
     
     public DoNothingAction(Renderable sprite) {
-        super("Do Nothing", new StatContainer());
         this.sprite = sprite;
     }
 
@@ -36,16 +35,16 @@ public class DoNothingAction extends Action {
     }
 
     @Override
-    public Ability copy() {
-        return new DoNothingAction(sprite);
-    }
-
-    @Override
     public String getDescription() {
         return "Do Nothing.";
     }
 
     @Override
-    public void init(StatContainer c) {}
+    public void init(Creature c) {}
+
+    @Override
+    public boolean isPossible(Creature c) {
+        return true;
+    }
     
 }

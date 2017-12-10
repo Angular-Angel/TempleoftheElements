@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
+import stat.EquationStat;
 import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
@@ -126,10 +127,28 @@ public class AttackDefinition implements EffectContainer{
         return name;
     }
     
-    public void init(StatContainer c) {
-        stats.init(c);
+    public String getDescription() {
+        stats.refactor();
+        
+        String ret = "";
+        ret += "This is an attack.";
+        
+        
+        
+        ret += "\nSize: " + stats.getScore("Size");
+//            ret += "\nDamage: " + missile.getScore("Damage") + " (" + ((EquationStat) missile.getStat("Damage")).equation + ")";
+
         for (Effect e : onHitEffects.values()) {
-            e.init(c);
+            ret += "\n" + e.getDescription();
+        }
+        
+        return ret;
+    }
+    
+    public void init(Creature c) {
+        stats.init(c.stats);
+        for (Effect e : onHitEffects.values()) {
+            e.init(c.stats);
         }
     }
     

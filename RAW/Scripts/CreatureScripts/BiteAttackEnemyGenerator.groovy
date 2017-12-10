@@ -1,5 +1,6 @@
 import templeoftheelements.creature.CreatureGenerationProcedure;
 import templeoftheelements.creature.CreatureDefinition;
+import templeoftheelements.creature.NaturalAttack;
 import templeoftheelements.display.VectorCircle;   // the groovy script importing.
 import templeoftheelements.controller.AttackAction;   // the groovy script importing.
 import templeoftheelements.item.AttackDefinition;
@@ -29,7 +30,7 @@ class BiteAttackEnemyGenerator extends CreatureGenerationProcedure {
         attack.stats.addStat("Damage Multiplier", new NumericStat(0));
         attack.stats.addStat("Stamina Cost", new NumericStat(4));
         
-        definition.addAbility(new AttackAction(attack));
+        definition.addAbility(new NaturalAttack(attack));
         
         return definition;
     }

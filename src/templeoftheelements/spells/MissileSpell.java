@@ -47,7 +47,6 @@ public class MissileSpell extends Spell {
         caster.attack(getMissile());
     }
 
-    @Override
     public Ability copy() {
         return new MissileSpell(this.getName(), getMissile().copy(), this.stats);
     }
@@ -91,7 +90,7 @@ public class MissileSpell extends Spell {
     
     
     @Override
-    public void init(StatContainer c) {
+    public void init(Creature c) {
         missile.init(c);
     }
     
@@ -108,5 +107,10 @@ public class MissileSpell extends Spell {
     @Override
     public float damageValueMultiplier() {
         return 3f;
+    }
+
+    @Override
+    public void deInit(Creature c) {
+        
     }
 }

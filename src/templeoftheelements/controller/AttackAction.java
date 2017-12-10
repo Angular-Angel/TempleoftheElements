@@ -14,19 +14,13 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public class AttackAction extends Action {
+public class AttackAction implements Action {
 
     
     private AttackDefinition attack;
-    public String description;
+    private String description;
     
     public AttackAction(AttackDefinition attack) {
-        super(attack.getName(), new StatContainer());
-        this.attack = attack;
-    }
-    
-    public AttackAction(String name, AttackDefinition attack) {
-        super(name, new StatContainer());
         this.attack = attack;
     }
     
@@ -41,18 +35,24 @@ public class AttackAction extends Action {
     }
 
     @Override
-    public Ability copy() {
-        return new AttackAction(this.getName(), attack);
-    }
-
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
-    public void init(StatContainer c) {
+    public void init(Creature c) {
         attack.init(c);
+    }
+
+    @Override
+    public boolean isPossible(Creature c) {
+        return true;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return attack.getName();
     }
     
 }

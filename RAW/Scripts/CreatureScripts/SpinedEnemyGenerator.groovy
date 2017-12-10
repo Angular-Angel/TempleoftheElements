@@ -36,6 +36,10 @@ class SpinedEnemyGenerator extends CreatureGenerationProcedure {
                 creature = c;
             }
             
+            public void deInit(Creature c) {
+                
+            }
+            
             public void handle(CreatureEvent event) {
                 if (event.type == CreatureEvent.Type.COLLIDED && event.thing instanceof Creature) {
                     event.thing.takeDamage(10, "Piercing");

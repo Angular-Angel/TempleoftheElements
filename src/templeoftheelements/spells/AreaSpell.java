@@ -44,7 +44,6 @@ public class AreaSpell extends Spell {
             e.effect(caster, pos);
     }
 
-    @Override
     public Ability copy() {
         AreaSpell ret = new AreaSpell(getName(), sprite);
         ret.stats.addAllStats(stats);
@@ -85,11 +84,16 @@ public class AreaSpell extends Spell {
     }
     
     @Override
-    public void init(StatContainer c) {
-        stats.init(c);
+    public void init(Creature c) {
+        stats.init(c.stats);
         for (Effect e : effects.values()) {
-            e.init(c);
+            e.init(c.stats);
         }
+    }
+
+    @Override
+    public void deInit(Creature c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -38,7 +38,6 @@ class SelfTargetSpell extends Spell {
         for (Effect e : effects.values()) e.effect(caster, caster);
     }
 
-    @Override
     public Ability copy() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -76,11 +75,16 @@ class SelfTargetSpell extends Spell {
     }
     
     @Override
-    public void init(StatContainer c) {
-        stats.init(c);
+    public void init(Creature c) {
+        stats.init(c.stats);
         for (Effect e : effects.values()) {
-            e.init(c);
+            e.init(c.stats);
         }
+    }
+
+    @Override
+    public void deInit(Creature c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

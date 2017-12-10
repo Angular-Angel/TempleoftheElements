@@ -21,6 +21,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import stat.EquationStat;
+import stat.NumericStat;
+import stat.Stat;
+import stat.StatContainer;
 import stat.StatDescriptor;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.display.Sprite;
@@ -197,6 +201,32 @@ public class Registry extends RawReader {
         elements.put(name, ret);
         elementList.add(ret);
         
+        return ret;
+    }
+    
+    protected Stat readJSONStat(StatDescriptor statDescriptor, Object o) {
+        Stat stat = null; //initialize return variable
+        if (o instanceof Long) { //is it a numeric stat? 
+            stat = new NumericStat(statDescriptor, ((Long) o).intValue()); //if so, return that.
+        } else if (o instanceof Double) { //Also checking for numeric stat.
+            stat = new NumericStat(statDescriptor, ((Double) o).floatValue());
+        } else if (o instanceof String) {
+            stat = new EquationStat(statDescriptor, (String) o);
+        }
+        return stat;
+    }
+    
+    @Override
+    protected StatContainer readJSONStats(JSONArray stats) {
+        StatContainer ret = new StatContainer() {};
+        for (int i = 0; i < stats.size(); i++) {
+            JSONArray statArray = (JSONArray) stats.get(i);
+            String statName = (String) ((JSONArray) stats.get(i)).get(0);
+            StatDescriptor statDescriptor = statDescriptors.get(statName);
+            Stat stat = readJSONStat(statDescriptor, statArray.get(1));
+            ret.addStat((String) ((JSONArray) stats.get(i)).get(0), stat);
+
+        }
         return ret;
     }
     

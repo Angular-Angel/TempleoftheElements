@@ -4,7 +4,7 @@ package templeoftheelements.player;
 import java.util.ArrayList;
 import stat.StatDescriptor;
 import templeoftheelements.Element;
-import templeoftheelements.spells.Spell;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.Creature;
 
 /**
@@ -34,10 +34,10 @@ public class CharacterTree {
     public Element element;
     private final CharacterWheel wheel;
     public ArrayList<Focus> secondaryFocuses;
-    public ArrayList<Spell.Detail> targetDetails;
-    public ArrayList<Spell.Detail> effectDetails;
-    public ArrayList<Spell.Detail> costDetails;
-    public ArrayList<Spell.Detail> scalingDetails;
+    public ArrayList<Ability.Detail> targetDetails;
+    public ArrayList<Ability.Detail> effectDetails;
+    public ArrayList<Ability.Detail> costDetails;
+    public ArrayList<Ability.Detail> scalingDetails;
     public ArrayList<StatDescriptor> primaryAttributes;
     public ArrayList<StatDescriptor> secondaryAttributes;
     public ArrayList<ArrayList<CharacterNode>> layers;
