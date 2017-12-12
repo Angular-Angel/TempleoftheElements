@@ -64,7 +64,7 @@
                         ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 2], 
                         ["Swinging Attack", 1]]],
                      ["Stab", "Piercing", ["Icons.png", 108, 52, 36, 26, 100, 100], 
-                        [["Size", 0.15], ["Duration", 8], ["Reach", 0.8], 
+                        [["Size", 0.15], ["Duration", 8], ["Reach", 0.4], 
                         ["Angular Travel", 0], ["Distance Travel", 0.35], 
                         ["Recovery Time", 10], ["Damage Multiplier", 0.7], ["Stamina Cost", 1], 
                         ["Swinging Attack", 1]]]

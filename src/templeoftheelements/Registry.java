@@ -220,12 +220,21 @@ public class Registry extends RawReader {
     protected StatContainer readJSONStats(JSONArray stats) {
         StatContainer ret = new StatContainer() {};
         for (int i = 0; i < stats.size(); i++) {
-            JSONArray statArray = (JSONArray) stats.get(i);
-            String statName = (String) ((JSONArray) stats.get(i)).get(0);
-            StatDescriptor statDescriptor = statDescriptors.get(statName);
-            Stat stat = readJSONStat(statDescriptor, statArray.get(1));
-            ret.addStat((String) ((JSONArray) stats.get(i)).get(0), stat);
-
+            if (stats.get(i) instanceof JSONArray) {
+                JSONArray statArray = (JSONArray) stats.get(i);
+                String statName = (String) ((JSONArray) stats.get(i)).get(0);
+                StatDescriptor statDescriptor = statDescriptors.get(statName);
+                Stat stat;
+                if (statArray.size() > 1)
+                    stat = readJSONStat(statDescriptor, statArray.get(1));
+                else 
+                    stat = statDescriptor.stat.copy();
+                ret.addStat((String) ((JSONArray) stats.get(i)).get(0), stat);
+            } else if (stats.get(i) instanceof String) {
+                StatDescriptor statDescriptor = statDescriptors.get((String) stats.get(i));
+                if (statDescriptor == null) System.out.println((String) stats.get(i));
+                ret.addStat((String) statDescriptor.identifier, statDescriptor.stat.copy());
+            }
         }
         return ret;
     }
