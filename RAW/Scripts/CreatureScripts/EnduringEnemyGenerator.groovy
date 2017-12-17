@@ -10,7 +10,7 @@ class EnduringEnemyGenerator extends CreatureGenerationProcedure {
     public CreatureDefinition modify(CreatureDefinition definition) {
         //This script makes an enemy stronger.
         
-        definition.stats.getStat("Max Stamina").modifyBase(50);
+        definition.stats.getStat("Max Stamina").modify("Enduring", 50);
         
         return definition;
     }

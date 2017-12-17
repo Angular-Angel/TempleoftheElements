@@ -29,14 +29,13 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
         Element element = tree.element;
         
         abilitySkill.stats.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
-        
         String effectName = "Damage";
         
         if (spell.containsEffect(effectName)) {
             
             Effect e = spell.getEffect(effectName);
             
-            e.addStat("Damage Value", new NumericStat(damageValue*5));
+            e.addStat("Damage Value", damageValue*5);
             
         } else {
             
@@ -61,7 +60,7 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
                 }
             };
 
-            e.addStat("Damage Value", new NumericStat(damageValue));
+            e.addStat("Damage Value", damageValue);
 
             e.addStat("Damage", damage);
 

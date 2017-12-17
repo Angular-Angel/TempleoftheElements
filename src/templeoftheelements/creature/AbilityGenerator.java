@@ -80,11 +80,11 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
         
         try {
             
-            int costcomplex = (int) (abilitySkill.stats.getScore("Complexity") * (0.2 + (0.4 * random.nextFloat())));
-        
-            abilitySkill.stats.getStat("Complexity").modify(-costcomplex);
-            
-            abilitySkill.stats.addStat("Cost Complexity", new NumericStat(costcomplex));
+//            int costcomplexity = (int) (abilitySkill.stats.getScore("Complexity") * (0.2 + (0.4 * random.nextFloat())));
+//        
+//            abilitySkill.stats.getStat("Complexity").modify("Cost Complexity", -costcomplexity);
+//            
+//            abilitySkill.stats.addStat("Cost Complexity", new NumericStat(costcomplexity));
             
             int i = 0;
             while (abilitySkill.stats.getScore("Cost Complexity") > 0) {
@@ -95,9 +95,12 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                 } while (!abilitySkill.costDetails.contains(cost) && cost.cost > abilitySkill.stats.getScore("Cost Complexity"));
 
                 abilitySkill.costDetails.add(cost);
-                abilitySkill.stats.getStat("Cost Complexity").modify(-cost.cost);
+                abilitySkill.stats.getStat("Cost Complexity").modify(cost.toString(), -cost.cost);
+                i++;
+                if (i > 10) break;
                 
             }
+            i = 0;
             
             while (abilitySkill.stats.getScore("Complexity") > 0) {
                 Ability.Detail effect;
@@ -107,8 +110,9 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                 } while (!abilitySkill.effectDetails.contains(effect) && effect.cost > abilitySkill.stats.getScore("Complexity"));
 
                 abilitySkill.effectDetails.add(effect);
-                abilitySkill.stats.getStat("Complexity").modify(-effect.cost);
-                
+                abilitySkill.stats.getStat("Complexity").modify(effect.toString(), -effect.cost);
+                i++;
+                if (i > 10) break;
             }
         
             Ability.Detail cost;
@@ -121,7 +125,6 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                     i = 0;
                 
                 procedures.get(cost).modify(abilitySkill);
-                
             }
             
             Ability.Detail effect;
@@ -136,7 +139,7 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
                 if (abilitySkill.stats.getScore("Pool") > effect.cost) {
                     procedures.get(effect).modify(abilitySkill);
                 }
-                else abilitySkill.stats.getStat("Pool").modify(-1);
+                else abilitySkill.stats.getStat("Pool").modify("Effect too expensive", -1);
             }
             
             abilitySkill.stats.removeStat("Pool");

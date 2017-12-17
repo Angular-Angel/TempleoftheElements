@@ -13,6 +13,8 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
+import stat.NumericStat;
+import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.Actor;
 import templeoftheelements.item.AttackDefinition;
@@ -221,7 +223,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         controller.step(dt);
         try {
             if (!winded && stats.getScore("Stamina") < stats.getScore("Max Stamina")) {
-                stats.getStat("Stamina").modifyBase(stats.getScore("Stamina Regen") * dt * 150);
+                ((NumericStat) stats.getStat("Stamina")).modifyBase(stats.getScore("Stamina Regen") * dt * 150);
                 if (stats.getScore("Stamina") > stats.getScore("Max Stamina")) stats.getStat("Stamina").set(stats.getScore("Max Stamina"));
             }
             Vec2 speed = getBody().getLinearVelocity().mul(1 - stats.getScore("Acceleration")/stats.getScore("Max Speed"));
@@ -300,7 +302,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.TOOK_DAMAGE, damage, type));
         if (resistances.containsKey(type)) damage *= (1 - resistances.get(type));
         try {
-            stats.getStat("HP").modifyBase(-damage);
+            ((NumericStat) stats.getStat("HP")).modifyBase(-damage);
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -317,7 +319,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
             TempleOfTheElements.game.addActor(a);
             if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
-            if (attack.stats.hasStat("Stamina Cost")) stats.getStat("Stamina").modifyBase(-a.stats.getScore("Stamina Cost"));
+            if (attack.stats.hasStat("Stamina Cost")) ((NumericStat) stats.getStat("Stamina")).modifyBase(-a.stats.getScore("Stamina Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -445,7 +447,9 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     }
     
     private void factorStatusEffect(StatusEffect statusEffect) {
-        stats.addAllStats(statusEffect);
+        for (String s : statusEffect.stats.getStatList()) {
+            stats.getStat(s).modify(statusEffect.name, statusEffect.stats.getStat(s));
+        }
     }
 
     public void removeStatusEffect(StatusEffect statusEffect) {
@@ -458,7 +462,9 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     }
     
     private void defactorStatusEffect(StatusEffect statusEffect) {
-        stats.removeAllStats(statusEffect);
+        for (String s : statusEffect.stats.getStatList()) {
+            stats.getStat(s).removeMod(statusEffect.name);
+        }
     }
 
     @Override
@@ -501,7 +507,9 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         }
         
         public void unequip() {
-            stats.removeAllStats(equipment.playerStats);
+            for (String s : equipment.playerStats.getStatList()) {
+                stats.getStat(s).removeMod(equipment.getName());
+            }
             equipment = null;
         }
         
@@ -518,7 +526,9 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         
         private void factor() {
             if (equipment == null) return;
-            stats.addAllStats(equipment.playerStats);
+            for (String s : equipment.playerStats.getStatList()) {
+                stats.getStat(s).modify(equipment.getName(), equipment.playerStats.getStat(s));
+            }
         }
         
         /**
@@ -544,18 +554,18 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         public void equip(Equipment e) {
             if (canEquip(e)) {
                 equipment = e;
-                super.factor();
                 factor();
             }
         }
         
+        @Override
         public void unequip() {
-            stats.removeAllStats(equipment.playerStats);
-            equipment = null;
+            super.unequip();
             controller.refactorActions();
         }
         
         private void factor() {
+            super.factor();
             for (AttackDefinition a : ((Weapon) equipment).getAttacks()) 
                 controller.addAction(new AttackAction(a)); 
         }

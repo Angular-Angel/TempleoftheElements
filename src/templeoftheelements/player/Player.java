@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
 import org.lwjgl.glfw.GLFW;
 import stat.NoSuchStatException;
+import stat.NumericStat;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.controller.Controller;
 import templeoftheelements.item.Item;
@@ -215,9 +216,9 @@ public class Player implements Controller {
     public void roomCleared(Room room) {
         try {
             creature.stats.getStat("Stamina").set(creature.stats.getScore("Max Stamina"));
-            creature.stats.getStat("Mana").modifyBase(creature.stats.getScore("Mana Regen"));
+            ((NumericStat) creature.stats.getStat("Mana")).modifyBase(creature.stats.getScore("Mana Regen"));
             if (creature.stats.getScore("Mana")> creature.stats.getScore("Max Mana")) creature.stats.getStat("Mana").set(creature.stats.getScore("Max Mana"));
-            creature.stats.getStat("HP").modifyBase(creature.stats.getScore("HP Regen"));
+            ((NumericStat) creature.stats.getStat("HP")).modifyBase(creature.stats.getScore("HP Regen"));
             if (creature.stats.getScore("HP")> creature.stats.getScore("Max HP")) creature.stats.getStat("HP").set(creature.stats.getScore("Max HP"));
             gainExperience(room.experience);
         } catch (NoSuchStatException ex) {

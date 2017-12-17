@@ -19,7 +19,7 @@ public class CastTimeSpellGenerator extends AbilityGenerationProcedure {
         
         int castTime = 1 + random.nextInt(pool) / Ability.Detail.CAST_TIME.cost;
         
-        abilitySkill.ability.stats.addStat("Cast Time", new NumericStat(castTime));
+        abilitySkill.ability.stats.getStat("Cast Time").modify("Base", castTime);
         
         abilitySkill.stats.getStat("Cost Pool").modifyBase(-castTime * Ability.Detail.CAST_TIME.cost);
         abilitySkill.stats.getStat("Pool").modifyBase(castTime * Ability.Detail.CAST_TIME.cost);

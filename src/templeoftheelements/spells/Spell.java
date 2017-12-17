@@ -4,6 +4,7 @@ package templeoftheelements.spells;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import stat.NoSuchStatException;
+import stat.NumericStat;
 import stat.StatContainer;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
@@ -43,7 +44,7 @@ public abstract class Spell extends Ability implements EffectContainer, Action {
     public void perform(Creature creature, Position pos) {
         try {
             creature.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.USED_SPELL, this));
-            creature.stats.getStat("Mana").modifyBase(-stats.getScore("Mana Cost"));
+            ((NumericStat)creature.stats.getStat("Mana")).modifyBase(-stats.getScore("Mana Cost"));
         } catch (NoSuchStatException ex) {
             Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
         }

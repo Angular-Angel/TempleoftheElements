@@ -6,7 +6,7 @@
         "Stat Type": "INTEGER",
         "Stat": 100,
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Dexterity",
@@ -15,7 +15,7 @@
         "Stat Type": "INTEGER",
         "Stat": 100,
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Constitution",
@@ -24,7 +24,7 @@
         "Stat Type": "INTEGER",
         "Stat": 100,
         "Base": 100.0,
-        "Increase": 10.0
+        "Increase": 1.0
     },
     {
         "Name": "Perception",
@@ -33,7 +33,7 @@
         "Stat Type": "INTEGER",
         "Stat": 100,
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Intelligence",
@@ -42,7 +42,7 @@
         "Stat Type": "INTEGER",
         "Stat": 100,
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Spirit",
@@ -51,7 +51,7 @@
         "Stat Type": "INTEGER",
         "Stat": 100,
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Luck",
@@ -60,7 +60,7 @@
         "Stat Type": "INTEGER",
         "Stat": 100,
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Max HP",
@@ -69,7 +69,7 @@
         "Stat Type": "INTEGER",
         "Stat": "([Strength] *1.5 + [Constitution] * 0.5 + [Added HP]) * [HP Multiplier]",
         "Base": 200.0,
-        "Increase": 20.0,
+        "Increase": 4.0,
     },
     {
         "Name": "Max Mana",
@@ -78,7 +78,7 @@
         "Stat Type": "INTEGER",
         "Stat": "([Spirit] * 2 + [Added Mana]) * [Mana Multiplier]",
         "Base": 200.0,
-        "Increase": 20.0,
+        "Increase": 4.0,
     },
     {
         "Name": "Max Stamina",
@@ -87,7 +87,7 @@
         "Stat Type": "INTEGER",
         "Stat": "([Constitution] * 1.5 + [Spirit] * 0.5 + [Added Stamina]) * [Stamina Multiplier]",
         "Base": 200.0,
-        "Increase": 20.0,
+        "Increase": 4.0,
     },
     {
         "Name": "Movement Speed",
@@ -96,7 +96,7 @@
         "Stat Type": "INTEGER",
         "Stat": "([Dexterity] * 0.6 + [Constitution] * 0.3 + [Spirit] * 0.1 + [Added Speed]) * [Speed Multiplier] * 16",
         "Base": 1600.0,
-        "Increase": 160.0,
+        "Increase": 32.0,
     },
     {
         "Name": "Acceleration",
@@ -105,7 +105,7 @@
         "Stat Type": "INTEGER",
         "Stat": "[Max Speed] / 20",
         "Base": 80.0,
-        "Increase": 8.0,
+        "Increase": 1.6,
     },
     {
         "Name": "Turning Speed",
@@ -114,7 +114,7 @@
         "Stat Type": "INTEGER",
         "Stat": "([Max Speed] / 20) * [Speed Multiplier] / 180",
         "Base": 80.0,
-        "Increase": 8.0,
+        "Increase": 1.6,
     },
     {
         "Name": "Attack Speed",
@@ -123,7 +123,7 @@
         "Stat Type": "PERCENTAGE",
         "Stat": "([Dexterity] * 0.5 + [Constitution] * 0.25  + [Strength] * 0.15 + [Spirit] * 0.1 + [Added Attack Speed]) / 100",
         "Base": 1.0,
-        "Increase": 0.05,
+        "Increase": 0.01,
     },
     {
         "Name": "Size",
@@ -132,7 +132,7 @@
         "Stat Type": "INTEGER",
         "Stat": 1,
         "Base": 1.0,
-        "Increase": 0.1,
+        "Increase": 0.01,
     },
     {
         "Name": "Ranged Accuracy",
@@ -141,7 +141,7 @@
         "Stat": "[Dexterity] * 0.4 + [Perception] * 0.4 + [Intelligence] * 0.2",
         "Stat Type": "INTEGER",
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 2.0,
     },
     {
         "Name": "Melee Accuracy",
@@ -150,7 +150,7 @@
         "Stat": "[Dexterity] * 0.4 + [Strength] * 0.4 + [Perception] * 0.2",
         "Stat Type": "INTEGER",
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 2.0,
     },
     {
         "Name": "Dodge",
@@ -159,7 +159,7 @@
         "Stat": "[Dexterity] * 0.6 + [Perception] * 0.3 + [Intelligence] * 0.1",
         "Stat Type": "INTEGER",
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 2.0,
     },
     {
         "Name": "Speed of Thought",
@@ -168,7 +168,7 @@
         "Stat": "([Perception] * 0.6 + [Intelligence] * 0.3 + [Constitution] * 0.05 + [Spirit] * 0.05) / 100",
         "Stat Type": "PERCENTAGE",
         "Base": 1.0,
-        "Increase": 0.1,
+        "Increase": 0.01,
     },
     {
         "Name": "Carrying Capacity",
@@ -177,7 +177,7 @@
         "Stat": "[Strength] * 0.7 + [Constitution] * 0.3",
         "Stat Type": "INTEGER",
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.5,
     },
     {
         "Name": "Striking Strength",
@@ -186,7 +186,7 @@
         "Stat": "([Strength] * 0.6 + [Dexterity] * 0.4) / 100",
         "Stat Type": "PERCENTAGE",
         "Base": 1.0,
-        "Increase": 0.1,
+        "Increase": 0.015,
     },
     {
         "Name": "Experience Multiplier",
@@ -195,16 +195,16 @@
         "Stat": "([Intelligence] * 0.7 + [Perception] * 0.2 + [Spirit] * 0.1) / 100",
         "Stat Type": "PERCENTAGE",
         "Base": 1.0,
-        "Increase": 0.1,
+        "Increase": 0.01,
     },
     {
-        "Name": "Identification Capacity",
-        "Identifier": "Identification Capacity",
+        "Name": "Identification Score",
+        "Identifier": "Identification Score",
         "Type": "Stat Description",
         "Stat": "[Perception] * 0.6 + [Intelligence] * 0.4",
         "Stat Type": "INTEGER",
         "Base": 100.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "HP Regen",
@@ -213,7 +213,7 @@
         "Stat Type": "INTEGER",
         "Stat": "([Max HP] / 40 + [Constitution] * 0.1 + [Spirit] * 0.05 + [Added HP Regen]) * [HP Regen Multiplier]",
         "Base": 20.0,
-        "Increase": 1.0,
+        "Increase": 0.2,
     },
     {
         "Name": "Mana Regen",
@@ -222,16 +222,16 @@
         "Stat Type": "INTEGER",
         "Stat": "([Max Mana] / 10 + [Added Mana Regen]) * [Mana Regen Multiplier]",
         "Base": 20.0,
-        "Increase": 1.0,
+        "Increase": 0.2,
     },
     {
         "Name": "Stamina Regen",
         "Identifier": "Stamina Regen",
         "Type": "Stat Description",
         "Stat Type": "INTEGER",
-        "Stat": "([Constitution] * 0.1 + [Spirit] * 0.1 + [Added Mana Regen]) * [Mana Regen Multiplier]",
+        "Stat": "([Constitution] * 0.1 + [Spirit] * 0.1 + [Added Stamina Regen]) * [Stamina Regen Multiplier]",
         "Base": 20.0,
-        "Increase": 1.0,
+        "Increase": 0.2,
     },
     {
         "Name": "Bonus Attack Speed",
@@ -240,7 +240,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Bonus Speed",
@@ -249,7 +249,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Increased Speed",
@@ -258,7 +258,7 @@
         "Stat Type": "PERCENTAGE",
         "Stat": 1,
         "Base": 1.0,
-        "Increase": 0.05,
+        "Increase": 0.01,
     },
     {
         "Name": "Bonus Stamina",
@@ -267,7 +267,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 10.0,
+        "Increase": 1.0,
     },
     {
         "Name": "Increased Stamina",
@@ -276,7 +276,7 @@
         "Stat Type": "PERCENTAGE",
         "Stat": 1,
         "Base": 1.0,
-        "Increase": 0.05,
+        "Increase": 0.01,
     },
     {
         "Name": "Bonus HP",
@@ -285,7 +285,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 20.0,
+        "Increase": 2.0,
     },
     {
         "Name": "Increased HP",
@@ -294,7 +294,7 @@
         "Stat Type": "PERCENTAGE",
         "Stat": 1,
         "Base": 1.0,
-        "Increase": 0.05,
+        "Increase": 0.01,
     },
     {
         "Name": "Bonus Mana",
@@ -303,7 +303,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 20.0,
+        "Increase": 2.0,
     },
     {
         "Name": "Increased Mana",
@@ -312,7 +312,7 @@
         "Stat Type": "PERCENTAGE",
         "Stat": 1,
         "Base": 1.0,
-        "Increase": 0.05,
+        "Increase": 0.01,
     },
     {
         "Name": "Bonus Stamina",
@@ -321,7 +321,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 20.0,
+        "Increase": 2.0,
     },
     {
         "Name": "Increased Stamina",
@@ -330,7 +330,7 @@
         "Stat Type": "PERCENTAGE",
         "Stat": 1,
         "Base": 1.0,
-        "Increase": 0.05,
+        "Increase": 0.01,
     },
     {
         "Name": "Bonus HP Regen",
@@ -339,7 +339,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 1.0,
+        "Increase": 0.2,
     },
     {
         "Name": "Bonus Mana Regen",
@@ -348,7 +348,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 1.0,
+        "Increase": 0.2,
     },
     {
         "Name": "Bonus Stamina Regen",
@@ -357,7 +357,7 @@
         "Stat Type": "INTEGER",
         "Stat": 0,
         "Base": 0.0,
-        "Increase": 1.0,
+        "Increase": 0.2,
     },
     {
         "Name": "Bonus Physical Damage",
@@ -454,7 +454,7 @@
         "Identifier": "Physical Damage",
         "Type": "Stat Description",
         "Stat Type": "INTEGER",
-        "Stat": "([Strength] + [Added Physical Damage]) * [Physical Damage Multiplier] / 2",
+        "Stat": "([Strength] * 0.6 + [Dexterity] * 0.4 + [Added Physical Damage]) * [Physical Damage Multiplier] / 2",
         "Base": 50.0,
         "Increase": 5.0,
     }

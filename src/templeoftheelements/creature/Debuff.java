@@ -5,9 +5,7 @@
  */
 package templeoftheelements.creature;
 
-import templeoftheelements.creature.StatusEffect;
 import static templeoftheelements.TempleOfTheElements.game;
-import templeoftheelements.creature.Creature;
 
 /**
  *
@@ -57,7 +55,7 @@ public class Debuff extends StatusEffect {
     @Override
     public StatusEffect clone() {
         Debuff debuff = new Debuff(name, maxTimer, origin);
-        debuff.addAllStats(this);
+        debuff.stats.addAllStats(this.stats);
         return debuff;
     }
     

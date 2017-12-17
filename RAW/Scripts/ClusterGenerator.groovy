@@ -1,4 +1,5 @@
 import stat.Stat;
+import stat.StatContainer;
 import stat.NumericStat;
 import stat.StatDescriptor;
 import java.util.Random;
@@ -24,7 +25,7 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
     
     private StatDescriptor randomStat(CharacterTree tree) {
         StatDescriptor stat;
-        if (random.nextInt(2) == 0) {
+        if (random.nextInt(3) > 2) {
             //Use a primary stat
             stat = tree.primaryAttributes.get(random.nextInt(tree.primaryAttributes.size()));
         } else {
@@ -33,6 +34,14 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         }
         
         return stat;
+    }
+    
+    private StatContainer randomStats(CharacterTree tree) {
+        StatContainer ret = new StatContainer();
+        
+        //int statpoints = 
+        
+        return ret;
     }
 
     @Override
@@ -54,15 +63,15 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         position.y = (float) (65 * (tree.curLayer + 1) * Math.cos(tree.curAngle));
         node.setPosition(position);
         
-        node.stats.addStat(stat1, new NumericStat(stat1, stat1.increase));
-        node.stats.addStat(stat2, new NumericStat(stat2, stat2.increase));
+        node.stats.addStat(stat1, stat1.increase);
+        node.stats.addStat(stat2, stat2.increase);
         tree.addNode(node);
         
         CharacterNode entry = node; //remember our first node
         
         for (int i = 0; i < 3; i++) {
             node = new CharacterNode(node, tree);
-            node.stats.addStat(stat1, new NumericStat(stat1, stat1.increase));
+            node.stats.addStat(stat1, stat1.increase);
             
             position = new Vec2();
             position.x = (float) (65 * (tree.curLayer + 2 + i) * Math.sin(tree.curAngle));
@@ -103,8 +112,8 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         } else {
             node = new CharacterNode(new OrRequirement(endLine1, endLine2), tree);
 
-            node.stats.addStat(stat1, new NumericStat(stat1, stat1.increase));
-            node.stats.addStat(stat2, new NumericStat(stat2, stat2.increase));
+            node.stats.addStat(stat1, stat1.increase);
+            node.stats.addStat(stat2, stat2.increase);
         }
         position = new Vec2();
         position.x = (float) (65 * (tree.curLayer + 5) * Math.sin(tree.curAngle));
