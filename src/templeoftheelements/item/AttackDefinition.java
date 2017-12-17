@@ -99,14 +99,14 @@ public class AttackDefinition implements EffectContainer{
     public void addReference(String s, StatContainer container) {
         stats.addReference(s, container);
         for (Effect e : onHitEffects.values()) {
-            e.addReference(s, container);
+            e.stats.addReference(s, container);
         }
     }
     
     public void setActive(boolean active) {
         stats.setActive(active);
         for (Effect e : onHitEffects.values()) {
-            e.setActive(active);
+            e.stats.setActive(active);
         }
     }
 
@@ -148,7 +148,7 @@ public class AttackDefinition implements EffectContainer{
     public void init(Creature c) {
         stats.init(c.stats);
         for (Effect e : onHitEffects.values()) {
-            e.init(c.stats);
+            e.stats.init(c.stats);
         }
     }
     

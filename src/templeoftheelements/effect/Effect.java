@@ -5,16 +5,18 @@ import stat.StatContainer;
 
 
 
-public abstract class Effect extends StatContainer{
+public abstract class Effect {
     
     public final String name;
+    
+    public StatContainer stats =  new StatContainer();
     
     public abstract float effect(EffectSource source, Object o);
     
     public abstract String getDescription();
     
     public Effect(String name, boolean bool) {
-        super(bool);
+        stats = new StatContainer(bool);
         this.name = name;
     }
     

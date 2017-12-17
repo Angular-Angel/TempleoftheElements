@@ -35,7 +35,7 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
             
             Effect e = spell.getEffect(effectName);
             
-            e.addStat("Damage Value", damageValue*5);
+            e.stats.addStat("Damage Value", damageValue*5);
             
         } else {
             
@@ -50,19 +50,19 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
                 public float effect(EffectSource src, Object object) {
                     if (!(object instanceof Creature && src instanceof Creature)) return 0;
 
-                    return ((Creature) object).takeDamage(getScore("Damage"), ele.name);
+                    return ((Creature) object).takeDamage(stats.getScore("Damage"), ele.name);
                 }
 
                 public String getDescription() {
-                    refactor();
+                    stats.refactor();
 
-                    return "Deals " + getScore("Damage") + " " + ele.name + " Damage.";
+                    return "Deals " + stats.getScore("Damage") + " " + ele.name + " Damage.";
                 }
             };
 
-            e.addStat("Damage Value", damageValue);
+            e.stats.addStat("Damage Value", damageValue);
 
-            e.addStat("Damage", damage);
+            e.stats.addStat("Damage", damage);
 
             spell.addEffect(e)
         }

@@ -6,7 +6,6 @@
 package templeoftheelements.spells;
 
 import java.util.HashMap;
-import stat.StatContainer;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
@@ -85,7 +84,7 @@ public class EnemyTargetSpell extends Spell {
     public void init(Creature c) {
         stats.init(c.stats);
         for (Effect e : effects.values()) {
-            e.init(c.stats);
+            e.stats.init(c.stats);
         }
     }
 

@@ -218,7 +218,7 @@ public class Registry extends RawReader {
     
     @Override
     protected StatContainer readJSONStats(JSONArray stats) {
-        StatContainer ret = new StatContainer() {};
+        StatContainer ret = new StatContainer();
         for (int i = 0; i < stats.size(); i++) {
             if (stats.get(i) instanceof JSONArray) {
                 JSONArray statArray = (JSONArray) stats.get(i);
@@ -263,7 +263,7 @@ public class Registry extends RawReader {
         
         WeaponDefinition ret = new WeaponDefinition(name, sprite, level, rarity);
         JSONArray stats = (JSONArray) obj.get("Stats"); 
-        ret.addAllStats(readJSONStats(stats)); //add the stats that the item def will have.
+        ret.stats.addAllStats(readJSONStats(stats)); //add the stats that the item def will have.
         
         JSONArray attacks = (JSONArray) obj.get("Attacks"); 
         ArrayList<AttackDefinition> attackDefs = readAttackDefs(attacks);

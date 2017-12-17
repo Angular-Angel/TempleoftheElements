@@ -33,7 +33,7 @@ public class WeaponDefinition extends ItemDefinition {
     @Override
     public Weapon generate() {
         Weapon ret = new Weapon(name, sprite, level);
-        ret.stats.addAllStats(viewStats());
+        ret.stats.addAllStats(stats.viewStats());
         for (AttackDefinition a : attacks) ret.addAttack(a);
         return ret;
     }

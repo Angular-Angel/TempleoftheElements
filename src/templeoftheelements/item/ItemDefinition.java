@@ -10,12 +10,13 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public abstract class ItemDefinition extends StatContainer {
+public abstract class ItemDefinition {
     
     protected String name;
     protected Renderable sprite;
     protected int level;
     private int rarity;
+    public final StatContainer stats;
     
     public ItemDefinition(String name, Renderable sprite) {
         this(name, sprite, 1, 1);
@@ -27,6 +28,7 @@ public abstract class ItemDefinition extends StatContainer {
         this.sprite = sprite; 
         this.level = level;
         this.rarity = rarity;
+        this.stats = new StatContainer();
     }
      
     public abstract Item generate();

@@ -6,7 +6,6 @@
 package templeoftheelements.spells;
 
 import java.util.HashMap;
-import stat.StatContainer;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
@@ -87,7 +86,7 @@ public class AreaSpell extends Spell {
     public void init(Creature c) {
         stats.init(c.stats);
         for (Effect e : effects.values()) {
-            e.init(c.stats);
+            e.stats.init(c.stats);
         }
     }
 
