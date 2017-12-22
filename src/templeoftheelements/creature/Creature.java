@@ -235,7 +235,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
                 if (!curAttack.isDead()) {
                     curAttack.move(getPosition(), getDirection());
                 } else {
-                    timer = (int) curAttack.stats.getScore("Recovery Time") / stats.getScore("Attack Speed");
+                    timer = (int) curAttack.stats.getScore("Recovery Time") / stats.getScore("Attack Speed Multiplier");
                     curAttack = null;
                 }
             }

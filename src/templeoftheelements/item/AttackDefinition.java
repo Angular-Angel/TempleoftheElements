@@ -11,6 +11,7 @@ import stat.EquationStat;
 import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
+import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.collision.Attack;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.MeleeAttack;
@@ -68,8 +69,10 @@ public class AttackDefinition implements EffectContainer{
                 float reach = stats.getScore("Reach") + attacker.stats.getScore("Size")/2;
                 attack = new MeleeAttack(attacker, this, shape, dir, reach);
                 ((MeleeAttack) attack).move(attacker.getPosition(), 0);
-                attack.stats.addStat("Damage", new NumericStat(attacker.stats.getScore("Physical Damage") 
-                        * attack.stats.getScore("Damage Multiplier")));
+                float damage = attack.stats.getScore("Min Damage");
+                damage += game.random.nextFloat() * (attack.stats.getScore("Max Damage") - attack.stats.getScore("Min Damage"));
+                damage *= attacker.stats.getScore("Physical Damage Multiplier");
+                attack.stats.addStat("Damage", new NumericStat(damage));
             }
         } catch (NoSuchStatException ex) {
             Logger.getLogger(AttackDefinition.class.getName()).log(Level.SEVERE, null, ex);

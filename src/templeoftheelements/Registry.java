@@ -153,13 +153,19 @@ public class Registry extends RawReader {
         ja = (JSONArray) obj.get("PrimaryAttributes");
         if (ja != null)
         for (Object o : ja) {
-            ret.primaryAttributes.add(statDescriptors.get((String) o));
+            StatDescriptor stat = statDescriptors.get((String) o);
+            if (stat != null)
+                ret.primaryAttributes.add(stat);
+            else System.err.println((String) o);
         }
         
         ja = (JSONArray) obj.get("SecondaryAttributes");
         if (ja != null)
         for (Object o : ja) {
-            ret.secondaryAttributes.add(statDescriptors.get((String) o));
+            StatDescriptor stat = statDescriptors.get((String) o);
+            if (stat != null)
+                ret.secondaryAttributes.add(stat);
+            else System.err.println((String) o);
         }
         
         ja = (JSONArray) obj.get("DebuffAttributes");

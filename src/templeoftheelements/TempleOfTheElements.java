@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,7 @@ public final class TempleOfTheElements extends Game {
     public Player player;
     public World world;
     public Room room;
+    public Random random;
     
     public Screen screen;
     
@@ -128,6 +130,7 @@ public final class TempleOfTheElements extends Game {
         world = new World(new Vec2());
         world.setContactListener(new CollisionManager());
         registry = new Registry();
+        random = new Random();
         ((InitScript) registry.readGroovyScript(new File("RAW/Scripts/Init.groovy"))).Init();
     }
     

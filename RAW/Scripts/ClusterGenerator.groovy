@@ -28,9 +28,11 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         if (random.nextInt(3) > 2) {
             //Use a primary stat
             stat = tree.primaryAttributes.get(random.nextInt(tree.primaryAttributes.size()));
+            if (stat == null) System.out.println(tree.primaryAttributes);
         } else {
             //use a secondary stat.
             stat = tree.secondaryAttributes.get(random.nextInt(tree.secondaryAttributes.size()));
+            if (stat == null) System.out.println(tree.secondaryAttributes);
         }
         
         return stat;

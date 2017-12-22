@@ -106,18 +106,18 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTree> {
         
         //ret.details.add(detail);
         
-        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Mana"));
+        ret.secondaryAttributes.add(game.registry.statDescriptors.get("Max Mana"));
         
         if (ret.scalingDetails.contains(Ability.Detail.SPEED_BASED)) 
-            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Speed"));
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Max Speed"));
         
         if (ret.scalingDetails.contains(Ability.Detail.STAMINA_BASED) ||
             ret.scalingDetails.contains(Ability.Detail.STAMINA_COST)) 
-            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added Stamina"));
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Max Stamina"));
         
         if (ret.scalingDetails.contains(Ability.Detail.HP_BASED) ||
             ret.scalingDetails.contains(Ability.Detail.HP_COST)) 
-            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Added HP"));
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Max HP"));
         
         if (ret.scalingDetails.contains(Ability.Detail.CONSTITUTION_BASED))
             ret.secondaryAttributes.add(game.registry.statDescriptors.get("Constitution"));

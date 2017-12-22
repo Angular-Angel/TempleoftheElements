@@ -10,7 +10,7 @@ class FrenziedEnemyGenerator extends CreatureGenerationProcedure {
     public CreatureDefinition modify(CreatureDefinition definition) {
         //This script makes an enemy stronger.
         
-        definition.stats.getStat("Attack Speed").modify("Frenzied", 0.2);
+        definition.stats.getStat("Attack Speed Multiplier").modify("Frenzied", 0.2);
         
         return definition;
     }

@@ -196,13 +196,11 @@ public class CharacterNode implements Requirement , Renderable, Clickable {
         for (String s : stats.getStatList()) {
             try {
                 i -= 20;
-                if (stats.getStat(s).getStatDescriptor().type == StatDescriptor.StatType.INTEGER)
+                if (stats.getStat(s).getStatDescriptor().type == StatDescriptor.StatType.NUMBER)
                     game.font.draw(s + ": +" + (int) stats.getScore(s), new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
                 else if (stats.getStat(s).getStatDescriptor().type == StatDescriptor.StatType.PERCENTAGE)
                     game.font.draw(s + ": +" + (int) (stats.getScore(s) * 100) + "%", new com.samrj.devil.math.Vec2(screen.x +2, screen.y + i));
-            } catch (NoSuchStatException ex) {
-                Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException ex) {
+            } catch (NoSuchStatException | NullPointerException ex) {
                 Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
