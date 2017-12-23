@@ -14,7 +14,6 @@ import org.jbox2d.dynamics.*;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
 import stat.NumericStat;
-import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.Actor;
 import templeoftheelements.item.AttackDefinition;
@@ -41,7 +40,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     private Renderable sprite;
     private Controller controller;
     private Fixture fixture;
-    private float direction, timer;
+    private float direction, attackTimer;
     private MeleeAttack curAttack;
     private HashSet<Action> actions;
     private HashSet<Ability> abilities;
@@ -54,7 +53,6 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     private HashMap<String, StatusEffect> statusEffects;
     private ArrayList<CreatureListener> listeners;
     private ArrayList<PassiveAbility> passives;
-    private boolean winded;
     private String name; //For display and debug purposes.
     public StatContainer stats;
 
@@ -67,9 +65,8 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     }
     
     public Creature(Position pos, CreatureDefinition def) {
-        timer = 0; direction = 0;
+        attackTimer = 0; direction = 0;
         createPosition = pos;
-        winded = false;
         actions = new HashSet<>();
         bodyParts = new ArrayList<>();
         resistances = new HashMap<>();
@@ -215,48 +212,64 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     public Position getPosition() {
         return new Position( getBody().getPosition());
     }
+    
+    private void regenStamina(float dt) {
+        float curStamina = stats.getScore("Max Stamina");
+        if (stats.getScore("Stamina") < curStamina) {
+            ((NumericStat) stats.getStat("Stamina")).modifyBase(stats.getScore("Stamina Regen") * dt * 150);
+            if (stats.getScore("Stamina") > stats.getScore("Max Stamina")) stats.getStat("Stamina").set(stats.getScore("Max Stamina"));
+            notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.GAINED_STAMINA, stats.getScore("Stamina") - curStamina));
+        }
+    }
+    
+    private void accelerateBody(float dt) {
+        Vec2 speed = getBody().getLinearVelocity().mul(1 - stats.getScore("Acceleration")/stats.getScore("Max Speed"));
+        getBody().setLinearVelocity(speed);
+        getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(stats.getScore("Acceleration")));
+        notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.MOVED, getBody().getLinearVelocity().length()));
+    }
+    
+    private void manageMeleeAttack() {
+        if (curAttack != null) {
+            if (!curAttack.isDead()) {
+                curAttack.move(getPosition(), getDirection());
+            } else {
+                attackTimer = (int) curAttack.stats.getScore("Recovery Time") / stats.getScore("Attack Speed Multiplier");
+                curAttack = null;
+            }
+        }
+    }
+    
+    private void checkFatigue() {
+        float staminaPercentage = stats.getScore("Stamina") / stats.getScore("Max Stamina");
+        if (staminaPercentage < 0.9) {
+            if (statusEffects.containsKey("Fatigue") && statusEffects.get("Fatigue").severity < (int) (10 -10 * staminaPercentage)) {
+                StatusEffect effect = game.registry.statusEffects.get("Fatigue").clone();
+                effect.severity = (int) (10 -10 * staminaPercentage);
+                statusEffects.get("Fatigue").update(effect);
+            } else {
+                StatusEffect effect = game.registry.statusEffects.get("Fatigue").clone();
+                addStatusEffect(effect);
+            }
+        }
+    }
 
     @Override
     public void step(float dt) {
         for (PassiveAbility passive : passives) passive.step(dt);
         if (controller == null) return;
         controller.step(dt);
-        try {
-            if (!winded && stats.getScore("Stamina") < stats.getScore("Max Stamina")) {
-                ((NumericStat) stats.getStat("Stamina")).modifyBase(stats.getScore("Stamina Regen") * dt * 150);
-                if (stats.getScore("Stamina") > stats.getScore("Max Stamina")) stats.getStat("Stamina").set(stats.getScore("Max Stamina"));
-            }
-            Vec2 speed = getBody().getLinearVelocity().mul(1 - stats.getScore("Acceleration")/stats.getScore("Max Speed"));
-            getBody().setLinearVelocity(speed);
-            getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(stats.getScore("Acceleration")));
-            notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.MOVED, getBody().getLinearVelocity().length()));
-            if (curAttack != null) {
-                winded = true;
-                if (!curAttack.isDead()) {
-                    curAttack.move(getPosition(), getDirection());
-                } else {
-                    timer = (int) curAttack.stats.getScore("Recovery Time") / stats.getScore("Attack Speed Multiplier");
-                    curAttack = null;
-                }
-            }
-            float staminaPercentage = stats.getScore("Stamina") / stats.getScore("Max Stamina");
-            if (staminaPercentage < 0.9) {
-                if (statusEffects.containsKey("Fatigue") && statusEffects.get("Fatigue").severity < (int) (10 -10 * staminaPercentage)) {
-                    StatusEffect effect = game.registry.statusEffects.get("Fatigue").clone();
-                    effect.severity = (int) (10 -10 * staminaPercentage);
-                    statusEffects.get("Fatigue").update(effect);
-                } else {
-                    StatusEffect effect = game.registry.statusEffects.get("Fatigue").clone();
-                    addStatusEffect(effect);
-                }
-            }
-            
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (timer > 0) {
-            timer -= dt*150;
-            winded = false;
+        
+        regenStamina(dt);
+        
+        accelerateBody(dt);
+        
+        manageMeleeAttack();
+        
+        checkFatigue();
+        
+        if (attackTimer > 0) {
+            attackTimer -= dt*150;
         }
     }
 
@@ -301,28 +314,21 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     public float takeDamage(float damage, String type) {
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.TOOK_DAMAGE, damage, type));
         if (resistances.containsKey(type)) damage *= (1 - resistances.get(type));
-        try {
-            ((NumericStat) stats.getStat("HP")).modifyBase(-damage);
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.LOST_LIFE, damage, type));
+        ((NumericStat) stats.getStat("HP")).modifyBase(-damage);
+        notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.LOST_HP, damage, type));
         return damage;
     }
     
     public void attack(AttackDefinition attack) {
-        try {
-            if (curAttack != null || timer > 0) return;
-            if (attack.stats.hasStat("Stamina Cost") && attack.stats.getScore("Stamina Cost") > stats.getScore("Stamina")) return;
-            Attack a = attack.generate(this);
-            TempleOfTheElements.game.addSprite(a);
-            TempleOfTheElements.game.addActor(a);
-            if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
-            notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
-            if (attack.stats.hasStat("Stamina Cost")) ((NumericStat) stats.getStat("Stamina")).modifyBase(-a.stats.getScore("Stamina Cost"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if (curAttack != null || attackTimer > 0) return;
+        if (attack.stats.hasStat("Stamina Cost") && attack.stats.getScore("Stamina Cost") > stats.getScore("Stamina")) return;
+        Attack a = attack.generate(this);
+        TempleOfTheElements.game.addSprite(a);
+        TempleOfTheElements.game.addActor(a);
+        if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
+        notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
+        if (attack.stats.hasStat("Stamina Cost")) ((NumericStat) stats.getStat("Stamina")).modifyBase(-a.stats.getScore("Stamina Cost"));
+        notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.SPENT_STAMINA, attack.stats.getScore("Stamina Cost")));
     }
 
     /**

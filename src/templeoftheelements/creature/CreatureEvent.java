@@ -10,9 +10,11 @@ package templeoftheelements.creature;
 public class CreatureEvent {
     
     public static enum Type {
-        TOOK_DAMAGE, HEALED, TOOK_HIT, DEALT_DAMAGE, ATTACKED, USED_SPELL, 
-        TOOK_ACTION, MOVED, LOST_LIFE, DIED, COLLIDED, ADDED_STATUS_EFFECT, 
-        LOST_STATUS_EFFECT, HIT_ENEMY;
+        TOOK_HIT, TOOK_DAMAGE, SPENT_HP, LOST_HP, GAINED_HP, 
+        TOOK_ACTION, USED_SPELL, ATTACKED, HIT_ENEMY, DEALT_DAMAGE, 
+        SPENT_STAMINA, LOST_STAMINA, GAINED_STAMINA,
+        MOVED, COLLIDED, 
+        ADDED_STATUS_EFFECT, LOST_STATUS_EFFECT, DIED;
     }
     
     public final float quantity;
