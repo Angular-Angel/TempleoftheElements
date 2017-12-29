@@ -20,10 +20,11 @@ class MonsterGenerator extends CreatureGenerationProcedure {
     Random random = new Random();
     
     public CreatureDefinition generate() {
-        int rand = random.nextInt(2);
         
         String name = "Monster " + count++; //set The Name
         CreatureDefinition ret = game.registry.creatureDefs.get("Base").clone();
+        
+        ret.name = name;
         
         ret.types.add(CreatureDefinition.Detail.MONSTROUS_HUMANOID);
         
@@ -32,7 +33,7 @@ class MonsterGenerator extends CreatureGenerationProcedure {
         arrayList.addAll(Arrays.asList(CreatureDefinition.Detail.values()));
         arrayList = arrayList.subList(arrayList.indexOf(CreatureDefinition.Detail._PHYSICAL_) +1, arrayList.indexOf(CreatureDefinition.Detail._NATURAL_ATTACKS_));
         
-        rand = random.nextInt(arrayList.size());
+        int rand = random.nextInt(arrayList.size());
         ret.details.add(arrayList.get(rand));
         
         //Determine secondary strengths and then choose them.
@@ -76,6 +77,7 @@ class MonsterGenerator extends CreatureGenerationProcedure {
         
         ret.setControllerType(game.registry.controllers.get("Fighter.groovy"));
         ret.itemDrops.add(new ItemDrop(game.registry.itemPools.get("ItemRoller.groovy"), 2, 1));
+        ret.stats.addStat("XP", new NumericStat(100));
         game.registry.creatureDefs.put(name, ret);
         return ret;
     }

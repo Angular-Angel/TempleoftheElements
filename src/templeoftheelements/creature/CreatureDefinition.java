@@ -29,7 +29,7 @@ public class CreatureDefinition {
     public ArrayList<Ability> abilities;
     public ArrayList<Detail> types;
     public ArrayList<Detail> details;
-    public StatContainer stats;
+    public final StatContainer stats;
     
     public static enum Detail {
         //types:
@@ -67,6 +67,7 @@ public class CreatureDefinition {
         abilities.add(a);
     }
     
+    @Override
     public CreatureDefinition clone() {
         CreatureDefinition ret = new CreatureDefinition(name);
         ret.stats.addAllStats(stats.viewStats());
