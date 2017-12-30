@@ -7,6 +7,7 @@ package templeoftheelements.player;
 
 import java.util.ArrayList;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.creature.Creature;
 
 /**
@@ -16,12 +17,13 @@ import templeoftheelements.creature.Creature;
 public class AbilitySkill extends Skill {
     
     public CharacterTree tree;
-    public Ability ability;
+    public AbilityDefinition abilityDef;
     public Ability.Detail usage;
     public Ability.Detail targeting;
     public ArrayList<Ability.Detail> costDetails;
     public ArrayList<Ability.Detail> effectDetails;
     public ArrayList<Ability.Detail> scalingDetails;
+    public Ability displayAbility;
     
     public AbilitySkill(CharacterTree tree) {
         super();
@@ -34,23 +36,24 @@ public class AbilitySkill extends Skill {
     @Override
     public void beAcquired(Creature creature) {
         super.beAcquired(creature);
-        creature.addAbility(ability);
+        creature.addAbility(abilityDef.getAbility());
     }
     
     @Override
     public void init(Creature c) {
         super.init(c);
-        ability.init(c);
+        displayAbility = abilityDef.getAbility();
+        displayAbility.init(c);
     }
 
     @Override
     public String getName() {
-        return ability.getName();
+        return abilityDef.name;
     }
 
     @Override
     public String getDescription() {
-        return ability.getDescription();
+        return abilityDef.getDescription();
     }
     
 }

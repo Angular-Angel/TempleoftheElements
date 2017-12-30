@@ -5,12 +5,15 @@
  */
 package templeoftheelements.spells;
 
+import java.util.Collection;
 import java.util.HashMap;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 /**
  *
@@ -20,13 +23,13 @@ public class AreaSpell extends Spell {
 
     HashMap<String, Effect> effects;
 
-    public AreaSpell(String name, Renderable sprite, Effect effect) {
-        this(name, sprite);
+    public AreaSpell(AbilityDefinition abilityDefinition, Renderable sprite, Effect effect) {
+        this(abilityDefinition, sprite);
         addEffect(effect);
     }
     
-    public AreaSpell(String name, Renderable sprite) {
-        super(name, sprite);
+    public AreaSpell(AbilityDefinition abilityDefinition, Renderable sprite) {
+        super(abilityDefinition, sprite);
         this.effects = new HashMap<>();
     }
     
@@ -44,14 +47,14 @@ public class AreaSpell extends Spell {
     }
 
     public Ability copy() {
-        AreaSpell ret = new AreaSpell(getName(), sprite);
+        AreaSpell ret = new AreaSpell(abilityDef, sprite);
         ret.stats.addAllStats(stats);
         for (Effect e : effects.values()) ret.addEffect(e);
         return ret;
     }
 
     @Override
-    public void addEffect(Effect effect) {
+    public final void addEffect(Effect effect) {
         effects.put(effect.name, effect);
     }
 
@@ -76,11 +79,6 @@ public class AreaSpell extends Spell {
     public Effect getEffect(String s) {
         return effects.get(s);
     }
-
-    @Override
-    public float damageValueMultiplier() {
-        return 0.5f;
-    }
     
     @Override
     public void init(Creature c) {
@@ -91,8 +89,18 @@ public class AreaSpell extends Spell {
     }
 
     @Override
-    public void deInit(Creature c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deInit(Creature c) {}
+
+    @Override
+    public void addAllEffects(EffectContainer effects) {
+        for (Effect e : effects.getAllEffects()) {
+            addEffect(e);
+        }
+    }
+
+    @Override
+    public Collection<Effect> getAllEffects() {
+        return effects.values();
     }
     
 }

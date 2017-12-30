@@ -5,18 +5,23 @@
  */
 package templeoftheelements.creature;
 
+import java.util.Collection;
+import templeoftheelements.controller.Action;
 import templeoftheelements.controller.AttackAction;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 import templeoftheelements.item.AttackDefinition;
 
 /**
  *
  * @author angle
  */
-public class NaturalAttack extends Ability {
+public class NaturalAttack extends AbilityDefinition {
     
     public AttackDefinition attack;
     
     public NaturalAttack(AttackDefinition attack) {
+        super(attack.getName());
         this.attack = attack;
     }
 
@@ -24,16 +29,35 @@ public class NaturalAttack extends Ability {
     public String getDescription() {
         return attack.getDescription();
     }
-
+    
     @Override
-    public void init(Creature c) {
-        attack.init(c);
-        c.addAction(new AttackAction(attack));
+    public Ability getAbility() {
+        return new Ability(this) {
+            
+            AttackDefinition naturalAttack = attack.copy();
+            Action action = new AttackAction(naturalAttack);
+            
+            @Override
+            public void init(Creature c) {
+                naturalAttack.init(c);
+                c.addAction(action);
+            }
+
+            @Override
+            public void deInit(Creature c) {
+            c.removeAction(action);}
+            
+        };
     }
 
     @Override
-    public void deInit(Creature c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addAllEffects(EffectContainer effects) {
+        attack.addAllEffects(effects);
+    }
+
+    @Override
+    public Collection<Effect> getAllEffects() {
+        return attack.getAllEffects();
     }
     
 }

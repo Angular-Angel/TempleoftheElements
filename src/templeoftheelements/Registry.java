@@ -38,6 +38,7 @@ import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.player.CharacterTree;
 import templeoftheelements.effect.Effect;
 import templeoftheelements.effect.EffectListing;
@@ -411,7 +412,7 @@ public class Registry extends RawReader {
 
         if (abilities != null)
             for (Object o : abilities) 
-                ret.abilities.add((Ability) readGroovyScript((String) o));
+                ret.abilities.add((AbilityDefinition) readGroovyScript((String) o));
         
         addCreatureDef(name, ret);
         
@@ -419,6 +420,10 @@ public class Registry extends RawReader {
     }
     
     public void addCreatureDef(String name, CreatureDefinition def) {
+        if (creatureDefs.containsKey(name)) {
+            System.out.println(creatureDefs.keySet());
+            throw new IllegalArgumentException("CreatureDefinition already exists: " + name);
+        }
         creatureDefs.put(name, def);
         creatureList.add(def);
     }

@@ -1,6 +1,7 @@
 
 package templeoftheelements.spells;
 
+import java.util.Collection;
 import templeoftheelements.item.AttackDefinition;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +11,9 @@ import stat.StatContainer;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 /**
  *
@@ -22,16 +25,12 @@ public class MissileSpell extends Spell {
 
     public AttackDefinition missile;
     
-    public MissileSpell(AttackDefinition attack) {
-        this(attack.getName(), attack, new StatContainer());
+    public MissileSpell(AbilityDefinition abilityDefinition, AttackDefinition attack) {
+        this(abilityDefinition, attack, new StatContainer());
     }
     
-    public MissileSpell(String name, AttackDefinition attack) {
-        this(name, attack, new StatContainer());
-    }
-    
-    public MissileSpell(String name, AttackDefinition attack, StatContainer stats) {
-        super(name, attack.getSprite(), stats);
+    public MissileSpell(AbilityDefinition abilityDefinition, AttackDefinition attack, StatContainer stats) {
+        super(abilityDefinition, attack.getSprite(), stats);
         missile = attack;
     }
 
@@ -48,7 +47,7 @@ public class MissileSpell extends Spell {
     }
 
     public Ability copy() {
-        return new MissileSpell(this.getName(), getMissile().copy(), this.stats);
+        return new MissileSpell(abilityDef, getMissile().copy(), this.stats);
     }
 
     /**
@@ -91,6 +90,7 @@ public class MissileSpell extends Spell {
     
     @Override
     public void init(Creature c) {
+        stats.init(c.stats);
         missile.init(c);
     }
     
@@ -102,15 +102,18 @@ public class MissileSpell extends Spell {
     @Override
     public Effect getEffect(String s) {
         return missile.getEffect(s);
-    }    
-    
-    @Override
-    public float damageValueMultiplier() {
-        return 3f;
     }
 
     @Override
-    public void deInit(Creature c) {
-        
+    public void deInit(Creature c) {}
+    
+    @Override
+    public void addAllEffects(EffectContainer effects) {
+        missile.addAllEffects(effects);
+    }
+
+    @Override
+    public Collection<Effect> getAllEffects() {
+        return missile.getAllEffects();
     }
 }

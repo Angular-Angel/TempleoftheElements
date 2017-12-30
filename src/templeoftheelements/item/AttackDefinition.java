@@ -1,7 +1,9 @@
 
 package templeoftheelements.item;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -153,6 +155,18 @@ public class AttackDefinition implements EffectContainer{
         for (Effect e : onHitEffects.values()) {
             e.stats.init(c.stats);
         }
+    }
+
+    @Override
+    public void addAllEffects(EffectContainer effects) {
+        for (Effect e : effects.getAllEffects()) {
+            addEffect(e);
+        }
+    }
+
+    @Override
+    public Collection<Effect> getAllEffects() {
+        return onHitEffects.values();
     }
     
 }

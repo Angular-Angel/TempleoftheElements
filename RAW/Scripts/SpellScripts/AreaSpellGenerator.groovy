@@ -1,8 +1,12 @@
 import templeoftheelements.spells.AreaSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.AbilityDefinition;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.display.VectorCircle;   // the groovy script importing.
 import stat.NumericStat;
 import templeoftheelements.player.AbilitySkill;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 public class AreaSpellGenerator extends AbilityGenerationProcedure {
 
@@ -11,13 +15,42 @@ public class AreaSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        AreaSpell spell = new AreaSpell("Area Spell", new VectorCircle(0.5));
         
-        spell.stats.addStat("Cast Time", new NumericStat(0));
-        spell.stats.addStat("Mana Cost", new NumericStat(0));
-        spell.stats.addStat("Cooldown", new NumericStat(0));
+        AbilityDefinition areaSpell = new AbilityDefinition("Area Spell") {
+            
+            Map<String, Effect> effects = new HashMap<>();
+            
+            public String getDescription() {
+                return "This spell targets an enemy!";
+            }
+            public Ability getAbility() {
+                AreaSpell spell = new AreaSpell(this, new VectorCircle(0.5));
+       
+                spell.stats.addAllStats(stats.viewStats());
+                
+                spell.addAllEffects(this);
+                
+                return spell;
+            }
+            
+            @Override
+            public void addAllEffects(EffectContainer effects) {
+                for (Effect e : effects.getAllEffects()) {
+                    addEffect(e);
+                }
+            }
+
+            @Override
+            public Collection<Effect> getAllEffects() {
+                return effects.values();
+            }
+        }
         
-        abilitySkill.ability = spell
+        areaSpell.stats.addStat("Cast Time", new NumericStat(0));
+        areaSpell.stats.addStat("Mana Cost", new NumericStat(0));
+        areaSpell.stats.addStat("Cooldown", new NumericStat(0));
+        
+        abilitySkill.abilityDef = areaSpell
         return abilitySkill;
     }
 }

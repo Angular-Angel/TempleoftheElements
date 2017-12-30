@@ -7,7 +7,6 @@ package templeoftheelements;
  */
 
 
-public interface Actor extends Destroyable {
-    public void step(float dt);
+public interface Actor extends Destroyable, Steppable {
     public boolean isEnemy();
 }

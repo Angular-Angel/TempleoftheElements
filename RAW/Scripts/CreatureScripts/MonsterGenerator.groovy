@@ -78,7 +78,6 @@ class MonsterGenerator extends CreatureGenerationProcedure {
         ret.setControllerType(game.registry.controllers.get("Fighter.groovy"));
         ret.itemDrops.add(new ItemDrop(game.registry.itemPools.get("ItemRoller.groovy"), 2, 1));
         ret.stats.addStat("XP", new NumericStat(100));
-        game.registry.creatureDefs.put(name, ret);
         return ret;
     }
     

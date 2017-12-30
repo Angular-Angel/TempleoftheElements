@@ -2,6 +2,7 @@ import templeoftheelements.creature.CreatureGenerationProcedure;
 import templeoftheelements.creature.CreatureDefinition;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.creature.TriggeredAbility;
 import templeoftheelements.creature.CreatureEvent;
 import stat.StatContainer;
@@ -16,41 +17,36 @@ class SpinedEnemyGenerator extends CreatureGenerationProcedure {
     public CreatureDefinition modify(CreatureDefinition definition) {
         //This script makes an enemy stronger.
         
-        TriggeredAbility ability = new TriggeredAbility() {
+        AbilityDefinition spines = new AbilityDefinition("Spines") {
             
-            Creature creature;
-            
-            public String getName() {
-                return "Spines";
-            }
-
             public String getDescription() {
                 return "This creature has spines that damage anyone who gets too close."
             }
-
-            public Ability copy() {
-                return this.getClass().newInstance();
-            }
-
-            public void init(Creature c) {
-                creature = c;
-            }
             
-            public void deInit(Creature c) {
-                
-            }
-            
-            public void handle(CreatureEvent event) {
-                if (event.type == CreatureEvent.Type.COLLIDED && event.thing instanceof Creature) {
-                    event.thing.takeDamage(10, "Piercing");
+            public Ability getAbility(){
+                return new TriggeredAbility(this) {
+                    Creature creature;
+
+                    public void init(Creature c) {
+                        creature = c;
+                    }
+
+                    public void deInit(Creature c) {
+
+                    }
+
+                    public void handle(CreatureEvent event) {
+                        if (event.type == CreatureEvent.Type.COLLIDED && event.thing instanceof Creature) {
+                            System.out.println(event.quantity);
+                            event.thing.takeDamage(10, "Piercing");
+                        }
+
+                    }
                 }
-                   
             }
-            
-            public void init(StatContainer c) {}
         }
         
-        definition.addAbility(ability);
+        definition.addAbility(spines);
         
         return definition;
     }

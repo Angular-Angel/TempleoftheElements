@@ -20,6 +20,7 @@ import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.controller.Controller;
 import templeoftheelements.Damager;
 import templeoftheelements.GameObject;
+import templeoftheelements.Steppable;
 import templeoftheelements.item.Equipment;
 import templeoftheelements.item.Item;
 import templeoftheelements.TempleOfTheElements;
@@ -42,6 +43,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     private Fixture fixture;
     private float direction, attackTimer;
     private MeleeAttack curAttack;
+    private Action currentAction;
     private HashSet<Action> actions;
     private HashSet<Ability> abilities;
     private Position createPosition; //only used for a createBody method, not for 
@@ -52,7 +54,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     public ArrayList<ItemDrop> itemDrops;
     private HashMap<String, StatusEffect> statusEffects;
     private ArrayList<CreatureListener> listeners;
-    private ArrayList<PassiveAbility> passives;
+    private ArrayList<Steppable> steppables;
     private String name; //For display and debug purposes.
     public StatContainer stats;
 
@@ -73,7 +75,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         itemDrops = new ArrayList<>();
         statusEffects = new HashMap<>();
         listeners = new ArrayList<>();
-        passives = new ArrayList<>();
+        steppables = new ArrayList<>();
         abilities = new HashSet<>();
         this.stats = new StatContainer(def.stats);
         sprite = new VectorCircle(stats.getScore("Size"));
@@ -88,18 +90,16 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         actions.add(a);
     }
     
-    public void addPassive(PassiveAbility a) {
-        passives.add(a);
+    public void addSteppable(Steppable a) {
+        steppables.add(a);
     }
     
     public void addListener(CreatureListener a) {
         listeners.add(a);
     }
     
-    public void removeAbility(Ability a) {
-        if (a instanceof Action) actions.remove((Action) a);
-        if (a instanceof PassiveAbility) passives.remove((PassiveAbility) a);
-        if (a instanceof CreatureListener) listeners.remove((CreatureListener) a);
+    public void removeAction(Action a) {
+        actions.remove(a);
     }
     
     public HashSet<Action> getActions() {
@@ -256,7 +256,8 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
 
     @Override
     public void step(float dt) {
-        for (PassiveAbility passive : passives) passive.step(dt);
+        for (Steppable steppable : steppables) steppable.step(dt);
+        
         if (controller == null) return;
         controller.step(dt);
         

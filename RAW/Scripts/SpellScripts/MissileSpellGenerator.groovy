@@ -1,15 +1,21 @@
 import templeoftheelements.Element;
 import templeoftheelements.spells.MissileSpell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
+import templeoftheelements.creature.AbilityDefinition;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.display.VectorCircle;
 import templeoftheelements.item.AttackDefinition;
 import stat.Stat;
 import stat.EquationStat;
 import stat.NumericStat;
 import java.util.Random;
+import java.util.Collection;
+import java.util.HashMap;
 import templeoftheelements.player.CharacterWheel;
 import templeoftheelements.player.CharacterTree;
 import templeoftheelements.player.AbilitySkill;
+import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 public class MissileSpellGenerator extends AbilityGenerationProcedure {
 
@@ -50,13 +56,37 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
         missile.stats.addStat("Ranged Attack", new NumericStat(1));
         missile.stats.addStat("Size", size);
         missile.stats.addStat("Speed", speed);
+        
+        AbilityDefinition ret = new AbilityDefinition("Missile Spell") {
+            AttackDefinition missileDefinition = missile;
+            
+            public String getDescription() {
+                return "This spell targets an enemy!";
+            }
+            public Ability getAbility() {
+                MissileSpell spell = new MissileSpell(this, missile.copy());
+       
+                spell.stats.addAllStats(stats.viewStats());
+                
+                return spell;
+            }
+            
+            @Override
+            public void addAllEffects(EffectContainer effects) {
+                missileDefinition.addAllEffects(effects);
+            }
 
-        MissileSpell ret = new MissileSpell(missile);
+            @Override
+            public Collection<Effect> getAllEffects() {
+                return missileDefinition.getAllEffects();
+            }
+        }
+
         ret.stats.addStat("Cast Time", new NumericStat(0));
         ret.stats.addStat("Mana Cost", new NumericStat(0));
         ret.stats.addStat("Cooldown", new NumericStat(0));
 
-        abilitySkill.ability = ret;
+        abilitySkill.abilityDef = ret;
         
         return abilitySkill;
     }

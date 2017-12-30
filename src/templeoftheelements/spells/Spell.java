@@ -11,6 +11,7 @@ import templeoftheelements.collision.Position;
 import templeoftheelements.controller.Action;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.creature.CreatureEvent;
 import templeoftheelements.effect.EffectContainer;
 
@@ -20,34 +21,25 @@ public abstract class Spell extends Ability implements EffectContainer, Action {
     
     protected Renderable sprite;
 
-    public Spell(String name, Renderable sprite) {
-        this(name, sprite, new StatContainer());
+    public Spell(AbilityDefinition abilityDefinition, Renderable sprite) {
+        this(abilityDefinition, sprite, new StatContainer());
     }
     
     
-    public Spell(String name, Renderable sprite, StatContainer stats) {
-        super(name, stats);
+    public Spell(AbilityDefinition abilityDefinition, Renderable sprite, StatContainer stats) {
+        super(abilityDefinition, stats);
         this.sprite = sprite;
     }
     
     @Override
     public boolean isPossible(Creature c) {
-        try {
-            return (c.stats.getScore("Mana") > stats.getScore("Mana Cost"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+        return (c.stats.getScore("Mana") > stats.getScore("Mana Cost"));
     }
     
     @Override
     public void perform(Creature creature, Position pos) {
-        try {
-            creature.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.USED_SPELL, this));
-            ((NumericStat)creature.stats.getStat("Mana")).modifyBase(-stats.getScore("Mana Cost"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        creature.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.USED_SPELL, this));
+        ((NumericStat)creature.stats.getStat("Mana")).modifyBase(-stats.getScore("Mana Cost"));
     }
     
     public abstract void cast(Creature caster, Position pos);
@@ -56,15 +48,11 @@ public abstract class Spell extends Ability implements EffectContainer, Action {
     public String showCosts() {
         String ret = "";
         
-        try { 
-            ret += "\ncast Time: " + stats.getScore("Cast Time");
-            
-            ret += "\nMana Cost: " + stats.getScore("Mana Cost");
-            
-            ret += "\nCooldown: " + stats.getScore("Cooldown");
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Spell.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ret += "\nCast Time: " + stats.getScore("Cast Time");
+
+        ret += "\nMana Cost: " + stats.getScore("Mana Cost");
+
+        ret += "\nCooldown: " + stats.getScore("Cooldown");
         
         return ret;
     }
@@ -73,9 +61,6 @@ public abstract class Spell extends Ability implements EffectContainer, Action {
     public Renderable getSprite() {
         return sprite;
     }
-    
-    public abstract float damageValueMultiplier();
-    
     
     public void init(Creature c) {
         c.addAction(this);

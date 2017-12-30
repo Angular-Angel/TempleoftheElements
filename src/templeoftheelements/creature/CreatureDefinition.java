@@ -26,7 +26,7 @@ public class CreatureDefinition {
     public ArrayList<BodyPartDefinition> bodyParts;
     private final HashMap<String, Float> resistances;
     public ArrayList<ItemDrop> itemDrops;
-    public ArrayList<Ability> abilities;
+    public ArrayList<AbilityDefinition> abilities;
     public ArrayList<Detail> types;
     public ArrayList<Detail> details;
     public final StatContainer stats;
@@ -63,7 +63,7 @@ public class CreatureDefinition {
         resistances.put(type, f);
     }
     
-    public void addAbility(Ability a) {
+    public void addAbility(AbilityDefinition a) {
         abilities.add(a);
     }
     
@@ -74,7 +74,7 @@ public class CreatureDefinition {
         for (BodyPartDefinition b : bodyParts) ret.addBodyPart(b.name, b.position);
         for (String s : resistances.keySet()) ret.addResistance(s, resistances.get(s));
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
-        for (Ability a :abilities) {
+        for (AbilityDefinition a :abilities) {
             ret.addAbility(a);
         }
         return ret;
@@ -92,7 +92,7 @@ public class CreatureDefinition {
         ret.stats.addStat("HP", new NumericStat(ret.stats.getScore("Max HP")));
         ret.stats.addStat("Mana", new NumericStat(ret.stats.getScore("Max Mana")));
         ret.stats.addStat("Stamina", new NumericStat(ret.stats.getScore("Max Stamina")));
-        for (Ability a : abilities) ret.addAbility(a);
+        for (AbilityDefinition a : abilities) ret.addAbility(a.getAbility());
         for (ItemDrop i : itemDrops) ret.itemDrops.add(i);
         ret.setController(controllerType.clone(ret));
         return ret;

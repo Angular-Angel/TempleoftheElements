@@ -10,6 +10,8 @@ import java.util.Random;
 import templeoftheelements.player.CharacterWheel;
 import templeoftheelements.player.CharacterTree;
 import templeoftheelements.player.AbilitySkill;
+import templeoftheelements.creature.AbilityDefinition;
+import templeoftheelements.creature.Ability;
 
 public class DamageSpellGenerator extends AbilityGenerationProcedure {
 
@@ -19,7 +21,7 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
         CharacterTree tree = (CharacterTree) abilitySkill.tree; //the tree to which the node will belong
-        Spell spell = (Spell) abilitySkill.ability;
+        AbilityDefinition abilityDefinition = (AbilityDefinition) abilitySkill.abilityDef;
         
         int pool = Math.min(20, (abilitySkill.stats.getScore("Pool")));
         
@@ -31,15 +33,15 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
         abilitySkill.stats.getStat("Pool").modifyBase(-damageValue * Ability.Detail.DAMAGE.cost);
         String effectName = "Damage";
         
-        if (spell.containsEffect(effectName)) {
+        if (abilityDefinition.containsEffect(effectName)) {
             
-            Effect e = spell.getEffect(effectName);
+            Effect e = abilityDefinition.getEffect(effectName);
             
             e.stats.addStat("Damage Value", damageValue*5);
             
         } else {
             
-            damage = new EquationStat(" [Damage Value] * " + spell.damageValueMultiplier() + " * [Source@Spell Damage Multiplier]");
+            damage = new EquationStat(" [Damage Value] * [Source@Spell Damage Multiplier]");
         
 
             Effect e = new Effect(effectName, false) {
@@ -64,7 +66,7 @@ public class DamageSpellGenerator extends AbilityGenerationProcedure {
 
             e.stats.addStat("Damage", damage);
 
-            spell.addEffect(e)
+            abilityDefinition.addEffect(e)
         }
         
         return abilitySkill;

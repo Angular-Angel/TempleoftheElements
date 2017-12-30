@@ -14,12 +14,12 @@ public class ManaCostSpellGenerator extends AbilityGenerationProcedure {
         int pool = Math.min(10, (abilitySkill.stats.getScore("Cost Pool")));
         if (pool == 0) {
             abilitySkill.stats.getStat("Cost Pool").modifyBase(-1);
-            return abilitySkill.ability;
+            return abilitySkill;
         }
         
         int manaCost = 1 + random.nextInt(pool) / Ability.Detail.MANA_COST.cost;
         
-        abilitySkill.ability.stats.getStat("Mana Cost").modify("Base", manaCost);
+        abilitySkill.abilityDef.stats.getStat("Mana Cost").modify("Base", manaCost);
         
         abilitySkill.stats.getStat("Cost Pool").modifyBase(-manaCost * Ability.Detail.MANA_COST.cost);
         abilitySkill.stats.getStat("Pool").modifyBase(manaCost * Ability.Detail.MANA_COST.cost);

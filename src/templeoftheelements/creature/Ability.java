@@ -1,19 +1,11 @@
 
 package templeoftheelements.creature;
 
-import java.util.ArrayList;
 import stat.StatContainer;
 
 
 
 public abstract class Ability {
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
     
     public static enum Detail {
         
@@ -51,41 +43,17 @@ public abstract class Ability {
         }
 
     }
+    public final AbilityDefinition abilityDef;
+    public final StatContainer stats;
     
-    
-    public Detail usage;
-    public Detail targeting;
-    private final String name;
-    public ArrayList<Detail> costDetails;
-    public ArrayList<Detail> effectDetails;
-    public ArrayList<Detail> scalingDetails;
-    public StatContainer stats;
-    
-    public Ability() {
-        this("Ability");
+    public Ability(AbilityDefinition abilityDef) {
+        this(abilityDef, new StatContainer());
     }
     
-    public Ability(String name) {
-        this(name, true);
-    }
-    
-    public Ability(String name, boolean active) {
-        this(name, active, new StatContainer());
-    }
-    
-    public Ability(String name, StatContainer stats) {
-        this(name, true, stats);
-    }
-    
-    public Ability(String name, boolean active, StatContainer stats) {
-        this.name = name;
-        this.costDetails = new ArrayList<>();
-        this.effectDetails = new ArrayList<>();
-        this.scalingDetails = new ArrayList<>();
-        this.stats = new StatContainer(active, stats);
-    }
-    
-    public abstract String getDescription();
+    public Ability(AbilityDefinition abilityDef, StatContainer stats) {
+        this.abilityDef =  abilityDef;
+        this.stats = stats;
+    } 
     
     public abstract void init(Creature c);
     

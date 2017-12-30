@@ -1,6 +1,7 @@
 import templeoftheelements.spells.Spell;
 import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.creature.Creature; // these are used for
 import templeoftheelements.creature.Debuff;   // the groovy script importing.
 import stat.StatDescriptor;
@@ -21,7 +22,7 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
     public AbilitySkill modify(AbilitySkill abilitySkill) {
         CharacterTree tree = (CharacterTree) abilitySkill.tree; //the tree to which the node will belong
         
-        Spell spell = (Spell) abilitySkill.ability;
+        AbilityDefinition abilityDefinition = (AbilityDefinition) abilitySkill.abilityDef;
         
         final ArrayList<StatDescriptor> debuffAttributes = tree.element.debuffAttributes;
         
@@ -31,9 +32,9 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
         
         String name = "Debuff";
         
-        if (spell.containsEffect(name)) {
+        if (abilityDefinition.containsEffect(name)) {
             
-            effect = spell.getEffect(name);
+            effect = abilityDefinition.getEffect(name);
             
         } else {
         
@@ -67,12 +68,11 @@ public class DebuffSpellGenerator extends AbilityGenerationProcedure {
             i++;
             StatDescriptor debuffStat = debuffAttributes.get(random.nextInt(debuffAttributes.size()));
             int debuffValue = 1 + random.nextInt((int) (pool / Ability.Detail.DEBUFF.cost));
-            //effect.stats.addStat(debuffStat.name, debuffValue);
+            effect.stats.addStat(debuffStat.name, debuffValue);
             abilitySkill.stats.getStat("Pool").modifyBase(-debuffValue * Ability.Detail.DEBUFF.cost);
-//            ((Spell) abilityDef.ability).description += "\nDebuff: " + debuffStat.name + ", " + debuffValue;
         }
         
-        spell.addEffect(effect);
+        abilityDefinition.addEffect(effect);
         
         return abilitySkill;
     }

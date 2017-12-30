@@ -29,7 +29,7 @@ class ClawAttackEnemyGenerator extends CreatureGenerationProcedure {
         attack.stats.addStat("Recovery Time", new NumericStat(26));
         attack.stats.addStat("Min Damage", new NumericStat(15));
         attack.stats.addStat("Max Damage", new NumericStat(40));
-        attack.stats.addStat("Stamina Cost", new NumericStat(14));
+        attack.stats.addStat("Stamina Cost", new NumericStat(30));
         
         definition.addAbility(new NaturalAttack(attack));
         

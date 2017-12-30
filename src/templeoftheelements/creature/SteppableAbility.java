@@ -5,13 +5,15 @@
  */
 package templeoftheelements.creature;
 
+import templeoftheelements.Steppable;
+
 /**
  *
  * @author angle
  */
-public abstract class TriggeredAbility extends Ability implements CreatureListener{
+public abstract class SteppableAbility extends Ability implements Steppable{
     
-    public TriggeredAbility(AbilityDefinition abilityDef) {
+    public SteppableAbility(AbilityDefinition abilityDef) {
         super(abilityDef);
     }
     

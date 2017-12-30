@@ -3,6 +3,8 @@ import templeoftheelements.creature.AbilityGenerationProcedure;
 import templeoftheelements.display.VectorCircle;
 import stat.NumericStat;
 import java.util.Random;
+import templeoftheelements.creature.AbilityDefinition;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.player.AbilitySkill;
 
 public class EnemyTargetSpellGenerator extends AbilityGenerationProcedure {
@@ -12,13 +14,25 @@ public class EnemyTargetSpellGenerator extends AbilityGenerationProcedure {
     
     @Override
     public AbilitySkill modify(AbilitySkill abilitySkill) {
-        EnemyTargetSpell spell = new EnemyTargetSpell("Enemy Target Spell", new VectorCircle(0.5));
         
-        spell.stats.addStat("Cast Time", new NumericStat(0));
-        spell.stats.addStat("Mana Cost", new NumericStat(0));
-        spell.stats.addStat("Cooldown", new NumericStat(0));
+        AbilityDefinition enemyTargetSpell = new AbilityDefinition("Enemy Target Spell") {
+            public String getDescription() {
+                return "This spell targets an enemy!";
+            }
+            public Ability getAbility() {
+                EnemyTargetSpell spell = new EnemyTargetSpell(this, new VectorCircle(0.5));
+       
+                spell.stats.addAllStats(stats.viewStats());
+                
+                return spell;
+            }
+        }
         
-        abilitySkill.ability = spell
+        enemyTargetSpell.stats.addStat("Cast Time", new NumericStat(0));
+        enemyTargetSpell.stats.addStat("Mana Cost", new NumericStat(0));
+        enemyTargetSpell.stats.addStat("Cooldown", new NumericStat(0));
+        
+        abilitySkill.abilityDef = enemyTargetSpell;
         return abilitySkill;
     }
 }

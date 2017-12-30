@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package templeoftheelements.creature;
+package templeoftheelements;
 
 /**
  *
  * @author angle
  */
-public abstract class TriggeredAbility extends Ability implements CreatureListener{
-    
-    public TriggeredAbility(AbilityDefinition abilityDef) {
-        super(abilityDef);
-    }
+public interface Steppable {
+    public void step(float dt);
     
 }

@@ -6,12 +6,15 @@
 
 package templeoftheelements.spells;
 
+import java.util.Collection;
 import java.util.HashMap;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 /**
  *
  * @author angle
@@ -20,8 +23,8 @@ class SelfTargetSpell extends Spell {
     
     HashMap<String, Effect> effects;
 
-    public SelfTargetSpell(String name, Renderable sprite) {
-        super(name, sprite);
+    public SelfTargetSpell(AbilityDefinition abilityDefinition, Renderable sprite) {
+        super(abilityDefinition, sprite);
         effects = new HashMap<>();
     }
     
@@ -67,11 +70,6 @@ class SelfTargetSpell extends Spell {
     public Effect getEffect(String s) {
         return effects.get(s);
     }
-
-    @Override
-    public float damageValueMultiplier() {
-        return 1;
-    }
     
     @Override
     public void init(Creature c) {
@@ -82,8 +80,18 @@ class SelfTargetSpell extends Spell {
     }
 
     @Override
-    public void deInit(Creature c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deInit(Creature c) {}
+    
+    @Override
+    public void addAllEffects(EffectContainer effects) {
+        for (Effect e : effects.getAllEffects()) {
+            addEffect(e);
+        }
+    }
+
+    @Override
+    public Collection<Effect> getAllEffects() {
+        return effects.values();
     }
 }
 

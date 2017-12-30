@@ -5,14 +5,17 @@
  */
 package templeoftheelements.spells;
 
+import java.util.Collection;
 import java.util.HashMap;
 import static templeoftheelements.TempleOfTheElements.game;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
 import templeoftheelements.creature.Ability;
+import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.player.Clickable;
 import templeoftheelements.effect.Effect;
+import templeoftheelements.effect.EffectContainer;
 
 /**
  *
@@ -22,8 +25,8 @@ public class EnemyTargetSpell extends Spell {
     
     HashMap<String, Effect> effects;
 
-    public EnemyTargetSpell(String name, Renderable sprite) {
-        super(name, sprite);
+    public EnemyTargetSpell(AbilityDefinition abilityDefinition, Renderable sprite) {
+        super(abilityDefinition, sprite);
         effects = new HashMap<>();
     }
     
@@ -43,7 +46,7 @@ public class EnemyTargetSpell extends Spell {
     }
 
     public Ability copy() {
-        EnemyTargetSpell ret = new EnemyTargetSpell(getName(), sprite);
+        EnemyTargetSpell ret = new EnemyTargetSpell(abilityDef, sprite);
         for (Effect e : effects.values()) ret.addEffect(e);
         return ret;
     }
@@ -74,11 +77,6 @@ public class EnemyTargetSpell extends Spell {
     public Effect getEffect(String s) {
         return effects.get(s);
     }
-
-    @Override
-    public float damageValueMultiplier() {
-        return 1;
-    }
     
     @Override
     public void init(Creature c) {
@@ -89,8 +87,17 @@ public class EnemyTargetSpell extends Spell {
     }
 
     @Override
-    public void deInit(Creature c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void deInit(Creature c) {}
     
+    @Override
+    public void addAllEffects(EffectContainer effects) {
+        for (Effect e : effects.getAllEffects()) {
+            addEffect(e);
+        }
+    }
+
+    @Override
+    public Collection<Effect> getAllEffects() {
+        return effects.values();
+    }
 }
