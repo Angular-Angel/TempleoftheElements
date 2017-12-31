@@ -4,12 +4,10 @@ package templeoftheelements.player;
 import com.samrj.devil.graphics.GraphicsUtil;
 import com.samrj.devil.math.Vec2;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.opengl.GL11;
 import stat.NoSuchStatException;
-import stat.Stat;
 import stat.StatContainer;
 import stat.StatDescriptor;
 import templeoftheelements.TempleOfTheElements;
@@ -105,7 +103,7 @@ public class CharacterNode implements Requirement , Renderable, Clickable {
     
     public void acquire() {
         acquired = true;
-        tree.getCreature().stats.addAllStats(this.stats);
+        tree.getCreature().stats.increaseAllStats(this.stats);
     }
 
     @Override
