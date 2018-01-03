@@ -216,7 +216,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     private void regenStamina(float dt) {
         float curStamina = stats.getScore("Max Stamina");
         if (stats.getScore("Stamina") < curStamina) {
-            ((NumericStat) stats.getStat("Stamina")).modifyBase(stats.getScore("Stamina Regen") * dt * 150);
+            ((NumericStat) stats.getStat("Stamina")).modifyBase(stats.getScore("Stamina Regen") * dt);
             if (stats.getScore("Stamina") > stats.getScore("Max Stamina")) stats.getStat("Stamina").set(stats.getScore("Max Stamina"));
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.GAINED_STAMINA, stats.getScore("Stamina") - curStamina));
         }
@@ -258,7 +258,11 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     public void step(float dt) {
         for (Steppable steppable : steppables) steppable.step(dt);
         
-        if (controller == null) return;
+        for (StatusEffect status : statusEffects.values()) {
+            status.step(dt);
+        }
+        
+        //if (controller == null) return;
         controller.step(dt);
         
         regenStamina(dt);
@@ -362,18 +366,17 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
 
     @Override
     public boolean isDead() {
-        try {
-            return !(stats.getScore("HP") > 0);
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return true;
+        return !(stats.getScore("HP") > 0);
     }
 
     @Override
     public void destroy() {
         
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.DIED));
+        
+        for (StatusEffect statusEffect : statusEffects.values()) {
+            statusEffect.destroy();
+        }
         
         for (ItemDrop itemDrop : itemDrops) {
             Item item = itemDrop.getItem();
@@ -386,11 +389,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         TempleOfTheElements.game.world.destroyBody(fixture.getBody());
         TempleOfTheElements.game.removeSprite(this);
         
-        try {
-            TempleOfTheElements.game.player.gainExperience((int) stats.getScore("XP"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        TempleOfTheElements.game.player.gainExperience((int) stats.getScore("XP"));
     }
 
     @Override
@@ -463,7 +462,6 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         if (statusEffects.containsKey(statusEffect.name)) {
             statusEffects.remove(statusEffect.name);
             defactorStatusEffect(statusEffect);
-            statusEffect.creature = null;
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.LOST_STATUS_EFFECT, statusEffect));
         }
     }

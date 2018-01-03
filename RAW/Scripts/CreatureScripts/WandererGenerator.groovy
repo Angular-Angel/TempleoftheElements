@@ -73,7 +73,7 @@ class WandererGenerator implements GenerationProcedure<CreatureDefinition> {
         
         ret.setControllerType(game.registry.controllers.get("Wanderer.groovy"));
         ret.itemDrops.add(new ItemDrop(game.registry.itemPools.get("ItemRoller.groovy"), 2, 1));
-        ret.stats.addStat("XP", new NumericStat(100));
+        
         return ret;
     }
     

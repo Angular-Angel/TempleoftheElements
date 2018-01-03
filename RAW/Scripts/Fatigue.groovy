@@ -20,11 +20,12 @@ class Fatigue extends StatusEffect {
     }
     
     public void init(Creature c) {
-        clearStats();
-        addStat("Dexterity", new NumericStat((float) -c.stats.getScore("Dexterity") * 0.1 * this.severity));
-        addStat("Stamina Regen", new NumericStat((float) -c.stats.getScore("Stamina Regen") * 0.09 * this.severity));
-        addStat("Intelligence", new NumericStat((float) -c.stats.getScore("Intelligence") * 0.05 * this.severity));
-        addStat("Perception", new NumericStat((float) -c.stats.getScore("Perception") * 0.05 * this.severity));
+        creature = c;
+        stats.clearStats();
+        stats.addStat("Dexterity", new NumericStat((float) -c.stats.getScore("Dexterity") * 0.1 * this.severity));
+        stats.addStat("Stamina Regen", new NumericStat((float) -c.stats.getScore("Stamina Regen") * 0.09 * this.severity));
+        stats.addStat("Intelligence", new NumericStat((float) -c.stats.getScore("Intelligence") * 0.05 * this.severity));
+        stats.addStat("Perception", new NumericStat((float) -c.stats.getScore("Perception") * 0.05 * this.severity));
     }
     
     public void update(StatusEffect effect) {
@@ -39,8 +40,12 @@ class Fatigue extends StatusEffect {
 
     @Override
     public void step(float dt) {
+        if (creature == null) {
+            System.out.println("Null creature in fatigue.groovy!");
+            return;
+        }
         if (creature.stats.getScore("Stamina")/creature.stats.getScore("Max Stamina") > (1.05 - 0.1 * severity)) {
-            creature.removeStatusEffect(this);
+            destroy();
         }
         
     }
@@ -55,7 +60,10 @@ class Fatigue extends StatusEffect {
 
     @Override
     public void destroy() {
+        System.out.println(this);
+        System.out.println(creature);
         
+        creature.removeStatusEffect(this);
     }
     
     public StatusEffect clone() {

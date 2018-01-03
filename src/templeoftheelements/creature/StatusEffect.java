@@ -28,18 +28,13 @@ public abstract class StatusEffect implements Actor {
     
     
     public void updateStat(String name, Stat stat) {
-        try {
-            if (stats.hasStat(name)) {
-                creature.stats.getStat(name).removeMod(this.name);
-                stats.removeStat(name);
-            }
-            
-            stats.addStat(name, stat);
-            creature.stats.getStat(name).modify(this.name, new NumericStat(stats.getScore(name)));
-            
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(StatusEffect.class.getName()).log(Level.SEVERE, null, ex);
+        if (stats.hasStat(name)) {
+            creature.stats.getStat(name).removeMod(this.name);
+            stats.removeStat(name);
         }
+
+        stats.addStat(name, stat);
+        creature.stats.getStat(name).modify(this.name, new NumericStat(stats.getScore(name)));
     }
     
     public abstract void init(Creature c);
@@ -58,5 +53,6 @@ public abstract class StatusEffect implements Actor {
     @Override
     public abstract void destroy();
     
+    @Override
     public abstract StatusEffect clone();
 }

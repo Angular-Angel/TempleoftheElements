@@ -112,7 +112,7 @@
         "Identifier": "Stamina Regen",
         "Type": "Stat Description",
         "Stat Type": "NUMBER",
-        "Stat": "[Constitution] * 0.1 + [Spirit] * 0.1",
+        "Stat": "([Constitution] * 0.5 + [Spirit] * 0.5) / 1.5",
         "Base": 20.0,
         "Increase": 0.2,
     },
