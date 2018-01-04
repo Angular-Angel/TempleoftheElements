@@ -41,7 +41,16 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
     private StatContainer randomStats(CharacterTree tree) {
         StatContainer ret = new StatContainer();
         
-        //int statpoints = 
+        int statpoints = 15;
+        
+        while (statpoints > 0) {
+            StatDescriptor stat = randomStat(tree);
+            int statIncrease = Math.min(random.nextInt(4) + 1, statpoints);
+            if (ret.hasStat(stat))
+                ((NumericStat) ret.getStat(stat)).modifyBase((float) stat.increase * statIncrease);
+            else ret.addStat(stat, (float) stat.increase * statIncrease);
+            statpoints -= statIncrease;
+        }
         
         return ret;
     }
@@ -49,7 +58,7 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
     @Override
     public CharacterTree modify(CharacterTree tree) {
 
-        StatDescriptor stat1 = randomStat(tree), stat2 = randomStat(tree);
+        StatContainer stats1 = randomStats(tree), stats2 = randomStats(tree);
         
         CharacterNode node; //whichever node we're currently working on.
         
@@ -65,15 +74,15 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         position.y = (float) (65 * (tree.curLayer + 1) * Math.cos(tree.curAngle));
         node.setPosition(position);
         
-        node.stats.addStat(stat1, stat1.increase);
-        node.stats.addStat(stat2, stat2.increase);
+        node.stats.mergeStats(stats1);
+        node.stats.mergeStats(stats2);
         tree.addNode(node);
         
         CharacterNode entry = node; //remember our first node
         
         for (int i = 0; i < 3; i++) {
             node = new CharacterNode(node, tree);
-            node.stats.addStat(stat1, stat1.increase);
+            node.stats.addAllStats(stats1);
             
             position = new Vec2();
             position.x = (float) (65 * (tree.curLayer + 2 + i) * Math.sin(tree.curAngle));
@@ -91,7 +100,7 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         
         for (int i = 0; i < 3; i++) {
             node = new CharacterNode(node, tree);
-            node.stats.addStat(stat2, new NumericStat(stat2, stat2.increase));
+            node.stats.addAllStats(stats2);
             
             position = new Vec2();
             position.x = (float) (65 * (tree.curLayer + 2 + i) * Math.sin(tree.curAngle));
@@ -114,8 +123,8 @@ public class ClusterGenerator implements GenerationProcedure<CharacterTree> {
         } else {
             node = new CharacterNode(new OrRequirement(endLine1, endLine2), tree);
 
-            node.stats.addStat(stat1, stat1.increase);
-            node.stats.addStat(stat2, stat2.increase);
+            node.stats.mergeStats(stats1);
+            node.stats.mergeStats(stats2);
         }
         position = new Vec2();
         position.x = (float) (65 * (tree.curLayer + 5) * Math.sin(tree.curAngle));
