@@ -38,21 +38,6 @@ public class Debuff extends StatusEffect {
     }
 
     @Override
-    public boolean isEnemy() {
-        return origin != game.player.getCreature();
-    }
-
-    @Override
-    public boolean isDead() {
-        return timer <= 0;
-    }
-
-    @Override
-    public void destroy() {
-        
-    }
-
-    @Override
     public StatusEffect clone() {
         Debuff debuff = new Debuff(name, maxTimer, origin);
         debuff.stats.addAllStats(this.stats);
