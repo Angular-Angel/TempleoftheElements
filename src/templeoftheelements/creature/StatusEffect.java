@@ -8,13 +8,14 @@ import stat.NumericStat;
 import stat.Stat;
 import stat.StatContainer;
 import templeoftheelements.Actor;
+import templeoftheelements.Steppable;
 
 /**
  *
  * @author angle
  */
 
-public abstract class StatusEffect implements Actor {
+public abstract class StatusEffect implements Steppable {
     
     public final String name;
     public Creature creature;
@@ -43,15 +44,6 @@ public abstract class StatusEffect implements Actor {
 
     @Override
     public abstract void step(float dt);
-
-    @Override
-    public abstract boolean isEnemy();
-
-    @Override
-    public abstract boolean isDead();
-
-    @Override
-    public abstract void destroy();
     
     @Override
     public abstract StatusEffect clone();

@@ -351,16 +351,12 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     }
     
     public void modifyDirection(int direction) {
-        try {
-            this.direction += direction * stats.getScore("Turning Speed");
-            while (getDirection() > 360) {
-                this.direction -= 360;
-            }
-            while (getDirection() < 0) {
-                this.direction += 360;
-            }
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
+        this.direction += direction * stats.getScore("Turning Speed");
+        while (getDirection() > 360) {
+            this.direction -= 360;
+        }
+        while (getDirection() < 0) {
+            this.direction += 360;
         }
     }
 
@@ -373,10 +369,6 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     public void destroy() {
         
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.DIED));
-        
-        for (StatusEffect statusEffect : statusEffects.values()) {
-            statusEffect.destroy();
-        }
         
         for (ItemDrop itemDrop : itemDrops) {
             Item item = itemDrop.getItem();
@@ -445,7 +437,6 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
             statusEffects.put(statusEffect.name, statusEffect);
             statusEffect.init(this);
             factorStatusEffect(statusEffect);
-            game.addActor(statusEffect);
             notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ADDED_STATUS_EFFECT, statusEffect));
         } else {
             statusEffects.get(statusEffect.name).update(statusEffect);
@@ -474,13 +465,8 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
 
     @Override
     public boolean isClicked(float x, float y) {
-        try {
-            return (x > getPosition().x - stats.getScore("Size")/2 && x < getPosition().x + stats.getScore("Size")/2
+        return (x > getPosition().x - stats.getScore("Size")/2 && x < getPosition().x + stats.getScore("Size")/2
                     && y > getPosition().y - stats.getScore("Size")/2 && y < getPosition().y + stats.getScore("Size")/2);
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
     }
 
     @Override

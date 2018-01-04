@@ -45,25 +45,9 @@ class Fatigue extends StatusEffect {
             return;
         }
         if (creature.stats.getScore("Stamina")/creature.stats.getScore("Max Stamina") > (1.05 - 0.1 * severity)) {
-            destroy();
+            creature.removeStatusEffect(this);
         }
         
-    }
-
-    @Override
-    public boolean isEnemy() {return false;}
-
-    @Override
-    public boolean isDead() {
-        return (creature == null); 
-    }
-
-    @Override
-    public void destroy() {
-        System.out.println(this);
-        System.out.println(creature);
-        
-        creature.removeStatusEffect(this);
     }
     
     public StatusEffect clone() {
