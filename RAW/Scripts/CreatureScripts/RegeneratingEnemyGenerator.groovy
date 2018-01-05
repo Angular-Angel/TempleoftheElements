@@ -27,8 +27,12 @@ class RegeneratingEnemyGenerator extends CreatureGenerationProcedure {
                     Creature creature;
 
                     public void init(Creature c) {
-                        creature = c;
+                        initValues(c);
                         c.addSteppable(this);
+                    }
+                    
+                    public void initValues(Creature c) {
+                        creature = c;
                     }
 
                     public void step(float dt) {

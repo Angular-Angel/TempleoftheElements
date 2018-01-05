@@ -28,6 +28,11 @@ class SpinedEnemyGenerator extends CreatureGenerationProcedure {
                     Creature creature;
 
                     public void init(Creature c) {
+                        initValues(c);
+                        c.addListener(this);
+                    }
+                    
+                    public void initValues(Creature c) {
                         creature = c;
                     }
 

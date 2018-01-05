@@ -90,8 +90,8 @@ public class MissileSpell extends Spell {
     
     @Override
     public void init(Creature c) {
-        stats.init(c.stats);
-        missile.init(c);
+        initValues(c);
+        c.addAction(this);
     }
     
     @Override
@@ -115,5 +115,11 @@ public class MissileSpell extends Spell {
     @Override
     public Collection<Effect> getAllEffects() {
         return missile.getAllEffects();
+    }
+
+    @Override
+    public void initValues(Creature c) {
+        stats.initValues(c.stats);
+        missile.initValues(c);
     }
 }

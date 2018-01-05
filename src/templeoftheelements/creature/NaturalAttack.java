@@ -39,13 +39,18 @@ public class NaturalAttack extends AbilityDefinition {
             
             @Override
             public void init(Creature c) {
-                naturalAttack.init(c);
+                initValues(c);
                 c.addAction(action);
             }
 
             @Override
             public void deInit(Creature c) {
             c.removeAction(action);}
+
+            @Override
+            public void initValues(Creature c) {
+                naturalAttack.initValues(c);
+            }
             
         };
     }

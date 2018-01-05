@@ -22,7 +22,7 @@ public abstract class Skill {
     }
     
     public void init(Creature c) {
-        stats.init(c.stats);
+        stats.initValues(c.stats);
     }
     
     public void beAcquired(Creature creature) {

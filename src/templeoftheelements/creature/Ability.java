@@ -53,7 +53,9 @@ public abstract class Ability {
     public Ability(AbilityDefinition abilityDef, StatContainer stats) {
         this.abilityDef =  abilityDef;
         this.stats = stats;
-    } 
+    }
+    
+    public abstract void initValues(Creature c);
     
     public abstract void init(Creature c);
     

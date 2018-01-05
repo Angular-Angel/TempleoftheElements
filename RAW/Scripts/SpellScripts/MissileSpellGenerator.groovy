@@ -61,7 +61,7 @@ public class MissileSpellGenerator extends AbilityGenerationProcedure {
             AttackDefinition missileDefinition = missile;
             
             public String getDescription() {
-                return "This spell targets an enemy!";
+                return "This spell shoots a missile!";
             }
             public Ability getAbility() {
                 MissileSpell spell = new MissileSpell(this, missile.copy());

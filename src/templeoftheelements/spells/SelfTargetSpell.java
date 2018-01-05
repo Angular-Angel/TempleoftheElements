@@ -73,10 +73,8 @@ class SelfTargetSpell extends Spell {
     
     @Override
     public void init(Creature c) {
-        stats.init(c.stats);
-        for (Effect e : effects.values()) {
-            e.stats.init(c.stats);
-        }
+        initValues(c);
+        c.addAction(this);
     }
 
     @Override
@@ -92,6 +90,14 @@ class SelfTargetSpell extends Spell {
     @Override
     public Collection<Effect> getAllEffects() {
         return effects.values();
+    }
+
+    @Override
+    public void initValues(Creature c) {
+        stats.initValues(c.stats);
+        for (Effect e : effects.values()) {
+            e.stats.initValues(c.stats);
+        }
     }
 }
 

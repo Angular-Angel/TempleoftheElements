@@ -40,7 +40,7 @@ public class AttackAction implements Action {
     }
 
     public void init(Creature c) {
-        attack.init(c);
+        attack.initValues(c);
     }
 
     @Override

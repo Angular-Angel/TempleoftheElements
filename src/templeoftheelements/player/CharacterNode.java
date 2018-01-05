@@ -173,7 +173,7 @@ public class CharacterNode implements Requirement , Renderable, Clickable {
     }
     
     public void init(Creature c) {
-        stats.init(c.stats);
+        stats.initValues(c.stats);
     }
     
     public void setReqs(Requirement requirement) {

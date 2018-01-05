@@ -3,13 +3,11 @@ package templeoftheelements.item;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
-import stat.EquationStat;
 import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
@@ -150,10 +148,10 @@ public class AttackDefinition implements EffectContainer{
         return ret;
     }
     
-    public void init(Creature c) {
-        stats.init(c.stats);
+    public void initValues(Creature c) {
+        stats.initValues(c.stats);
         for (Effect e : onHitEffects.values()) {
-            e.stats.init(c.stats);
+            e.stats.initValues(c.stats);
         }
     }
 
