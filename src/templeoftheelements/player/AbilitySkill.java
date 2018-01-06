@@ -40,10 +40,10 @@ public class AbilitySkill extends Skill {
     }
     
     @Override
-    public void init(Creature c) {
-        super.init(c);
+    public void initValues(Creature c) {
+        super.initValues(c);
         displayAbility = abilityDef.getAbility();
-        displayAbility.init(c);
+        displayAbility.initValues(c);
     }
 
     @Override

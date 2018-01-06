@@ -35,7 +35,7 @@ public class SkillNode extends CharacterNode {
     @Override
     public void init(Creature c) {
         super.init(c);
-        skill.init(c);
+        skill.initValues(c);
     }
     
     @Override

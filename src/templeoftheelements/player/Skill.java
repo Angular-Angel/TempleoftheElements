@@ -21,7 +21,7 @@ public abstract class Skill {
         stats = new StatContainer(false);
     }
     
-    public void init(Creature c) {
+    public void initValues(Creature c) {
         stats.initValues(c.stats);
     }
     
