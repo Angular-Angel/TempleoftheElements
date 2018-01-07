@@ -1,8 +1,6 @@
 
 package templeoftheelements.controller;
 
-import templeoftheelements.creature.Ability;
-import stat.StatContainer;
 import templeoftheelements.item.AttackDefinition;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
@@ -39,7 +37,7 @@ public class AttackAction implements Action {
         return description;
     }
 
-    public void init(Creature c) {
+    public void initValues(Creature c) {
         attack.initValues(c);
     }
 

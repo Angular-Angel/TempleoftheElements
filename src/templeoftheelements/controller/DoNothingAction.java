@@ -40,7 +40,7 @@ public class DoNothingAction implements Action {
     }
 
     @Override
-    public void init(Creature c) {}
+    public void initValues(Creature c) {}
 
     @Override
     public boolean isPossible(Creature c) {

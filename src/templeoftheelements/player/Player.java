@@ -21,6 +21,7 @@ import templeoftheelements.display.HUD;
 import templeoftheelements.display.Screen;
 import templeoftheelements.display.SelectIcon;
 import static templeoftheelements.TempleOfTheElements.rotate;
+import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
  *

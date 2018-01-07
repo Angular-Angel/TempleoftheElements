@@ -26,5 +26,5 @@ public interface Action {
     
     public String getDescription();
     
-    public void init(Creature c);
+    public void initValues(Creature c);
 }

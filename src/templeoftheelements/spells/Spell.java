@@ -62,7 +62,7 @@ public abstract class Spell extends Ability implements EffectContainer, Action {
         return sprite;
     }
     
-    public void init(Creature c) {
+    public void initValues(Creature c) {
         c.addAction(this);
     }
     
