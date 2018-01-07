@@ -2,14 +2,15 @@
     {
         "Name": "Base",
         "Type": "Creature Definition",
-        "Stats": ["Strength", "Dexterity", "Constitution",
+        "Stats": ["Strength", "Agility", "Dexterity", "Vitality", "Endurance",
                   "Perception", "Intelligence", "Spirit", "Luck",
                   "Max HP", "Max Stamina", "Max Mana", 
                   "HP Regen", "Mana Regen", "Stamina Regen",
-                  "Physical Damage Multiplier", "Spell Range Multiplier",
-                  "Spell Damage Multiplier", "Spell Speed Multiplier",
-                  "Attack Speed Multiplier", "Max Speed", "Acceleration", "Size",
-                  "Turning Speed", "Sight Range"]
+                  "Physical Damage Multiplier", "Damage Resistance Multiplier",
+                  "Spell Range Multiplier", "Spell Damage Multiplier", 
+                  "Spell Speed Multiplier", "Attack Speed Multiplier", 
+                  "Max Speed", "Acceleration", "Size", "Turning Speed", 
+                  "Sight Range"]
         "Body Parts": [],
         "Controller": "Wanderer.groovy",
         "Item Drops": [],

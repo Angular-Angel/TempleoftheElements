@@ -10,7 +10,7 @@ class ToughEnemyGenerator extends CreatureGenerationProcedure {
     public CreatureDefinition modify(CreatureDefinition definition) {
         //This script makes an enemy stronger.
         
-        definition.stats.getStat("Constitution").modify("Tough", 50);
+        definition.stats.getStat("Endurance").modify("Tough", 50);
         
         return definition;
     }

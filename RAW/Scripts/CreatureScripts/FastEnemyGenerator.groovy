@@ -10,7 +10,7 @@ class FastEnemyGenerator extends CreatureGenerationProcedure {
     public CreatureDefinition modify(CreatureDefinition definition) {
         //This script makes an enemy stronger.
         
-        definition.stats.getStat("Dexterity").modify("Fast", 50);
+        definition.stats.getStat("Agility").modify("Fast", 50);
         
         return definition;
     }

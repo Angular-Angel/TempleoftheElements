@@ -42,7 +42,7 @@ class SpinedEnemyGenerator extends CreatureGenerationProcedure {
 
                     public void handle(CreatureEvent event) {
                         if (event.type == CreatureEvent.Type.COLLIDED && event.thing instanceof Creature) {
-                            System.out.println(event.quantity);
+                            System.out.println("Spined Collision: " + event.quantity);
                             event.thing.takeDamage(10, "Piercing");
                         }
 

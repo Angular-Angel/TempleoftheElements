@@ -176,12 +176,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         bodydef.position.set(position);
         bodydef.type = BodyType.DYNAMIC;
         CircleShape bodyShape = new CircleShape();
-        try {
-            bodyShape.setRadius(stats.getScore("Size"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
-            bodyShape.setRadius(1);
-        }
+        bodyShape.setRadius(stats.getScore("Size"));
         Body body = TempleOfTheElements.game.world.createBody(bodydef);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1;
@@ -317,6 +312,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
      */
     @Override
     public float takeDamage(float damage, String type) {
+        damage *= stats.getScore("Damage Resistance Multiplier");
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.TOOK_DAMAGE, damage, type));
         if (resistances.containsKey(type)) damage *= (1 - resistances.get(type));
         ((NumericStat) stats.getStat("HP")).modifyBase(-damage);
