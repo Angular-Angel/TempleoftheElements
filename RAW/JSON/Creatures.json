@@ -2,8 +2,9 @@
     {
         "Name": "Base",
         "Type": "Creature Definition",
-        "Stats": ["Strength", "Agility", "Dexterity", "Vitality", "Endurance",
-                  "Perception", "Intelligence", "Spirit", "Luck",
+        "Stats": ["Strength", "Vitality", "Endurance",  "Dexterity", "Agility",
+                  "Perception", "Intellect", "Acumen", "Creativity", "Spirit",
+                  "Luck",
                   "Max HP", "Max Stamina", "Max Mana", 
                   "HP Regen", "Mana Regen", "Stamina Regen",
                   "Physical Damage Multiplier", "Damage Resistance Multiplier",

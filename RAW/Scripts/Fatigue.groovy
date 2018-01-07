@@ -22,10 +22,7 @@ class Fatigue extends StatusEffect {
     public void init(Creature c) {
         creature = c;
         stats.clearStats();
-        stats.addStat("Dexterity", new NumericStat((float) -c.stats.getScore("Dexterity") * 0.1 * this.severity));
         stats.addStat("Stamina Regen", new NumericStat((float) -c.stats.getScore("Stamina Regen") * 0.09 * this.severity));
-        stats.addStat("Intelligence", new NumericStat((float) -c.stats.getScore("Intelligence") * 0.05 * this.severity));
-        stats.addStat("Perception", new NumericStat((float) -c.stats.getScore("Perception") * 0.05 * this.severity));
     }
     
     public void update(StatusEffect effect) {

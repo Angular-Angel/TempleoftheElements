@@ -37,7 +37,9 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTree> {
         ArrayList<StatDescriptor> attributePool = new ArrayList<>();
         
         //the three basic mental attributes.
-        attributePool.add(game.registry.statDescriptors.get("Intelligence"));
+        attributePool.add(game.registry.statDescriptors.get("Intellect"));
+        attributePool.add(game.registry.statDescriptors.get("Acumen"));
+        attributePool.add(game.registry.statDescriptors.get("Creativity"));
         attributePool.add(game.registry.statDescriptors.get("Spirit"));
         attributePool.add(game.registry.statDescriptors.get("Perception"));
         
@@ -119,8 +121,8 @@ class MagicalStyleGenerator implements ProceduralGenerator<CharacterTree> {
             ret.scalingDetails.contains(Ability.Detail.HP_COST)) 
             ret.secondaryAttributes.add(game.registry.statDescriptors.get("Max HP"));
         
-        if (ret.scalingDetails.contains(Ability.Detail.CONSTITUTION_BASED))
-            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Constitution"));
+        if (ret.scalingDetails.contains(Ability.Detail.VITALITY_BASED))
+            ret.secondaryAttributes.add(game.registry.statDescriptors.get("Vitality"));
         
         
         attributePool.clear();

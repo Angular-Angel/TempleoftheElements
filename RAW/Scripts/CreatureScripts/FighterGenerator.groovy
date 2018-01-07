@@ -33,13 +33,19 @@ class FighterGenerator extends CreatureGenerationProcedure {
         String name = "Fighter " + count++; //set The Name
         CreatureDefinition ret = game.registry.creatureDefs.get("Base").clone(); //Create the return variable.
         ret.name = name;
-        int statTotal = 12; //Set the total amount of core attribute bonuses available.
+        int statTotal = 180; //Set the total amount of core attribute bonuses available.
         int tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.addStat("Constitution", new NumericStat(tempStat)); //generate the core attributes
+        ret.addStat("Vitality", new NumericStat(tempStat)); //generate the core attributes
+        tempStat = random.nextInt(statTotal);
+        statTotal -= tempStat;
+        ret.addStat("Endurance", new NumericStat(tempStat));
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
         ret.addStat("Dexterity", new NumericStat(tempStat));
+        tempStat = random.nextInt(statTotal);
+        statTotal -= tempStat;
+        ret.addStat("Agility", new NumericStat(tempStat));
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
         ret.addStat("Strength", new NumericStat(2 + tempStat));
@@ -52,8 +58,11 @@ class FighterGenerator extends CreatureGenerationProcedure {
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
         ret.addStat("Luck", new NumericStat(tempStat));
+        tempStat = random.nextInt(statTotal);
+        statTotal -= tempStat;
+        ret.addStat("Acumen", new NumericStat(tempStat));
         tempStat = statTotal;
-        ret.addStat("Intelligence", new NumericStat(tempStat));
+        ret.addStat("Intellect", new NumericStat(tempStat));
         
         AttackDefinition attack = new AttackDefinition(name, new VectorCircle(1), "Fire");
         attack.addStat("Melee Attack", new BinaryStat());

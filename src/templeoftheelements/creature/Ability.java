@@ -10,6 +10,9 @@ public abstract class Ability {
     public static enum Detail {
         
         //Usage
+//Usage
+//Usage
+//Usage
         _USAGES_(-1), SPAMMABLE(0), SITUATIONAL(0), NONCOMBAT(0), PASSIVE(0),
         
         //Costs
@@ -31,8 +34,8 @@ public abstract class Ability {
         EXHAUSTION(3), MULTI_TARGET(4), HOMING(3), CHAIN(4),
         
         //Scaling
-        _SCALING_(-1), SPIRIT_BASED(0), INTELLIGENCE_BASED(0), PERCEPTION_BASED(0), SPEED_BASED(0), 
-        STRENGTH_BASED(0), CONSTITUTION_BASED(0), DEXTERITY_BASED(0), STAMINA_BASED(0), HP_BASED(0), LUCK_BASED(0);
+        _SCALING_(-1), SPIRIT_BASED(0), INTELLECT_BASED(0), PERCEPTION_BASED(0), SPEED_BASED(0), 
+        STRENGTH_BASED(0), VITALITY_BASED(0), DEXTERITY_BASED(0), STAMINA_BASED(0), HP_BASED(0), LUCK_BASED(0);
         
         //
         

@@ -32,27 +32,36 @@ class WandererGenerator implements GenerationProcedure<CreatureDefinition> {
         
         String name = "Wanderer " + count++; //set The Name
         CreatureDefinition ret = new CreatureDefinition(name); //Create the return variable.
-        int statTotal = 12; //Set the total amount of core attribute bonuses available.
+        int statTotal = 180; //Set the total amount of core attribute bonuses available.
         int tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.addStat("Constitution", new NumericStat(10 + tempStat)); //generate the core attrbutes
+        ret.addStat("Vitality", new NumericStat(tempStat)); //generate the core attributes
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.addStat("Dexterity", new NumericStat(12 + tempStat));
+        ret.addStat("Endurance", new NumericStat(tempStat));
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.addStat("Strength", new NumericStat(10 + tempStat));
+        ret.addStat("Dexterity", new NumericStat(tempStat));
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.addStat("Perception", new NumericStat(10 + tempStat));
+        ret.addStat("Agility", new NumericStat(tempStat));
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.addStat("Spirit", new NumericStat(10 + tempStat));
+        ret.addStat("Strength", new NumericStat(2 + tempStat));
         tempStat = random.nextInt(statTotal);
         statTotal -= tempStat;
-        ret.addStat("Luck", new NumericStat(10 + tempStat));
+        ret.addStat("Perception", new NumericStat(tempStat));
+        tempStat = random.nextInt(statTotal);
+        statTotal -= tempStat;
+        ret.addStat("Spirit", new NumericStat(tempStat));
+        tempStat = random.nextInt(statTotal);
+        statTotal -= tempStat;
+        ret.addStat("Luck", new NumericStat(tempStat));
+        tempStat = random.nextInt(statTotal);
+        statTotal -= tempStat;
+        ret.addStat("Acumen", new NumericStat(tempStat));
         tempStat = statTotal;
-        ret.addStat("Intelligence", new NumericStat(10 + tempStat));
+        ret.addStat("Intellect", new NumericStat(tempStat));
         
         //generate the secondary attributes.
         float size = ((float) ret.getScore("Strength") + ret.getScore("Constitution")) / (2 * ret.getScore("Dexterity"));
