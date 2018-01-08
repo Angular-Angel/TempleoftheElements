@@ -1,10 +1,10 @@
 
 package templeoftheelements;
 
-import templeoftheelements.spells.Spell;
 import java.util.ArrayList;
 import java.util.HashMap;
 import stat.StatDescriptor;
+import templeoftheelements.creature.Ability;
 import templeoftheelements.player.CharacterTree;
 
 /**
@@ -17,10 +17,10 @@ public class Element {
     public final String name;
     
     public ArrayList<CharacterTree.Focus> focuses;
-    public ArrayList<Spell.Detail> targetDetails;
-    public ArrayList<Spell.Detail> effectDetails;
-    public ArrayList<Spell.Detail> costDetails;
-    public ArrayList<Spell.Detail> scalingDetails;
+    public ArrayList<Ability.Detail> targetDetails;
+    public ArrayList<Ability.Detail> effectDetails;
+    public ArrayList<Ability.Detail> costDetails;
+    public ArrayList<Ability.Detail> scalingDetails;
     public ArrayList<String> relations;
     public ArrayList<StatDescriptor> primaryAttributes;
     public ArrayList<StatDescriptor> secondaryAttributes;

@@ -17,8 +17,14 @@ public class CharacterTree {
     
     //This defines the prupose of the character tree.
     public static enum Focus {
-        OFFENSE, DEFENSE, UTILITY, MINIONS, PROJECTILES, BUFFS, DEBUFFS, HEALING,
-        TERRAIN_ALTERATION, TELEPATHY, DIVINATION, ITEM_MANIPULATION, MOVEMENT
+        //Generic focuses
+        OFFENSE, DEFENSE, UTILITY, 
+        
+        //Magical Focuses
+        MINIONS, PROJECTILES, BUFFS, DEBUFFS, HEALING,
+        TERRAIN_ALTERATION, TELEPATHY, DIVINATION, ITEM_MANIPULATION, 
+        
+        MOVEMENT
     }
     
     //these define any extra details common on abilities of this style.
