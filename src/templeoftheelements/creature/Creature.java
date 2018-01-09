@@ -6,13 +6,10 @@ import templeoftheelements.controller.Action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import org.lwjgl.opengl.GL11;
-import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
 import templeoftheelements.Actor;
@@ -26,9 +23,10 @@ import templeoftheelements.item.Item;
 import templeoftheelements.TempleOfTheElements;
 import templeoftheelements.collision.Attack;
 import templeoftheelements.collision.Damageable;
-import templeoftheelements.collision.MeleeAttack;
 import templeoftheelements.collision.Position;
 import static templeoftheelements.TempleOfTheElements.game;
+import templeoftheelements.controller.DoNothingAction;
+import templeoftheelements.controller.OngoingAction;
 import templeoftheelements.item.Weapon;
 import templeoftheelements.display.VectorCircle;
 import templeoftheelements.display.Renderable;
@@ -41,9 +39,8 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     private Renderable sprite;
     private Controller controller;
     private Fixture fixture;
-    private float direction, attackTimer;
-    private MeleeAttack curAttack;
-    private Action currentAction;
+    private float direction;
+    private OngoingAction currentAction;
     private HashSet<Action> actions;
     private HashSet<Ability> abilities;
     private Position createPosition; //only used for a createBody method, not for 
@@ -67,7 +64,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     }
     
     public Creature(Position pos, CreatureDefinition def) {
-        attackTimer = 0; direction = 0;
+        direction = 0;
         createPosition = pos;
         actions = new HashSet<>();
         bodyParts = new ArrayList<>();
@@ -79,6 +76,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         abilities = new HashSet<>();
         this.stats = new StatContainer(def.stats);
         sprite = new VectorCircle(stats.getScore("Size"));
+        currentAction = new DoNothingAction();
     }
     
     public void addAbility(Ability a) {
@@ -224,17 +222,6 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.MOVED, getBody().getLinearVelocity().length()));
     }
     
-    private void manageMeleeAttack() {
-        if (curAttack != null) {
-            if (!curAttack.isDead()) {
-                curAttack.move(getPosition(), getDirection());
-            } else {
-                attackTimer = (int) curAttack.stats.getScore("Recovery Time") / stats.getScore("Attack Speed Multiplier");
-                curAttack = null;
-            }
-        }
-    }
-    
     private void checkFatigue() {
         float staminaPercentage = stats.getScore("Stamina") / stats.getScore("Max Stamina");
         if (staminaPercentage < 0.9) {
@@ -257,6 +244,8 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
             status.step(dt);
         }
         
+        currentAction.step(dt);
+        
         //if (controller == null) return;
         controller.step(dt);
         
@@ -264,13 +253,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         
         accelerateBody(dt);
         
-        manageMeleeAttack();
-        
         checkFatigue();
-        
-        if (attackTimer > 0) {
-            attackTimer -= dt*150;
-        }
     }
 
     /**
@@ -300,6 +283,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     /**
      * @return the body
      */
+    @Override
     public Body getBody() {
         return fixture.getBody();
     }
@@ -318,20 +302,6 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         ((NumericStat) stats.getStat("HP")).modifyBase(-damage);
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.LOST_HP, damage, type));
         return damage;
-    }
-    
-    public void attack(AttackDefinition attack) {
-        if (curAttack != null || attackTimer > 0) return;
-        if (attack.stats.hasStat("Stamina Cost") && attack.stats.getScore("Stamina Cost") > stats.getScore("Stamina")) return;
-        Attack a = attack.generate(this);
-        TempleOfTheElements.game.addSprite(a);
-        TempleOfTheElements.game.addActor(a);
-        if (a instanceof MeleeAttack) curAttack = (MeleeAttack) a;
-        notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.ATTACKED, a));
-        if (attack.stats.hasStat("Stamina Cost")) {
-            ((NumericStat) stats.getStat("Stamina")).modifyBase(-a.stats.getScore("Stamina Cost"));
-            notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.SPENT_STAMINA, attack.stats.getScore("Stamina Cost")));
-        }
     }
 
     /**
@@ -482,6 +452,11 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     @Override
     public Damager getOwner() {
         return this;
+    }
+    
+    public void performAction(OngoingAction ongoingAction) {
+        currentAction = ongoingAction;
+        ongoingAction.begin(this);
     }
     
     public class BodyPart {

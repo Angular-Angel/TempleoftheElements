@@ -43,7 +43,7 @@ public class MissileSpell extends Spell {
 
     @Override
     public void cast(Creature caster, Position pos) {
-        caster.attack(getMissile());
+        //caster.attack(getMissile());
     }
 
     public Ability copy() {

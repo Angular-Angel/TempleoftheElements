@@ -24,7 +24,8 @@ public class AttackAction implements Action {
     
     @Override
     public void perform(Creature creature, Position in) {
-        creature.attack(attack);
+        if (attack.stats.hasStat("Stamina Cost") && attack.stats.getScore("Stamina Cost") > creature.stats.getScore("Stamina")) return;
+        creature.performAction(new OngoingMeleeAttack(attack));
     }
 
     @Override
@@ -37,6 +38,7 @@ public class AttackAction implements Action {
         return description;
     }
 
+    @Override
     public void initValues(Creature c) {
         attack.initValues(c);
     }

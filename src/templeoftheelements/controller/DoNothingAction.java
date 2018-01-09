@@ -9,6 +9,7 @@ import stat.StatContainer;
 import templeoftheelements.creature.Creature;
 import templeoftheelements.collision.Position;
 import templeoftheelements.display.Renderable;
+import templeoftheelements.display.VectorCircle;
 
 /**
  *
@@ -16,35 +17,14 @@ import templeoftheelements.display.Renderable;
  */
 
 
-public class DoNothingAction implements Action {
+public class DoNothingAction implements OngoingAction {
 
-    private Renderable sprite;
-    
-    public DoNothingAction(Renderable sprite) {
-        this.sprite = sprite;
+    @Override
+    public void begin(Creature c) {
     }
 
     @Override
-    public void perform(Creature creature, Position in) {
-        
-    }
-
-    @Override
-    public Renderable getSprite() {
-        return sprite;
-    }
-
-    @Override
-    public String getDescription() {
-        return "Do Nothing.";
-    }
-
-    @Override
-    public void initValues(Creature c) {}
-
-    @Override
-    public boolean isPossible(Creature c) {
-        return true;
+    public void step(float dt) {
     }
     
 }
