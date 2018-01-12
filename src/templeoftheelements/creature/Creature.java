@@ -218,7 +218,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     private void accelerateBody(float dt) {
         Vec2 speed = getBody().getLinearVelocity().mul(1 - stats.getScore("Acceleration")/stats.getScore("Max Speed"));
         getBody().setLinearVelocity(speed);
-        getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(stats.getScore("Acceleration")));
+        getBody().applyForceToCenter(controller.getAccel().mul(dt).mul(150).mul(stats.getScore("Acceleration") * currentAction.movespeedModifier()));
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.MOVED, getBody().getLinearVelocity().length()));
     }
     
@@ -455,8 +455,14 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
     }
     
     public void performAction(OngoingAction ongoingAction) {
-        currentAction = ongoingAction;
-        ongoingAction.begin(this);
+        if (currentAction.interruptible()) {
+            currentAction.end();
+            currentAction = ongoingAction;
+            ongoingAction.begin(this);
+        }
+    } public void endAction() {
+        currentAction.end();
+        currentAction = new DoNothingAction();
     }
     
     public class BodyPart {

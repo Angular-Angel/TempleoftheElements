@@ -21,7 +21,6 @@ import templeoftheelements.display.HUD;
 import templeoftheelements.display.Screen;
 import templeoftheelements.display.SelectIcon;
 import static templeoftheelements.TempleOfTheElements.rotate;
-import static templeoftheelements.TempleOfTheElements.rotate;
 
 /**
  *
@@ -33,15 +32,15 @@ public class Player implements Controller {
 
     private Creature creature;
     private Vec2 accel;
-    private Screen characterScreen;
+    private final Screen characterScreen;
     public HUD hud;
-    private Inventory inventory;
+    private final Inventory inventory;
     public CharacterWheel characterWheel;
     public SelectIcon leftClick, rightClick;
     private int experience;
     private int level;
     public int characterPoints;
-    private HashSet<Action> actions;
+    private final HashSet<Action> actions;
     
     public Player(Creature b) {
         creature = b;
@@ -55,6 +54,7 @@ public class Player implements Controller {
         creature.setController(this);
     }
     
+    @Override
     public void init() {
         hud = new HUD(this);
         leftClick = new SelectIcon(new Position(200, 50), 100, 100);
@@ -67,10 +67,12 @@ public class Player implements Controller {
         return actions;
     }
     
+    @Override
     public void addAction(Action a ) {
         actions.add(a);
     }
     
+    @Override
     public void refactorActions() {
         actions.clear();
         creature.refactorActions();

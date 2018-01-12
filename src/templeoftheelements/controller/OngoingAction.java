@@ -16,4 +16,10 @@ public interface OngoingAction extends Steppable {
     
     public void begin(Creature c);
     
+    public boolean interruptible();
+    
+    public void end();
+    
+    public float movespeedModifier();
+    
 }

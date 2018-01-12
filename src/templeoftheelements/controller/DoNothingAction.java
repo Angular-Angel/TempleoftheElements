@@ -1,15 +1,7 @@
 
 package templeoftheelements.controller;
 
-import templeoftheelements.controller.Action;
-import templeoftheelements.creature.Ability;
-import java.util.HashMap;
-import org.jbox2d.common.Vec2;
-import stat.StatContainer;
 import templeoftheelements.creature.Creature;
-import templeoftheelements.collision.Position;
-import templeoftheelements.display.Renderable;
-import templeoftheelements.display.VectorCircle;
 
 /**
  *
@@ -25,6 +17,20 @@ public class DoNothingAction implements OngoingAction {
 
     @Override
     public void step(float dt) {
+    }
+
+    @Override
+    public boolean interruptible() {
+        return true;
+    }
+
+    @Override
+    public float movespeedModifier() {
+        return 1;
+    }
+
+    @Override
+    public void end() {
     }
     
 }

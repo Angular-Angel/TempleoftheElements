@@ -184,7 +184,7 @@
         "Identifier": "Attack Speed Multiplier",
         "Type": "Stat Description",
         "Stat Type": "PERCENTAGE",
-        "Stat": "([Agility] * 0.3 + [Dexterity] * 0.3 + [Vitality] * 0.15  + [Strength] * 0.15 + [Spirit] * 0.1) / 100",
+        "Stat": "100 / ([Agility] * 0.3 + [Dexterity] * 0.3 + [Vitality] * 0.15  + [Strength] * 0.15 + [Spirit] * 0.1)",
         "Base": 1.0,
         "Increase": 0.01,
     },

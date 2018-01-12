@@ -33,7 +33,9 @@ public class OngoingMeleeAttack implements OngoingAction{
             if (!attack.isDead()) {
                 attack.move(creature.getPosition(), creature.getDirection());
             } else {
-                //attackTimer = (int) attack.stats.getScore("Recovery Time") / stats.getScore("Attack Speed Multiplier");
+                System.out.println("templeoftheelements.controller.OngoingMeleeAttack.step()");
+                creature.endAction();
+                creature.performAction(new RecoveryAction(attack.stats.getScore("Recovery Time") * creature.stats.getScore("Attack Speed Multiplier")));
                 attack = null;
             }
         }
@@ -51,6 +53,20 @@ public class OngoingMeleeAttack implements OngoingAction{
             ((NumericStat) creature.stats.getStat("Stamina")).modifyBase(-a.stats.getScore("Stamina Cost"));
             creature.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.SPENT_STAMINA, attack.stats.getScore("Stamina Cost")));
         }
+    }
+
+    @Override
+    public boolean interruptible() {
+        return false;
+    }
+
+    @Override
+    public float movespeedModifier() {
+        return attackDefinition.stats.getScore("Movespeed Modifier");
+    }
+
+    @Override
+    public void end() {
     }
     
 }
