@@ -299,7 +299,7 @@ public class Creature implements Damageable, Actor, Renderable, Clickable, Damag
         damage *= stats.getScore("Damage Resistance Multiplier");
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.TOOK_DAMAGE, damage, type));
         if (resistances.containsKey(type)) damage *= (1 - resistances.get(type));
-        ((NumericStat) stats.getStat("HP")).modifyBase(-damage);
+        stats.getStat("HP").modifyBase(-damage);
         notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.LOST_HP, damage, type));
         return damage;
     }
