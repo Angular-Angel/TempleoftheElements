@@ -68,12 +68,7 @@ public class AbilityGenerator implements ProceduralGenerator<AbilitySkill> {
         targetingMethods.addAll(Arrays.asList(Ability.Detail.values()));
         targetingMethods = new ArrayList<>(targetingMethods.subList(targetingMethods.indexOf(Ability.Detail._TARGETING_) +1, targetingMethods.indexOf(Ability.Detail._COMMON_)));
         
-        do {
-            
-            abilitySkill.targeting = targetingMethods.get(random.nextInt(targetingMethods.size()));
-
-        } while (!procedures.containsKey(abilitySkill.targeting));
-        
+        abilitySkill.targeting = targetingMethods.get(random.nextInt(targetingMethods.size()));
         abilitySkill = procedures.get(abilitySkill.targeting).modify(abilitySkill);
         
         //Then, depending on the above, pick what costs this spell will have.
