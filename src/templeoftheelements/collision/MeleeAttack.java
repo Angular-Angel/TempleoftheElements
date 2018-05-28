@@ -39,12 +39,8 @@ public class MeleeAttack extends Attack {
         super(c);
         stats.addAllStats(attack.stats.viewStats());
         expired = false;
-        try {
-            this.timer = (int) attack.stats.getScore("Duration");
-            sprite = new VectorCircle(attack.stats.getScore("Size"));
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(MeleeAttack.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.timer = (int) attack.stats.getScore("Duration");
+        sprite = new VectorCircle(attack.stats.getScore("Size"));
         this.angle = angle;
         this.type = attack.getType();
         dist = distance;
@@ -64,15 +60,11 @@ public class MeleeAttack extends Attack {
     @Override
     public void step(float dt) {
         if (timer > 0) {
-            try {
-                timer--;
-                if (stats.getScore("Angular Travel") > 0)
-                    angle += stats.getScore("Angular Travel")/stats.getScore("Duration");
-                if (stats.getScore("Distance Travel") > 0)
-                    dist += stats.getScore("Distance Travel")/stats.getScore("Duration");
-            } catch (NoSuchStatException ex) {
-                Logger.getLogger(MeleeAttack.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            timer--;
+            if (stats.getScore("Angular Travel") > 0)
+                angle += stats.getScore("Angular Travel")/stats.getScore("Duration");
+            if (stats.getScore("Distance Travel") > 0)
+                dist += stats.getScore("Distance Travel")/stats.getScore("Duration");
         }
         else expired = true;
     }
@@ -82,11 +74,8 @@ public class MeleeAttack extends Attack {
         if (!(o instanceof Creature)) return 0;
         Creature creature = (Creature) o;
         float damage = super.hit(o);
-        try {
-            damage += creature.takeDamage(stats.getScore("Damage"), type);
-        } catch (NoSuchStatException ex) {
-            Logger.getLogger(MeleeAttack.class.getName()).log(Level.SEVERE, null, ex);
-        } expired = true;
+        damage += creature.takeDamage(stats.getScore("Damage"), type);
+        expired = true;
         origin.notifyCreatureEvent(new CreatureEvent(CreatureEvent.Type.DEALT_DAMAGE, damage, o));
         return damage;
     }
