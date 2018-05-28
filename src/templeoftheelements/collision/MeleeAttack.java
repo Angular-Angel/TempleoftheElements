@@ -27,12 +27,12 @@ import templeoftheelements.creature.CreatureEvent;
 
 public class MeleeAttack extends Attack {
     
-    private Renderable sprite;
-    private Fixture fixture;
+    private final Renderable sprite;
+    private final Fixture fixture;
     private int timer, angle;
     private float dist;
     private boolean expired;
-    private String type;
+    private final String type;
     
     
     public MeleeAttack(Creature c, AttackDefinition attack, Shape bodyShape, int angle, float distance) {
