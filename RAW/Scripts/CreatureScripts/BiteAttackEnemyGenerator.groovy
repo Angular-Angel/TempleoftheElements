@@ -30,7 +30,8 @@ class BiteAttackEnemyGenerator extends CreatureGenerationProcedure {
         attack.stats.addStat("Min Damage", new NumericStat(20));
         attack.stats.addStat("Max Damage", new NumericStat(50));
         attack.stats.addStat("Stamina Cost", new NumericStat(4));
-        attack.stats.addStat("Movespeed Modifier", new NumericStat(0.85));
+        attack.stats.addStat("Movespeed Modifier", new NumericStat(0.4));
+        attack.stats.addStat("Stamina Regen Modifier", new NumericStat(0.2));
         
         definition.addAbility(new NaturalAttack(attack));
         
