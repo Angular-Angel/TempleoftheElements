@@ -33,7 +33,6 @@ public class OngoingMeleeAttack implements OngoingAction{
             if (!attack.isDead()) {
                 attack.move(creature.getPosition(), creature.getDirection());
             } else {
-                System.out.println("templeoftheelements.controller.OngoingMeleeAttack.step()");
                 creature.endAction();
                 creature.performAction(new RecoveryAction(attack.stats.getScore("Recovery Time") * creature.stats.getScore("Attack Speed Multiplier")));
                 attack = null;
@@ -67,6 +66,11 @@ public class OngoingMeleeAttack implements OngoingAction{
 
     @Override
     public void end() {
+    }
+
+    @Override
+    public float staminaRegenModifier() {
+        return attackDefinition.stats.getScore("Stamina Regen Modifier");
     }
     
 }

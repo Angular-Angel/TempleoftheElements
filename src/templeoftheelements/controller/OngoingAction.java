@@ -22,4 +22,6 @@ public interface OngoingAction extends Steppable {
     
     public float movespeedModifier();
     
+    public float staminaRegenModifier();
+    
 }

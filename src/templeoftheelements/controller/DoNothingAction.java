@@ -32,5 +32,10 @@ public class DoNothingAction implements OngoingAction {
     @Override
     public void end() {
     }
+
+    @Override
+    public float staminaRegenModifier() {
+        return 1;
+    }
     
 }

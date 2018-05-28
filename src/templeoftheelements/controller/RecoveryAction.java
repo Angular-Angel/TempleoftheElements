@@ -37,7 +37,6 @@ public class RecoveryAction implements OngoingAction {
 
     @Override
     public void step(float dt) {
-        System.out.println(timer);
         timer -= dt;
         if (timer <= 0) {
             creature.endAction();
@@ -46,6 +45,11 @@ public class RecoveryAction implements OngoingAction {
 
     @Override
     public void end() {
+    }
+
+    @Override
+    public float staminaRegenModifier() {
+        return 0.5f;
     }
     
 }
