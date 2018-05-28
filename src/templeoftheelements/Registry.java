@@ -37,7 +37,6 @@ import templeoftheelements.item.MagicEquipmentDef;
 import templeoftheelements.item.MagicItemDef;
 import templeoftheelements.item.MagicWeaponDef;
 import templeoftheelements.item.WeaponDefinition;
-import templeoftheelements.creature.Ability;
 import templeoftheelements.creature.AbilityDefinition;
 import templeoftheelements.player.CharacterTree;
 import templeoftheelements.effect.Effect;
@@ -63,7 +62,6 @@ public class Registry extends RawReader {
     public HashMap<String, Element> elements;
     public HashMap<String, EffectListing> effects;
     public HashMap<String, StatusEffect> statusEffects;
-    public HashMap<String, StatDescriptor> statDescriptors;
     public ArrayList<Element> elementList;
     public ArrayList<MagicItemDef> magicEffects;
     public ArrayList<CreatureDefinition> creatureList;
@@ -73,6 +71,7 @@ public class Registry extends RawReader {
     public AbilityGenerator abilityGenerator;
     
     public Registry() {
+        super();
         creatureDefs = new HashMap<>();
         textures = new HashMap<>();
         itemDefs = new HashMap<>();
@@ -84,7 +83,6 @@ public class Registry extends RawReader {
         elementList = new ArrayList<>();
         spriteSheets = new HashMap<>();
         statusEffects = new HashMap<>();
-        statDescriptors = new HashMap<>();
         effects = new HashMap<>();
         controllers.put("BasicAI.java", new BasicAI());
         creatureTypeGenerator = new CreatureTypeGenerator();
