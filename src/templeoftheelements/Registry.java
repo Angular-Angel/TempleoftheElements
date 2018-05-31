@@ -64,7 +64,8 @@ public class Registry extends RawReader {
     public HashMap<String, StatusEffect> statusEffects;
     public ArrayList<Element> elementList;
     public ArrayList<MagicItemDef> magicEffects;
-    public ArrayList<CreatureDefinition> creatureList;
+    public ArrayList<CreatureDefinition> creatureTypes;
+    public ArrayList<CreatureDefinition> enemyTypes;
     public CreatureTypeGenerator creatureTypeGenerator;
     public ProceduralGenerator<CharacterTree> treeGenerator;
     public GenerationProcedure<CharacterTree> clusterGenerator;
@@ -78,7 +79,8 @@ public class Registry extends RawReader {
         controllers = new HashMap<>();
         magicEffects = new ArrayList<>();
         itemPools = new HashMap<>();
-        creatureList = new ArrayList<>();
+        creatureTypes = new ArrayList<>();
+        enemyTypes = new ArrayList<>();
         elements = new HashMap<>();
         elementList = new ArrayList<>();
         spriteSheets = new HashMap<>();
@@ -423,7 +425,12 @@ public class Registry extends RawReader {
             throw new IllegalArgumentException("CreatureDefinition already exists: " + name);
         }
         creatureDefs.put(name, def);
-        creatureList.add(def);
+        creatureTypes.add(def);
+    }
+    
+    public void addEnemyDef(String name, CreatureDefinition def) {
+        addCreatureDef(name, def);
+        enemyTypes.add(def);
     }
     
     public EffectListing readEffectListing(JSONObject obj) {

@@ -65,7 +65,7 @@ class Initiator implements InitScript {
         
         for (int i = 0; i < 10; i++) {
             CreatureDefinition definition = game.registry.creatureTypeGenerator.generate();
-            game.registry.addCreatureDef(definition.getName(), definition);
+            game.registry.addEnemyDef(definition.getName(), definition);
         }
         
         Floor.FloorSchematic schematic = new Floor.FloorSchematic(30, 30);

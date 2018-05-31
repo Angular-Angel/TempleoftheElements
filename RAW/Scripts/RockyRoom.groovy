@@ -34,7 +34,7 @@ class RockyRoom implements GenerationProcedure<Room> {
 //        }
         
         for (int i = 0; i < room.width/10; i++) {
-            Creature creature = game.registry.creatureList.get(random.nextInt(game.registry.creatureList.size())).genCreature();
+            Creature creature = game.registry.enemyTypes.get(random.nextInt(game.registry.enemyTypes.size())).genCreature();
             room.add(creature);
         }
     }
