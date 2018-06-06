@@ -21,7 +21,7 @@ public class AreaSpellGenerator extends AbilityGenerationProcedure {
             Map<String, Effect> effects = new HashMap<>();
             
             public String getDescription() {
-                return "This spell targets an enemy!";
+                return "This spell targets an area!";
             }
             public Ability getAbility() {
                 AreaSpell spell = new AreaSpell(this, new VectorCircle(0.5));
@@ -50,7 +50,7 @@ public class AreaSpellGenerator extends AbilityGenerationProcedure {
         areaSpell.stats.addStat("Mana Cost", new NumericStat(0));
         areaSpell.stats.addStat("Cooldown", new NumericStat(0));
         
-        abilitySkill.abilityDef = areaSpell
+        abilitySkill.abilityDef = areaSpell;
         return abilitySkill;
     }
 }
