@@ -19,7 +19,7 @@ import templeoftheelements.effect.EffectContainer;
  *
  * @author angle
  */
-class SelfTargetSpell extends Spell {
+public class SelfTargetSpell extends Spell {
     
     HashMap<String, Effect> effects;
 

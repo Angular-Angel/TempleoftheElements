@@ -39,6 +39,7 @@ class Initiator implements InitScript {
         game.registry.abilityGenerator.addProcedure(Ability.Detail.PROJECTILE, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/MissileSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Ability.Detail.AREA_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/AreaSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Ability.Detail.ENEMY_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/EnemyTargetSpellGenerator.groovy")));
+        game.registry.abilityGenerator.addProcedure(Ability.Detail.SELF_TARGET, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/SelfTargetSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Ability.Detail.MANA_COST, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/ManaCostSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Ability.Detail.COOLDOWN, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/CooldownSpellGenerator.groovy")));
         game.registry.abilityGenerator.addProcedure(Ability.Detail.CAST_TIME, game.registry.readGroovyScript(new File("RAW/Scripts/SpellScripts/CastTimeSpellGenerator.groovy")));
