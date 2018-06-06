@@ -1,9 +1,6 @@
 
 package templeoftheelements.spells;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import stat.NoSuchStatException;
 import stat.NumericStat;
 import stat.StatContainer;
 import templeoftheelements.creature.Creature;
